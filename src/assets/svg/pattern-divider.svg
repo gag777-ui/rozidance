@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 30" fill="none" preserveAspectRatio="xMidYMid meet">
+  <!-- Geometric Armenian frise divider -->
+  <g stroke="#D9C9B0" stroke-width="0.6" fill="none">
+    <line x1="0" y1="15" x2="320" y2="15"/>
+    <line x1="480" y1="15" x2="800" y2="15"/>
+    <!-- Central motif: star/diamond -->
+    <polygon points="400,5 408,15 400,25 392,15" fill="#D9C9B0" opacity="0.5"/>
+    <polygon points="400,5 408,15 400,25 392,15" transform="rotate(45 400 15)" fill="none" stroke-width="0.5"/>
+    <!-- Small diamonds flanking -->
+    <polygon points="370,11 376,15 370,19 364,15"/>
+    <polygon points="430,11 436,15 430,19 424,15"/>
+    <polygon points="340,12 344,15 340,18 336,15"/>
+    <polygon points="460,12 464,15 460,18 456,15"/>
+  </g>
+</svg>

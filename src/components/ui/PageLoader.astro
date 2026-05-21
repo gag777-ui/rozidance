@@ -1,0 +1,32 @@
+---
+// Page loader — ivoire fond, logo Rozi Dance en fondu, max 1.5s
+---
+
+<div id="page-loader" role="status" aria-label="Chargement">
+  <div class="loader-logo">
+    <span class="loader-logo-text">Rozi <span class="loader-dot">·</span> Dance</span>
+  </div>
+</div>
+
+<style>
+  .loader-logo {
+    animation: loaderFadeIn 500ms var(--ease-out-soft) forwards;
+  }
+
+  .loader-logo-text {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    letter-spacing: 0.04em;
+  }
+
+  .loader-dot {
+    color: var(--color-accent);
+  }
+
+  @keyframes loaderFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>

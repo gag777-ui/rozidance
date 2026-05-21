@@ -1,0 +1,199 @@
+---
+import { getTranslations } from '../../i18n/utils';
+const t = getTranslations('fr');
+---
+
+<header id="site-header" class="site-header">
+  <div class="section-container header-inner">
+    <!-- Logo -->
+    <a href="/" class="logo" aria-label="Rozi Dance — accueil">
+      <span class="logo-text">Rozi <span class="logo-dot">·</span> Dance</span>
+    </a>
+
+    <!-- Nav desktop -->
+    <nav class="nav-desktop" aria-label="Navigation principale">
+      <ul>
+        <li><a href="/#prestations" class="nav-link">{t.nav.prestations}</a></li>
+        <li><a href="/#galerie" class="nav-link">{t.nav.galerie}</a></li>
+        <li><a href="/cours" class="nav-link">{t.nav.cours}</a></li>
+        <li><a href="/#apropos" class="nav-link">{t.nav.apropos}</a></li>
+        <li><a href="/#contact" class="nav-link">{t.nav.contact}</a></li>
+      </ul>
+    </nav>
+
+    <!-- CTA desktop -->
+    <a href="/#contact" class="btn-primary header-cta">
+      {t.nav.contact}
+    </a>
+
+    <!-- Hamburger mobile -->
+    <button
+      id="menu-toggle"
+      class="menu-toggle"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- Nav mobile -->
+  <nav id="mobile-menu" class="nav-mobile" aria-label="Menu mobile" hidden>
+    <ul>
+      <li><a href="/#prestations" class="nav-link">{t.nav.prestations}</a></li>
+      <li><a href="/#galerie" class="nav-link">{t.nav.galerie}</a></li>
+      <li><a href="/cours" class="nav-link">{t.nav.cours}</a></li>
+      <li><a href="/#apropos" class="nav-link">{t.nav.apropos}</a></li>
+      <li><a href="/#contact" class="nav-link">{t.nav.contact}</a></li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-bg-primary);
+    border-bottom: 0.5px solid transparent;
+    transition: border-color 300ms, backdrop-filter 300ms, background-color 300ms;
+  }
+
+  .site-header.scrolled {
+    border-color: var(--color-border);
+    backdrop-filter: blur(12px);
+    background-color: rgba(247, 241, 230, 0.85);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    gap: 2rem;
+  }
+
+  .logo {
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    letter-spacing: 0.02em;
+  }
+
+  .logo-dot {
+    color: var(--color-accent);
+  }
+
+  .nav-desktop ul {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header-cta {
+    flex-shrink: 0;
+    padding: 0.5rem 1.25rem;
+  }
+
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-text-primary);
+    transition: transform 300ms var(--ease-out-soft), opacity 300ms;
+  }
+
+  .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .nav-mobile {
+    padding: 1.5rem;
+    background-color: var(--color-bg-primary);
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .nav-mobile ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-mobile .nav-link {
+    font-size: 1.125rem;
+  }
+
+  @media (max-width: 768px) {
+    .nav-desktop,
+    .header-cta {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  // Sticky header scroll effect
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (header) {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    }
+  });
+
+  // Mobile menu toggle
+  const toggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    if (mobileMenu) {
+      mobileMenu.hidden = expanded;
+    }
+  });
+
+  // Close mobile menu on nav link click
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (mobileMenu) mobileMenu.hidden = true;
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

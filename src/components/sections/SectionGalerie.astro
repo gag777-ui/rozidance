@@ -1,0 +1,234 @@
+---
+import { getTranslations } from '../../i18n/utils';
+const t = getTranslations('fr');
+
+// Placeholder images — remplacer par des vraies photos WebP de Rozi Dance
+const photos = [
+  { src: '/images/galerie/photo-01.webp', alt: 'Rozi Dance — performance de danse arménienne', w: 1200, h: 800 },
+  { src: '/images/galerie/photo-02.webp', alt: 'Rozi Dance — chant de la mariée', w: 800, h: 800 },
+  { src: '/images/galerie/photo-03.webp', alt: 'Rozi Dance — cérémonie de mariage arménien', w: 800, h: 1067 },
+  { src: '/images/galerie/photo-04.webp', alt: 'Rozi Dance — cours de danse', w: 800, h: 800 },
+  { src: '/images/galerie/photo-05.webp', alt: 'Rozi Dance — duo artistique arménien', w: 800, h: 1067 },
+  { src: '/images/galerie/photo-06.webp', alt: 'Rozi Dance — événement festif arménien', w: 800, h: 800 },
+];
+---
+
+<section id="galerie" class="section-galerie" aria-labelledby="galerie-title">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <span class="eyebrow">{t.galerie.eyebrow}</span>
+      <h2 class="section-title" id="galerie-title">{t.galerie.title}</h2>
+    </div>
+
+    <!-- Gallery grid -->
+    <div class="gallery-grid reveal" id="gallery-grid">
+      {photos.map((photo, i) => (
+        <a
+          href={photo.src}
+          class={`gallery-item gallery-item-${i + 1}`}
+          data-pswp-width={photo.w}
+          data-pswp-height={photo.h}
+          aria-label={`Agrandir : ${photo.alt}`}
+          target="_blank"
+        >
+          <div class="gallery-img-wrap">
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              loading="lazy"
+              decoding="async"
+              class="gallery-img"
+              width={photo.w}
+              height={photo.h}
+              onerror="this.src='/images/placeholder.webp'"
+            />
+            <div class="gallery-overlay" aria-hidden="true">
+              <span class="gallery-zoom-icon">+</span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Instagram link -->
+    <div class="gallery-footer reveal">
+      <a
+        href="https://instagram.com/rozi.dance"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-ghost gallery-insta-btn"
+        aria-label="Voir notre Instagram @rozi.dance"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+        {t.galerie.instagramLink}
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#gallery-grid',
+    children: 'a',
+    pswpModule: () => import('photoswipe'),
+    padding: { top: 20, bottom: 20, left: 20, right: 20 },
+  });
+  lightbox.init();
+</script>
+
+<style>
+  .section-galerie {
+    padding-block: var(--spacing-section);
+    background-color: var(--color-bg-card);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  /* Asymmetric mosaic grid */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 280px);
+    gap: 0.75rem;
+  }
+
+  .gallery-item-1 {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+
+  .gallery-item-2 { grid-column: 3; grid-row: 1; }
+  .gallery-item-3 { grid-column: 4; grid-row: 1; }
+  .gallery-item-4 { grid-column: 3; grid-row: 2; }
+  .gallery-item-5 { grid-column: 4; grid-row: 2; }
+  .gallery-item-6 { display: none; }
+
+  .gallery-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+    background-color: var(--color-border);
+  }
+
+  /* Sur desktop les items ont une hauteur de grille — sur mobile aspect-ratio prend le relais */
+  .gallery-item {
+    display: block;
+  }
+
+  .gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 600ms var(--ease-out-soft);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(43, 31, 21, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 400ms var(--ease-out-soft);
+  }
+
+  .gallery-zoom-icon {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 300;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 300ms, transform 300ms var(--ease-out-soft);
+  }
+
+  .gallery-item:hover .gallery-img {
+    transform: scale(1.04);
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    background-color: rgba(43, 31, 21, 0.2);
+  }
+
+  .gallery-item:hover .gallery-zoom-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .gallery-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+  }
+
+  .gallery-insta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  @media (max-width: 768px) {
+    /* Sur mobile : grille simple 2 colonnes, hauteur auto via aspect-ratio */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: none;
+      gap: 0.5rem;
+    }
+
+    /* Reset toutes les positions fixes */
+    .gallery-item-1,
+    .gallery-item-2,
+    .gallery-item-3,
+    .gallery-item-4,
+    .gallery-item-5 {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    /* Première photo prend toute la largeur */
+    .gallery-item-1 {
+      grid-column: 1 / 3;
+    }
+
+    /* Hauteur via aspect-ratio sur le wrapper */
+    .gallery-item-1 .gallery-img-wrap {
+      aspect-ratio: 4 / 3;
+      height: auto;
+    }
+
+    .gallery-item-2 .gallery-img-wrap,
+    .gallery-item-3 .gallery-img-wrap,
+    .gallery-item-4 .gallery-img-wrap,
+    .gallery-item-5 .gallery-img-wrap {
+      aspect-ratio: 1 / 1;
+      height: auto;
+    }
+
+    /* Override : img-wrap prend la hauteur de l'aspect-ratio */
+    .gallery-img-wrap {
+      height: auto;
+    }
+  }
+</style>

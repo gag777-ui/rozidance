@@ -1,0 +1,208 @@
+---
+import { getTranslations } from '../../i18n/utils';
+const t = getTranslations('fr');
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <!-- Geometric pattern watermark (SVG inline) -->
+  <div class="footer-pattern" aria-hidden="true">
+    <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="footer-pattern-svg">
+      <!-- Armenian carpet geometric motif — stylized diamonds & stars -->
+      <g fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.12">
+        <polygon points="200,10 220,40 200,70 180,40" />
+        <polygon points="200,10 220,40 200,70 180,40" transform="rotate(45 200 40)" />
+        <rect x="180" y="20" width="40" height="40" transform="rotate(45 200 40)" />
+        <polygon points="60,50 80,80 60,110 40,80" />
+        <polygon points="60,50 80,80 60,110 40,80" transform="rotate(45 60 80)" />
+        <polygon points="340,50 360,80 340,110 320,80" />
+        <polygon points="340,50 360,80 340,110 320,80" transform="rotate(45 340 80)" />
+        <line x1="0" y1="140" x2="400" y2="140" />
+        <line x1="0" y1="145" x2="400" y2="145" />
+        <rect x="20" y="155" width="8" height="8" transform="rotate(45 24 159)" />
+        <rect x="50" y="155" width="8" height="8" transform="rotate(45 54 159)" />
+        <rect x="80" y="155" width="8" height="8" transform="rotate(45 84 159)" />
+        <rect x="110" y="155" width="8" height="8" transform="rotate(45 114 159)" />
+        <rect x="140" y="155" width="8" height="8" transform="rotate(45 144 159)" />
+        <rect x="170" y="155" width="8" height="8" transform="rotate(45 174 159)" />
+        <rect x="200" y="155" width="8" height="8" transform="rotate(45 204 159)" />
+        <rect x="230" y="155" width="8" height="8" transform="rotate(45 234 159)" />
+        <rect x="260" y="155" width="8" height="8" transform="rotate(45 264 159)" />
+        <rect x="290" y="155" width="8" height="8" transform="rotate(45 294 159)" />
+        <rect x="320" y="155" width="8" height="8" transform="rotate(45 324 159)" />
+        <rect x="350" y="155" width="8" height="8" transform="rotate(45 354 159)" />
+        <rect x="380" y="155" width="8" height="8" transform="rotate(45 384 159)" />
+      </g>
+    </svg>
+  </div>
+
+  <div class="section-container footer-inner">
+    <!-- Logo + tagline -->
+    <div class="footer-brand">
+      <a href="/" class="footer-logo" aria-label="Rozi Dance — accueil">
+        <span class="footer-logo-text">Rozi <span class="footer-logo-dot">·</span> Dance</span>
+      </a>
+      <p class="footer-tagline">{t.footer.tagline}</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="footer-nav" aria-label="Navigation footer">
+      <p class="footer-nav-title">{t.footer.nav}</p>
+      <ul>
+        <li><a href="/#prestations" class="nav-link">{t.nav.prestations}</a></li>
+        <li><a href="/#galerie" class="nav-link">{t.nav.galerie}</a></li>
+        <li><a href="/cours" class="nav-link">{t.nav.cours}</a></li>
+        <li><a href="/#apropos" class="nav-link">{t.nav.apropos}</a></li>
+        <li><a href="/#contact" class="nav-link">{t.nav.contact}</a></li>
+      </ul>
+    </nav>
+
+    <!-- Liens sociaux -->
+    <div class="footer-social">
+      <p class="footer-nav-title">{t.footer.links}</p>
+      <ul>
+        <li>
+          <a href="https://instagram.com/rozi.dance" target="_blank" rel="noopener noreferrer" class="nav-link">
+            Instagram
+          </a>
+        </li>
+        <li>
+          <a href="https://youtube.com/@rozidance" target="_blank" rel="noopener noreferrer" class="nav-link">
+            YouTube
+          </a>
+        </li>
+        <li>
+          <a href="mailto:contact@rozidance.be" class="nav-link">
+            contact@rozidance.be
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <div class="section-container footer-bottom-inner">
+      <p>{t.footer.copyright.replace('{year}', String(year))}</p>
+      <a href="/mentions-legales" class="nav-link footer-legal">{t.footer.legal}</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-muted);
+    position: relative;
+    overflow: hidden;
+    padding-top: 4rem;
+  }
+
+  .footer-pattern {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .footer-pattern-svg {
+    width: 100%;
+    height: 100%;
+    color: var(--color-gold);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-logo {
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-logo-text {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+
+  .footer-logo-dot {
+    color: var(--color-accent);
+  }
+
+  .footer-tagline {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .footer-nav-title {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  .footer-nav ul,
+  .footer-social ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .footer-nav .nav-link,
+  .footer-social .nav-link {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .footer-nav .nav-link:hover,
+  .footer-social .nav-link:hover {
+    color: #fff;
+  }
+
+  .footer-nav .nav-link::after,
+  .footer-social .nav-link::after {
+    background-color: var(--color-accent);
+  }
+
+  .footer-bottom {
+    border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+    padding-block: 1.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-legal {
+    color: var(--color-text-muted);
+    font-size: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

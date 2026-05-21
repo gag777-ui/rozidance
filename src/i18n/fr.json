@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "siteTitle": "Rozi Dance — Chant & Danse arméniens",
+    "siteDescription": "Duo artistique arménien proposant chant de la mariée, danse événementielle et cours de chant & danse. Basé en Belgique, disponible dans toute l'Europe.",
+    "ogTitle": "Rozi Dance — L'âme arménienne en mouvement",
+    "ogDescription": "Prestations de chant et danse arméniens pour mariages, cérémonies et événements. Cours de chant & danse pour tous niveaux."
+  },
+
+  "nav": {
+    "prestations": "Prestations",
+    "galerie": "Galerie",
+    "cours": "Cours",
+    "apropos": "À propos",
+    "contact": "Contact"
+  },
+
+  "hero": {
+    "eyebrow": "Tradition · Chant · Danse",
+    "line1": "L'âme",
+    "line2": "arménienne",
+    "line3italic": "en mouvement",
+    "subtitle": "Duo artistique pour vos mariages, célébrations et événements.",
+    "ctaPrimary": "Nous contacter",
+    "ctaSecondary": "Découvrir"
+  },
+
+  "prestations": {
+    "eyebrow": "Ce que nous proposons",
+    "title": "Trois univers, une même passion",
+    "items": [
+      {
+        "id": "chant-mariee",
+        "title": "Chant de la mariée",
+        "description": "Chants traditionnels arméniens interprétés lors de la cérémonie d'habillage de la mariée. Un moment intime et émouvant ancré dans la tradition.",
+        "link": "En savoir plus"
+      },
+      {
+        "id": "danse-evenementielle",
+        "title": "Danse événementielle",
+        "description": "Performances de groupe pour mariages et célébrations. Nous apportons l'énergie et la joie de la danse arménienne à vos événements les plus précieux.",
+        "link": "En savoir plus"
+      },
+      {
+        "id": "cours",
+        "title": "Cours chant & danse",
+        "description": "Apprenez le chant arménien traditionnel ou international, et les danses folkloriques arméniennes. Cours individuels et en groupe, tous niveaux.",
+        "link": "Voir les cours"
+      }
+    ]
+  },
+
+  "galerie": {
+    "eyebrow": "Moments capturés",
+    "title": "Galerie",
+    "instagramLink": "Voir notre Instagram",
+    "altPlaceholder": "Photo Rozi Dance"
+  },
+
+  "videos": {
+    "eyebrow": "En performance",
+    "title": "Vivez nos prestations",
+    "youtubeLink": "Voir toute la chaîne YouTube"
+  },
+
+  "apropos": {
+    "eyebrow": "Notre histoire",
+    "title": "Deux voix, deux corps, une même tradition",
+    "p1": "Rozi Dance, c'est avant tout une histoire de passion partagée pour la culture arménienne. Formées dès l'enfance aux arts traditionnels, nous perpétuons un héritage musical et chorégraphique millénaire avec une sensibilité contemporaine.",
+    "p2": "Que ce soit lors de la cérémonie d'habillage d'une mariée, d'un grand banquet de mariage ou dans la salle de cours, nous mettons notre cœur et notre âme au service de la beauté de nos traditions.",
+    "altPortrait": "Portrait du duo Rozi Dance"
+  },
+
+  "contact": {
+    "eyebrow": "Réservation & informations",
+    "title": "Parlons de votre événement",
+    "subtitle": "Contactez-nous via le réseau de votre choix — nous répondons dans les 24 heures.",
+    "instagram": {
+      "label": "Instagram",
+      "handle": "@rozi.dance"
+    },
+    "email": {
+      "label": "E-mail",
+      "address": "contact@rozidance.be"
+    },
+    "youtube": {
+      "label": "YouTube",
+      "handle": "Notre chaîne"
+    }
+  },
+
+  "cours": {
+    "pageTitle": "Cours de chant & danse arméniens — Rozi Dance",
+    "pageDescription": "Cours de chant arménien et international, cours de danse folklorique arménienne. Individuels et en groupe, tous niveaux, à distance possible.",
+    "heroEyebrow": "Apprenez à votre rythme",
+    "heroTitle": "Cours de chant & danse",
+    "heroSubtitle": "Des cours accessibles à tous, du débutant au confirmé, en présentiel ou à distance.",
+    "chantTitle": "Cours de chant",
+    "chantDescription": "Découvrez le répertoire arménien traditionnel ainsi que des chants internationaux. Nos cours s'adaptent à votre voix et à votre niveau, qu'il soit débutant ou confirmé.",
+    "danseTitle": "Cours de danse",
+    "danseDescription": "Initiez-vous aux danses folkloriques arméniennes ou perfectionnez votre technique. Cours en solo ou en groupe, dans une ambiance chaleureuse et bienveillante.",
+    "tarifsEyebrow": "Investissement",
+    "tarifsTitle": "Tarifs",
+    "faqEyebrow": "Questions fréquentes",
+    "faqTitle": "Tout ce que vous voulez savoir",
+    "ctaTitle": "Prêt à commencer ?",
+    "ctaSubtitle": "Contactez-nous pour choisir la formule qui vous convient.",
+    "ctaBtn": "Nous contacter"
+  },
+
+  "footer": {
+    "tagline": "L'âme arménienne en mouvement.",
+    "nav": "Navigation",
+    "links": "Liens",
+    "legal": "Mentions légales",
+    "copyright": "© {year} Rozi Dance. Tous droits réservés.",
+    "madeWith": "Site réalisé avec soin."
+  },
+
+  "404": {
+    "title": "Page introuvable",
+    "description": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "cta": "Retour à l'accueil"
+  }
+}

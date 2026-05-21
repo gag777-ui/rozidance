@@ -1,0 +1,32 @@
+---
+// Geometric Armenian-inspired frise divider
+---
+
+<div class="geo-divider" aria-hidden="true">
+  <svg viewBox="0 0 800 30" fill="none" preserveAspectRatio="xMidYMid meet" role="presentation">
+    <g stroke="#D9C9B0" stroke-width="0.6">
+      <line x1="0" y1="15" x2="340" y2="15"/>
+      <line x1="460" y1="15" x2="800" y2="15"/>
+      <polygon points="400,5 409,15 400,25 391,15" fill="#D9C9B0" opacity="0.5"/>
+      <polygon points="400,5 409,15 400,25 391,15" transform="rotate(45 400 15)" fill="none" stroke-width="0.5"/>
+      <polygon points="365,11 372,15 365,19 358,15"/>
+      <polygon points="435,11 442,15 435,19 428,15"/>
+      <polygon points="330,12 335,15 330,18 325,15"/>
+      <polygon points="470,12 475,15 470,18 465,15"/>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .geo-divider {
+    max-width: 900px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    opacity: 0.7;
+  }
+
+  .geo-divider svg {
+    width: 100%;
+    display: block;
+  }
+</style>

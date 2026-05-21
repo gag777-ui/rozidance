@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getTranslations } from '../i18n/utils';
+import SectionHero from '../components/sections/SectionHero.astro';
+import SectionPrestations from '../components/sections/SectionPrestations.astro';
+import SectionGalerie from '../components/sections/SectionGalerie.astro';
+import SectionVideos from '../components/sections/SectionVideos.astro';
+import SectionApropos from '../components/sections/SectionApropos.astro';
+import SectionContact from '../components/sections/SectionContact.astro';
+import GeoDivider from '../components/ui/GeoDivider.astro';
+import SchemaOrg from '../components/SchemaOrg.astro';
+
+const t = getTranslations('fr');
+---
+
+<Layout
+  title={t.meta.siteTitle}
+  description={t.meta.siteDescription}
+  ogTitle={t.meta.ogTitle}
+  ogDescription={t.meta.ogDescription}
+>
+  <SchemaOrg slot="schema" />
+
+  <SectionHero />
+
+  <GeoDivider />
+
+  <SectionPrestations />
+
+  <GeoDivider />
+
+  <SectionGalerie />
+
+  <GeoDivider />
+
+  <SectionVideos />
+
+  <GeoDivider />
+
+  <SectionApropos />
+
+  <GeoDivider />
+
+  <SectionContact />
+</Layout>

@@ -1,0 +1,79 @@
+---
+// Schema.org JSON-LD — LocalBusiness + PerformingGroup + Person×2 + Service×3
+---
+
+<script is:inline type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["LocalBusiness", "PerformingGroup", "MusicGroup"],
+      "@id": "https://rozidance.be/#organization",
+      "name": "Rozi Dance",
+      "description": "Duo artistique arménien proposant chant de la mariée, danse événementielle et cours de chant & danse. Basé en Belgique, disponible dans toute l'Europe.",
+      "url": "https://rozidance.be",
+      "logo": "https://rozidance.be/images/logo.webp",
+      "image": "https://rozidance.be/images/og-default.webp",
+      "telephone": "",
+      "email": "contact@rozidance.be",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "BE",
+        "addressRegion": "Belgique"
+      },
+      "sameAs": [
+        "https://instagram.com/rozi.dance",
+        "https://youtube.com/@rozidance"
+      ],
+      "numberOfEmployees": 2,
+      "foundingDate": "2020",
+      "areaServed": ["BE", "FR", "RU", "AM", "Europe"],
+      "knowsLanguage": ["fr", "ru", "hy"],
+      "genre": "Traditional Armenian music and dance"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://rozidance.be/#artist-1",
+      "name": "Rozi Dance — artiste 1",
+      "memberOf": {"@id": "https://rozidance.be/#organization"},
+      "knowsAbout": ["Chant arménien", "Danse traditionnelle arménienne"],
+      "jobTitle": "Artiste"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://rozidance.be/#artist-2",
+      "name": "Rozi Dance — artiste 2",
+      "memberOf": {"@id": "https://rozidance.be/#organization"},
+      "knowsAbout": ["Chant arménien", "Danse traditionnelle arménienne"],
+      "jobTitle": "Artiste"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://rozidance.be/#service-chant-mariee",
+      "name": "Chant de la mariée",
+      "description": "Chants traditionnels arméniens interprétés lors de la cérémonie d'habillage de la mariée.",
+      "provider": {"@id": "https://rozidance.be/#organization"},
+      "serviceType": "Cérémonie musicale",
+      "areaServed": "Europe"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://rozidance.be/#service-danse",
+      "name": "Danse événementielle",
+      "description": "Performances de groupe pour mariages, célébrations et événements festifs.",
+      "provider": {"@id": "https://rozidance.be/#organization"},
+      "serviceType": "Spectacle vivant",
+      "areaServed": "Europe"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://rozidance.be/#service-cours",
+      "name": "Cours de chant et danse arméniens",
+      "description": "Cours de chant arménien traditionnel et international, et de danse folklorique arménienne. Tous niveaux, individuels et en groupe.",
+      "provider": {"@id": "https://rozidance.be/#organization"},
+      "serviceType": "Enseignement artistique",
+      "areaServed": ["BE", "Europe", "Online"]
+    }
+  ]
+}
+</script>

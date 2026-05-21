@@ -1,0 +1,138 @@
+---
+import { getTranslations } from '../../i18n/utils';
+const t = getTranslations('fr');
+---
+
+<section id="apropos" class="section-apropos" aria-labelledby="apropos-title">
+  <div class="section-container apropos-inner">
+    <!-- Portrait -->
+    <div class="apropos-image reveal">
+      <div class="portrait-frame">
+        <img
+          src="/images/portrait-duo.webp"
+          alt={t.apropos.altPortrait}
+          loading="lazy"
+          decoding="async"
+          width="560"
+          height="560"
+          class="portrait-img"
+          onerror="this.src='/images/placeholder-portrait.webp'"
+        />
+        <!-- Decorative corner accents -->
+        <div class="portrait-corner portrait-corner-tl" aria-hidden="true"></div>
+        <div class="portrait-corner portrait-corner-br" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="apropos-text reveal">
+      <span class="eyebrow">{t.apropos.eyebrow}</span>
+      <h2 id="apropos-title">{t.apropos.title}</h2>
+      <p>{t.apropos.p1}</p>
+      <p>{t.apropos.p2}</p>
+
+      <div class="apropos-signature" aria-hidden="true">
+        <span class="signature-text">Rozi <span class="signature-dot">·</span> Dance</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-apropos {
+    padding-block: var(--spacing-section);
+    background-color: var(--color-bg-card);
+  }
+
+  .apropos-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .portrait-frame {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 480px;
+  }
+
+  .portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+    background-color: var(--color-border);
+  }
+
+  /* Decorative gold corner accents */
+  .portrait-corner {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-color: var(--color-gold);
+    border-style: solid;
+  }
+
+  .portrait-corner-tl {
+    top: -10px;
+    left: -10px;
+    border-width: 1px 0 0 1px;
+  }
+
+  .portrait-corner-br {
+    bottom: -10px;
+    right: -10px;
+    border-width: 0 1px 1px 0;
+  }
+
+  .apropos-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .apropos-text h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .apropos-text p {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .apropos-signature {
+    margin-top: 0.5rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--color-divider);
+  }
+
+  .signature-text {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .signature-dot {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 900px) {
+    .apropos-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .portrait-frame {
+      max-width: 360px;
+      margin-inline: auto;
+    }
+  }
+</style>
