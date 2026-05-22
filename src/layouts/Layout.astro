@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import Cursor from '../components/ui/Cursor.astro';
@@ -77,8 +78,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       />
     </noscript>
 
-    <!-- View Transitions -->
-    <meta name="astro-view-transitions" content="ready" />
+    <!-- View Transitions (navigation instantanée entre pages) -->
+    <ClientRouter />
 
     <!-- Schema.org JSON-LD -->
     <slot name="schema" />
@@ -111,10 +112,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       revealEls.forEach((el) => observer.observe(el));
 
       // Page loader dismiss
-      window.addEventListener('load', () => {
+      document.addEventListener('DOMContentLoaded', () => {
         const loader = document.getElementById('page-loader');
         if (loader) {
-          setTimeout(() => loader.classList.add('loaded'), 1800);
+          setTimeout(() => loader.classList.add('loaded'), 200);
         }
       });
     </script>

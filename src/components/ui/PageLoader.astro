@@ -3,17 +3,33 @@
 
 <div id="page-loader" role="status" aria-label="Chargement">
   <div class="loader-logo">
+    <img
+      src="/images/logo.webp"
+      alt="Rozi Dance"
+      class="loader-logo-img"
+      width="64"
+      height="64"
+    />
     <span class="loader-logo-text">Rozi <span class="loader-dot">·</span> Dance</span>
   </div>
 </div>
 
 <style>
-  /* Fade-in + rise sur le wrapper */
   .loader-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     animation: loaderFadeIn 500ms var(--ease-out-soft) both;
   }
 
-  /* Respiration sur le texte uniquement */
+  .loader-logo-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    display: block;
+    animation: loaderPulse 1600ms ease-in-out 0ms infinite;
+  }
+
   .loader-logo-text {
     font-family: var(--font-serif);
     font-size: 1.75rem;
@@ -35,6 +51,6 @@
 
   @keyframes loaderPulse {
     0%, 100% { transform: scale(1);    opacity: 1;   }
-    50%       { transform: scale(1.14); opacity: 0.5; }
+    50%       { transform: scale(1.08); opacity: 0.6; }
   }
 </style>
