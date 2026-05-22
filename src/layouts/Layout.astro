@@ -86,7 +86,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   </head>
 
   <body>
-    <PageLoader />
+    <PageLoader transition:persist />
     <Cursor />
     <Header />
     <main>
@@ -111,13 +111,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       );
       revealEls.forEach((el) => observer.observe(el));
 
-      // Page loader dismiss
-      const loader = document.getElementById('page-loader');
-      if (loader) loader.classList.add('loaded');
-      document.addEventListener('DOMContentLoaded', () => {
+      // Page loader dismiss — fonctionne sur load initial + navigations View Transitions
+      function dismissLoader() {
         const l = document.getElementById('page-loader');
         if (l) l.classList.add('loaded');
-      });
+      }
+      dismissLoader();
+      document.addEventListener('astro:page-load', dismissLoader);
     </script>
   </body>
 </html>
