@@ -69,8 +69,8 @@
     "eyebrow": "Rozi Dance en chiffres",
     "items": [
       { "value": "200+", "label": "Mariages accompagnés" },
-      { "value": "10 ans", "label": "D'expérience artistique" },
-      { "value": "5", "label": "Pays d'intervention" },
+      { "value": "4 ans", "label": "D'expérience artistique" },
+      { "value": "8", "label": "Pays d'intervention" },
       { "value": "100%", "label": "Avec le cœur" }
     ]
   },
