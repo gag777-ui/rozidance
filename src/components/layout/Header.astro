@@ -6,7 +6,16 @@ const t = getTranslations('fr');
 <header id="site-header" class="site-header">
   <div class="section-container header-inner">
     <!-- Logo -->
-    <a href="/" class="logo" aria-label="Rozi · Dance — accueil">
+    <a href="/" class="logo" aria-label="Rozi Dance — accueil">
+      <img
+        src="/images/logo.webp"
+        alt=""
+        class="logo-img"
+        width="64"
+        height="64"
+        loading="eager"
+        decoding="async"
+      />
       <span class="logo-text">Rozi <span class="logo-dot">·</span> Dance</span>
     </a>
 
@@ -79,6 +88,16 @@ const t = getTranslations('fr');
   .logo {
     text-decoration: none;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .logo-img {
+    display: block;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
   }
 
   .logo-text {

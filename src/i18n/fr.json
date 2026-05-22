@@ -15,11 +15,13 @@
   },
 
   "hero": {
-    "eyebrow": "Tradition · Chant · Danse",
-    "line1": "L'âme",
-    "line2": "arménienne",
-    "line3italic": "en mouvement",
-    "subtitle": "Duo artistique pour vos mariages, célébrations et événements.",
+    "eyebrowChant": "Chant",
+    "eyebrowDanse": "Danse",
+    "eyebrowMusique": "Musique",
+    "line1": "Vos moments",
+    "line2": "",
+    "line3italic": "en lumière",
+    "subtitle": "Duo & groupe artistique pour mariages, célébrations et événements privés.",
     "ctaPrimary": "Nous contacter",
     "ctaSecondary": "Découvrir"
   },
