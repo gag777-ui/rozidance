@@ -49,22 +49,20 @@ const t = getTranslations('fr');
         <span class="contact-card-arrow" aria-hidden="true">→</span>
       </a>
 
-      <!-- YouTube -->
+      <!-- Téléphone -->
       <a
-        href="https://youtube.com/@rozidance"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="tel:+32486219896"
         class="contact-card card reveal"
-        aria-label="Voir notre chaîne YouTube Rozi Dance"
+        aria-label="Appeler le +32 486 21 98 96"
         style="transition-delay: 240ms"
       >
         <div class="contact-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 10.8 19.79 19.79 0 01.07 2.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
           </svg>
         </div>
-        <p class="contact-card-label">{t.contact.youtube.label}</p>
-        <p class="contact-card-value">{t.contact.youtube.handle}</p>
+        <p class="contact-card-label">Téléphone</p>
+        <p class="contact-card-value">+32 486 21 98 96</p>
         <span class="contact-card-arrow" aria-hidden="true">→</span>
       </a>
     </div>
@@ -166,6 +164,17 @@ const t = getTranslations('fr');
     opacity: 1;
     transform: translateX(0);
   }
+
+  @keyframes cardBreath {
+    0%, 100% { box-shadow: 0 0 0 0px rgba(167, 94, 60, 0); }
+    50%       { box-shadow: 0 0 0 4px rgba(167, 94, 60, 0.18); }
+  }
+
+  .contact-card:nth-child(1) { animation: cardBreath 2.4s ease-in-out infinite; animation-delay: 0s; }
+  .contact-card:nth-child(2) { animation: cardBreath 2.4s ease-in-out infinite; animation-delay: 0.8s; }
+  .contact-card:nth-child(3) { animation: cardBreath 2.4s ease-in-out infinite; animation-delay: 1.6s; }
+
+  .contact-card:hover { animation-play-state: paused; }
 
   @media (max-width: 768px) {
     .contact-cards {

@@ -3,17 +3,11 @@ import { getTranslations } from '../../i18n/utils';
 const t = getTranslations('fr');
 
 const photos = [
-  { src: '/images/galerie/photo-01.webp', alt: 'Rozi Dance — performance de danse arménienne', w: 1200, h: 800 },
-  { src: '/images/galerie/photo-02.webp', alt: 'Rozi Dance — chant de la mariée', w: 800, h: 800 },
-  { src: '/images/galerie/photo-03.webp', alt: 'Rozi Dance — cérémonie de mariage arménien', w: 800, h: 1067 },
-  { src: '/images/galerie/photo-04.webp', alt: 'Rozi Dance — cours de danse', w: 800, h: 800 },
-  { src: '/images/galerie/photo-05.webp', alt: 'Rozi Dance — duo artistique arménien', w: 800, h: 1067 },
-  { src: '/images/galerie/photo-06.webp', alt: 'Rozi Dance — événement festif arménien', w: 800, h: 800, extra: true },
-  { src: '/images/galerie/photo-07.webp', alt: 'Rozi Dance — performance artistique', w: 800, h: 800, extra: true },
-  { src: '/images/galerie/photo-08.webp', alt: 'Rozi Dance — danse arménienne', w: 800, h: 800, extra: true },
-  { src: '/images/galerie/photo-09.webp', alt: 'Rozi Dance — chant et danse', w: 800, h: 800, extra: true },
-  { src: '/images/galerie/photo-10.webp', alt: 'Rozi Dance — groupe artistique', w: 800, h: 800, extra: true },
-  { src: '/images/galerie/photo-11.webp', alt: 'Rozi Dance — spectacle arménien', w: 800, h: 800, extra: true },
+  { src: '/images/galerie/photo-01.webp', alt: 'Rozi Dance — performance de danse arménienne', w: 1108, h: 1420 },
+  { src: '/images/galerie/photo-02.webp', alt: 'Rozi Dance — chant de la mariée', w: 1137, h: 1383 },
+  { src: '/images/galerie/photo-03.webp', alt: 'Rozi Dance — cérémonie de mariage arménien', w: 1132, h: 1389 },
+  { src: '/images/galerie/photo-04.webp', alt: 'Rozi Dance — cours de danse', w: 1560, h: 1008 },
+  { src: '/images/galerie/photo-06.webp', alt: 'Rozi Dance — événement festif arménien', w: 1129, h: 1393 },
 ];
 ---
 
@@ -29,7 +23,7 @@ const photos = [
       {photos.map((photo, i) => (
         <a
           href={photo.src}
-          class={`gallery-item gallery-item-${i + 1}${photo.extra ? ' gallery-extra' : ''}`}
+          class={`gallery-item gallery-item-${i + 1}`}
           data-pswp-width={photo.w}
           data-pswp-height={photo.h}
           aria-label={`Agrandir : ${photo.alt}`}
@@ -54,15 +48,11 @@ const photos = [
       ))}
     </div>
 
-    <!-- Voir plus button -->
-    <div class="gallery-voir-plus reveal">
-      <button id="btn-voir-plus" class="btn-ghost gallery-voir-plus-btn" aria-expanded="false">
-        Voir plus
-      </button>
-    </div>
-
-    <!-- Instagram link -->
+    <!-- Boutons footer -->
     <div class="gallery-footer reveal">
+      <a href="/galerie" class="btn-primary gallery-all-btn">
+        Voir la galerie complète
+      </a>
       <a
         href="https://instagram.com/rozi.dance"
         target="_blank"
@@ -85,23 +75,11 @@ const photos = [
 
   const lightbox = new PhotoSwipeLightbox({
     gallery: '#gallery-grid',
-    children: 'a:not(.gallery-extra-hidden)',
+    children: 'a',
     pswpModule: () => import('photoswipe'),
     padding: { top: 20, bottom: 20, left: 20, right: 20 },
   });
   lightbox.init();
-
-  const btn = document.getElementById('btn-voir-plus');
-  const extraItems = document.querySelectorAll<HTMLElement>('.gallery-extra');
-
-  btn?.addEventListener('click', () => {
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    extraItems.forEach((el) => {
-      el.style.display = expanded ? 'none' : 'block';
-    });
-    btn.setAttribute('aria-expanded', String(!expanded));
-    btn.textContent = expanded ? 'Voir plus' : 'Voir moins';
-  });
 </script>
 
 <style>
@@ -125,29 +103,20 @@ const photos = [
     margin: 0;
   }
 
-  /* Asymmetric mosaic grid */
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 280px);
-    grid-auto-rows: 280px;
     gap: 0.75rem;
   }
 
-  .gallery-item-1 {
-    grid-column: 1 / 3;
-    grid-row: 1 / 3;
-  }
-
+  .gallery-item-1 { grid-column: 1 / 3; grid-row: 1 / 3; }
   .gallery-item-2 { grid-column: 3; grid-row: 1; }
   .gallery-item-3 { grid-column: 4; grid-row: 1; }
   .gallery-item-4 { grid-column: 3; grid-row: 2; }
   .gallery-item-5 { grid-column: 4; grid-row: 2; }
 
-  /* Extra photos hidden by default */
-  .gallery-extra {
-    display: none;
-  }
+  .gallery-item { display: block; }
 
   .gallery-img-wrap {
     position: relative;
@@ -156,10 +125,6 @@ const photos = [
     overflow: hidden;
     border-radius: 4px;
     background-color: var(--color-border);
-  }
-
-  .gallery-item {
-    display: block;
   }
 
   .gallery-img {
@@ -190,33 +155,17 @@ const photos = [
     transition: opacity 300ms, transform 300ms var(--ease-out-soft);
   }
 
-  .gallery-item:hover .gallery-img {
-    transform: scale(1.04);
-  }
-
-  .gallery-item:hover .gallery-overlay {
-    background-color: rgba(43, 31, 21, 0.2);
-  }
-
-  .gallery-item:hover .gallery-zoom-icon {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .gallery-voir-plus {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5rem;
-  }
-
-  .gallery-voir-plus-btn {
-    padding: 0.625rem 2rem;
-  }
+  .gallery-item:hover .gallery-img { transform: scale(1.04); }
+  .gallery-item:hover .gallery-overlay { background-color: rgba(43, 31, 21, 0.2); }
+  .gallery-item:hover .gallery-zoom-icon { opacity: 1; transform: scale(1); }
 
   .gallery-footer {
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 1.25rem;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
   }
 
   .gallery-insta-btn {
@@ -227,10 +176,8 @@ const photos = [
 
   @media (max-width: 768px) {
     .gallery-grid {
-      display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: none;
-      grid-auto-rows: auto;
       gap: 0.5rem;
     }
 
@@ -243,31 +190,14 @@ const photos = [
       grid-row: auto;
     }
 
-    .gallery-item-1 {
-      grid-column: 1 / 3;
-    }
-
-    .gallery-item-1 .gallery-img-wrap {
-      aspect-ratio: 4 / 3;
-      height: auto;
-    }
+    .gallery-item-1 { grid-column: 1 / 3; }
+    .gallery-item-1 .gallery-img-wrap { aspect-ratio: 4 / 3; height: auto; }
 
     .gallery-item-2 .gallery-img-wrap,
     .gallery-item-3 .gallery-img-wrap,
     .gallery-item-4 .gallery-img-wrap,
-    .gallery-item-5 .gallery-img-wrap {
-      aspect-ratio: 1 / 1;
-      height: auto;
-    }
+    .gallery-item-5 .gallery-img-wrap { aspect-ratio: 1 / 1; height: auto; }
 
-    .gallery-img-wrap {
-      height: auto;
-    }
-
-    /* Extra items mobile layout */
-    .gallery-extra .gallery-img-wrap {
-      aspect-ratio: 1 / 1;
-      height: auto;
-    }
+    .gallery-img-wrap { height: auto; }
   }
 </style>
