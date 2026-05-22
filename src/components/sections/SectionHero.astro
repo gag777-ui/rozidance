@@ -46,7 +46,56 @@ const heroVideoId = import.meta.env.PUBLIC_HERO_VIDEO_ID || 'dQw4w9WgXcQ';
 
     <!-- Video side -->
     <div class="hero-video-wrap">
-      <div class="hero-video-frame">
+      <!-- Cadre décoratif laurier-rose -->
+      <div class="video-deco-wrap">
+        <svg class="video-deco-svg" viewBox="0 0 580 346" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Motif laurier-rose : une branche avec feuilles + fleur, conçu depuis (0,0) vers le coin extérieur -->
+            <g id="laurier-corner">
+              <!-- Tige principale -->
+              <path d="M 0,0 C -10,-8 -18,-20 -24,-38" stroke="#B89060" stroke-width="0.9" stroke-linecap="round"/>
+              <!-- Feuille 1 (basse) -->
+              <path d="M -7,-7 C -17,-15 -19,-7 -11,-3 C -8,-1 -7,-7 Z" fill="#8A9E78"/>
+              <!-- Feuille 2 (milieu) -->
+              <path d="M -15,-19 C -27,-25 -26,-16 -18,-13 C -15,-12 -15,-19 Z" fill="#8A9E78"/>
+              <!-- Feuille 3 (petite, côté opposé) -->
+              <path d="M -10,-14 C -8,-24 -2,-22 -3,-16 C -3,-13 -10,-14 Z" fill="#8A9E78" opacity="0.7"/>
+              <!-- Tige secondaire + bouton de fleur -->
+              <path d="M -11,-13 C -16,-20 -18,-28 -18,-34" stroke="#B89060" stroke-width="0.7" stroke-linecap="round"/>
+              <ellipse cx="-18" cy="-37" rx="2.5" ry="5" fill="#D4949A" transform="rotate(-15,-18,-37)"/>
+              <!-- Fleur épanouie en bout de tige -->
+              <g transform="translate(-24,-38)">
+                <ellipse cx="0" cy="-5" rx="2" ry="3.8" fill="#C8848C"/>
+                <ellipse cx="0" cy="-5" rx="2" ry="3.8" fill="#C8848C" transform="rotate(72,0,0)"/>
+                <ellipse cx="0" cy="-5" rx="2" ry="3.8" fill="#C8848C" transform="rotate(144,0,0)"/>
+                <ellipse cx="0" cy="-5" rx="2" ry="3.8" fill="#C8848C" transform="rotate(216,0,0)"/>
+                <ellipse cx="0" cy="-5" rx="2" ry="3.8" fill="#C8848C" transform="rotate(288,0,0)"/>
+                <circle cx="0" cy="0" r="2" fill="#ECC890"/>
+              </g>
+              <!-- Petite feuille terminale -->
+              <path d="M -18,-32 C -26,-38 -24,-30 -18,-28 C -16,-27 -18,-32 Z" fill="#8A9E78" opacity="0.65"/>
+            </g>
+          </defs>
+
+          <!-- Coin haut-gauche (0,0 du frame = 30,30 du SVG) -->
+          <use href="#laurier-corner" transform="translate(30,30)" opacity="0.6"/>
+          <!-- Coin haut-droit (miroir horizontal) -->
+          <use href="#laurier-corner" transform="translate(550,30) scale(-1,1)" opacity="0.6"/>
+          <!-- Coin bas-gauche (miroir vertical) -->
+          <use href="#laurier-corner" transform="translate(30,316) scale(1,-1)" opacity="0.6"/>
+          <!-- Coin bas-droit (miroir double) -->
+          <use href="#laurier-corner" transform="translate(550,316) scale(-1,-1)" opacity="0.6"/>
+
+          <!-- Petits points décoratifs dorés sur les côtés (subtils) -->
+          <circle cx="290" cy="2" r="1.2" fill="#B89060" opacity="0.35"/>
+          <circle cx="282" cy="2" r="0.8" fill="#B89060" opacity="0.25"/>
+          <circle cx="298" cy="2" r="0.8" fill="#B89060" opacity="0.25"/>
+          <circle cx="290" cy="344" r="1.2" fill="#B89060" opacity="0.35"/>
+          <circle cx="282" cy="344" r="0.8" fill="#B89060" opacity="0.25"/>
+          <circle cx="298" cy="344" r="0.8" fill="#B89060" opacity="0.25"/>
+        </svg>
+
+        <div class="hero-video-frame">
         <!-- Subtle overlay -->
         <div class="video-overlay" aria-hidden="true"></div>
 
@@ -60,7 +109,8 @@ const heroVideoId = import.meta.env.PUBLIC_HERO_VIDEO_ID || 'dQw4w9WgXcQ';
           loading="lazy"
           aria-hidden="true"
         ></iframe>
-      </div>
+        </div><!-- /hero-video-frame -->
+      </div><!-- /video-deco-wrap -->
     </div>
   </div>
 </section>
@@ -148,10 +198,26 @@ const heroVideoId = import.meta.env.PUBLIC_HERO_VIDEO_ID || 'dQw4w9WgXcQ';
     justify-content: center;
   }
 
+  .video-deco-wrap {
+    position: relative;
+    padding: 28px;
+    width: 100%;
+    max-width: 576px;
+  }
+
+  .video-deco-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 2;
+  }
+
   .hero-video-frame {
     position: relative;
     width: 100%;
-    max-width: 520px;
     aspect-ratio: 16 / 9;
     border-radius: 4px;
     border: 1px solid var(--color-gold);
@@ -190,14 +256,18 @@ const heroVideoId = import.meta.env.PUBLIC_HERO_VIDEO_ID || 'dQw4w9WgXcQ';
       justify-content: center;
     }
 
-    /* Vidéo sous le texte sur tablette */
     .hero-video-wrap {
       order: 1;
     }
 
-    .hero-video-frame {
+    /* Pas de padding déco sur mobile — trop chargé en petit */
+    .video-deco-wrap {
+      padding: 0;
       max-width: 100%;
-      aspect-ratio: 16 / 9;
+    }
+
+    .video-deco-svg {
+      display: none;
     }
 
     .hero-text {
