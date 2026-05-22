@@ -1,0 +1,103 @@
+---
+import { getTranslations } from '../../i18n/utils';
+const t = getTranslations('fr');
+---
+
+<section class="section-stats" aria-labelledby="stats-eyebrow">
+  <div class="section-container">
+    <span class="eyebrow stats-eyebrow" id="stats-eyebrow">{t.stats.eyebrow}</span>
+    <div class="stats-grid">
+      {t.stats.items.map((stat) => (
+        <div class="stat-item reveal">
+          <span class="stat-value">{stat.value}</span>
+          <span class="stat-label">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-stats {
+    padding-block: var(--spacing-section);
+    background-color: var(--color-bg-card);
+  }
+
+  .stats-eyebrow {
+    display: block;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 36px;
+    width: 0.5px;
+    background-color: var(--color-divider);
+  }
+
+  .stat-value {
+    font-family: var(--font-serif);
+    font-size: clamp(2.25rem, 4vw, 3.25rem);
+    color: var(--color-gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-item::after {
+      display: none;
+    }
+
+    .stat-item:nth-child(1),
+    .stat-item:nth-child(2) {
+      border-bottom: 0.5px solid var(--color-divider);
+    }
+  }
+
+  @media (max-width: 400px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-item:nth-child(1),
+    .stat-item:nth-child(2) {
+      border-bottom: none;
+    }
+
+    .stat-item:not(:last-child) {
+      border-bottom: 0.5px solid var(--color-divider);
+    }
+  }
+</style>

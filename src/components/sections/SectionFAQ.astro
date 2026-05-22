@@ -1,0 +1,128 @@
+---
+import { getTranslations } from '../../i18n/utils';
+const t = getTranslations('fr');
+---
+
+<section id="faq" class="section-faq" aria-labelledby="faq-title">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <span class="eyebrow">{t.faq.eyebrow}</span>
+      <h2 class="section-title" id="faq-title">{t.faq.title}</h2>
+    </div>
+
+    <div class="faq-list reveal">
+      {t.faq.items.map((item) => (
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>{item.q}</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p class="faq-answer">{item.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-faq {
+    padding-block: var(--spacing-section);
+    background-color: var(--color-bg-card);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .faq-list {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .faq-item {
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .faq-item:last-child {
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    color: var(--color-text-primary);
+    user-select: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    color: var(--color-gold);
+  }
+
+  .faq-icon::before,
+  .faq-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: currentColor;
+    transition: transform 300ms var(--ease-out-soft), opacity 300ms var(--ease-out-soft);
+  }
+
+  .faq-icon::before {
+    width: 12px;
+    height: 0.5px;
+    transform: translate(-50%, -50%);
+  }
+
+  .faq-icon::after {
+    width: 0.5px;
+    height: 12px;
+    transform: translate(-50%, -50%);
+  }
+
+  details[open] .faq-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    opacity: 0;
+  }
+
+  .faq-body {
+    overflow: hidden;
+  }
+
+  .faq-answer {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin: 0;
+    padding-bottom: 1.5rem;
+  }
+</style>

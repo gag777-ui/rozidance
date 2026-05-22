@@ -1,5 +1,4 @@
 ---
-// Page loader — ivoire fond, logo Rozi Dance en fondu, max 1.5s
 ---
 
 <div id="page-loader" role="status" aria-label="Chargement">
@@ -9,16 +8,20 @@
 </div>
 
 <style>
+  /* Fade-in + rise sur le wrapper */
   .loader-logo {
-    animation: loaderFadeIn 500ms var(--ease-out-soft) forwards;
+    animation: loaderFadeIn 500ms var(--ease-out-soft) both;
   }
 
+  /* Respiration sur le texte uniquement */
   .loader-logo-text {
     font-family: var(--font-serif);
     font-size: 1.75rem;
     font-weight: 400;
     color: var(--color-text-primary);
     letter-spacing: 0.04em;
+    display: inline-block;
+    animation: loaderPulse 1600ms ease-in-out 0ms infinite;
   }
 
   .loader-dot {
@@ -28,5 +31,10 @@
   @keyframes loaderFadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes loaderPulse {
+    0%, 100% { transform: scale(1);    opacity: 1;   }
+    50%       { transform: scale(1.14); opacity: 0.5; }
   }
 </style>

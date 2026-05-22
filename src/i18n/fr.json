@@ -62,6 +62,65 @@
     "youtubeLink": "Voir toute la chaîne YouTube"
   },
 
+  "stats": {
+    "eyebrow": "Rozi Dance en chiffres",
+    "items": [
+      { "value": "200+", "label": "Mariages accompagnés" },
+      { "value": "10 ans", "label": "D'expérience artistique" },
+      { "value": "5", "label": "Pays d'intervention" },
+      { "value": "100%", "label": "Avec le cœur" }
+    ]
+  },
+
+  "temoignages": {
+    "eyebrow": "Ce que disent nos clients",
+    "title": "Ils nous ont fait confiance",
+    "items": [
+      {
+        "quote": "Un moment absolument magique. Les chants de Rozi Dance ont ému toute notre famille — un souvenir gravé pour toujours.",
+        "author": "Ani & Saro",
+        "event": "Mariage arménien, Bruxelles"
+      },
+      {
+        "quote": "Professionnelles, talentueuses et chaleureuses. La danse a sublimé notre soirée, les invités en parlent encore.",
+        "author": "Nadia M.",
+        "event": "Réception de mariage, Liège"
+      },
+      {
+        "quote": "Mes enfants adorent les cours. L'atmosphère est bienveillante et la transmission de la culture arménienne est magnifique.",
+        "author": "Christine K.",
+        "event": "Cours de danse, Anvers"
+      }
+    ]
+  },
+
+  "faq": {
+    "eyebrow": "Questions fréquentes",
+    "title": "Tout ce que vous voulez savoir",
+    "items": [
+      {
+        "q": "Intervenez-vous en dehors de la Belgique ?",
+        "a": "Oui, nous intervenons dans toute l'Europe. Des frais de déplacement peuvent s'appliquer selon la distance. Contactez-nous pour un devis personnalisé."
+      },
+      {
+        "q": "Dans quels délais faut-il nous réserver ?",
+        "a": "Nous recommandons de nous contacter au moins 2 à 3 mois avant l'événement pour garantir notre disponibilité, surtout en haute saison (mai–septembre)."
+      },
+      {
+        "q": "Proposez-vous des prestations sur mesure ?",
+        "a": "Absolument. Chaque prestation est adaptée à vos souhaits : choix des chants, durée, tenues. Nous échangeons avec vous en amont pour créer quelque chose d'unique."
+      },
+      {
+        "q": "Les cours sont-ils accessibles aux débutants complets ?",
+        "a": "Tout à fait. Nous accueillons tous les niveaux, du débutant absolu au pratiquant confirmé. Chaque cours est adapté au rythme et aux objectifs de chaque élève."
+      },
+      {
+        "q": "Peut-on combiner plusieurs prestations pour un même événement ?",
+        "a": "Oui, et c'est souvent ce que nous recommandons. Par exemple, chant de la mariée le matin et performance de danse le soir — nous construisons le programme avec vous."
+      }
+    ]
+  },
+
   "apropos": {
     "eyebrow": "Notre histoire",
     "title": "Deux voix, deux corps, une même tradition",
