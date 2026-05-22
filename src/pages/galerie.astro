@@ -4,15 +4,15 @@ import { getTranslations } from '../i18n/utils';
 const t = getTranslations('fr');
 
 const photos = [
-  { src: '/images/galerie/photo-01.webp', alt: 'Rozi Dance — performance de danse arménienne', w: 1108, h: 1420 },
-  { src: '/images/galerie/photo-02.webp', alt: 'Rozi Dance — chant de la mariée', w: 1137, h: 1383 },
-  { src: '/images/galerie/photo-03.webp', alt: 'Rozi Dance — cérémonie de mariage arménien', w: 1132, h: 1389 },
-  { src: '/images/galerie/photo-04.webp', alt: 'Rozi Dance — cours de danse', w: 1560, h: 1008 },
-  { src: '/images/galerie/photo-06.webp', alt: 'Rozi Dance — événement festif arménien', w: 1129, h: 1393 },
-  { src: '/images/galerie/photo-07.webp', alt: 'Rozi Dance — performance artistique', w: 1290, h: 723 },
-  { src: '/images/galerie/photo-08.webp', alt: 'Rozi Dance — danse arménienne', w: 1600, h: 1067 },
-  { src: '/images/galerie/photo-09.webp', alt: 'Rozi Dance — chant et danse', w: 1600, h: 1067 },
-  { src: '/images/galerie/photo-10.webp', alt: 'Rozi Dance — groupe artistique', w: 1290, h: 722 },
+  { src: '/images/galerie/photo-01.webp', thumb: '/images/galerie/photo-01-thumb.webp', alt: 'Rozi Dance — performance de danse arménienne', w: 1108, h: 1420 },
+  { src: '/images/galerie/photo-02.webp', thumb: '/images/galerie/photo-02-thumb.webp', alt: 'Rozi Dance — chant de la mariée', w: 1137, h: 1383 },
+  { src: '/images/galerie/photo-03.webp', thumb: '/images/galerie/photo-03-thumb.webp', alt: 'Rozi Dance — cérémonie de mariage arménien', w: 1132, h: 1389 },
+  { src: '/images/galerie/photo-04.webp', thumb: '/images/galerie/photo-04-thumb.webp', alt: 'Rozi Dance — cours de danse', w: 1560, h: 1008 },
+  { src: '/images/galerie/photo-06.webp', thumb: '/images/galerie/photo-06-thumb.webp', alt: 'Rozi Dance — événement festif arménien', w: 1129, h: 1393 },
+  { src: '/images/galerie/photo-07.webp', thumb: '/images/galerie/photo-07-thumb.webp', alt: 'Rozi Dance — performance artistique', w: 1290, h: 723 },
+  { src: '/images/galerie/photo-08.webp', thumb: '/images/galerie/photo-08-thumb.webp', alt: 'Rozi Dance — danse arménienne', w: 1600, h: 1067 },
+  { src: '/images/galerie/photo-09.webp', thumb: '/images/galerie/photo-09-thumb.webp', alt: 'Rozi Dance — chant et danse', w: 1600, h: 1067 },
+  { src: '/images/galerie/photo-10.webp', thumb: '/images/galerie/photo-10-thumb.webp', alt: 'Rozi Dance — groupe artistique', w: 1290, h: 722 },
 ];
 ---
 
@@ -42,7 +42,7 @@ const photos = [
           >
             <div class="galerie-img-wrap">
               <img
-                src={photo.src}
+                src={photo.thumb}
                 alt={photo.alt}
                 loading="lazy"
                 decoding="async"

@@ -112,11 +112,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       revealEls.forEach((el) => observer.observe(el));
 
       // Page loader dismiss
+      const loader = document.getElementById('page-loader');
+      if (loader) loader.classList.add('loaded');
       document.addEventListener('DOMContentLoaded', () => {
-        const loader = document.getElementById('page-loader');
-        if (loader) {
-          setTimeout(() => loader.classList.add('loaded'), 200);
-        }
+        const l = document.getElementById('page-loader');
+        if (l) l.classList.add('loaded');
       });
     </script>
   </body>
