@@ -3,18 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import { getTranslations } from '../i18n/utils';
 const t = getTranslations('fr');
 
-const tarifsChant = [
-  { formule: 'Séance individuelle (1h)', prix: '60 €' },
-  { formule: 'Forfait 10 séances individuelles', prix: '540 €' },
-  { formule: 'Cours en groupe (par personne)', prix: '25 €' },
-];
-
-const tarifsDanse = [
-  { formule: 'Séance individuelle (1h)', prix: '55 €' },
-  { formule: 'Forfait 10 séances individuelles', prix: '490 €' },
-  { formule: 'Cours en groupe (par personne)', prix: '20 €' },
-];
-
 const faq = [
   {
     q: 'Faut-il déjà savoir chanter pour s\'inscrire aux cours ?',
@@ -42,7 +30,7 @@ const faq = [
   },
   {
     q: 'Peut-on combiner cours de chant et cours de danse ?',
-    a: 'Tout à fait, et c\'est même ce que nous recommandons ! Un tarif combiné est disponible, contactez-nous pour un devis personnalisé.',
+    a: 'Tout à fait, et c\'est même ce que nous recommandons ! Contactez-nous pour un programme personnalisé.',
   },
   {
     q: 'Les cours en groupe ont-ils un nombre minimum de participants ?',
@@ -109,61 +97,6 @@ const faq = [
           <li>Tous niveaux, tous âges</li>
           <li>Ambiance chaleureuse et bienveillante</li>
         </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Tarifs -->
-  <section class="cours-tarifs" aria-labelledby="tarifs-title">
-    <div class="section-container">
-      <div class="section-header reveal">
-        <span class="eyebrow">{t.cours.tarifsEyebrow}</span>
-        <h2 id="tarifs-title">{t.cours.tarifsTitle}</h2>
-      </div>
-
-      <div class="tarifs-grid">
-        <!-- Chant -->
-        <div class="tarif-block card reveal">
-          <h3 class="tarif-block-title">Cours de chant</h3>
-          <table class="tarif-table">
-            <thead>
-              <tr>
-                <th>Formule</th>
-                <th>Tarif</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tarifsChant.map((row) => (
-                <tr>
-                  <td>{row.formule}</td>
-                  <td class="tarif-prix">{row.prix}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Danse -->
-        <div class="tarif-block card reveal" style="transition-delay: 120ms">
-          <h3 class="tarif-block-title">Cours de danse</h3>
-          <table class="tarif-table">
-            <thead>
-              <tr>
-                <th>Formule</th>
-                <th>Tarif</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tarifsDanse.map((row) => (
-                <tr>
-                  <td>{row.formule}</td>
-                  <td class="tarif-prix">{row.prix}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p class="tarif-note">* Tarif combiné chant + danse disponible sur demande.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -305,11 +238,6 @@ const faq = [
     background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
   }
 
-  /* Tarifs */
-  .cours-tarifs {
-    padding-block: 5rem;
-  }
-
   .section-header {
     text-align: center;
     margin-bottom: 3rem;
@@ -323,61 +251,6 @@ const faq = [
     font-size: clamp(1.875rem, 3.5vw, 2.75rem);
     color: var(--color-text-primary);
     margin: 0;
-  }
-
-  .tarifs-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-
-  .tarif-block {
-    padding: 2rem;
-  }
-
-  .tarif-block-title {
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    color: var(--color-text-primary);
-    margin: 0 0 1.5rem;
-    font-weight: 400;
-  }
-
-  .tarif-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .tarif-table th {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    text-align: left;
-    padding-bottom: 0.75rem;
-    border-bottom: 0.5px solid var(--color-border);
-  }
-
-  .tarif-table td {
-    padding: 0.75rem 0;
-    font-size: 0.9375rem;
-    color: var(--color-text-secondary);
-    border-bottom: 0.5px solid var(--color-border);
-  }
-
-  .tarif-prix {
-    font-family: var(--font-serif);
-    font-size: 1.0625rem !important;
-    color: var(--color-text-primary) !important;
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .tarif-note {
-    font-size: 12px;
-    color: var(--color-text-muted);
-    margin: 1rem 0 0;
-    line-height: 1.5;
   }
 
   /* FAQ */
@@ -472,10 +345,6 @@ const faq = [
 
     .cours-section-inner.reverse {
       direction: ltr;
-    }
-
-    .tarifs-grid {
-      grid-template-columns: 1fr;
     }
 
     .cours-deco {
