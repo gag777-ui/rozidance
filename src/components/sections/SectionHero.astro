@@ -75,7 +75,6 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
           aria-hidden="true"
           disablepictureinpicture
         ></iframe>
-        <div class="video-edge-fade" aria-hidden="true"></div>
       </div>
     </div>
 
@@ -198,17 +197,6 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
     height: 100%;
     border: none;
     pointer-events: none;
-  }
-
-  .video-edge-fade {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    background:
-      radial-gradient(ellipse 80px 40px at 100% 100%, #F7F1E6 0%, transparent 100%),
-      linear-gradient(to right,  var(--color-bg-primary) 0%, transparent 4%, transparent 96%, var(--color-bg-primary) 100%),
-      linear-gradient(to bottom, var(--color-bg-primary) 0%, transparent 4%, transparent 96%, var(--color-bg-primary) 100%);
   }
 
   /* ── DESKTOP ── */
