@@ -38,10 +38,12 @@ const t = getTranslations(lang);
   <SectionHero />
 
   <div class="logo-bridge reveal-fade" aria-hidden="true">
-    <img src="/images/logo.webp" alt="" width="120" height="120" loading="eager" decoding="async" />
+    <img src="/images/logo.webp" alt="" width="160" height="160" loading="eager" decoding="async" />
   </div>
 
-  <SectionPrestations />
+  <div class="prestations-wrap">
+    <SectionPrestations />
+  </div>
   <SectionGalerie />
   <SectionVideos />
   <SectionApropos />
@@ -55,13 +57,21 @@ const t = getTranslations(lang);
   .logo-bridge {
     display: flex;
     justify-content: center;
-    padding-block: 2.5rem 1.5rem;
+    padding-block: 1.25rem 0.75rem;
     background-color: var(--color-bg-primary);
   }
 
   .logo-bridge img {
-    width: 96px;
+    width: 140px;
     height: auto;
-    opacity: 0.88;
+    opacity: 0.9;
+  }
+
+  .prestations-wrap :global(.section-prestations) {
+    padding-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .logo-bridge img { width: 110px; }
   }
 </style>
