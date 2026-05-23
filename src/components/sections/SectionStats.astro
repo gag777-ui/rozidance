@@ -156,6 +156,5 @@ function parseStat(value: string) {
     items.forEach((el) => observer.observe(el));
   }
 
-  initCounters();
   document.addEventListener('astro:page-load', initCounters);
 </script>

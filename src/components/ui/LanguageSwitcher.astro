@@ -58,14 +58,19 @@ const others = langs.filter(l => l.code !== currentLocale);
 </details>
 
 <script>
+  let _dropdownClick: ((e: MouseEvent) => void) | null = null;
+
   function initDropdown() {
     const dropdown = document.getElementById('lang-dropdown') as HTMLDetailsElement | null;
     if (!dropdown) return;
-    document.addEventListener('click', (e) => {
+
+    if (_dropdownClick) document.removeEventListener('click', _dropdownClick);
+    _dropdownClick = (e) => {
       if (!dropdown.contains(e.target as Node)) dropdown.open = false;
-    });
+    };
+    document.addEventListener('click', _dropdownClick);
   }
-  initDropdown();
+
   document.addEventListener('astro:page-load', initDropdown);
 </script>
 

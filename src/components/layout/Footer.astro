@@ -87,7 +87,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   <div class="footer-bottom">
     <div class="section-container footer-bottom-inner">
       <p>{t.footer.copyright.replace('{year}', String(year))}</p>
-      <a href="/mentions-legales" class="nav-link footer-legal">{t.footer.legal}</a>
+      <a href={`${base}/mentions-legales`} class="nav-link footer-legal">{t.footer.legal}</a>
     </div>
   </div>
 </footer>
