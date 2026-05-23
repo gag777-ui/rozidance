@@ -14,59 +14,90 @@ const t = getTranslations(lang);
     </div>
 
     <div class="contact-cards">
+
       <!-- Instagram -->
       <a
         href="https://instagram.com/rozi.dance"
         target="_blank"
         rel="noopener noreferrer"
-        class="contact-card card reveal-scale"
+        class="contact-card reveal-scale"
         aria-label="Nous contacter sur Instagram @rozi.dance"
         style="transition-delay: 0ms"
       >
-        <div class="contact-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-          </svg>
+        <div class="card-accent-bar"></div>
+        <div class="card-body">
+          <span class="card-ordinal" aria-hidden="true">01</span>
+          <div class="card-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4.5"/>
+              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <p class="card-label">{t.contact.instagram.label}</p>
+          <p class="card-value">{t.contact.instagram.handle}</p>
+          <span class="card-link">
+            {t.contact.instagram.label}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="card-arrow-svg">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
         </div>
-        <p class="contact-card-label">{t.contact.instagram.label}</p>
-        <p class="contact-card-value">{t.contact.instagram.handle}</p>
-        <span class="contact-card-arrow" aria-hidden="true">→</span>
       </a>
 
       <!-- Email -->
       <a
         href="mailto:contact@rozidance.be"
-        class="contact-card card reveal-scale"
+        class="contact-card reveal-scale"
         aria-label="Nous envoyer un e-mail à contact@rozidance.be"
         style="transition-delay: 120ms"
       >
-        <div class="contact-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <path d="M2 7l10 7 10-7"/>
-          </svg>
+        <div class="card-accent-bar"></div>
+        <div class="card-body">
+          <span class="card-ordinal" aria-hidden="true">02</span>
+          <div class="card-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="M2 7l10 7 10-7"/>
+            </svg>
+          </div>
+          <p class="card-label">{t.contact.email.label}</p>
+          <p class="card-value">{t.contact.email.address}</p>
+          <span class="card-link">
+            {t.contact.email.label}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="card-arrow-svg">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
         </div>
-        <p class="contact-card-label">{t.contact.email.label}</p>
-        <p class="contact-card-value">{t.contact.email.address}</p>
-        <span class="contact-card-arrow" aria-hidden="true">→</span>
       </a>
 
       <!-- Téléphone -->
       <a
         href="tel:+32486219896"
-        class="contact-card card reveal-scale"
+        class="contact-card reveal-scale"
         aria-label="Appeler le +32 486 21 98 96"
         style="transition-delay: 240ms"
       >
-        <div class="contact-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 10.8 19.79 19.79 0 01.07 2.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-          </svg>
+        <div class="card-accent-bar"></div>
+        <div class="card-body">
+          <span class="card-ordinal" aria-hidden="true">03</span>
+          <div class="card-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 10.8 19.79 19.79 0 01.07 2.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+          </div>
+          <p class="card-label">Téléphone</p>
+          <p class="card-value">+32 486 21 98 96</p>
+          <span class="card-link">
+            Appeler
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="card-arrow-svg">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
         </div>
-        <p class="contact-card-label">Téléphone</p>
-        <p class="contact-card-value">+32 486 21 98 96</p>
-        <span class="contact-card-arrow" aria-hidden="true">→</span>
       </a>
+
     </div>
   </div>
 </section>
@@ -103,80 +134,108 @@ const t = getTranslations(lang);
   .contact-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   .contact-card {
+    position: relative;
+    background-color: var(--color-bg-card);
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 2.5rem 2rem;
     text-decoration: none;
-    gap: 0.75rem;
-    position: relative;
+    transition: transform 400ms var(--ease-out-soft), border-color 400ms var(--ease-out-soft), box-shadow 400ms var(--ease-out-soft);
   }
 
-  .contact-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: var(--color-accent);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.5rem;
-    transition: background-color 400ms var(--ease-out-soft), transform 400ms var(--ease-out-soft);
+  .contact-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+    box-shadow: 0 12px 32px rgba(193, 104, 71, 0.12);
+  }
+
+  .card-accent-bar {
+    height: 3px;
+    background: linear-gradient(to right, var(--color-accent), var(--color-gold));
     flex-shrink: 0;
   }
 
-  .contact-card:hover .contact-icon {
-    background-color: var(--color-accent-hover);
-    transform: scale(1.06);
+  .card-body {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    flex: 1;
+    position: relative;
   }
 
-  .contact-card-label {
+  .card-ordinal {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--color-border);
+    pointer-events: none;
+    user-select: none;
+    transition: color 400ms var(--ease-out-soft);
+  }
+
+  .contact-card:hover .card-ordinal {
+    color: rgba(193, 104, 71, 0.12);
+  }
+
+  .card-icon {
+    color: var(--color-accent);
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .card-label {
     font-size: 11px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--color-gold);
     margin: 0;
+    font-family: var(--font-sans);
   }
 
-  .contact-card-value {
+  .card-value {
     font-family: var(--font-serif);
     font-size: 1.0625rem;
     color: var(--color-text-primary);
     margin: 0;
+    flex: 1;
+    line-height: 1.4;
+    word-break: break-all;
   }
 
-  .contact-card-arrow {
-    position: absolute;
-    bottom: 1.25rem;
-    right: 1.5rem;
-    font-size: 1rem;
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-accent);
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: opacity 300ms, transform 300ms var(--ease-out-soft);
+    margin-top: 0.25rem;
+    transition: gap 250ms var(--ease-out-soft);
   }
 
-  .contact-card:hover .contact-card-arrow {
-    opacity: 1;
-    transform: translateX(0);
+  .contact-card:hover .card-link {
+    gap: 0.75rem;
   }
 
-  @keyframes cardBreath {
-    0%, 100% { box-shadow: 0 0 0 0px rgba(167, 94, 60, 0); }
-    50%       { box-shadow: 0 0 0 4px rgba(167, 94, 60, 0.18); }
+  .card-arrow-svg {
+    flex-shrink: 0;
+    transition: transform 250ms var(--ease-out-soft);
   }
 
-  .contact-card:nth-child(1) { animation: cardBreath 2.4s ease-in-out infinite; animation-delay: 0s; }
-  .contact-card:nth-child(2) { animation: cardBreath 2.4s ease-in-out infinite; animation-delay: 0.8s; }
-  .contact-card:nth-child(3) { animation: cardBreath 2.4s ease-in-out infinite; animation-delay: 1.6s; }
-
-  .contact-card:hover { animation-play-state: paused; }
+  .contact-card:hover .card-arrow-svg {
+    transform: translateX(3px);
+  }
 
   @media (max-width: 768px) {
     .contact-cards {
