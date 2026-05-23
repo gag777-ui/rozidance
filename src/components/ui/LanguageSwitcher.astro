@@ -24,36 +24,32 @@ function langUrl(locale: string): string {
   return `/${locale}${cleanPath}`;
 }
 
-const langs: { code: Lang; flag: string; name: string }[] = [
-  { code: 'fr', flag: '🇫🇷', name: 'Français' },
-  { code: 'en', flag: '🇬🇧', name: 'English' },
-  { code: 'nl', flag: '🇳🇱', name: 'Nederlands' },
-  { code: 'ru', flag: '🇷🇺', name: 'Русский' },
-  { code: 'hy', flag: '🇦🇲', name: 'Հայերեն' },
+const langs: { code: Lang; flag: string }[] = [
+  { code: 'fr', flag: '🇫🇷' },
+  { code: 'en', flag: '🇬🇧' },
+  { code: 'nl', flag: '🇳🇱' },
+  { code: 'ru', flag: '🇷🇺' },
+  { code: 'hy', flag: '🇦🇲' },
 ];
 
 const current = langs.find(l => l.code === currentLocale)!;
+const others = langs.filter(l => l.code !== currentLocale);
 ---
 
 <details class="lang-dropdown" id="lang-dropdown">
   <summary class="lang-trigger" aria-label="Changer de langue">
-    <span class="lang-flag">{current.flag}</span>
-    <svg class="lang-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-      <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+    <span>{current.flag}</span>
   </summary>
 
-  <div class="lang-menu" role="list">
-    {langs.map((lang) => (
+  <div class="lang-menu">
+    {others.map((lang) => (
       <a
         href={langUrl(lang.code)}
-        class:list={['lang-option', { 'lang-option-active': lang.code === currentLocale }]}
+        class="lang-option"
         hreflang={lang.code}
-        role="listitem"
-        aria-current={lang.code === currentLocale ? 'true' : undefined}
+        aria-label={lang.code.toUpperCase()}
       >
-        <span class="lang-option-flag">{lang.flag}</span>
-        <span class="lang-option-name">{lang.name}</span>
+        {lang.flag}
       </a>
     ))}
   </div>
@@ -63,20 +59,10 @@ const current = langs.find(l => l.code === currentLocale)!;
   function initDropdown() {
     const dropdown = document.getElementById('lang-dropdown') as HTMLDetailsElement | null;
     if (!dropdown) return;
-
-    // Close on outside click
     document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target as Node)) {
-        dropdown.open = false;
-      }
-    });
-
-    // Close when a language link is clicked
-    dropdown.querySelectorAll('.lang-option').forEach((link) => {
-      link.addEventListener('click', () => { dropdown.open = false; });
+      if (!dropdown.contains(e.target as Node)) dropdown.open = false;
     });
   }
-
   initDropdown();
   document.addEventListener('astro:page-load', initDropdown);
 </script>
@@ -87,94 +73,62 @@ const current = langs.find(l => l.code === currentLocale)!;
     flex-shrink: 0;
   }
 
-  /* Hide native marker */
   .lang-trigger {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
     cursor: pointer;
-    padding: 0.3rem 0.5rem;
-    border-radius: 4px;
-    background: transparent;
+    font-size: 1.25rem;
+    line-height: 1;
     border: 0.5px solid transparent;
-    transition: border-color 250ms, background-color 250ms;
+    transition: border-color 200ms, background-color 200ms;
     user-select: none;
   }
   .lang-trigger::-webkit-details-marker { display: none; }
-
   .lang-trigger:hover {
     border-color: var(--color-border);
     background-color: var(--color-bg-card);
   }
 
-  .lang-flag {
-    font-size: 1.1rem;
-    line-height: 1;
-  }
-
-  .lang-chevron {
-    color: var(--color-text-muted);
-    transition: transform 250ms var(--ease-out-soft);
-    flex-shrink: 0;
-  }
-
-  .lang-dropdown[open] .lang-chevron {
-    transform: rotate(180deg);
-  }
-
-  /* Dropdown menu */
   .lang-menu {
     position: absolute;
     top: calc(100% + 0.4rem);
     right: 0;
-    min-width: 148px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.375rem;
     background-color: var(--color-bg-card);
     border: 0.5px solid var(--color-border);
-    border-radius: 6px;
-    box-shadow: 0 8px 24px rgba(43, 31, 21, 0.12);
-    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(43, 31, 21, 0.1);
     z-index: 200;
-    animation: menuOpen 180ms var(--ease-out-soft) both;
+    animation: menuOpen 160ms var(--ease-out-soft) both;
   }
 
   @keyframes menuOpen {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(-4px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   .lang-option {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
-    padding: 0.625rem 0.875rem;
+    justify-content: center;
+    width: 34px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    line-height: 1;
     text-decoration: none;
-    transition: background-color 200ms;
+    transition: background-color 150ms;
   }
 
   .lang-option:hover {
     background-color: var(--color-bg-primary);
-  }
-
-  .lang-option-active {
-    background-color: var(--color-bg-primary);
-  }
-
-  .lang-option-flag {
-    font-size: 1.05rem;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
-  .lang-option-name {
-    font-family: var(--font-sans);
-    font-size: 12px;
-    letter-spacing: 0.03em;
-    color: var(--color-text-primary);
-  }
-
-  .lang-option-active .lang-option-name {
-    color: var(--color-accent);
-    font-weight: 500;
   }
 </style>
