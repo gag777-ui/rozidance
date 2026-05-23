@@ -44,9 +44,9 @@ const photos = [
     <div class="galerie-grid-wrap section-container">
       <div class="galerie-grid" id="galerie-grid">
         {photos.map((photo, i) => (
-          <a href={photo.src} class={`galerie-item galerie-item-${i + 1}`} data-pswp-width={photo.w} data-pswp-height={photo.h} aria-label={photo.alt} target="_blank">
+          <a href={photo.src} class={`galerie-item galerie-item-${i + 1}`} data-pswp-width={photo.w} data-pswp-height={photo.h} aria-label={photo.alt} target="_blank" rel="noopener noreferrer">
             <div class="galerie-img-wrap">
-              <img src={photo.thumb} alt={photo.alt} loading="lazy" decoding="async" class="galerie-img" width={photo.w} height={photo.h} onerror="this.src='/images/placeholder.webp'" />
+              <img src={photo.thumb} alt={photo.alt} loading="lazy" decoding="async" class="galerie-img" width={photo.w} height={photo.h} data-fallback="/images/placeholder.webp" />
               <div class="galerie-overlay" aria-hidden="true"><span class="galerie-zoom-icon">+</span></div>
             </div>
           </a>

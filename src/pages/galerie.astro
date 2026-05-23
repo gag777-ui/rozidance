@@ -41,6 +41,7 @@ const photos = [
             data-pswp-height={photo.h}
             aria-label={`Agrandir : ${photo.alt}`}
             target="_blank"
+            rel="noopener noreferrer"
           >
             <div class="galerie-img-wrap">
               <img
@@ -51,7 +52,7 @@ const photos = [
                 class="galerie-img"
                 width={photo.w}
                 height={photo.h}
-                onerror="this.src='/images/placeholder.webp'"
+                data-fallback="/images/placeholder.webp"
               />
               <div class="galerie-overlay" aria-hidden="true">
                 <span class="galerie-zoom-icon">+</span>

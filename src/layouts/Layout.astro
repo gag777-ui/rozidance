@@ -96,6 +96,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Scroll reveal + Loader + Dark mode persistence -->
     <script>
+      // ── Fallback images (remplace onerror inline) ──
+      function initImgFallbacks() {
+        document.querySelectorAll<HTMLImageElement>('img[data-fallback]').forEach((img) => {
+          img.addEventListener('error', () => {
+            const fb = img.dataset.fallback;
+            if (fb && img.src !== fb) img.src = fb;
+          }, { once: true });
+        });
+      }
+      initImgFallbacks();
+      document.addEventListener('astro:page-load', initImgFallbacks);
+
       // ── Scroll reveal (ré-initialisé à chaque navigation) ──
       function initReveal() {
         const observer = new IntersectionObserver(
