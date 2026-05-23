@@ -30,23 +30,6 @@
   --radius-card: 8px;
 }
 
-/* ─── Dark mode token overrides ─────────────────────────────────────────── */
-html[data-theme="dark"] {
-  --color-bg-primary:     #1A1008;
-  --color-bg-card:        #251A0C;
-  --color-bg-dark:        #0D0805;
-  --color-text-primary:   #EFE6D5;
-  --color-text-secondary: #C0A07A;
-  --color-text-muted:     #8A7260;
-  --color-gold:           #C09B60;
-  --color-border:         #362418;
-  --color-divider:        #4A3220;
-}
-
-html[data-theme="dark"] .eyebrow {
-  color: #C8A050;
-}
-
 /* ─── Base ───────────────────────────────────────────────────────────────── */
 @layer base {
   html {

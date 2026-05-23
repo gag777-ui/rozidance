@@ -1,6 +1,5 @@
 ---
 import { getTranslations } from '../../i18n/utils';
-import ThemeToggle from '../ui/ThemeToggle.astro';
 const t = getTranslations('fr');
 ---
 
@@ -30,9 +29,6 @@ const t = getTranslations('fr');
         <li><a href="/#contact" class="nav-link">{t.nav.contact}</a></li>
       </ul>
     </nav>
-
-    <!-- Toggle dark mode -->
-    <ThemeToggle />
 
     <!-- CTA desktop -->
     <a href="/#contact" class="btn-primary header-cta">
@@ -79,10 +75,6 @@ const t = getTranslations('fr');
     border-color: var(--color-border);
     backdrop-filter: blur(12px);
     background-color: rgba(247, 241, 230, 0.85);
-  }
-
-  :global(html[data-theme="dark"]) .site-header.scrolled {
-    background-color: rgba(26, 16, 8, 0.88);
   }
 
   .header-inner {

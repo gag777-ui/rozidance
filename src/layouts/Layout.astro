@@ -31,18 +31,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <!doctype html>
 <html lang="fr">
   <head>
-    <!-- Anti-flash : applique le thème avant tout rendu -->
-    <script is:inline>
-      (function () {
-        try {
-          var saved = localStorage.getItem('theme');
-          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (saved === 'dark' || (!saved && prefersDark)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-          }
-        } catch (e) {}
-      })();
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
@@ -110,14 +98,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Scroll reveal + Loader + Dark mode persistence -->
     <script>
-      // ── Dark mode : préserve data-theme lors du swap View Transitions ──
-      document.addEventListener('astro:before-swap', (e) => {
-        const theme = document.documentElement.getAttribute('data-theme');
-        if (theme) {
-          (e as any).newDocument.documentElement.setAttribute('data-theme', theme);
-        }
-      });
-
       // ── Scroll reveal (ré-initialisé à chaque navigation) ──
       function initReveal() {
         const observer = new IntersectionObserver(
