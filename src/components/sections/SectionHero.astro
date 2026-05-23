@@ -11,8 +11,10 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
 
 <section class="hero-section" aria-labelledby="hero-title">
 
-  <!-- Vidéo fond plein écran (desktop uniquement) -->
+  <!-- Vidéo fond plein écran -->
   <div class="hero-video-bg" aria-hidden="true">
+    <!-- Poster affiché avant le chargement de la vidéo (et en fallback si YouTube bloque) -->
+    <div class="hero-poster"></div>
     <iframe
       class="hero-bg-iframe"
       data-src={`https://www.youtube-nocookie.com/embed/${heroVideoId}?${ytParams}`}
@@ -113,6 +115,14 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
     z-index: 0;
   }
 
+  /* Poster image — visible avant le chargement de la vidéo */
+  .hero-poster {
+    position: absolute;
+    inset: 0;
+    background: url('/images/og-default.webp') center / cover no-repeat;
+    z-index: 0;
+  }
+
   .hero-bg-iframe {
     position: absolute;
     top: 50%;
@@ -124,6 +134,7 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
     min-width: 177.78vh;
     border: none;
     pointer-events: none;
+    z-index: 1;
   }
 
   /* Filtre sombre par-dessus la vidéo */
