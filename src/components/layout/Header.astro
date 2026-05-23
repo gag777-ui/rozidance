@@ -34,26 +34,26 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       </ul>
     </nav>
 
-    <!-- Sélecteur de langue -->
-    <LanguageSwitcher />
-
     <!-- CTA desktop -->
     <a href={`${base || '/'}#contact`} class="btn-primary header-cta">
       {t.nav.contact}
     </a>
 
-    <!-- Hamburger mobile -->
-    <button
-      id="menu-toggle"
-      class="menu-toggle"
-      aria-label="Ouvrir le menu"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <!-- Sélecteur de langue + hamburger groupés -->
+    <div class="header-end">
+      <LanguageSwitcher />
+      <button
+        id="menu-toggle"
+        class="menu-toggle"
+        aria-label="Ouvrir le menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </div>
 
   <!-- Nav mobile -->
@@ -131,6 +131,13 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   .header-cta {
     flex-shrink: 0;
     padding: 0.5rem 1.25rem;
+  }
+
+  .header-end {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
   }
 
   .menu-toggle {
