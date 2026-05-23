@@ -3,18 +3,31 @@ import { getTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/utils';
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
+
+function parseStat(value: string) {
+  const m = value.match(/^(\d+)(.*)$/);
+  return m ? { num: parseInt(m[1]), suffix: m[2] } : { num: 0, suffix: value };
+}
 ---
 
 <section class="section-stats" aria-labelledby="stats-eyebrow">
   <div class="section-container">
     <span class="eyebrow stats-eyebrow reveal-fade" id="stats-eyebrow">{t.stats.eyebrow}</span>
     <div class="stats-grid">
-      {t.stats.items.map((stat, i) => (
-        <div class="stat-item reveal-scale" style={`transition-delay: ${i * 100}ms`}>
-          <span class="stat-value">{stat.value}</span>
-          <span class="stat-label">{stat.label}</span>
-        </div>
-      ))}
+      {t.stats.items.map((stat, i) => {
+        const { num, suffix } = parseStat(stat.value);
+        return (
+          <div
+            class="stat-item reveal-scale"
+            style={`transition-delay: ${i * 100}ms`}
+            data-count-to={num}
+            data-count-suffix={suffix}
+          >
+            <span class="stat-value">{stat.value}</span>
+            <span class="stat-label">{stat.label}</span>
+          </div>
+        );
+      })}
     </div>
   </div>
 </section>
@@ -103,3 +116,46 @@ const t = getTranslations(lang);
     }
   }
 </style>
+
+<script>
+  function initCounters() {
+    const items = document.querySelectorAll<HTMLElement>('.stat-item[data-count-to]');
+    if (!items.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        if (el.dataset.counted) return;
+        el.dataset.counted = 'true';
+        observer.unobserve(el);
+
+        const to = parseInt(el.dataset.countTo ?? '0');
+        const suffix = el.dataset.countSuffix ?? '';
+        const span = el.querySelector<HTMLElement>('.stat-value');
+        if (!span) return;
+
+        const duration = 1800;
+        const startTime = performance.now();
+
+        function easeOutCubic(t: number): number {
+          return 1 - Math.pow(1 - t, 3);
+        }
+
+        function tick(now: number) {
+          const t = Math.min((now - startTime) / duration, 1);
+          span.textContent = Math.round(easeOutCubic(t) * to) + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+          else span.textContent = to + suffix;
+        }
+
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+
+    items.forEach((el) => observer.observe(el));
+  }
+
+  initCounters();
+  document.addEventListener('astro:page-load', initCounters);
+</script>
