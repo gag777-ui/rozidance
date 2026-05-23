@@ -12,17 +12,23 @@
 </button>
 
 <script>
+  let backToTopHandler: (() => void) | null = null;
+
   function initBackToTop() {
     const btn = document.getElementById('back-to-top');
     if (!btn) return;
 
-    function update() {
-      const visible = window.scrollY > 450;
-      btn.classList.toggle('is-visible', visible);
+    // Supprime l'ancien listener avant d'en créer un nouveau
+    if (backToTopHandler) {
+      window.removeEventListener('scroll', backToTopHandler);
     }
 
-    window.addEventListener('scroll', update, { passive: true });
-    update();
+    backToTopHandler = () => {
+      btn.classList.toggle('is-visible', window.scrollY > 450);
+    };
+
+    window.addEventListener('scroll', backToTopHandler, { passive: true });
+    backToTopHandler();
 
     btn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });

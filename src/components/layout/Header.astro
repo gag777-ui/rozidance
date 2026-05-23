@@ -188,31 +188,39 @@ const t = getTranslations('fr');
 </style>
 
 <script>
-  // Sticky header scroll effect
-  const header = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    if (header) {
-      header.classList.toggle('scrolled', window.scrollY > 40);
+  let headerScrollHandler: (() => void) | null = null;
+
+  function initHeader() {
+    // Nettoyage de l'ancien listener scroll avant d'en créer un nouveau
+    if (headerScrollHandler) {
+      window.removeEventListener('scroll', headerScrollHandler);
     }
-  });
 
-  // Mobile menu toggle
-  const toggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
+    const header = document.getElementById('site-header');
+    headerScrollHandler = () => {
+      header?.classList.toggle('scrolled', window.scrollY > 40);
+    };
+    window.addEventListener('scroll', headerScrollHandler, { passive: true });
+    headerScrollHandler();
 
-  toggle?.addEventListener('click', () => {
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
-    if (mobileMenu) {
-      mobileMenu.hidden = expanded;
-    }
-  });
+    // Menu mobile — nouvelles références DOM à chaque navigation
+    const toggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-  // Close mobile menu on nav link click
-  mobileMenu?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      if (mobileMenu) mobileMenu.hidden = true;
-      toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      if (mobileMenu) mobileMenu.hidden = expanded;
     });
-  });
+
+    mobileMenu?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (mobileMenu) mobileMenu.hidden = true;
+        toggle?.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  initHeader();
+  document.addEventListener('astro:page-load', initHeader);
 </script>
