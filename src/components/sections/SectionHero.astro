@@ -336,23 +336,16 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
 
 <script>
   function loadHeroVideos() {
-    const bgIframe = document.querySelector<HTMLIFrameElement>('.hero-bg-iframe');
-    if (bgIframe?.dataset.src) {
-      const bg = bgIframe.closest<HTMLElement>('.hero-video-bg');
-      if (bg && getComputedStyle(bg).display !== 'none') {
-        bgIframe.src = bgIframe.dataset.src;
+    document.querySelectorAll<HTMLIFrameElement>('.hero-bg-iframe, .hero-widget-iframe').forEach((iframe) => {
+      const target = iframe.dataset.src;
+      if (target && iframe.src !== target) {
+        iframe.src = target;
       }
-    }
-
-    const widgetWrap   = document.querySelector<HTMLElement>('.hero-video-wrap');
-    const widgetIframe = document.querySelector<HTMLIFrameElement>('.hero-widget-iframe');
-    if (widgetIframe?.dataset.src && widgetWrap && getComputedStyle(widgetWrap).display !== 'none') {
-      widgetIframe.src = widgetIframe.dataset.src;
-    }
+    });
   }
 
   // Premier chargement : attend window.load pour ne pas bloquer le LCP
   window.addEventListener('load', loadHeroVideos);
-  // Navigations View Transitions : recharge la vidéo à chaque arrivée sur la page
-  document.addEventListener('astro:page-load', loadHeroVideos);
+  // Navigations View Transitions : s'exécute dès le swap DOM (avant les animations)
+  document.addEventListener('astro:after-swap', loadHeroVideos);
 </script>
