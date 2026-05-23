@@ -9,9 +9,19 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
 <section class="hero-section" aria-labelledby="hero-title">
 
-  <!-- Fond hero : image statique (remplacée par <video> quand le MP4 sera dispo) -->
+  <!-- Fond hero : vidéo MP4 auto-hébergée -->
   <div class="hero-video-bg" aria-hidden="true">
-    <div class="hero-poster"></div>
+    <video
+      class="hero-bg-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      disablepictureinpicture
+      poster="/images/og-default.webp"
+    >
+      <source src="/videos/hero.mp4" type="video/mp4" />
+    </video>
     <div class="hero-filter"></div>
   </div>
 
@@ -86,15 +96,22 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     z-index: 0;
   }
 
-  /* Image de fond — permanent jusqu'à intégration du MP4 */
-  .hero-poster {
+  /* Vidéo fond */
+  .hero-bg-video {
     position: absolute;
-    inset: 0;
-    background: url('/images/og-default.webp') center / cover no-repeat;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
     z-index: 0;
+    pointer-events: none;
   }
 
-  /* Filtre sombre par-dessus l'image */
+  /* Filtre sombre par-dessus la vidéo */
   .hero-filter {
     position: absolute;
     inset: 0;
