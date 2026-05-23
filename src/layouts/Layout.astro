@@ -126,6 +126,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         initReveal();
         dismissLoader();
       });
+
+      // ── Scroll position au changement de page ──
+      // scroll-behavior:smooth interfère avec View Transitions : on le coupe
+      // pendant le swap pour que le scroll-to-top soit instantané.
+      document.addEventListener('astro:before-swap', () => {
+        document.documentElement.style.scrollBehavior = 'auto';
+      });
+      document.addEventListener('astro:after-swap', () => {
+        if (!window.location.hash) {
+          window.scrollTo(0, 0);
+        }
+        // Rétablit le smooth scroll après que le DOM est stable
+        requestAnimationFrame(() => {
+          document.documentElement.style.scrollBehavior = '';
+        });
+      });
     </script>
   </body>
 </html>
