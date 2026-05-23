@@ -3,6 +3,7 @@ import { getTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/utils';
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
+const base = lang === 'fr' ? '' : `/${lang}`;
 
 const icons = ['🎤', '💃', '🎓'] as const;
 ---
@@ -23,7 +24,7 @@ const icons = ['🎤', '💃', '🎓'] as const;
           <h3 class="card-title">{item.title}</h3>
           <p class="card-description">{item.description}</p>
           <a
-            href={item.id === 'cours' ? '/cours' : `/#contact`}
+            href={item.id === 'cours' ? `${base}/cours` : `${base}/#contact`}
             class="card-link"
             aria-label={`${item.link} — ${item.title}`}
           >

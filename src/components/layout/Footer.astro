@@ -4,6 +4,7 @@ import type { Lang } from '../../i18n/utils';
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
 const year = new Date().getFullYear();
+const base = lang === 'fr' ? '' : `/${lang}`;
 ---
 
 <footer class="site-footer">
@@ -41,7 +42,7 @@ const year = new Date().getFullYear();
   <div class="section-container footer-inner">
     <!-- Logo + tagline -->
     <div class="footer-brand">
-      <a href="/" class="footer-logo" aria-label="Rozi · Dance — accueil">
+      <a href={base || '/'} class="footer-logo" aria-label="Rozi · Dance — accueil">
         <span class="footer-logo-text">Rozi <span class="footer-logo-dot">·</span> Dance</span>
       </a>
       <p class="footer-tagline">{t.footer.tagline}</p>
@@ -51,11 +52,11 @@ const year = new Date().getFullYear();
     <nav class="footer-nav" aria-label="Navigation footer">
       <p class="footer-nav-title">{t.footer.nav}</p>
       <ul>
-        <li><a href="/#prestations" class="nav-link">{t.nav.prestations}</a></li>
-        <li><a href="/#galerie" class="nav-link">{t.nav.galerie}</a></li>
-        <li><a href="/cours" class="nav-link">{t.nav.cours}</a></li>
-        <li><a href="/#apropos" class="nav-link">{t.nav.apropos}</a></li>
-        <li><a href="/#contact" class="nav-link">{t.nav.contact}</a></li>
+        <li><a href={`${base}/#prestations`} class="nav-link">{t.nav.prestations}</a></li>
+        <li><a href={`${base}/#galerie`} class="nav-link">{t.nav.galerie}</a></li>
+        <li><a href={`${base}/cours`} class="nav-link">{t.nav.cours}</a></li>
+        <li><a href={`${base}/#apropos`} class="nav-link">{t.nav.apropos}</a></li>
+        <li><a href={`${base}/#contact`} class="nav-link">{t.nav.contact}</a></li>
       </ul>
     </nav>
 
