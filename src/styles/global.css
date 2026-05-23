@@ -43,7 +43,9 @@
 
   body {
     background-color: var(--color-bg-primary);
-    overflow-x: clip;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
   }
 
   h1, h2, h3, h4 {
