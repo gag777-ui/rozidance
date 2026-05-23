@@ -24,12 +24,12 @@ function langUrl(locale: string): string {
   return `/${locale}${cleanPath}`;
 }
 
-const langs: { code: Lang; flag: string }[] = [
-  { code: 'fr', flag: '🇫🇷' },
-  { code: 'en', flag: '🇬🇧' },
-  { code: 'nl', flag: '🇳🇱' },
-  { code: 'ru', flag: '🇷🇺' },
-  { code: 'hy', flag: '🇦🇲' },
+const langs: { code: Lang; label: string }[] = [
+  { code: 'fr', label: 'FR' },
+  { code: 'en', label: 'EN' },
+  { code: 'nl', label: 'NL' },
+  { code: 'ru', label: 'RU' },
+  { code: 'hy', label: 'HY' },
 ];
 
 const current = langs.find(l => l.code === currentLocale)!;
@@ -38,7 +38,10 @@ const others = langs.filter(l => l.code !== currentLocale);
 
 <details class="lang-dropdown" id="lang-dropdown">
   <summary class="lang-trigger" aria-label="Changer de langue">
-    <span>{current.flag}</span>
+    <span class="lang-current">{current.label}</span>
+    <svg class="lang-chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true">
+      <path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </summary>
 
   <div class="lang-menu">
@@ -47,9 +50,8 @@ const others = langs.filter(l => l.code !== currentLocale);
         href={langUrl(lang.code)}
         class="lang-option"
         hreflang={lang.code}
-        aria-label={lang.code.toUpperCase()}
       >
-        {lang.flag}
+        {lang.label}
       </a>
     ))}
   </div>
@@ -77,13 +79,10 @@ const others = langs.filter(l => l.code !== currentLocale);
     list-style: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
+    gap: 0.25rem;
     cursor: pointer;
-    font-size: 1.25rem;
-    line-height: 1;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
     border: 0.5px solid transparent;
     transition: border-color 200ms, background-color 200ms;
     user-select: none;
@@ -94,41 +93,56 @@ const others = langs.filter(l => l.code !== currentLocale);
     background-color: var(--color-bg-card);
   }
 
+  .lang-current {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .lang-chevron {
+    color: var(--color-text-muted);
+    transition: transform 220ms var(--ease-out-soft);
+    flex-shrink: 0;
+  }
+  .lang-dropdown[open] .lang-chevron {
+    transform: rotate(180deg);
+  }
+
   .lang-menu {
     position: absolute;
-    top: calc(100% + 0.4rem);
+    top: calc(100% + 0.35rem);
     right: 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: 0.375rem;
+    padding: 0.3rem;
     background-color: var(--color-bg-card);
     border: 0.5px solid var(--color-border);
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(43, 31, 21, 0.1);
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(43, 31, 21, 0.1);
     z-index: 200;
-    animation: menuOpen 160ms var(--ease-out-soft) both;
+    animation: menuOpen 150ms var(--ease-out-soft) both;
   }
 
   @keyframes menuOpen {
-    from { opacity: 0; transform: translateY(-4px) scale(0.97); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .lang-option {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 30px;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    line-height: 1;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--color-text-secondary);
     text-decoration: none;
-    transition: background-color 150ms;
+    padding: 0.35rem 0.6rem;
+    border-radius: 4px;
+    transition: color 150ms, background-color 150ms;
+    white-space: nowrap;
   }
-
   .lang-option:hover {
+    color: var(--color-text-primary);
     background-color: var(--color-bg-primary);
   }
 </style>
