@@ -14,7 +14,7 @@ const t = getTranslations(lang);
 
     <div class="temoignages-grid">
       {t.temoignages.items.map((item, i) => (
-        <article class="temoignage-card card reveal" style={`transition-delay: ${i * 110}ms`}>
+        <article class="temoignage-card card reveal-scale" style={`transition-delay: ${i * 130}ms`}>
           <span class="temoignage-mark" aria-hidden="true">"</span>
           <p class="temoignage-text">{item.quote}</p>
           <footer class="temoignage-author">

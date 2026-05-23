@@ -12,9 +12,9 @@ const t = getTranslations(lang);
       <h2 class="section-title" id="faq-title">{t.faq.title}</h2>
     </div>
 
-    <div class="faq-list reveal">
-      {t.faq.items.map((item) => (
-        <details class="faq-item">
+    <div class="faq-list">
+      {t.faq.items.map((item, i) => (
+        <details class="faq-item reveal-fade" style={`transition-delay: ${i * 80}ms`}>
           <summary class="faq-question">
             <span>{item.q}</span>
             <span class="faq-icon" aria-hidden="true"></span>
