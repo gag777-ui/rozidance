@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/utils';
+import SectionHero from '../../components/sections/SectionHero.astro';
+import SectionPrestations from '../../components/sections/SectionPrestations.astro';
+import SectionGalerie from '../../components/sections/SectionGalerie.astro';
+import SectionVideos from '../../components/sections/SectionVideos.astro';
+import SectionApropos from '../../components/sections/SectionApropos.astro';
+import SectionStats from '../../components/sections/SectionStats.astro';
+import SectionTemoignages from '../../components/sections/SectionTemoignages.astro';
+import SectionFAQ from '../../components/sections/SectionFAQ.astro';
+import SectionContact from '../../components/sections/SectionContact.astro';
+import GeoDivider from '../../components/ui/GeoDivider.astro';
+import SchemaOrg from '../../components/SchemaOrg.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'nl' } },
+    { params: { lang: 'ru' } },
+    { params: { lang: 'hy' } },
+  ];
+}
+
+const lang = (Astro.currentLocale ?? Astro.params.lang ?? 'fr') as Lang;
+const t = getTranslations(lang);
+---
+
+<Layout
+  title={t.meta.siteTitle}
+  description={t.meta.siteDescription}
+  ogTitle={t.meta.ogTitle}
+  ogDescription={t.meta.ogDescription}
+>
+  <SchemaOrg slot="schema" />
+
+  <SectionHero />
+  <GeoDivider />
+  <SectionPrestations />
+  <GeoDivider />
+  <SectionGalerie />
+  <GeoDivider />
+  <SectionVideos />
+  <GeoDivider />
+  <SectionApropos />
+  <GeoDivider />
+  <SectionStats />
+  <GeoDivider />
+  <SectionTemoignages />
+  <GeoDivider />
+  <SectionFAQ />
+  <GeoDivider />
+  <SectionContact />
+</Layout>

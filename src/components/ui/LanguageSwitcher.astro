@@ -1,0 +1,78 @@
+---
+import type { Lang } from '../../i18n/utils';
+
+const currentLocale = (Astro.currentLocale ?? 'fr') as Lang;
+const currentPath = Astro.url.pathname;
+
+const nonDefaultLocales = ['en', 'nl', 'ru', 'hy'];
+
+// Strip locale prefix to get the clean path
+let cleanPath = currentPath;
+for (const loc of nonDefaultLocales) {
+  if (cleanPath.startsWith(`/${loc}/`)) {
+    cleanPath = cleanPath.slice(loc.length + 1);
+    break;
+  }
+  if (cleanPath === `/${loc}`) {
+    cleanPath = '/';
+    break;
+  }
+}
+
+function langUrl(locale: string): string {
+  if (locale === 'fr') return cleanPath;
+  if (cleanPath === '/') return `/${locale}`;
+  return `/${locale}${cleanPath}`;
+}
+
+const langs: { code: Lang; label: string }[] = [
+  { code: 'fr', label: 'FR' },
+  { code: 'en', label: 'EN' },
+  { code: 'nl', label: 'NL' },
+  { code: 'ru', label: 'RU' },
+  { code: 'hy', label: 'HY' },
+];
+---
+
+<nav class="lang-switcher" aria-label="Sélection de langue">
+  {langs.map((lang) => (
+    <a
+      href={langUrl(lang.code)}
+      class:list={['lang-link', { 'lang-active': lang.code === currentLocale }]}
+      hreflang={lang.code}
+      aria-current={lang.code === currentLocale ? 'true' : undefined}
+    >
+      {lang.label}
+    </a>
+  ))}
+</nav>
+
+<style>
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+    flex-shrink: 0;
+  }
+
+  .lang-link {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding: 0.25rem 0.375rem;
+    border-radius: 2px;
+    transition: color 250ms, background-color 250ms;
+    line-height: 1;
+  }
+
+  .lang-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .lang-active {
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+</style>

@@ -1,50 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getTranslations } from '../i18n/utils';
-const t = getTranslations('fr');
+import type { Lang } from '../i18n/utils';
+const lang = (Astro.currentLocale ?? 'fr') as Lang;
+const t = getTranslations(lang);
 
-const faq = [
-  {
-    q: 'Faut-il déjà savoir chanter pour s\'inscrire aux cours ?',
-    a: 'Pas du tout ! Nos cours s\'adressent à tous les niveaux, du grand débutant au chanteur confirmé souhaitant se spécialiser dans le répertoire arménien.',
-  },
-  {
-    q: 'Les cours se font-ils en arménien ?',
-    a: 'Les cours peuvent se dérouler en français, russe ou arménien selon votre préférence. Les chants sont bien sûr enseignés dans leur langue originale (arménien), avec explication des textes.',
-  },
-  {
-    q: 'Les cours à distance sont-ils possibles ?',
-    a: 'Oui, nous proposons des cours en visioconférence (Zoom, Google Meet). Cette formule est disponible pour les cours individuels de chant et de danse.',
-  },
-  {
-    q: 'Combien de temps faut-il pour apprendre un chant ?',
-    a: 'En général, un chant simple peut être appris en 2 à 4 séances. Les pièces plus complexes demandent plus de temps. Tout dépend de votre niveau et de votre pratique entre les cours.',
-  },
-  {
-    q: 'Proposez-vous des cours pour préparer un chant de mariage ?',
-    a: 'Absolument ! C\'est l\'une de nos spécialités. Nous pouvons vous préparer à chanter lors de votre propre cérémonie de mariage, avec un programme sur mesure adapté à votre calendrier.',
-  },
-  {
-    q: 'Les cours de danse sont-ils adaptés aux débutants ?',
-    a: 'Oui, tous nos cours de danse débutent par les bases. Aucune expérience préalable en danse n\'est nécessaire. Nous avançons à votre rythme.',
-  },
-  {
-    q: 'Peut-on combiner cours de chant et cours de danse ?',
-    a: 'Tout à fait, et c\'est même ce que nous recommandons ! Contactez-nous pour un programme personnalisé.',
-  },
-  {
-    q: 'Les cours en groupe ont-ils un nombre minimum de participants ?',
-    a: 'Les cours en groupe démarrent à partir de 4 personnes. Ils sont idéaux pour les associations culturelles, groupes d\'amis ou préparations d\'événements.',
-  },
-  {
-    q: 'Peut-on offrir des cours en cadeau ?',
-    a: 'Oui, nous proposons des bons cadeaux pour des séances individuelles ou des forfaits. Contactez-nous par e-mail pour en commander un.',
-  },
-  {
-    q: 'Comment payer ?',
-    a: 'Nous acceptons le virement bancaire (BE) et le cash pour les cours en présentiel. Les modalités sont précisées lors de l\'inscription.',
-  },
-];
+const faq = t.cours.faqItems;
 ---
 
 <Layout

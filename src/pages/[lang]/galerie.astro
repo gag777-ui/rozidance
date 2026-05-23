@@ -1,8 +1,18 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getTranslations } from '../i18n/utils';
-import type { Lang } from '../i18n/utils';
-const lang = (Astro.currentLocale ?? 'fr') as Lang;
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'nl' } },
+    { params: { lang: 'ru' } },
+    { params: { lang: 'hy' } },
+  ];
+}
+
+const lang = (Astro.currentLocale ?? Astro.params.lang ?? 'fr') as Lang;
 const t = getTranslations(lang);
 
 const photos = [
@@ -19,43 +29,25 @@ const photos = [
 ---
 
 <Layout
-  title="Galerie — Rozi Dance"
+  title={`${t.galerie.title} — Rozi Dance`}
   description="Découvrez les photos de Rozi Dance : performances de danse arménienne, chant de la mariée, cérémonies et événements."
 >
   <main class="galerie-page">
     <div class="galerie-hero section-container">
-      <a href="/#galerie" class="galerie-back">← Retour</a>
+      <a href={`/${lang}`} class="galerie-back">← {t.nav.prestations === 'Performances' ? 'Back' : lang === 'nl' ? 'Terug' : lang === 'ru' ? 'Назад' : lang === 'hy' ? 'Վերադառնալ' : 'Retour'}</a>
       <div class="galerie-header">
         <span class="eyebrow">{t.galerie.eyebrow}</span>
-        <h1 class="galerie-title">Galerie</h1>
+        <h1 class="galerie-title">{t.galerie.title}</h1>
       </div>
     </div>
 
     <div class="galerie-grid-wrap section-container">
       <div class="galerie-grid" id="galerie-grid">
         {photos.map((photo) => (
-          <a
-            href={photo.src}
-            class="galerie-item"
-            data-pswp-width={photo.w}
-            data-pswp-height={photo.h}
-            aria-label={`Agrandir : ${photo.alt}`}
-            target="_blank"
-          >
+          <a href={photo.src} class="galerie-item" data-pswp-width={photo.w} data-pswp-height={photo.h} aria-label={photo.alt} target="_blank">
             <div class="galerie-img-wrap">
-              <img
-                src={photo.thumb}
-                alt={photo.alt}
-                loading="lazy"
-                decoding="async"
-                class="galerie-img"
-                width={photo.w}
-                height={photo.h}
-                onerror="this.src='/images/placeholder.webp'"
-              />
-              <div class="galerie-overlay" aria-hidden="true">
-                <span class="galerie-zoom-icon">+</span>
-              </div>
+              <img src={photo.thumb} alt={photo.alt} loading="lazy" decoding="async" class="galerie-img" width={photo.w} height={photo.h} onerror="this.src='/images/placeholder.webp'" />
+              <div class="galerie-overlay" aria-hidden="true"><span class="galerie-zoom-icon">+</span></div>
             </div>
           </a>
         ))}
@@ -63,13 +55,7 @@ const photos = [
     </div>
 
     <div class="galerie-footer section-container">
-      <a
-        href="https://instagram.com/rozi.dance"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-ghost"
-        aria-label="Voir notre Instagram @rozi.dance"
-      >
+      <a href="https://instagram.com/rozi.dance" target="_blank" rel="noopener noreferrer" class="btn-ghost" aria-label="Instagram @rozi.dance">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
         </svg>
@@ -82,10 +68,8 @@ const photos = [
 <script>
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
   import 'photoswipe/style.css';
-
   const lightbox = new PhotoSwipeLightbox({
-    gallery: '#galerie-grid',
-    children: 'a',
+    gallery: '#galerie-grid', children: 'a',
     pswpModule: () => import('photoswipe'),
     padding: { top: 20, bottom: 20, left: 20, right: 20 },
   });
@@ -93,103 +77,22 @@ const photos = [
 </script>
 
 <style>
-  .galerie-page {
-    padding-block: 2rem 5rem;
-    min-height: 80vh;
-  }
-
-  .galerie-hero {
-    padding-block: 2rem 2.5rem;
-  }
-
-  .galerie-back {
-    display: inline-block;
-    font-family: var(--font-sans);
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    margin-bottom: 1.5rem;
-    transition: color 300ms;
-  }
-
+  .galerie-page { padding-block: 2rem 5rem; min-height: 80vh; }
+  .galerie-hero { padding-block: 2rem 2.5rem; }
+  .galerie-back { display: inline-block; font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.04em; color: var(--color-text-secondary); text-decoration: none; margin-bottom: 1.5rem; transition: color 300ms; }
   .galerie-back:hover { color: var(--color-accent); }
-
-  .galerie-header {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .galerie-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: var(--color-text-primary);
-    margin: 0;
-    line-height: 1.0;
-  }
-
-  .galerie-grid-wrap {
-    padding-block: 0 2.5rem;
-  }
-
-  .galerie-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-  }
-
+  .galerie-header { display: flex; flex-direction: column; gap: 0.75rem; }
+  .galerie-title { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--color-text-primary); margin: 0; line-height: 1.0; }
+  .galerie-grid-wrap { padding-block: 0 2.5rem; }
+  .galerie-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
   .galerie-item { display: block; }
-
-  .galerie-img-wrap {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    border-radius: 4px;
-    background-color: var(--color-border);
-  }
-
-  .galerie-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-    transition: transform 600ms var(--ease-out-soft);
-  }
-
-  .galerie-overlay {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(43, 31, 21, 0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 400ms var(--ease-out-soft);
-  }
-
-  .galerie-zoom-icon {
-    color: #fff;
-    font-size: 2rem;
-    font-weight: 300;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 300ms, transform 300ms var(--ease-out-soft);
-  }
-
+  .galerie-img-wrap { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; background-color: var(--color-border); }
+  .galerie-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 600ms var(--ease-out-soft); }
+  .galerie-overlay { position: absolute; inset: 0; background-color: rgba(43, 31, 21, 0); display: flex; align-items: center; justify-content: center; transition: background-color 400ms var(--ease-out-soft); }
+  .galerie-zoom-icon { color: #fff; font-size: 2rem; font-weight: 300; opacity: 0; transform: scale(0.8); transition: opacity 300ms, transform 300ms var(--ease-out-soft); }
   .galerie-item:hover .galerie-img { transform: scale(1.04); }
   .galerie-item:hover .galerie-overlay { background-color: rgba(43, 31, 21, 0.2); }
   .galerie-item:hover .galerie-zoom-icon { opacity: 1; transform: scale(1); }
-
-  .galerie-footer {
-    display: flex;
-    justify-content: center;
-    padding-top: 1rem;
-  }
-
-  @media (max-width: 768px) {
-    .galerie-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-    }
-  }
+  .galerie-footer { display: flex; justify-content: center; padding-top: 1rem; }
+  @media (max-width: 768px) { .galerie-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; } }
 </style>

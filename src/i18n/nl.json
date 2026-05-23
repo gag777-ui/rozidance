@@ -1,0 +1,187 @@
+{
+  "meta": {
+    "siteTitle": "Rozi Dance — Armeens Zingen & Dansen",
+    "siteDescription": "Armeens artistiek duo met bruidszang, evenementendans en zang- en danslessen. Gevestigd in België, actief door heel Europa.",
+    "ogTitle": "Rozi Dance — De Armeense Ziel in Beweging",
+    "ogDescription": "Armeense zang- en dansoptredens voor bruiloften, ceremonies en evenementen. Zang- en danslessen voor alle niveaus."
+  },
+
+  "nav": {
+    "prestations": "Optredens",
+    "galerie": "Galerij",
+    "cours": "Lessen",
+    "apropos": "Over ons",
+    "contact": "Contact"
+  },
+
+  "hero": {
+    "eyebrowChant": "Zang",
+    "eyebrowDanse": "Dans",
+    "eyebrowMusique": "Muziek",
+    "eyebrowGalerie": "Galerij",
+    "line1": "Uw momenten",
+    "line2": "",
+    "line3italic": "in het licht",
+    "subtitle": "Artistiek duo & groep voor bruiloften, feesten en privé-evenementen.",
+    "ctaPrimary": "Neem contact op",
+    "ctaSecondary": "Ontdekken"
+  },
+
+  "prestations": {
+    "eyebrow": "Wat wij bieden",
+    "title": "Drie werelden, één passie",
+    "items": [
+      {
+        "id": "chant-mariee",
+        "title": "Bruiloften & feesten",
+        "description": "Bruiloften, doopsels, verjaardagen, kinderfeestjes of privé-avonden — wij brengen uw evenementen tot leven met zang, dans en optredens op maat.",
+        "link": "Meer weten"
+      },
+      {
+        "id": "danse-evenementielle",
+        "title": "De kunst van het zingen",
+        "description": "Een stem voor elke gelegenheid. Traditionele, hedendaagse of gepersonaliseerde zang, in meerdere talen, voor uw meest bijzondere momenten.",
+        "link": "Meer weten"
+      },
+      {
+        "id": "cours",
+        "title": "Zang & dans — lessen",
+        "description": "Zang- en danslessen, individueel of in groep, voor alle niveaus en leeftijden. Meerdere onderwijstalen, van beginner tot gevorderde.",
+        "link": "Lessen bekijken"
+      }
+    ]
+  },
+
+  "galerie": {
+    "eyebrow": "Vastgelegde momenten",
+    "title": "Galerij",
+    "instagramLink": "Bekijk onze Instagram",
+    "altPlaceholder": "Foto Rozi Dance"
+  },
+
+  "videos": {
+    "eyebrow": "In optreden",
+    "title": "Beleef onze voorstellingen",
+    "youtubeLink": "Bekijk het volledige YouTube-kanaal"
+  },
+
+  "stats": {
+    "eyebrow": "Rozi Dance in cijfers",
+    "items": [
+      { "value": "200+", "label": "Begeleidde bruiloften" },
+      { "value": "4 jaar", "label": "Artistieke ervaring" },
+      { "value": "8", "label": "Landen" },
+      { "value": "100%", "label": "Met het hart" }
+    ]
+  },
+
+  "temoignages": {
+    "eyebrow": "Wat onze klanten zeggen",
+    "title": "Zij vertrouwden ons",
+    "items": [
+      {
+        "quote": "Een absoluut magisch moment. De liederen van Rozi Dance raakten de hele familie — een herinnering voor altijd.",
+        "author": "Ani & Saro",
+        "event": "Armeense bruiloft, Brussel"
+      },
+      {
+        "quote": "Professioneel, getalenteerd en warm. De dans maakte onze avond subliem — gasten praten er nog steeds over.",
+        "author": "Nadia M.",
+        "event": "Huwelijksreceptie, Luik"
+      },
+      {
+        "quote": "Mijn kinderen zijn dol op de lessen. De sfeer is zorgzaam en de overdracht van de Armeense cultuur is prachtig.",
+        "author": "Christine K.",
+        "event": "Danslessen, Antwerpen"
+      }
+    ]
+  },
+
+  "faq": {
+    "eyebrow": "Veelgestelde vragen",
+    "title": "Alles wat u wilt weten",
+    "items": [
+      {
+        "q": "Treden jullie op buiten België?",
+        "a": "Ja, wij treden op in heel Europa. Reiskosten kunnen van toepassing zijn afhankelijk van de afstand. Neem contact op voor een gepersonaliseerde offerte."
+      },
+      {
+        "q": "Hoe ver van tevoren moeten we boeken?",
+        "a": "We raden aan ons minstens 2 tot 3 maanden voor het evenement te contacteren, vooral in het hoogseizoen (mei–september)."
+      },
+      {
+        "q": "Bieden jullie maatwerk optredens aan?",
+        "a": "Absoluut. Elk optreden is aangepast aan uw wensen: keuze van liedjes, duur, kostuums. We bespreken alles vooraf."
+      },
+      {
+        "q": "Zijn de lessen toegankelijk voor absolute beginners?",
+        "a": "Zeker. We verwelkomen alle niveaus. Elke les is aangepast aan het tempo en de doelstellingen van elke leerling."
+      },
+      {
+        "q": "Kunnen meerdere optredens voor hetzelfde evenement gecombineerd worden?",
+        "a": "Ja, en dat is vaak wat we aanbevelen. Bijvoorbeeld bruidszang 's ochtends en een dansoptreden 's avonds — we bouwen het programma samen met u."
+      }
+    ]
+  },
+
+  "apropos": {
+    "eyebrow": "Ons verhaal",
+    "title": "Twee stemmen, twee lichamen, één traditie",
+    "p1": "Rozi Dance is bovenal een verhaal van gedeelde passie voor de Armeense cultuur. Opgeleid sinds de kindertijd in traditionele kunsten, bestendigen wij een millennia-oud muzikaal en choreografisch erfgoed met een hedendaagse gevoeligheid.",
+    "p2": "Of het nu bij de aankleedceremonie van een bruid, een groot huwelijksbanket of in de leszaal is, wij steken ons hart en ziel in de schoonheid van onze tradities.",
+    "altPortrait": "Portret van het Rozi Dance duo"
+  },
+
+  "contact": {
+    "eyebrow": "Reservering & informatie",
+    "title": "Laten we het over uw evenement hebben",
+    "subtitle": "Contacteer ons via uw voorkeurkanaal — we antwoorden binnen 24 uur.",
+    "instagram": { "label": "Instagram", "handle": "@rozi.dance" },
+    "email": { "label": "E-mail", "address": "contact@rozidance.be" },
+    "youtube": { "label": "YouTube", "handle": "Ons kanaal" }
+  },
+
+  "cours": {
+    "pageTitle": "Armeense zang- & danslessen — Rozi Dance",
+    "pageDescription": "Armeense en internationale zanglessen, Armeense volksdanslessen. Individueel en in groep, alle niveaus, online mogelijk.",
+    "heroEyebrow": "Leer op uw eigen tempo",
+    "heroTitle": "Zang- & danslessen",
+    "heroSubtitle": "Lessen toegankelijk voor iedereen, van beginner tot gevorderde, persoonlijk of online.",
+    "chantTitle": "Zanglessen",
+    "chantDescription": "Ontdek het traditionele Armeense repertoire en internationale liederen. Onze lessen zijn afgestemd op uw stem en niveau.",
+    "danseTitle": "Danslessen",
+    "danseDescription": "Maak kennis met Armeense volksdansen of perfectioneer uw techniek. Individuele of groepslessen in een warme sfeer.",
+    "faqEyebrow": "Veelgestelde vragen",
+    "faqTitle": "Alles wat u wilt weten",
+    "faqItems": [
+      { "q": "Moet ik al kunnen zingen om me in te schrijven?", "a": "Helemaal niet! Onze lessen zijn voor alle niveaus, van absolute beginners tot ervaren zangers." },
+      { "q": "Worden de lessen in het Armeens gegeven?", "a": "De lessen kunnen in het Frans, Russisch of Armeens plaatsvinden. De liedjes worden onderricht in hun originele taal (Armeens), met uitleg van de teksten." },
+      { "q": "Zijn online lessen mogelijk?", "a": "Ja, we bieden lessen via videoconferentie (Zoom, Google Meet) aan." },
+      { "q": "Hoe lang duurt het om een lied te leren?", "a": "Een eenvoudig lied kan in 2 tot 4 lessen geleerd worden. Complexere stukken kosten meer tijd." },
+      { "q": "Bieden jullie lessen aan om een trouwlied voor te bereiden?", "a": "Absoluut! Dit is een van onze specialiteiten. We bereiden u voor op uw huwelijksceremonie." },
+      { "q": "Zijn de danslessen geschikt voor beginners?", "a": "Ja, al onze danslessen beginnen bij de basis. Geen voorafgaande ervaring vereist." },
+      { "q": "Kunnen zang- en danslessen gecombineerd worden?", "a": "Absoluut, en dat is wat we aanbevelen! Contacteer ons voor een persoonlijk programma." },
+      { "q": "Is er een minimum aantal deelnemers voor groepslessen?", "a": "Groepslessen starten vanaf 4 personen." },
+      { "q": "Kunnen lessen als cadeau gegeven worden?", "a": "Ja, we bieden cadeaubonnen aan. Contacteer ons per e-mail." },
+      { "q": "Hoe betalen we?", "a": "We accepteren bankoverschrijving (BE) en contant voor persoonlijke lessen." }
+    ],
+    "ctaTitle": "Klaar om te beginnen?",
+    "ctaSubtitle": "Contacteer ons om de formule te kiezen die bij u past.",
+    "ctaBtn": "Neem contact op"
+  },
+
+  "footer": {
+    "tagline": "De Armeense ziel in beweging.",
+    "nav": "Navigatie",
+    "links": "Links",
+    "legal": "Juridische vermeldingen",
+    "copyright": "© {year} Rozi Dance. Alle rechten voorbehouden.",
+    "madeWith": "Website gemaakt met zorg."
+  },
+
+  "404": {
+    "title": "Pagina niet gevonden",
+    "description": "De pagina die u zoekt bestaat niet of is verplaatst.",
+    "cta": "Terug naar huis"
+  }
+}

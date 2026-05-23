@@ -1,7 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getTranslations } from '../i18n/utils';
-const t = getTranslations('fr');
+import type { Lang } from '../i18n/utils';
+const lang = (Astro.currentLocale ?? 'fr') as Lang;
+const t = getTranslations(lang);
 ---
 
 <Layout

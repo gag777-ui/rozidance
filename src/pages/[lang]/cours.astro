@@ -1,0 +1,117 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'nl' } },
+    { params: { lang: 'ru' } },
+    { params: { lang: 'hy' } },
+  ];
+}
+
+const lang = (Astro.currentLocale ?? Astro.params.lang ?? 'fr') as Lang;
+const t = getTranslations(lang);
+const faq = t.cours.faqItems;
+---
+
+<Layout title={t.cours.pageTitle} description={t.cours.pageDescription}>
+  <section class="cours-hero" aria-labelledby="cours-title">
+    <div class="section-container cours-hero-inner">
+      <span class="eyebrow">{t.cours.heroEyebrow}</span>
+      <h1 id="cours-title">{t.cours.heroTitle}</h1>
+      <p class="cours-hero-subtitle">{t.cours.heroSubtitle}</p>
+    </div>
+  </section>
+
+  <section class="cours-section" aria-labelledby="chant-title">
+    <div class="section-container cours-section-inner">
+      <div class="cours-text reveal">
+        <h2 id="chant-title">{t.cours.chantTitle}</h2>
+        <p>{t.cours.chantDescription}</p>
+      </div>
+      <div class="cours-deco reveal" aria-hidden="true">
+        <div class="cours-deco-circle"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cours-section cours-section-alt" aria-labelledby="danse-title">
+    <div class="section-container cours-section-inner reverse">
+      <div class="cours-deco reveal" aria-hidden="true">
+        <div class="cours-deco-circle danse-circle"></div>
+      </div>
+      <div class="cours-text reveal">
+        <h2 id="danse-title">{t.cours.danseTitle}</h2>
+        <p>{t.cours.danseDescription}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cours-faq" aria-labelledby="faq-title">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="eyebrow">{t.cours.faqEyebrow}</span>
+        <h2 id="faq-title">{t.cours.faqTitle}</h2>
+      </div>
+      <div class="faq-list" id="faq-accordion">
+        {faq.map((item: { q: string; a: string }, i: number) => (
+          <details class="faq-item reveal" style={`transition-delay: ${i * 40}ms`}>
+            <summary class="faq-question">
+              {item.q}
+              <span class="faq-chevron" aria-hidden="true">+</span>
+            </summary>
+            <p class="faq-answer">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cours-cta" aria-labelledby="cta-title">
+    <div class="section-container">
+      <div class="cta-inner reveal">
+        <h2 id="cta-title">{t.cours.ctaTitle}</h2>
+        <p>{t.cours.ctaSubtitle}</p>
+        <a href={`/${lang}#contact`} class="btn-primary">{t.cours.ctaBtn}</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .cours-hero { padding-block: 5rem 3.5rem; background-color: var(--color-bg-card); }
+  .cours-hero-inner { display: flex; flex-direction: column; gap: 1rem; max-width: 700px; }
+  .cours-hero-inner h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--color-text-primary); margin: 0; }
+  .cours-hero-subtitle { font-size: 1.0625rem; color: var(--color-text-secondary); line-height: 1.65; margin: 0; }
+  .cours-section { padding-block: 5rem; }
+  .cours-section-alt { background-color: var(--color-bg-card); }
+  .cours-section-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .cours-section-inner.reverse { direction: rtl; }
+  .cours-section-inner.reverse > * { direction: ltr; }
+  .cours-text h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); color: var(--color-text-primary); margin: 0 0 1.25rem; }
+  .cours-text p { font-size: 1rem; color: var(--color-text-secondary); line-height: 1.75; margin: 0; }
+  .cours-deco-circle { width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, var(--color-gold) 0%, transparent 70%); opacity: 0.06; margin-inline: auto; }
+  .danse-circle { background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%); }
+  .cours-faq { padding-block: 5rem; background-color: var(--color-bg-card); }
+  .section-header { text-align: center; margin-bottom: 3rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+  .section-header h2 { font-size: clamp(1.875rem, 3.5vw, 2.75rem); color: var(--color-text-primary); margin: 0; }
+  .faq-list { max-width: 800px; margin-inline: auto; display: flex; flex-direction: column; gap: 0; }
+  .faq-item { border-bottom: 0.5px solid var(--color-border); }
+  .faq-question { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; font-family: var(--font-serif); font-size: 1.0625rem; color: var(--color-text-primary); cursor: pointer; list-style: none; user-select: none; }
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-chevron { font-size: 1.25rem; color: var(--color-accent); transition: transform 300ms var(--ease-out-soft); flex-shrink: 0; }
+  details[open] .faq-chevron { transform: rotate(45deg); }
+  .faq-answer { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.75; margin: 0; padding-bottom: 1.25rem; padding-right: 2rem; }
+  .cours-cta { padding-block: 5rem; }
+  .cta-inner { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+  .cta-inner h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); color: var(--color-text-primary); margin: 0; }
+  .cta-inner p { font-size: 1rem; color: var(--color-text-secondary); margin: 0; max-width: 45ch; line-height: 1.65; }
+  @media (max-width: 900px) {
+    .cours-section-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .cours-section-inner.reverse { direction: ltr; }
+    .cours-deco { display: none; }
+  }
+</style>

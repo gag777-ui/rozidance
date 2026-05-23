@@ -1,6 +1,8 @@
 ---
 import { getTranslations } from '../../i18n/utils';
-const t = getTranslations('fr');
+import type { Lang } from '../../i18n/utils';
+const lang = (Astro.currentLocale ?? 'fr') as Lang;
+const t = getTranslations(lang);
 ---
 
 <section id="contact" class="section-contact" aria-labelledby="contact-title">

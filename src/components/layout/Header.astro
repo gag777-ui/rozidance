@@ -1,6 +1,9 @@
 ---
 import { getTranslations } from '../../i18n/utils';
-const t = getTranslations('fr');
+import type { Lang } from '../../i18n/utils';
+import LanguageSwitcher from '../ui/LanguageSwitcher.astro';
+const lang = (Astro.currentLocale ?? 'fr') as Lang;
+const t = getTranslations(lang);
 ---
 
 <header id="site-header" class="site-header">
@@ -29,6 +32,9 @@ const t = getTranslations('fr');
         <li><a href="/#contact" class="nav-link">{t.nav.contact}</a></li>
       </ul>
     </nav>
+
+    <!-- Sélecteur de langue -->
+    <LanguageSwitcher />
 
     <!-- CTA desktop -->
     <a href="/#contact" class="btn-primary header-cta">
