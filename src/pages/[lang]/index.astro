@@ -36,6 +36,11 @@ const t = getTranslations(lang);
   <SchemaOrg slot="schema" />
 
   <SectionHero />
+
+  <div class="logo-bridge reveal-fade" aria-hidden="true">
+    <img src="/images/logo.webp" alt="" width="120" height="120" loading="eager" decoding="async" />
+  </div>
+
   <GeoDivider />
   <SectionPrestations />
   <GeoDivider />
@@ -53,3 +58,18 @@ const t = getTranslations(lang);
   <GeoDivider />
   <SectionContact />
 </Layout>
+
+<style>
+  .logo-bridge {
+    display: flex;
+    justify-content: center;
+    padding-block: 2.5rem 1.5rem;
+    background-color: var(--color-bg-primary);
+  }
+
+  .logo-bridge img {
+    width: 96px;
+    height: auto;
+    opacity: 0.88;
+  }
+</style>
