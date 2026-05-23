@@ -170,13 +170,6 @@
   }
 }
 
-/* ─── Custom cursor ──────────────────────────────────────────────────────── */
-@media (hover: hover) and (pointer: fine) {
-  html { cursor: none; }
-  a, button, [role="button"], label, select, [data-cursor-grow] {
-    cursor: none;
-  }
-}
 
 /* ─── Scroll animations (JS adds .is-visible) ────────────────────────────── */
 .reveal {
