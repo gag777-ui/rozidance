@@ -105,39 +105,43 @@ const videos = [
 </section>
 
 <script>
-  document.querySelectorAll<HTMLElement>('.video-thumb-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.video-card');
-      if (!card) return;
+  function initVideos() {
+    document.querySelectorAll<HTMLElement>('.video-thumb-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.video-card');
+        if (!card) return;
 
-      const player = card.querySelector('.video-player') as HTMLElement | null;
-      const iframe = card.querySelector('.video-iframe') as HTMLIFrameElement | null;
+        const player = card.querySelector('.video-player') as HTMLElement | null;
+        const iframe = card.querySelector('.video-iframe') as HTMLIFrameElement | null;
 
-      if (!player || !iframe) return;
+        if (!player || !iframe) return;
 
-      const dataSrc = iframe.getAttribute('data-src');
-      if (dataSrc) iframe.src = dataSrc;
-      player.hidden = false;
-      btn.hidden = true;
+        const dataSrc = iframe.getAttribute('data-src');
+        if (dataSrc) iframe.src = dataSrc;
+        player.hidden = false;
+        btn.hidden = true;
+      });
     });
-  });
 
-  document.querySelectorAll('.video-close-btn').forEach((closeBtn) => {
-    closeBtn.addEventListener('click', () => {
-      const card = closeBtn.closest('.video-card');
-      if (!card) return;
+    document.querySelectorAll<HTMLElement>('.video-close-btn').forEach((closeBtn) => {
+      closeBtn.addEventListener('click', () => {
+        const card = closeBtn.closest('.video-card');
+        if (!card) return;
 
-      const player = card.querySelector('.video-player') as HTMLElement | null;
-      const iframe = card.querySelector('.video-iframe') as HTMLIFrameElement | null;
-      const thumbBtn = card.querySelector('.video-thumb-btn') as HTMLElement | null;
+        const player = card.querySelector('.video-player') as HTMLElement | null;
+        const iframe = card.querySelector('.video-iframe') as HTMLIFrameElement | null;
+        const thumbBtn = card.querySelector('.video-thumb-btn') as HTMLElement | null;
 
-      if (player) {
-        player.hidden = true;
-        if (iframe) iframe.src = '';
-      }
-      if (thumbBtn) thumbBtn.hidden = false;
+        if (player) {
+          player.hidden = true;
+          if (iframe) iframe.src = '';
+        }
+        if (thumbBtn) thumbBtn.hidden = false;
+      });
     });
-  });
+  }
+
+  document.addEventListener('astro:page-load', initVideos);
 </script>
 
 <style>
