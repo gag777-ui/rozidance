@@ -26,11 +26,11 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     <!-- Nav desktop -->
     <nav class="nav-desktop" aria-label="Navigation principale">
       <ul>
-        <li><a href={`${base}/#prestations`} class="nav-link">{t.nav.prestations}</a></li>
-        <li><a href={`${base}/#galerie`} class="nav-link">{t.nav.galerie}</a></li>
+        <li><a href={`${base || '/'}#prestations`} class="nav-link">{t.nav.prestations}</a></li>
+        <li><a href={`${base || '/'}#galerie`} class="nav-link">{t.nav.galerie}</a></li>
         <li><a href={`${base}/cours`} class="nav-link">{t.nav.cours}</a></li>
-        <li><a href={`${base}/#apropos`} class="nav-link">{t.nav.apropos}</a></li>
-        <li><a href={`${base}/#contact`} class="nav-link">{t.nav.contact}</a></li>
+        <li><a href={`${base || '/'}#apropos`} class="nav-link">{t.nav.apropos}</a></li>
+        <li><a href={`${base || '/'}#contact`} class="nav-link">{t.nav.contact}</a></li>
       </ul>
     </nav>
 
@@ -38,7 +38,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     <LanguageSwitcher />
 
     <!-- CTA desktop -->
-    <a href={`${base}/#contact`} class="btn-primary header-cta">
+    <a href={`${base || '/'}#contact`} class="btn-primary header-cta">
       {t.nav.contact}
     </a>
 
@@ -59,11 +59,11 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   <!-- Nav mobile -->
   <nav id="mobile-menu" class="nav-mobile" aria-label="Menu mobile" hidden>
     <ul>
-      <li><a href={`${base}/#prestations`} class="nav-link">{t.nav.prestations}</a></li>
-      <li><a href={`${base}/#galerie`} class="nav-link">{t.nav.galerie}</a></li>
+      <li><a href={`${base || '/'}#prestations`} class="nav-link">{t.nav.prestations}</a></li>
+      <li><a href={`${base || '/'}#galerie`} class="nav-link">{t.nav.galerie}</a></li>
       <li><a href={`${base}/cours`} class="nav-link">{t.nav.cours}</a></li>
-      <li><a href={`${base}/#apropos`} class="nav-link">{t.nav.apropos}</a></li>
-      <li><a href={`${base}/#contact`} class="nav-link">{t.nav.contact}</a></li>
+      <li><a href={`${base || '/'}#apropos`} class="nav-link">{t.nav.apropos}</a></li>
+      <li><a href={`${base || '/'}#contact`} class="nav-link">{t.nav.contact}</a></li>
     </ul>
   </nav>
 </header>

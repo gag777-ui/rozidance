@@ -52,11 +52,11 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     <nav class="footer-nav" aria-label="Navigation footer">
       <p class="footer-nav-title">{t.footer.nav}</p>
       <ul>
-        <li><a href={`${base}/#prestations`} class="nav-link">{t.nav.prestations}</a></li>
-        <li><a href={`${base}/#galerie`} class="nav-link">{t.nav.galerie}</a></li>
+        <li><a href={`${base || '/'}#prestations`} class="nav-link">{t.nav.prestations}</a></li>
+        <li><a href={`${base || '/'}#galerie`} class="nav-link">{t.nav.galerie}</a></li>
         <li><a href={`${base}/cours`} class="nav-link">{t.nav.cours}</a></li>
-        <li><a href={`${base}/#apropos`} class="nav-link">{t.nav.apropos}</a></li>
-        <li><a href={`${base}/#contact`} class="nav-link">{t.nav.contact}</a></li>
+        <li><a href={`${base || '/'}#apropos`} class="nav-link">{t.nav.apropos}</a></li>
+        <li><a href={`${base || '/'}#contact`} class="nav-link">{t.nav.contact}</a></li>
       </ul>
     </nav>
 
