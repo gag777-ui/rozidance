@@ -192,7 +192,12 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     position: fixed;
     inset: 0;
     z-index: 140;
-    background-color: var(--color-bg-dark);
+    background:
+      radial-gradient(ellipse 110% 55% at 50% 0%, rgba(193, 104, 71, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 40% at 90% 95%, rgba(122, 92, 32, 0.13) 0%, transparent 55%),
+      rgba(12, 7, 4, 0.95);
+    backdrop-filter: blur(20px) saturate(0.6);
+    -webkit-backdrop-filter: blur(20px) saturate(0.6);
     display: flex;
     align-items: center;
     justify-content: center;
