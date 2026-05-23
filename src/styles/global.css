@@ -233,6 +233,35 @@
   transform: scale(1) translateY(0);
 }
 
+/* ─── Apparition des titres (stagger dans .section-header) ──────────────── */
+
+/* Eyebrow : glisse depuis le bas en premier */
+.section-header .eyebrow {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 550ms var(--ease-out-soft),
+              transform 550ms var(--ease-out-soft);
+}
+.section-header.is-visible .eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Titre : masqué, monte avec 160ms de décalage + léger letter-spacing */
+.section-header .section-title {
+  opacity: 0;
+  transform: translateY(32px);
+  letter-spacing: 0.04em;
+  transition: opacity 900ms var(--ease-out-soft) 160ms,
+              transform 900ms var(--ease-out-soft) 160ms,
+              letter-spacing 900ms var(--ease-out-soft) 160ms;
+}
+.section-header.is-visible .section-title {
+  opacity: 1;
+  transform: translateY(0);
+  letter-spacing: 0;
+}
+
 /* ─── Page loader ────────────────────────────────────────────────────────── */
 #page-loader {
   position: fixed;
