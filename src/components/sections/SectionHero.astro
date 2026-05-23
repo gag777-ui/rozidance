@@ -5,25 +5,13 @@ const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
 const base = lang === 'fr' ? '' : `/${lang}`;
 
-const heroVideoId = import.meta.env.PUBLIC_HERO_VIDEO_ID || 'dQw4w9WgXcQ';
-const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&playsinline=1&fs=0`;
 ---
 
 <section class="hero-section" aria-labelledby="hero-title">
 
-  <!-- Vidéo fond plein écran -->
+  <!-- Fond hero : image statique (remplacée par <video> quand le MP4 sera dispo) -->
   <div class="hero-video-bg" aria-hidden="true">
-    <!-- Poster affiché avant le chargement de la vidéo (et en fallback si YouTube bloque) -->
     <div class="hero-poster"></div>
-    <iframe
-      class="hero-bg-iframe"
-      data-src={`https://www.youtube-nocookie.com/embed/${heroVideoId}?${ytParams}`}
-      title=""
-      tabindex="-1"
-      style="border:none"
-      allow="autoplay; encrypted-media"
-      disablepictureinpicture
-    ></iframe>
     <div class="hero-filter"></div>
   </div>
 
@@ -74,23 +62,6 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
       </div>
     </div>
 
-    <!-- Widget vidéo (mobile uniquement) -->
-    <div class="hero-video-wrap">
-      <div class="hero-video-frame">
-        <iframe
-          class="hero-widget-iframe"
-          data-src={`https://www.youtube-nocookie.com/embed/${heroVideoId}?${ytParams}`}
-          title="Rozi Dance — vidéo de présentation"
-          tabindex="-1"
-          style="border:none"
-          allow="autoplay; encrypted-media"
-          loading="lazy"
-          aria-hidden="true"
-          disablepictureinpicture
-        ></iframe>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -115,42 +86,22 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
     z-index: 0;
   }
 
-  /* Poster image — au-dessus de l'iframe, disparaît progressivement */
+  /* Image de fond — permanent jusqu'à intégration du MP4 */
   .hero-poster {
     position: absolute;
     inset: 0;
     background: url('/images/og-default.webp') center / cover no-repeat;
-    z-index: 2;
-    pointer-events: none;
-    animation: posterFadeOut 1s ease-out 2.5s forwards;
+    z-index: 0;
   }
 
-  @keyframes posterFadeOut {
-    to { opacity: 0; }
-  }
-
-  .hero-bg-iframe {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100vw;
-    height: 56.25vw;
-    min-height: 100%;
-    min-width: 177.78vh;
-    border: none;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* Filtre sombre — au-dessus du poster et de l'iframe */
+  /* Filtre sombre par-dessus l'image */
   .hero-filter {
     position: absolute;
     inset: 0;
     background:
       linear-gradient(to bottom, rgba(20,10,5,0.62) 0%, transparent 48%),
       radial-gradient(ellipse 120% 100% at 50% 50%, rgba(20,10,5,0.5) 0%, rgba(20,10,5,0.82) 100%);
-    z-index: 3;
+    z-index: 1;
     pointer-events: none;
   }
 
@@ -304,21 +255,3 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
   }
 </style>
 
-<script>
-  function loadHeroVideos() {
-    document.querySelectorAll<HTMLIFrameElement>('.hero-bg-iframe, .hero-widget-iframe').forEach((iframe) => {
-      const target = iframe.dataset.src;
-      if (target && iframe.src !== target) {
-        iframe.src = target;
-      }
-    });
-  }
-
-  // Nettoie les anciens listeners avant d'en ajouter de nouveaux
-  (window as any)._heroAbort?.abort();
-  const ac = new AbortController();
-  (window as any)._heroAbort = ac;
-
-  window.addEventListener('load', loadHeroVideos, { signal: ac.signal, once: true });
-  document.addEventListener('astro:after-swap', loadHeroVideos, { signal: ac.signal });
-</script>
