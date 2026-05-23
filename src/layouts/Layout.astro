@@ -109,7 +109,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           },
           { threshold: 0.12 }
         );
-        document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => {
+        document.querySelectorAll('.reveal:not(.is-visible), .reveal-fade:not(.is-visible), .reveal-left:not(.is-visible), .reveal-right:not(.is-visible), .reveal-scale:not(.is-visible)').forEach((el) => {
           observer.observe(el);
         });
       }

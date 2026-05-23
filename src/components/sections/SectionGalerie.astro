@@ -16,13 +16,13 @@ const photos = [
 
 <section id="galerie" class="section-galerie" aria-labelledby="galerie-title">
   <div class="section-container">
-    <div class="section-header reveal">
+    <div class="section-header reveal-fade">
       <span class="eyebrow">{t.galerie.eyebrow}</span>
       <h2 class="section-title" id="galerie-title">{t.galerie.title}</h2>
     </div>
 
     <!-- Gallery grid -->
-    <div class="gallery-grid reveal" id="gallery-grid">
+    <div class="gallery-grid reveal-scale" id="gallery-grid">
       {photos.map((photo, i) => (
         <a
           href={photo.src}
@@ -52,7 +52,7 @@ const photos = [
     </div>
 
     <!-- Boutons footer -->
-    <div class="gallery-footer reveal">
+    <div class="gallery-footer reveal-fade">
       <a href={`${base}/galerie`} class="btn-primary gallery-all-btn">
         {t.galerie.ctaAll}
       </a>

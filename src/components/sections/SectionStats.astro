@@ -7,10 +7,10 @@ const t = getTranslations(lang);
 
 <section class="section-stats" aria-labelledby="stats-eyebrow">
   <div class="section-container">
-    <span class="eyebrow stats-eyebrow" id="stats-eyebrow">{t.stats.eyebrow}</span>
+    <span class="eyebrow stats-eyebrow reveal-fade" id="stats-eyebrow">{t.stats.eyebrow}</span>
     <div class="stats-grid">
-      {t.stats.items.map((stat) => (
-        <div class="stat-item reveal">
+      {t.stats.items.map((stat, i) => (
+        <div class="stat-item reveal-scale" style={`transition-delay: ${i * 100}ms`}>
           <span class="stat-value">{stat.value}</span>
           <span class="stat-label">{stat.label}</span>
         </div>
