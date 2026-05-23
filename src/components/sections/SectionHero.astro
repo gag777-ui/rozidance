@@ -115,12 +115,18 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
     z-index: 0;
   }
 
-  /* Poster image — visible avant le chargement de la vidéo */
+  /* Poster image — au-dessus de l'iframe, disparaît progressivement */
   .hero-poster {
     position: absolute;
     inset: 0;
     background: url('/images/og-default.webp') center / cover no-repeat;
-    z-index: 0;
+    z-index: 2;
+    pointer-events: none;
+    animation: posterFadeOut 1s ease-out 2.5s forwards;
+  }
+
+  @keyframes posterFadeOut {
+    to { opacity: 0; }
   }
 
   .hero-bg-iframe {
@@ -137,14 +143,15 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
     z-index: 1;
   }
 
-  /* Filtre sombre par-dessus la vidéo */
+  /* Filtre sombre — au-dessus du poster et de l'iframe */
   .hero-filter {
     position: absolute;
     inset: 0;
     background:
       linear-gradient(to bottom, rgba(20,10,5,0.62) 0%, transparent 48%),
       radial-gradient(ellipse 120% 100% at 50% 50%, rgba(20,10,5,0.5) 0%, rgba(20,10,5,0.82) 100%);
-    z-index: 1;
+    z-index: 3;
+    pointer-events: none;
   }
 
   .hero-pattern { display: none; }
