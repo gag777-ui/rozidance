@@ -335,11 +335,13 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
 </style>
 
 <script>
-  // Charge les iframes au window.load pour ne pas bloquer la page
-  window.addEventListener('load', () => {
+  function loadHeroVideos() {
     const bgIframe = document.querySelector<HTMLIFrameElement>('.hero-bg-iframe');
-    if (bgIframe?.dataset.src && getComputedStyle(bgIframe.closest('.hero-video-bg') as Element).display !== 'none') {
-      bgIframe.src = bgIframe.dataset.src;
+    if (bgIframe?.dataset.src) {
+      const bg = bgIframe.closest<HTMLElement>('.hero-video-bg');
+      if (bg && getComputedStyle(bg).display !== 'none') {
+        bgIframe.src = bgIframe.dataset.src;
+      }
     }
 
     const widgetWrap   = document.querySelector<HTMLElement>('.hero-video-wrap');
@@ -347,5 +349,10 @@ const ytParams = `autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&mo
     if (widgetIframe?.dataset.src && widgetWrap && getComputedStyle(widgetWrap).display !== 'none') {
       widgetIframe.src = widgetIframe.dataset.src;
     }
-  });
+  }
+
+  // Premier chargement : attend window.load pour ne pas bloquer le LCP
+  window.addEventListener('load', loadHeroVideos);
+  // Navigations View Transitions : recharge la vidéo à chaque arrivée sur la page
+  document.addEventListener('astro:page-load', loadHeroVideos);
 </script>
