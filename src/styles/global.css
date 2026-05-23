@@ -32,6 +32,11 @@
 
 /* ─── Base ───────────────────────────────────────────────────────────────── */
 @layer base {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
   html {
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
