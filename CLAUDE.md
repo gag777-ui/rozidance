@@ -33,39 +33,75 @@ No test suite or linter configured yet.
 
 **Custom cursor** — `Cursor.astro`, desktop only (`hover: hover` + `pointer: fine`).
 
-**Page loader** — `PageLoader.astro` shows "Rozi · Dance" with a breathing/pulse animation (`loaderPulse` keyframe on `.loader-logo-text`). Dismissed via `setTimeout(600ms)` after `window.load` in `Layout.astro`. **TODO:** replace text with logo image when available.
+**Page loader** — `PageLoader.astro` shows "Rozi · Dance" with a breathing/pulse animation (`loaderPulse` keyframe on `.loader-logo-text`). Dismissed via `setTimeout(600ms)` after `window.load` in `Layout.astro`. **TODO:** replace text with logo image (`/images/logo.webp` is now available).
+
+**astro:page-load pattern** — All `<script>` blocks must wrap their init logic in a named function called via `document.addEventListener('astro:page-load', initXxx)`. Never call init functions directly at module level — View Transitions re-fires `astro:page-load` on each navigation, and direct calls skip re-init or accumulate listeners. For handlers attached to `document`/`window`, store the reference in a module-level variable and remove it before re-adding.
 
 ## Hero section (SectionHero.astro)
 
-Dual layout — same component, different behaviour per breakpoint:
+Full-screen video background using a **self-hosted MP4** (`/videos/hero.mp4`, 9.8MB, 720p 30s, no audio). Works on all breakpoints — mobile and desktop share the same layout.
 
-- **Mobile (<901px):** ivory background, 1-col grid (text above, video widget below). Widget uses `data-src` loaded at `window.load`. Edge fade (4 linear-gradient layers) on `.video-edge-fade` inside the frame.
-- **Desktop (≥901px):** full-screen YouTube background (`youtube-nocookie.com`, `disablepictureinpicture`, `data-src` loaded at `window.load`). Dark radial-gradient filter + strong top gradient (`rgba 0.96 → transparent over 42%`) to hide YouTube title overlay. White text with text-shadow. Section `background-color: var(--color-bg-dark)` so no flash before video loads.
+- `<video autoplay muted loop playsinline disablepictureinpicture>` — no script needed, browser handles autoplay
+- `poster="/images/og-default.webp"` while video loads
+- Dark filter: `linear-gradient` top + `radial-gradient` on `.hero-filter` (z-index 1 above video)
+- Geometric SVG watermark pattern (`.hero-pattern`) visible desktop only, opacity 0.07
+- White text, `text-shadow` for legibility over video
+- No YouTube iframe in the hero — replaced due to YouTube anti-bot (SABR) blocking embeds
 
-Both iframes use `data-src` (not `src`) to avoid blocking `window.load`. The script swaps `data-src` → `src` after load.
+Video was downloaded via yt-dlp (`--cookies-from-browser chrome --js-runtimes "node:/usr/local/bin/node"`) and compressed with ffmpeg (`-crf 26 -preset slow -movflags +faststart`).
 
-## YouTube embeds
+## YouTube embeds (SectionVideos only)
 
-- Domain: `www.youtube-nocookie.com` (reduces Chrome media session integration)
-- Params: `controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&playsinline=1&fs=0&autoplay=1&mute=1&loop=1`
-- Attribute: `disablepictureinpicture` on all hero iframes
-- Hero video ID: `PUBLIC_HERO_VIDEO_ID` env var → `.env`. Falls back to a placeholder.
-- **Known limitation:** Chrome briefly shows its Global Media Controls overlay on video start. Cannot be prevented with CSS/HTML on YouTube iframes. V2 fix: replace with native `<video>` element.
-- **TODO:** replace placeholder IDs with real IDs from Gago (`PUBLIC_HERO_VIDEO_ID` + 3 cards in `SectionVideos.astro`).
+Used exclusively in `SectionVideos.astro` for the 3 video cards.
+
+- Domain: `www.youtube.com/embed/` (standard embed)
+- Params: `autoplay=1&rel=0&modestbranding=1`
+- Thumbnails: `https://img.youtube.com/vi/{id}/hqdefault.jpg`
+- Click on thumbnail → `data-src` swapped into `iframe.src` → video plays inline
+- Close button resets `iframe.src = ''` to stop playback
+- All click listeners wrapped in `initVideos()` via `astro:page-load`
+- **TODO:** replace placeholder video IDs with real IDs from Gago
+
+## Mobile menu (Header.astro)
+
+Frosted-glass drawer sliding from the right on mobile (≤768px).
+
+- Hamburger button (`#menu-toggle`) in `.header-end` group alongside `LanguageSwitcher`
+- Drawer (`#mobile-menu`, `.nav-mobile`) is `position: fixed; right: 0` — outside `<header>` in DOM
+- Backdrop overlay (`#menu-backdrop`) sits between page content and drawer (z-index 139 / 140)
+- Open: `translateX(100%) → translateX(0)` on drawer + `opacity: 0 → 1` on backdrop
+- Link entrance: `opacity 0 + translateX(22px) + blur(4px) → visible`, staggered 60–260ms per link
+- Close triggers: hamburger click, backdrop click, any link click, swipe up >60px
+- `document.body.style.overflow = 'hidden'` when open to prevent scroll behind drawer
+- Desktop: drawer hidden with `display: none !important`
 
 ## Sections with placeholder content
 
 - **SectionStats** — 4 stat numbers, waiting for real figures from Gago
 - **SectionTemoignages** — 3 testimonial cards, waiting for real quotes
-- **SectionFAQ** — 5 Q&A items, CSS-only `<details>/<summary>` accordion
-- **SectionVideos** — 3 cards with `video-placeholder.webp`, waiting for real YouTube IDs
+- **SectionVideos** — 3 cards, waiting for real YouTube IDs from Gago
+
+## Favicon
+
+All favicon files generated from `public/images/logo.webp` (500×500):
+
+| File | Size | Purpose |
+|---|---|---|
+| `public/favicon.svg` | 32px base64-embedded PNG | Modern browsers (priority 1) |
+| `public/favicon.ico` | 32×32 | Legacy browsers / fallback |
+| `public/icons/apple-touch-icon.png` | 180×180 | iOS home screen |
+| `public/icons/icon-192.png` | 192×192 | Android PWA |
+| `public/icons/icon-512.png` | 512×512 | PWA splash screen |
+
+`Layout.astro` links: `favicon.svg` → `favicon.ico` → `apple-touch-icon`. `site.webmanifest` references `icon-192` and `icon-512`.
 
 ## Images
 
 All images must be WebP. Placeholders use `onerror` fallback to `/images/placeholder.webp`.
+- `public/images/logo.webp` — 500×500, used as favicon source and in header
 - `public/images/galerie/photo-01.webp` → `photo-06.webp` — **TODO: real photos from Gago**
 - `public/images/portrait-duo.webp` — **TODO: real portrait**
-- `public/images/og-default.webp` (1200×630) — **TODO: real OG image**
+- `public/images/og-default.webp` (1200×630) — **TODO: real OG image**, also used as video poster
 - `public/images/video-placeholder.webp` — dark 480×270 placeholder for video cards
 
 ## Pages
@@ -86,7 +122,6 @@ All images must be WebP. Placeholders use `onerror` fallback to `/images/placeho
 - No audio player (V2)
 - No dark mode (V2)
 - Language selector hidden (V2: show when EN/RU/HY added)
-- No MP4 hero video (V2: replace YouTube iframe with `<video autoplay muted loop playsinline>`)
 
 ## Key conventions
 
