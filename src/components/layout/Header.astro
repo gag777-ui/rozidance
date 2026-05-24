@@ -63,12 +63,14 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 <!-- Drawer mobile depuis la droite -->
 <nav id="mobile-menu" class="nav-mobile" aria-label="Menu mobile" aria-hidden="true">
   <div class="mobile-menu-inner">
+
+    <!-- Liens nav -->
     <ul>
-      <li><a href={`${base || '/'}#prestations`} class="mobile-nav-link">{t.nav.prestations}</a></li>
-      <li><a href={`${base || '/'}#galerie`} class="mobile-nav-link">{t.nav.galerie}</a></li>
-      <li><a href={`${base}/cours`} class="mobile-nav-link">{t.nav.cours}</a></li>
-      <li><a href={`${base || '/'}#apropos`} class="mobile-nav-link">{t.nav.apropos}</a></li>
-      <li><a href={`${base || '/'}#contact`} class="mobile-nav-link">{t.nav.contact}</a></li>
+      <li><a href={`${base || '/'}#prestations`} class="mobile-nav-link"><span class="link-text">{t.nav.prestations}</span></a></li>
+      <li><a href={`${base || '/'}#galerie`} class="mobile-nav-link"><span class="link-text">{t.nav.galerie}</span></a></li>
+      <li><a href={`${base}/cours`} class="mobile-nav-link"><span class="link-text">{t.nav.cours}</span></a></li>
+      <li><a href={`${base || '/'}#apropos`} class="mobile-nav-link"><span class="link-text">{t.nav.apropos}</span></a></li>
+      <li><a href={`${base || '/'}#contact`} class="mobile-nav-link"><span class="link-text">{t.nav.contact}</span></a></li>
     </ul>
 
     <div class="mobile-menu-footer">
@@ -205,40 +207,42 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     pointer-events: auto;
   }
 
-  /* ── Drawer depuis la droite ── */
+  /* ── Panneau compact depuis le haut-droite ── */
   .nav-mobile {
     position: fixed;
-    top: 0;
+    top: 72px;
     right: 0;
-    bottom: 0;
-    width: min(260px, 78vw);
+    bottom: auto;
+    width: min(210px, 72vw);
     z-index: 140;
-    background: rgba(251, 247, 240, 0.55);
+    background: rgba(251, 247, 240, 0.18);
     backdrop-filter: blur(32px) saturate(1.6);
     -webkit-backdrop-filter: blur(32px) saturate(1.6);
-    box-shadow: -12px 0 48px rgba(43, 31, 21, 0.08);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    box-shadow: -4px 8px 32px rgba(43, 31, 21, 0.12);
+    border-radius: 0 0 0 10px;
+    border: 0.5px solid rgba(168, 135, 83, 0.18);
+    border-right: none;
 
     /* Fermé */
-    transform: translateX(100%);
+    transform-origin: top right;
+    transform: scale(0.88) translateY(-16px);
+    opacity: 0;
     pointer-events: none;
-    transition: transform 400ms var(--ease-out-soft);
+    transition: transform 500ms cubic-bezier(0.34, 1.52, 0.64, 1),
+                opacity 220ms var(--ease-out-soft);
   }
 
   .nav-mobile.is-open {
-    transform: translateX(0);
+    transform: scale(1) translateY(0);
+    opacity: 1;
     pointer-events: auto;
   }
 
   .mobile-menu-inner {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 2rem;
-    padding: 3rem 2rem;
-    height: 100%;
+    gap: 0.9rem;
+    padding: 1.5rem 1.5rem 1.25rem;
   }
 
   .nav-mobile ul {
@@ -253,25 +257,76 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   .mobile-nav-link {
     font-family: var(--font-serif);
     font-size: 1.15rem;
-    color: var(--color-text-primary);
+    color: rgba(43, 31, 21, 0.95);
     text-decoration: none;
     letter-spacing: 0.02em;
-    display: block;
-    padding: 0.7rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0;
     border-bottom: 0.5px solid rgba(193, 104, 71, 0.1);
+    position: relative;
 
-    /* Entrée animée : glisse + flou qui se dissout */
     opacity: 0;
     transform: translateX(22px);
     filter: blur(4px);
-    transition: color 220ms, padding-left 220ms,
+    transition: color 220ms,
+                transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1),
                 opacity 500ms var(--ease-out-soft),
-                transform 500ms var(--ease-out-soft),
                 filter 500ms var(--ease-out-soft);
   }
 
   .nav-mobile ul li:first-child .mobile-nav-link {
     border-top: 0.5px solid rgba(193, 104, 71, 0.1);
+  }
+
+  @keyframes textSweep {
+    from { background-position: center 300%; }
+    to   { background-position: center -300%; }
+  }
+
+  .link-text {
+    background: linear-gradient(to bottom,
+      rgba(43,31,21,0.95) 35%,
+      rgba(193,104,71,1) 50%,
+      rgba(43,31,21,0.95) 65%
+    );
+    background-size: 100% 300%;
+    background-position: center 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .mobile-nav-link:hover .link-text {
+    -webkit-text-fill-color: var(--color-accent);
+  }
+
+  .nav-mobile.is-open li:nth-child(1) .link-text { animation: textSweep 3000ms ease-in-out  820ms forwards; }
+  .nav-mobile.is-open li:nth-child(2) .link-text { animation: textSweep 3000ms ease-in-out 1300ms forwards; }
+  .nav-mobile.is-open li:nth-child(3) .link-text { animation: textSweep 3000ms ease-in-out 1780ms forwards; }
+  .nav-mobile.is-open li:nth-child(4) .link-text { animation: textSweep 3000ms ease-in-out 2260ms forwards; }
+  .nav-mobile.is-open li:nth-child(5) .link-text { animation: textSweep 3000ms ease-in-out 2740ms forwards; }
+
+  .mobile-nav-link::after {
+    content: '›';
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--color-accent);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 260ms var(--ease-out-soft),
+                transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--color-accent);
+    transform: translateX(8px);
+  }
+  .mobile-nav-link:hover::after {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .nav-mobile.is-open .mobile-nav-link {
@@ -280,16 +335,12 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     filter: blur(0);
   }
 
-  .nav-mobile.is-open li:nth-child(1) .mobile-nav-link { transition-delay: 60ms; }
-  .nav-mobile.is-open li:nth-child(2) .mobile-nav-link { transition-delay: 110ms; }
-  .nav-mobile.is-open li:nth-child(3) .mobile-nav-link { transition-delay: 160ms; }
-  .nav-mobile.is-open li:nth-child(4) .mobile-nav-link { transition-delay: 210ms; }
-  .nav-mobile.is-open li:nth-child(5) .mobile-nav-link { transition-delay: 260ms; }
+  .nav-mobile.is-open li:nth-child(1) .mobile-nav-link { transition-delay: 80ms; }
+  .nav-mobile.is-open li:nth-child(2) .mobile-nav-link { transition-delay: 130ms; }
+  .nav-mobile.is-open li:nth-child(3) .mobile-nav-link { transition-delay: 180ms; }
+  .nav-mobile.is-open li:nth-child(4) .mobile-nav-link { transition-delay: 230ms; }
+  .nav-mobile.is-open li:nth-child(5) .mobile-nav-link { transition-delay: 280ms; }
 
-  .mobile-nav-link:hover {
-    color: var(--color-accent);
-    padding-left: 0.4rem;
-  }
 
   /* Signature en bas */
   .mobile-menu-footer {
@@ -303,10 +354,11 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     transform: translateY(0);
   }
 
+
   .mobile-menu-sig {
     font-family: var(--font-serif);
     font-size: 0.875rem;
-    color: var(--color-text-muted);
+    color: rgba(43, 31, 21, 0.4);
     letter-spacing: 0.06em;
   }
 

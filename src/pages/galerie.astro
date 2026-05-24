@@ -15,6 +15,11 @@ const photos = [
   { src: '/images/galerie/photo-08.webp', thumb: '/images/galerie/photo-08-thumb.webp', alt: 'Rozi Dance — danse arménienne', w: 1600, h: 1067 },
   { src: '/images/galerie/photo-09.webp', thumb: '/images/galerie/photo-09-thumb.webp', alt: 'Rozi Dance — chant et danse', w: 1600, h: 1067 },
   { src: '/images/galerie/photo-10.webp', thumb: '/images/galerie/photo-10-thumb.webp', alt: 'Rozi Dance — groupe artistique', w: 1290, h: 722 },
+  { src: '/images/galerie/photo-11.webp', thumb: '/images/galerie/photo-11-thumb.webp', alt: 'Rozi Dance — performance arménienne', w: 934, h: 1400 },
+  { src: '/images/galerie/photo-12.webp', thumb: '/images/galerie/photo-12-thumb.webp', alt: 'Rozi Dance — chant et danse', w: 1400, h: 934 },
+  { src: '/images/galerie/photo-13.webp', thumb: '/images/galerie/photo-13-thumb.webp', alt: 'Rozi Dance — célébration arménienne', w: 787, h: 1400 },
+  { src: '/images/galerie/photo-14.webp', thumb: '/images/galerie/photo-14-thumb.webp', alt: 'Rozi Dance — mariage arménien', w: 1050, h: 1400 },
+  { src: '/images/galerie/photo-15.webp', thumb: '/images/galerie/photo-15-thumb.webp', alt: 'Rozi Dance — événement festif', w: 787, h: 1400 },
 ];
 ---
 
@@ -136,7 +141,7 @@ const photos = [
   .galerie-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 280px 200px 220px 220px;
+    grid-template-rows: 280px 200px 220px 220px 200px 220px;
     gap: 0.75rem;
   }
 
@@ -153,6 +158,13 @@ const photos = [
   /* Row 4 — portrait + landscape wide */
   .galerie-item-8 { grid-column: 1; grid-row: 4; }
   .galerie-item-9 { grid-column: 2 / 4; grid-row: 4; }
+  /* Row 5 — portrait + landscape wide */
+  .galerie-item-10 { grid-column: 1; grid-row: 5; }
+  .galerie-item-11 { grid-column: 2 / 4; grid-row: 5; }
+  /* Row 6 — three portraits */
+  .galerie-item-12 { grid-column: 1; grid-row: 6; }
+  .galerie-item-13 { grid-column: 2; grid-row: 6; }
+  .galerie-item-14 { grid-column: 3; grid-row: 6; }
 
   .galerie-item { display: block; }
 
@@ -218,7 +230,12 @@ const photos = [
     .galerie-item-6,
     .galerie-item-7,
     .galerie-item-8,
-    .galerie-item-9 {
+    .galerie-item-9,
+    .galerie-item-10,
+    .galerie-item-11,
+    .galerie-item-12,
+    .galerie-item-13,
+    .galerie-item-14 {
       grid-column: auto;
       grid-row: auto;
     }
