@@ -4,7 +4,6 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import PageLoader from '../components/ui/PageLoader.astro';
-import BackToTop from '../components/ui/BackToTop.astro';
 
 interface Props {
   title: string;
@@ -92,7 +91,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <Footer />
-    <BackToTop />
 
     <!-- Scroll reveal + Loader + Dark mode persistence -->
     <script>
