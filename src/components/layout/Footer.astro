@@ -87,6 +87,9 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   <div class="footer-bottom">
     <div class="section-container footer-bottom-inner">
       <p>{t.footer.copyright.replace('{year}', String(year))}</p>
+      <a href="https://synaplink.be" target="_blank" rel="noopener noreferrer" class="footer-synaplink">
+        Propulsé par Synaplink
+      </a>
       <a href={`${base}/mentions-legales`} class="nav-link footer-legal">{t.footer.legal}</a>
     </div>
   </div>
@@ -201,6 +204,15 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     color: var(--color-text-muted);
     font-size: 12px;
   }
+
+  .footer-synaplink {
+    font-size: 12px;
+    color: var(--color-accent);
+    text-decoration: none;
+    opacity: 0.75;
+    transition: opacity 220ms;
+  }
+  .footer-synaplink:hover { opacity: 1; }
 
   @media (max-width: 768px) {
     .footer-inner {
