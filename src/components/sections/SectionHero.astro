@@ -49,16 +49,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
     <!-- Texte -->
     <div class="hero-text">
-      <span class="hero-eyebrow">
-        <a href="https://www.youtube.com/watch?v=kTIPlgRoWUE" target="_blank" rel="noopener noreferrer" class="eyebrow-link">{t.hero.eyebrowChant}</a>
-        {' · '}
-        <a href="https://www.instagram.com/reel/DQhuDa2jATw/?igsh=c2k0OXV1M2JkbXBh" target="_blank" rel="noopener noreferrer" class="eyebrow-link">{t.hero.eyebrowDanse}</a>
-        {' · '}
-        <a href="https://www.instagram.com/band_hay?igsh=cDRxNjVmanEwMWho" target="_blank" rel="noopener noreferrer" class="eyebrow-link">{t.hero.eyebrowMusique}</a>
-        {' · '}
-        <a href={`${base}/galerie`} class="eyebrow-link">{t.hero.eyebrowGalerie}</a>
-      </span>
-
       <h1 class="hero-title" id="hero-title">
         <span class="hero-line">{t.hero.line1}</span>
         <span class="hero-line">{t.hero.line2}</span>
@@ -162,39 +152,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   /* Widget vidéo mobile supprimé — on utilise la vidéo fond */
   .hero-video-wrap { display: none; }
-
-  /* Texte blanc sur fond sombre */
-  .hero-eyebrow {
-    font-family: var(--font-sans);
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.72);
-    display: block;
-  }
-
-  @keyframes eyebrowBreath {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.4; }
-  }
-
-  .eyebrow-link {
-    color: inherit;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 1px;
-    animation: eyebrowBreath 2.4s ease-in-out infinite;
-  }
-
-  .hero-eyebrow a:nth-child(1) { animation-delay: 0s; }
-  .hero-eyebrow a:nth-child(2) { animation-delay: 0.6s; }
-  .hero-eyebrow a:nth-child(3) { animation-delay: 1.2s; }
-  .hero-eyebrow a:nth-child(4) { animation-delay: 1.8s; }
-
-  .eyebrow-link:hover {
-    opacity: 1;
-    animation-play-state: paused;
-  }
 
   .hero-title {
     display: flex;
