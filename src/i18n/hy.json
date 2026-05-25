@@ -30,10 +30,10 @@
     "title": "Երեք աշխարհ, մեկ կիրք",
     "items": [
       {
-        "id": "chant-mariee",
-        "title": "Հարսանիքներ ու տոնախմբություններ",
-        "description": "Հարսանիքներ, մկրտություններ, ծննդյան տոներ կամ մասնավոր երեկոներ — մենք կյանք ենք հաղորդում ձեր միջոցառումներին:",
-        "link": "Ավելին"
+        "id": "mariages",
+        "title": "Հарсaniqner",
+        "description": "Հарсaкaни erg, baletayinner, banketi animation — dzez hamar andznayin kargatsum.",
+        "link": "Tesnel"
       },
       {
         "id": "danse-evenementielle",

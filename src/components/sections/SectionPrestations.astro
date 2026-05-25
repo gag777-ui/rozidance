@@ -47,7 +47,7 @@ const ordinals = ['01', '02', '03'] as const;
             <h3 class="card-title">{item.title}</h3>
             <p class="card-description">{item.description}</p>
             <a
-              href={item.id === 'cours' ? `${base}/cours` : item.id === 'mariages' ? `${base}/mariages` : `${base || '/'}#contact`}
+              href={item.id === 'cours' ? `${base}/cours` : `${base || '/'}#contact`}
               class="card-link"
               aria-label={`${item.link} — ${item.title}`}
             >

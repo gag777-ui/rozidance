@@ -5,7 +5,6 @@
     "ogTitle": "Rozi Dance — The Armenian Soul in Motion",
     "ogDescription": "Armenian singing and dance performances for weddings, ceremonies and events. Singing & dance lessons for all levels."
   },
-
   "nav": {
     "prestations": "Performances",
     "galerie": "Gallery",
@@ -13,7 +12,6 @@
     "apropos": "About",
     "contact": "Contact"
   },
-
   "hero": {
     "eyebrowChant": "Singing",
     "eyebrowDanse": "Dance",
@@ -27,16 +25,15 @@
     "ctaPrimary": "Contact us",
     "ctaSecondary": "Discover"
   },
-
   "prestations": {
     "eyebrow": "What we offer",
     "title": "Three worlds, one passion",
     "items": [
       {
-        "id": "chant-mariee",
-        "title": "Weddings & celebrations",
-        "description": "Weddings, baptisms, birthdays, children's parties or private evenings — we bring your events to life with singing, dance and tailor-made performances.",
-        "link": "Learn more"
+        "id": "mariages",
+        "title": "Weddings",
+        "description": "Bridal singing, entrance dance, banquet entertainment — bespoke performances for your most beautiful day.",
+        "link": "See our work"
       },
       {
         "id": "danse-evenementielle",
@@ -52,7 +49,6 @@
       }
     ]
   },
-
   "galerie": {
     "eyebrow": "Captured moments",
     "title": "Gallery",
@@ -60,23 +56,32 @@
     "instagramLink": "View our Instagram",
     "altPlaceholder": "Rozi Dance photo"
   },
-
   "videos": {
     "eyebrow": "In performance",
     "title": "Experience our shows",
     "youtubeLink": "View the full YouTube channel"
   },
-
   "stats": {
     "eyebrow": "Rozi Dance in numbers",
     "items": [
-      { "value": "200+", "label": "Weddings accompanied" },
-      { "value": "4 years", "label": "Of artistic experience" },
-      { "value": "8", "label": "Countries served" },
-      { "value": "100%", "label": "With heart" }
+      {
+        "value": "200+",
+        "label": "Weddings accompanied"
+      },
+      {
+        "value": "4 years",
+        "label": "Of artistic experience"
+      },
+      {
+        "value": "8",
+        "label": "Countries served"
+      },
+      {
+        "value": "100%",
+        "label": "With heart"
+      }
     ]
   },
-
   "temoignages": {
     "eyebrow": "What our clients say",
     "title": "They trusted us",
@@ -98,7 +103,6 @@
       }
     ]
   },
-
   "faq": {
     "eyebrow": "Frequently asked questions",
     "title": "Everything you want to know",
@@ -125,7 +129,6 @@
       }
     ]
   },
-
   "apropos": {
     "eyebrow": "Our story",
     "title": "Two voices, two bodies, one tradition",
@@ -133,16 +136,23 @@
     "p2": "Whether at a bride's dressing ceremony, a grand wedding banquet or in the dance studio, we put our heart and soul into the beauty of our traditions.",
     "altPortrait": "Rozi Dance duo portrait"
   },
-
   "contact": {
     "eyebrow": "Booking & information",
     "title": "Let's talk about your event",
     "subtitle": "Contact us via your preferred channel — we respond within 24 hours.",
-    "instagram": { "label": "Instagram", "handle": "@rozi.dance" },
-    "email": { "label": "E-mail", "address": "abrahamyan.rose@mail.ru" },
-    "youtube": { "label": "YouTube", "handle": "Our channel" }
+    "instagram": {
+      "label": "Instagram",
+      "handle": "@rozi.dance"
+    },
+    "email": {
+      "label": "E-mail",
+      "address": "abrahamyan.rose@mail.ru"
+    },
+    "youtube": {
+      "label": "YouTube",
+      "handle": "Our channel"
+    }
   },
-
   "cours": {
     "pageTitle": "Armenian singing & dance lessons — Rozi Dance",
     "pageDescription": "Armenian and international singing lessons, Armenian folk dance lessons. Individual and group, all levels, remote possible.",
@@ -156,22 +166,51 @@
     "faqEyebrow": "Frequently asked questions",
     "faqTitle": "Everything you want to know",
     "faqItems": [
-      { "q": "Do I need to know how to sing to enrol?", "a": "Not at all! Our lessons are for all levels, from complete beginners to experienced singers wishing to specialise in Armenian repertoire." },
-      { "q": "Are lessons taught in Armenian?", "a": "Lessons can be conducted in French, Russian or Armenian according to your preference. Songs are of course taught in their original language (Armenian), with explanations of the texts." },
-      { "q": "Are remote lessons available?", "a": "Yes, we offer lessons via video conference (Zoom, Google Meet). This option is available for individual singing and dance lessons." },
-      { "q": "How long does it take to learn a song?", "a": "Generally, a simple song can be learned in 2 to 4 sessions. More complex pieces take longer. It all depends on your level and practice between lessons." },
-      { "q": "Do you offer lessons to prepare a wedding song?", "a": "Absolutely! This is one of our specialities. We can prepare you to sing at your own wedding ceremony, with a bespoke programme adapted to your schedule." },
-      { "q": "Are dance lessons suitable for beginners?", "a": "Yes, all our dance lessons start from the basics. No prior dance experience is required. We progress at your pace." },
-      { "q": "Can singing and dance lessons be combined?", "a": "Absolutely, and it's what we recommend! Contact us for a personalised programme." },
-      { "q": "Do group lessons have a minimum number of participants?", "a": "Group lessons start from 4 people. They are ideal for cultural associations, groups of friends or event preparation." },
-      { "q": "Can lessons be given as a gift?", "a": "Yes, we offer gift vouchers for individual sessions or packages. Contact us by e-mail to order one." },
-      { "q": "How do we pay?", "a": "We accept bank transfer (BE) and cash for in-person lessons. Details are provided at enrolment." }
+      {
+        "q": "Do I need to know how to sing to enrol?",
+        "a": "Not at all! Our lessons are for all levels, from complete beginners to experienced singers wishing to specialise in Armenian repertoire."
+      },
+      {
+        "q": "Are lessons taught in Armenian?",
+        "a": "Lessons can be conducted in French, Russian or Armenian according to your preference. Songs are of course taught in their original language (Armenian), with explanations of the texts."
+      },
+      {
+        "q": "Are remote lessons available?",
+        "a": "Yes, we offer lessons via video conference (Zoom, Google Meet). This option is available for individual singing and dance lessons."
+      },
+      {
+        "q": "How long does it take to learn a song?",
+        "a": "Generally, a simple song can be learned in 2 to 4 sessions. More complex pieces take longer. It all depends on your level and practice between lessons."
+      },
+      {
+        "q": "Do you offer lessons to prepare a wedding song?",
+        "a": "Absolutely! This is one of our specialities. We can prepare you to sing at your own wedding ceremony, with a bespoke programme adapted to your schedule."
+      },
+      {
+        "q": "Are dance lessons suitable for beginners?",
+        "a": "Yes, all our dance lessons start from the basics. No prior dance experience is required. We progress at your pace."
+      },
+      {
+        "q": "Can singing and dance lessons be combined?",
+        "a": "Absolutely, and it's what we recommend! Contact us for a personalised programme."
+      },
+      {
+        "q": "Do group lessons have a minimum number of participants?",
+        "a": "Group lessons start from 4 people. They are ideal for cultural associations, groups of friends or event preparation."
+      },
+      {
+        "q": "Can lessons be given as a gift?",
+        "a": "Yes, we offer gift vouchers for individual sessions or packages. Contact us by e-mail to order one."
+      },
+      {
+        "q": "How do we pay?",
+        "a": "We accept bank transfer (BE) and cash for in-person lessons. Details are provided at enrolment."
+      }
     ],
     "ctaTitle": "Ready to start?",
     "ctaSubtitle": "Contact us to choose the option that suits you.",
     "ctaBtn": "Contact us"
   },
-
   "footer": {
     "tagline": "The Armenian soul in motion.",
     "nav": "Navigation",
@@ -180,7 +219,6 @@
     "copyright": "© {year} Rozi Dance. All rights reserved.",
     "madeWith": "Website crafted with care."
   },
-
   "404": {
     "title": "Page not found",
     "description": "The page you're looking for doesn't exist or has been moved.",
