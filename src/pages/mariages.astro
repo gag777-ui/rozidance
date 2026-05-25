@@ -5,52 +5,54 @@ import type { Lang } from '../i18n/utils';
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
 
+const COVER = '/images/reel-cover.webp';
+
 const reels = [
   {
     url: 'https://www.instagram.com/reel/DTvKVC2irei/?igsh=YmZvYnZjcW05YzJw',
-    cover: '/images/galerie/photo-01-thumb.webp',
+    cover: COVER,
     title: 'Danse de la mariée',
     description: 'Performance de danse traditionnelle arménienne lors de la cérémonie d\'habillage.',
   },
   {
     url: 'https://www.instagram.com/reel/DUDvZQPCrNU/?igsh=Y3V1N3I2ZTIyZ29u',
-    cover: '/images/galerie/photo-02-thumb.webp',
+    cover: COVER,
     title: 'Chant de la mariée',
     description: 'Chant arménien accompagnant les préparatifs du mariage.',
   },
   {
     url: 'https://www.instagram.com/reel/DR1unSWDMTp/?igsh=MTdyb29lOTFkczZrNA%3D%3D',
-    cover: '/images/galerie/photo-03-thumb.webp',
+    cover: COVER,
     title: 'Cérémonie & banquet',
     description: 'Animation complète du banquet de mariage — chant, danse et performances.',
   },
   {
     url: 'https://www.instagram.com/reel/DKxHqISI1Wp/?igsh=d3A3YWJ0Y2lzanJr',
-    cover: '/images/galerie/photo-06-thumb.webp',
+    cover: COVER,
     title: 'Soirée arménienne',
     description: 'Ambiance festive avec musique et danses folkloriques pour tous les invités.',
   },
   {
     url: 'https://www.instagram.com/reel/DKpyjmmot4i/?igsh=MXR3cGk4cDBzc3E0ZQ%3D%3D',
-    cover: '/images/galerie/photo-04-thumb.webp',
+    cover: COVER,
     title: 'Baptêmes & anniversaires',
     description: 'Performances sur mesure pour vos célébrations en famille.',
   },
   {
     url: 'https://www.instagram.com/p/DIUSq1RoOJD/?igsh=c29naDl0d3Y4bnVn',
-    cover: '/images/galerie/photo-01-thumb.webp',
+    cover: COVER,
     title: 'Entrée des mariés',
     description: 'Accompagnement musical et chorégraphique de l\'entrée des mariés.',
   },
   {
     url: 'https://www.instagram.com/reel/CzYCxokosLj/?igsh=NndycW1na2IwczM3',
-    cover: '/images/galerie/photo-02-thumb.webp',
+    cover: COVER,
     title: 'Performance événementielle',
     description: 'Show de danse et chant pour animer vos réceptions et événements privés.',
   },
   {
     url: 'https://www.instagram.com/reel/C-Bbdt6Iy94/?igsh=MWdsMTlndDY5bjdrag%3D%3D',
-    cover: '/images/galerie/photo-03-thumb.webp',
+    cover: COVER,
     title: 'Fêtes & célébrations',
     description: 'Animation festive pour anniversaires, baptêmes et fêtes de famille.',
   },
@@ -198,16 +200,16 @@ const reels = [
 
   .reel-cover {
     position: relative;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
-    background-color: var(--color-bg-dark);
+    background-color: #0d0d0d;
   }
 
   .reel-cover img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center center;
     display: block;
     transition: transform 600ms var(--ease-out-soft);
   }
