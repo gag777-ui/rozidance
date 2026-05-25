@@ -62,7 +62,24 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       <h1 class="hero-title" id="hero-title">
         <span class="hero-line">{t.hero.line1}</span>
         <span class="hero-line">{t.hero.line2}</span>
-        <em class="hero-line hero-italic">{t.hero.line3italic}</em>
+        <em class="hero-line hero-italic">
+          {t.hero.line3a && (
+            <>
+              {t.hero.line3a}
+              <span class="hero-dancer" aria-hidden="true">
+                <svg width="22" height="32" viewBox="0 0 22 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="11" cy="2.5" r="2.2" fill="currentColor"/>
+                  <path d="M11 4.7 L11 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M11 7.5 L3 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M11 7.5 L19 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M11 14 L7 22 L4 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M11 14 L15 20 L19 26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </>
+          )}
+          {t.hero.line3italic}
+        </em>
       </h1>
 
       <p class="hero-subtitle">{t.hero.subtitle}</p>
@@ -207,6 +224,24 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     font-size: clamp(3rem, 12vw, 5.5rem);
     line-height: 1.0;
     margin-top: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25em;
+  }
+
+  .hero-dancer {
+    display: inline-flex;
+    align-items: center;
+    color: rgba(255,255,255,0.55);
+    flex-shrink: 0;
+    position: relative;
+    top: 0.05em;
+  }
+
+  .hero-dancer svg {
+    width: clamp(14px, 2.5vw, 22px);
+    height: auto;
   }
 
   .hero-subtitle {
@@ -286,6 +321,10 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
     .hero-italic {
       font-size: clamp(4rem, 9vw, 8rem);
+    }
+
+    .hero-dancer svg {
+      width: clamp(18px, 2.2vw, 32px);
     }
 
     .hero-subtitle {
