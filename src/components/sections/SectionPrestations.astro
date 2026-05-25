@@ -6,20 +6,21 @@ const t = getTranslations(lang);
 const base = lang === 'fr' ? '' : `/${lang}`;
 
 const svgIcons = [
-  /* Microphone */
+  /* Alliances / mariage */
+  `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="8" cy="12" r="5"/>
+    <circle cx="16" cy="12" r="5"/>
+  </svg>`,
+  /* Étoile / célébration */
+  `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+  </svg>`,
+  /* Microphone / chant */
   `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <rect x="9" y="2" width="6" height="11" rx="3"/>
     <path d="M5 10a7 7 0 0014 0"/>
     <line x1="12" y1="19" x2="12" y2="22"/>
     <line x1="8" y1="22" x2="16" y2="22"/>
-  </svg>`,
-  /* Figure danse */
-  `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <circle cx="12" cy="3.5" r="1.5"/>
-    <path d="M9 8.5c1-.6 2.5-.8 3 0l2 3-3 2"/>
-    <path d="M14 11.5l2 4-4 1"/>
-    <path d="M10 11.5l-2 4 4 1"/>
-    <path d="M11 7.5l-3 2 1.5 2"/>
   </svg>`,
   /* Livre / cours */
   `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -30,7 +31,7 @@ const svgIcons = [
   </svg>`,
 ] as const;
 
-const ordinals = ['01', '02', '03'] as const;
+const ordinals = ['01', '02', '03', '04'] as const;
 ---
 
 <section id="prestations" class="section-prestations" aria-labelledby="prestations-title">
@@ -50,7 +51,7 @@ const ordinals = ['01', '02', '03'] as const;
             <h3 class="card-title">{item.title}</h3>
             <p class="card-description">{item.description}</p>
             <a
-              href={item.id === 'cours' ? `${base}/cours` : `${base || '/'}#contact`}
+              href={item.id === 'cours' ? `${base}/cours` : item.id === 'mariages' ? `${base}/mariages` : `${base || '/'}#contact`}
               class="card-link"
               aria-label={`${item.link} — ${item.title}`}
             >
@@ -88,7 +89,7 @@ const ordinals = ['01', '02', '03'] as const;
 
   .cards-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.25rem;
   }
 
@@ -190,18 +191,17 @@ const ordinals = ['01', '02', '03'] as const;
     transform: translateX(3px);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 540px) {
     .cards-grid {
       grid-template-columns: 1fr;
       max-width: 480px;
       margin-inline: auto;
-    }
-  }
-
-  @media (min-width: 600px) and (max-width: 900px) {
-    .cards-grid {
-      grid-template-columns: repeat(2, 1fr);
-      max-width: 100%;
     }
   }
 </style>

@@ -33,10 +33,16 @@
     "title": "Présentation",
     "items": [
       {
-        "id": "chant-mariee",
-        "title": "Mariages & célébrations",
-        "description": "Mariages, baptêmes, anniversaires, fêtes d'enfants ou soirées — nous animons vos événements avec chant, danse et performances sur mesure.",
-        "link": "En savoir plus"
+        "id": "mariages",
+        "title": "Mariages",
+        "description": "Chant de la mariée, danse d'entrée, animation du banquet — nous sublisons chaque moment de votre journée avec des performances sur mesure.",
+        "link": "Voir les prestations"
+      },
+      {
+        "id": "celebrations",
+        "title": "Célébrations",
+        "description": "Célébrez vos plus beaux moments avec nos musiciens, danseuses et groupe d'animateurs — baptêmes, anniversaires, fêtes d'enfants et soirées privées.",
+        "link": "Nous contacter"
       },
       {
         "id": "danse-evenementielle",
