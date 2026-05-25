@@ -86,16 +86,23 @@ const photos = [
 </Layout>
 
 <script>
-  import PhotoSwipeLightbox from 'photoswipe/lightbox';
   import 'photoswipe/style.css';
 
-  const lightbox = new PhotoSwipeLightbox({
-    gallery: '#galerie-grid',
-    children: 'a',
-    pswpModule: () => import('photoswipe'),
-    padding: { top: 20, bottom: 20, left: 20, right: 20 },
-  });
-  lightbox.init();
+  let lightbox: any = null;
+
+  async function initGallery() {
+    if (lightbox) { lightbox.destroy(); lightbox = null; }
+    const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox');
+    lightbox = new PhotoSwipeLightbox({
+      gallery: '#galerie-grid',
+      children: 'a',
+      pswpModule: () => import('photoswipe'),
+      padding: { top: 20, bottom: 20, left: 20, right: 20 },
+    });
+    lightbox.init();
+  }
+
+  document.addEventListener('astro:page-load', initGallery);
 </script>
 
 <style>

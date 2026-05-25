@@ -43,13 +43,13 @@
 
   body {
     background-color: var(--color-bg-primary);
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
     position: relative;
   }
 
   section {
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   h1, h2, h3, h4 {
