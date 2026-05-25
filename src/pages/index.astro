@@ -28,7 +28,11 @@ const t = getTranslations(lang);
 
   <SectionHero />
 
-  <!-- Bande de transition hero → prestations -->
+  <div class="logo-bridge reveal-fade" aria-hidden="true">
+    <img src="/images/logo.webp" alt="" width="160" height="160" loading="eager" decoding="async" />
+  </div>
+
+  <!-- Bande tags sur fond clair, au-dessus des cartes -->
   <div class="hero-tagband">
     <div class="tagband-inner">
       <a href="https://www.youtube.com/watch?v=kTIPlgRoWUE" target="_blank" rel="noopener noreferrer" class="tagband-link">{t.hero.eyebrowChant}</a>
@@ -39,10 +43,6 @@ const t = getTranslations(lang);
       <span class="tagband-sep" aria-hidden="true">·</span>
       <a href={`${lang === 'fr' ? '' : `/${lang}`}/galerie`} class="tagband-link">{t.hero.eyebrowGalerie}</a>
     </div>
-  </div>
-
-  <div class="logo-bridge reveal-fade" aria-hidden="true">
-    <img src="/images/logo.webp" alt="" width="160" height="160" loading="eager" decoding="async" />
   </div>
 
   <div class="prestations-wrap">
@@ -73,8 +73,8 @@ const t = getTranslations(lang);
 
 <style>
   .hero-tagband {
-    background-color: var(--color-bg-dark);
-    border-bottom: 0.5px solid rgba(168, 135, 83, 0.2);
+    background-color: var(--color-bg-primary);
+    border-bottom: 0.5px solid var(--color-border);
   }
 
   .tagband-inner {
@@ -94,17 +94,17 @@ const t = getTranslations(lang);
     font-size: 11px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-text-muted);
     text-decoration: none;
     transition: color 280ms;
   }
 
   .tagband-link:hover {
-    color: var(--color-gold);
+    color: var(--color-accent);
   }
 
   .tagband-sep {
-    color: rgba(168, 135, 83, 0.4);
+    color: var(--color-border);
     font-size: 10px;
   }
 
