@@ -27,7 +27,15 @@ const videos = [
   <div class="section-container">
     <div class="section-header reveal-fade">
       <span class="eyebrow">{t.videos.eyebrow}</span>
-      <h2 class="section-title" id="videos-title">{t.videos.title}</h2>
+      <h2 class="section-title" id="videos-title">
+        <span class="title-passion-wrap">
+          {t.videos.title}
+          <svg class="passion-heart" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M11 23.5C11 23.5 1.5 16.5 1.5 9.5C1.5 5.91 4.41 3 8 3C9.6 3 11 3.9 11 3.9C11 3.9 12.4 3 14 3C17.59 3 20.5 5.91 20.5 9.5C20.5 16.5 11 23.5 11 23.5Z"
+              stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </h2>
     </div>
 
     <div class="videos-grid">
@@ -98,7 +106,7 @@ const videos = [
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
         </svg>
-        {t.videos.youtubeLink}
+        Voir toute la chaîne <span class="yt-label-red">YouTube</span>
       </a>
     </div>
   </div>
@@ -162,6 +170,21 @@ const videos = [
     font-size: clamp(1.875rem, 3.5vw, 2.75rem);
     color: var(--color-text-primary);
     margin: 0;
+  }
+
+  .title-passion-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .passion-heart {
+    position: absolute;
+    right: -0.22em;
+    top: 0.08em;
+    width: 0.3em;
+    height: 0.36em;
+    color: #C96876;
+    stroke: currentColor;
   }
 
   .videos-grid {
@@ -272,6 +295,10 @@ const videos = [
     display: inline-flex;
     align-items: center;
     gap: 0.625rem;
+  }
+
+  .yt-label-red {
+    color: #ff0000;
   }
 
   @media (max-width: 900px) {

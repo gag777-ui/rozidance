@@ -44,7 +44,7 @@ const ordinals = ['01', '02', '03'] as const;
           <div class="card-accent-bar"></div>
           <div class="card-body">
             <span class="card-ordinal" aria-hidden="true">{ordinals[i]}</span>
-            <div class="card-icon" set:html={svgIcons[i]} />
+            <div class={`card-icon card-icon-${i}`} set:html={svgIcons[i]} />
             <h3 class="card-title">{item.title}</h3>
             <p class="card-description">{item.description}</p>
             <a
@@ -150,6 +150,14 @@ const ordinals = ['01', '02', '03'] as const;
     color: var(--color-accent);
     flex-shrink: 0;
     display: flex;
+  }
+
+  .card-icon-0 {
+    color: var(--color-gold);
+  }
+
+  .card-icon-1 {
+    color: #E53E3E;
   }
 
   .card-title {

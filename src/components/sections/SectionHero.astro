@@ -19,7 +19,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       playsinline
       disablepictureinpicture
       preload="none"
-      poster="/images/og-default.webp"
     >
       <source src="/videos/hero.mp4" type="video/mp4" />
     </video>
@@ -52,15 +51,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       <h1 class="hero-title" id="hero-title">
         <span class="hero-line">{t.hero.line1}</span>
         <span class="hero-line">{t.hero.line2}</span>
-        <em class="hero-line hero-italic">
-          {t.hero.line3a && (
-            <>
-              {t.hero.line3a}
-              <span class="hero-dot" aria-hidden="true">·</span>
-            </>
-          )}
-          {t.hero.line3italic}
-        </em>
+        <em class="hero-line hero-italic" id="hero-italic" aria-label={`${t.hero.line3a} · ${t.hero.line3italic}`}></em>
       </h1>
 
 
@@ -139,6 +130,30 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   /* Widget vidéo mobile supprimé — on utilise la vidéo fond */
   .hero-video-wrap { display: none; }
 
+  /* ── Animations d'entrée du titre ── */
+  @keyframes heroWordIn {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes heroLineIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes heroSignatureIn {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.92);
+      filter: blur(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
   .hero-title {
     display: flex;
     flex-direction: column;
@@ -151,6 +166,22 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .hero-line { display: block; }
 
+  /* "Bienvenu" — apparaît en premier, juste après le loader */
+  .hero-line:nth-child(1) {
+    animation: heroWordIn 650ms var(--ease-out-soft) 500ms both;
+  }
+
+  /* "dans le monde de" — suit avec du recul */
+  .hero-line:nth-child(2) {
+    animation: heroLineIn 700ms var(--ease-out-soft) 950ms both;
+    color: rgba(220, 190, 165, 0.88);
+  }
+
+  /* "Rozi · Dance" — géré par le typewriter JS */
+  .hero-italic {
+    opacity: 0;
+  }
+
   .hero-line:first-child {
     font-size: clamp(1.125rem, 4vw, 1.5rem);
     letter-spacing: 0.18em;
@@ -162,7 +193,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   }
 
   .hero-italic {
-    color: var(--color-accent);
+    color: #CE8698;
     font-style: italic;
     font-size: clamp(3rem, 12vw, 5.5rem);
     line-height: 1.0;
@@ -171,13 +202,21 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     align-items: center;
     justify-content: center;
     gap: 0.25em;
+    min-height: 1.1em;
   }
 
-  .hero-dot {
-    color: rgba(255, 255, 255, 0.5);
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  .hero-cursor {
+    display: inline-block;
     font-style: normal;
-    font-size: 0.35em;
-    vertical-align: middle;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    animation: cursorBlink 0.6s step-end infinite;
+    margin-left: 2px;
   }
 
   .hero-subtitle {
@@ -265,4 +304,33 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     }
   }
 </style>
+
+<script>
+  const FULL_TEXT = 'Rozi · Dance';
+  const CHAR_DELAY = 45;
+  const START_DELAY = 900;
+
+  function initHeroTypewriter() {
+    const el = document.getElementById('hero-italic') as HTMLElement | null;
+    if (!el) return;
+
+    el.textContent = '';
+    el.style.opacity = '1';
+
+    let i = 0;
+
+    function typeNext() {
+      if (i >= FULL_TEXT.length) return;
+      el.textContent += FULL_TEXT[i];
+      i++;
+      const jitter = (Math.random() - 0.5) * 50;
+      const pause = i === 4 ? 320 : CHAR_DELAY + jitter;
+      setTimeout(typeNext, pause);
+    }
+
+    setTimeout(typeNext, START_DELAY);
+  }
+
+  document.addEventListener('astro:page-load', initHeroTypewriter);
+</script>
 

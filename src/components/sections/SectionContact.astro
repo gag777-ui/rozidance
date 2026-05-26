@@ -27,11 +27,20 @@ const t = getTranslations(lang);
         <div class="card-accent-bar"></div>
         <div class="card-body">
           <span class="card-ordinal" aria-hidden="true">01</span>
-          <div class="card-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5"/>
-              <circle cx="12" cy="12" r="4.5"/>
-              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+          <div class="card-icon card-icon-instagram" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <defs>
+                <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#feda75"/>
+                  <stop offset="25%" stop-color="#fa7e1e"/>
+                  <stop offset="55%" stop-color="#d62976"/>
+                  <stop offset="80%" stop-color="#962fbf"/>
+                  <stop offset="100%" stop-color="#4f5bd5"/>
+                </linearGradient>
+              </defs>
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="url(#ig-grad)"/>
+              <circle cx="12" cy="12" r="4.5" stroke="url(#ig-grad)"/>
+              <circle cx="17.5" cy="6.5" r="0.5" fill="url(#ig-grad)" stroke="none"/>
             </svg>
           </div>
           <p class="card-label">{t.contact.instagram.label}</p>
@@ -55,7 +64,7 @@ const t = getTranslations(lang);
         <div class="card-accent-bar"></div>
         <div class="card-body">
           <span class="card-ordinal" aria-hidden="true">02</span>
-          <div class="card-icon" aria-hidden="true">
+          <div class="card-icon card-icon-email" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="4" width="20" height="16" rx="2"/>
               <path d="M2 7l10 7 10-7"/>
@@ -191,6 +200,10 @@ const t = getTranslations(lang);
     color: var(--color-accent);
     display: flex;
     flex-shrink: 0;
+  }
+
+  .card-icon-email {
+    color: #EA4335;
   }
 
   .card-label {
