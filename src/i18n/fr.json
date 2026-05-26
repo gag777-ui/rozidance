@@ -5,7 +5,6 @@
     "ogTitle": "Rozi Dance — L'âme arménienne en mouvement",
     "ogDescription": "Prestations de chant et danse arméniens pour mariages, cérémonies et événements. Cours de chant & danse pour tous niveaux."
   },
-
   "nav": {
     "prestations": "Prestations",
     "galerie": "Galerie",
@@ -13,7 +12,6 @@
     "apropos": "À propos",
     "contact": "Contact"
   },
-
   "hero": {
     "eyebrowChant": "Chant",
     "eyebrowDanse": "Danse",
@@ -27,16 +25,15 @@
     "ctaPrimary": "Nous contacter",
     "ctaSecondary": "Découvrir"
   },
-
   "prestations": {
     "eyebrow": "Ce que nous proposons",
     "title": "Présentation",
     "items": [
       {
         "id": "mariages",
-        "title": "Mariages",
+        "title": "Mariages & Événements",
         "description": "Chant de la mariée, danse d'entrée, animation du banquet — nous sublisons chaque moment de votre journée avec des performances sur mesure.",
-        "link": "Voir les prestations"
+        "link": "Nos services"
       },
       {
         "id": "danse-evenementielle",
@@ -52,7 +49,6 @@
       }
     ]
   },
-
   "galerie": {
     "eyebrow": "Moments capturés",
     "title": "Galerie",
@@ -60,23 +56,32 @@
     "instagramLink": "Voir notre Instagram",
     "altPlaceholder": "Photo Rozi Dance"
   },
-
   "videos": {
     "eyebrow": "En performance",
     "title": "Vivez nos prestations",
     "youtubeLink": "Voir toute la chaîne YouTube"
   },
-
   "stats": {
     "eyebrow": "Rozi Dance en chiffres",
     "items": [
-      { "value": "200+", "label": "Mariages accompagnés" },
-      { "value": "4 ans", "label": "D'expérience artistique" },
-      { "value": "8", "label": "Pays d'intervention" },
-      { "value": "100%", "label": "Avec le cœur" }
+      {
+        "value": "200+",
+        "label": "Mariages accompagnés"
+      },
+      {
+        "value": "4 ans",
+        "label": "D'expérience artistique"
+      },
+      {
+        "value": "8",
+        "label": "Pays d'intervention"
+      },
+      {
+        "value": "100%",
+        "label": "Avec le cœur"
+      }
     ]
   },
-
   "temoignages": {
     "eyebrow": "Ce que disent nos clients",
     "title": "Ils nous ont fait confiance",
@@ -98,7 +103,6 @@
       }
     ]
   },
-
   "faq": {
     "eyebrow": "Questions fréquentes",
     "title": "Tout ce que vous voulez savoir",
@@ -125,7 +129,6 @@
       }
     ]
   },
-
   "apropos": {
     "eyebrow": "Notre histoire",
     "title": "Deux voix, deux corps, une même tradition",
@@ -133,7 +136,6 @@
     "p2": "Que ce soit lors de la cérémonie d'habillage d'une mariée, d'un grand banquet de mariage ou dans la salle de cours, nous mettons notre cœur et notre âme au service de la beauté de nos traditions.",
     "altPortrait": "Portrait du duo Rozi Dance"
   },
-
   "contact": {
     "eyebrow": "Réservation & informations",
     "title": "Parlons de votre événement",
@@ -151,7 +153,6 @@
       "handle": "Notre chaîne"
     }
   },
-
   "cours": {
     "pageTitle": "Cours de chant & danse arméniens — Rozi Dance",
     "pageDescription": "Cours de chant arménien et international, cours de danse folklorique arménienne. Individuels et en groupe, tous niveaux, à distance possible.",
@@ -167,22 +168,51 @@
     "faqEyebrow": "Questions fréquentes",
     "faqTitle": "Tout ce que vous voulez savoir",
     "faqItems": [
-      { "q": "Faut-il déjà savoir chanter pour s'inscrire aux cours ?", "a": "Pas du tout ! Nos cours s'adressent à tous les niveaux, du grand débutant au chanteur confirmé souhaitant se spécialiser dans le répertoire arménien." },
-      { "q": "Les cours se font-ils en arménien ?", "a": "Les cours peuvent se dérouler en français, russe ou arménien selon votre préférence. Les chants sont bien sûr enseignés dans leur langue originale (arménien), avec explication des textes." },
-      { "q": "Les cours à distance sont-ils possibles ?", "a": "Oui, nous proposons des cours en visioconférence (Zoom, Google Meet). Cette formule est disponible pour les cours individuels de chant et de danse." },
-      { "q": "Combien de temps faut-il pour apprendre un chant ?", "a": "En général, un chant simple peut être appris en 2 à 4 séances. Les pièces plus complexes demandent plus de temps. Tout dépend de votre niveau et de votre pratique entre les cours." },
-      { "q": "Proposez-vous des cours pour préparer un chant de mariage ?", "a": "Absolument ! C'est l'une de nos spécialités. Nous pouvons vous préparer à chanter lors de votre propre cérémonie de mariage, avec un programme sur mesure adapté à votre calendrier." },
-      { "q": "Les cours de danse sont-ils adaptés aux débutants ?", "a": "Oui, tous nos cours de danse débutent par les bases. Aucune expérience préalable en danse n'est nécessaire. Nous avançons à votre rythme." },
-      { "q": "Peut-on combiner cours de chant et cours de danse ?", "a": "Tout à fait, et c'est même ce que nous recommandons ! Contactez-nous pour un programme personnalisé." },
-      { "q": "Les cours en groupe ont-ils un nombre minimum de participants ?", "a": "Les cours en groupe démarrent à partir de 4 personnes. Ils sont idéaux pour les associations culturelles, groupes d'amis ou préparations d'événements." },
-      { "q": "Peut-on offrir des cours en cadeau ?", "a": "Oui, nous proposons des bons cadeaux pour des séances individuelles ou des forfaits. Contactez-nous par e-mail pour en commander un." },
-      { "q": "Comment payer ?", "a": "Nous acceptons le virement bancaire (BE) et le cash pour les cours en présentiel. Les modalités sont précisées lors de l'inscription." }
+      {
+        "q": "Faut-il déjà savoir chanter pour s'inscrire aux cours ?",
+        "a": "Pas du tout ! Nos cours s'adressent à tous les niveaux, du grand débutant au chanteur confirmé souhaitant se spécialiser dans le répertoire arménien."
+      },
+      {
+        "q": "Les cours se font-ils en arménien ?",
+        "a": "Les cours peuvent se dérouler en français, russe ou arménien selon votre préférence. Les chants sont bien sûr enseignés dans leur langue originale (arménien), avec explication des textes."
+      },
+      {
+        "q": "Les cours à distance sont-ils possibles ?",
+        "a": "Oui, nous proposons des cours en visioconférence (Zoom, Google Meet). Cette formule est disponible pour les cours individuels de chant et de danse."
+      },
+      {
+        "q": "Combien de temps faut-il pour apprendre un chant ?",
+        "a": "En général, un chant simple peut être appris en 2 à 4 séances. Les pièces plus complexes demandent plus de temps. Tout dépend de votre niveau et de votre pratique entre les cours."
+      },
+      {
+        "q": "Proposez-vous des cours pour préparer un chant de mariage ?",
+        "a": "Absolument ! C'est l'une de nos spécialités. Nous pouvons vous préparer à chanter lors de votre propre cérémonie de mariage, avec un programme sur mesure adapté à votre calendrier."
+      },
+      {
+        "q": "Les cours de danse sont-ils adaptés aux débutants ?",
+        "a": "Oui, tous nos cours de danse débutent par les bases. Aucune expérience préalable en danse n'est nécessaire. Nous avançons à votre rythme."
+      },
+      {
+        "q": "Peut-on combiner cours de chant et cours de danse ?",
+        "a": "Tout à fait, et c'est même ce que nous recommandons ! Contactez-nous pour un programme personnalisé."
+      },
+      {
+        "q": "Les cours en groupe ont-ils un nombre minimum de participants ?",
+        "a": "Les cours en groupe démarrent à partir de 4 personnes. Ils sont idéaux pour les associations culturelles, groupes d'amis ou préparations d'événements."
+      },
+      {
+        "q": "Peut-on offrir des cours en cadeau ?",
+        "a": "Oui, nous proposons des bons cadeaux pour des séances individuelles ou des forfaits. Contactez-nous par e-mail pour en commander un."
+      },
+      {
+        "q": "Comment payer ?",
+        "a": "Nous acceptons le virement bancaire (BE) et le cash pour les cours en présentiel. Les modalités sont précisées lors de l'inscription."
+      }
     ],
     "ctaTitle": "Prêt à commencer ?",
     "ctaSubtitle": "Contactez-nous pour choisir la formule qui vous convient.",
     "ctaBtn": "Nous contacter"
   },
-
   "footer": {
     "tagline": "L'âme arménienne en mouvement.",
     "nav": "Navigation",
@@ -191,7 +221,6 @@
     "copyright": "© {year} Rozi Dance. Tous droits réservés.",
     "madeWith": "Site réalisé avec soin."
   },
-
   "404": {
     "title": "Page introuvable",
     "description": "La page que vous cherchez n'existe pas ou a été déplacée.",

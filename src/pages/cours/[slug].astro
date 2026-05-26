@@ -1,0 +1,267 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import type { Lang } from '../../i18n/utils';
+
+export async function getStaticPaths() {
+  const desc = 'Nous sommes fiers de transmettre notre art et notre passion à chaque élève, quel que soit son niveau.';
+  const cats = [
+    { slug: 'chant-armenien', title: 'Chant arménien', description: desc, count: 6 },
+    { slug: 'chant-jazz-soul-pop', title: 'Chant Jazz · Soul · Pop', description: desc, count: 6 },
+    { slug: 'chant-de-mariage', title: 'Chant de mariage', description: desc, count: 6 },
+    { slug: 'danse-armenienne', title: 'Danse arménienne', description: desc, count: 6 },
+    { slug: 'danse-en-groupe', title: 'Danse en groupe', description: desc, count: 6 },
+    { slug: 'cours-en-ligne', title: 'Cours en ligne', description: desc, count: 6 },
+  ];
+  return cats.map(cat => ({
+    params: { slug: cat.slug },
+    props: { cat },
+  }));
+}
+
+const { cat } = Astro.props;
+const lang = (Astro.currentLocale ?? 'fr') as Lang;
+const base = lang === 'fr' ? '' : `/${lang}`;
+
+const reels: string[] = Array.from({ length: cat.count }, () => '#');
+---
+
+<Layout
+  title={`${cat.title} — Rozi Dance`}
+  description={cat.description}
+>
+  <!-- Hero -->
+  <section class="cat-hero">
+    <div class="section-container cat-hero-inner">
+      <a href={`${base}/cours`} class="back-link">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Cours
+      </a>
+      <span class="eyebrow">Cours de chant & danse</span>
+      <h1>{cat.title}</h1>
+      <p class="hero-subtitle">{cat.description}</p>
+    </div>
+  </section>
+
+  <!-- Reels grid -->
+  <section class="reels-section">
+    <div class="section-container">
+      <div class="reels-grid">
+        {reels.map((href, i) => (
+          <a
+            href={href}
+            class="reel-card reveal"
+            style={`transition-delay: ${i * 50}ms`}
+            aria-label={`${cat.title} — vidéo ${i + 1}`}
+            target={href !== '#' ? '_blank' : undefined}
+            rel={href !== '#' ? 'noopener noreferrer' : undefined}
+          >
+            <div class="reel-thumb">
+              <img
+                src="/images/reel-cover.webp"
+                alt={`${cat.title} ${i + 1}`}
+                loading="lazy"
+                width="300"
+                height="533"
+              />
+              <div class="reel-overlay">
+                <svg class="reel-ig-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.4"/>
+                  <circle cx="12" cy="12" r="3.5" stroke="white" stroke-width="1.4"/>
+                  <circle cx="17" cy="7" r="1.2" fill="white"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cat-cta">
+    <div class="section-container cat-cta-inner reveal-fade">
+      <span class="eyebrow">S'inscrire</span>
+      <h2>Prêt à commencer ?</h2>
+      <p>Contactez-nous pour choisir la formule qui vous convient et définir votre programme.</p>
+      <div class="cta-actions">
+        <a href={`${base || '/'}#contact`} class="cta-btn cta-primary">
+          Nous contacter
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href={`${base}/cours`} class="cta-btn cta-secondary">
+          Voir tous les cours
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .cat-hero {
+    padding-block: var(--spacing-section);
+    background-color: var(--color-bg-section);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .cat-hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: color 220ms var(--ease-out-soft), gap 220ms var(--ease-out-soft);
+  }
+
+  .back-link:hover { color: var(--color-accent); gap: 0.6rem; }
+
+  .cat-hero h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  .reels-section {
+    padding-block: var(--spacing-section);
+  }
+
+  .reels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .reels-grid {
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .reels-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+
+  .reel-card { display: block; text-decoration: none; }
+
+  .reel-thumb {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background-color: var(--color-bg-card);
+    border: 0.5px solid var(--color-border);
+  }
+
+  .reel-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 500ms var(--ease-out-soft);
+  }
+
+  .reel-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.22);
+    opacity: 0;
+    transition: opacity 300ms var(--ease-out-soft);
+  }
+
+  .reel-ig-icon { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+
+  .reel-card:hover .reel-thumb img { transform: scale(1.04); }
+  .reel-card:hover .reel-overlay { opacity: 1; }
+
+  .cat-cta {
+    padding-block: var(--spacing-section);
+    background-color: var(--color-bg-section);
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .cat-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+  }
+
+  .cat-cta h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .cat-cta p {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    max-width: 50ch;
+    margin: 0;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-btn);
+    transition: background-color 300ms var(--ease-out-soft), gap 250ms var(--ease-out-soft), color 300ms var(--ease-out-soft);
+  }
+
+  .cta-primary { background-color: var(--color-accent); color: white; }
+  .cta-primary:hover { background-color: color-mix(in srgb, var(--color-accent) 85%, black); gap: 0.75rem; }
+
+  .cta-secondary {
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border: 0.5px solid var(--color-border);
+  }
+
+  .cta-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); }
+</style>
