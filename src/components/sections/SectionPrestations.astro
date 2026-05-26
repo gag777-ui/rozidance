@@ -35,6 +35,7 @@ const ordinals = ['01', '02', '03'] as const;
     <div class="section-header reveal-fade">
       <span class="eyebrow">{t.prestations.eyebrow}</span>
       <h2 class="section-title" id="prestations-title">{t.prestations.title}</h2>
+      <p class="prestations-subtitle">{t.hero.subtitle}</p>
     </div>
 
     <div class="cards-grid">
@@ -81,6 +82,13 @@ const ordinals = ['01', '02', '03'] as const;
     font-size: clamp(1.875rem, 3.5vw, 2.75rem);
     color: var(--color-text-primary);
     margin: 0;
+  }
+
+  .prestations-subtitle {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
   }
 
   .cards-grid {
