@@ -58,7 +58,7 @@
   },
   "videos": {
     "eyebrow": "In optreden",
-    "title": "Beleef onze voorstellingen",
+    "title": "Passie",
     "youtubeLink": "Bekijk het volledige YouTube-kanaal"
   },
   "stats": {
@@ -163,6 +163,8 @@
     "chantDescription": "Ontdek het traditionele Armeense repertoire en internationale liederen. Onze lessen zijn afgestemd op uw stem en niveau.",
     "danseTitle": "Danslessen",
     "danseDescription": "Maak kennis met Armeense volksdansen of perfectioneer uw techniek. Individuele of groepslessen in een warme sfeer.",
+    "tarifsEyebrow": "Investering",
+    "tarifsTitle": "Tarieven",
     "faqEyebrow": "Veelgestelde vragen",
     "faqTitle": "Alles wat u wilt weten",
     "faqItems": [

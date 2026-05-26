@@ -58,7 +58,7 @@
   },
   "videos": {
     "eyebrow": "In performance",
-    "title": "Experience our shows",
+    "title": "Passion",
     "youtubeLink": "View the full YouTube channel"
   },
   "stats": {
@@ -163,6 +163,8 @@
     "chantDescription": "Discover the traditional Armenian repertoire as well as international songs. Our lessons adapt to your voice and level, whether beginner or advanced.",
     "danseTitle": "Dance lessons",
     "danseDescription": "Discover Armenian folk dances or perfect your technique. Solo or group lessons, in a warm and welcoming atmosphere.",
+    "tarifsEyebrow": "Investment",
+    "tarifsTitle": "Rates",
     "faqEyebrow": "Frequently asked questions",
     "faqTitle": "Everything you want to know",
     "faqItems": [
