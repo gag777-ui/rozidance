@@ -27,18 +27,18 @@
   },
   "prestations": {
     "eyebrow": "Wat wij bieden",
-    "title": "Drie werelden, één passie",
+    "title": "Presentatie",
     "items": [
       {
         "id": "mariages",
         "title": "Huwelijken & Evenementen",
-        "description": "Bruidsezang, openingsdans, feestanimatie — op maat gemaakte optredens voor uw mooiste dag.",
+        "description": "Bruidszang, openingsdans, bankettanimatie — wij verheffen elk moment van uw dag met optredens op maat.",
         "link": "Bekijk onze prestaties"
       },
       {
         "id": "danse-evenementielle",
         "title": "De kunst van het zingen",
-        "description": "Een stem voor elke gelegenheid. Traditionele, hedendaagse of gepersonaliseerde zang, in meerdere talen, voor uw meest bijzondere momenten.",
+        "description": "Een stem voor elke gelegenheid. Jazz · Soul · Pop, hedendaagse of gepersonaliseerde zang, in meerdere talen, voor uw meest bijzondere momenten.",
         "link": "Meer weten"
       },
       {

@@ -27,18 +27,18 @@
   },
   "prestations": {
     "eyebrow": "What we offer",
-    "title": "Three worlds, one passion",
+    "title": "Presentation",
     "items": [
       {
         "id": "mariages",
         "title": "Weddings & Events",
-        "description": "Bridal singing, entrance dance, banquet entertainment — bespoke performances for your most beautiful day.",
+        "description": "Bridal singing, entrance dance, banquet entertainment — we elevate every moment of your day with bespoke performances.",
         "link": "See our work"
       },
       {
         "id": "danse-evenementielle",
         "title": "The art of singing",
-        "description": "A voice for every occasion. Traditional, contemporary or personalised singing, in several languages, to accompany your most precious moments.",
+        "description": "A voice for every occasion. Jazz · Soul · Pop, contemporary or personalised singing, in several languages, to accompany your most precious moments.",
         "link": "Learn more"
       },
       {
