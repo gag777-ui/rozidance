@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rozi Dance — Demo Inspiration</title>
+<meta name="description" content="Démo inspiration premium — Rozi Dance"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+<style>
+/* ─── RESET & TOKENS ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FAF7F2;
+  --dark:#1C1410;
+  --dark2:#120a06;
+  --card-dark:rgba(255,255,255,.04);
+  --acc:#C16847;
+  --gold:#A8882A;
+  --ivory:#FBF8F3;
+  --border-light:rgba(255,255,255,.1);
+  --border-warm:rgba(193,104,71,.25);
+  --muted-light:rgba(255,255,255,.45);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+html{scroll-behavior:auto} /* Lenis gère le scroll */
+body{
+  font-family:var(--sans);
+  background:var(--dark2);
+  color:#fff;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ═══════════════════════════════════════
+   BORDER GRADIENT — technique Samsara
+   adaptée en terracotta/or
+═══════════════════════════════════════ */
+.border-glow{position:relative}
+.border-glow::before{
+  content:"";position:absolute;inset:0;
+  border-radius:inherit;padding:1px;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  background:linear-gradient(
+    225deg,
+    rgba(255,255,255,0) 0%,
+    rgba(193,104,71,.4) 35%,
+    rgba(168,136,42,.3) 55%,
+    rgba(255,255,255,0) 100%
+  );
+  pointer-events:none;
+}
+
+/* ═══════════════════════════════════════
+   REVEAL ANIMATIONS
+═══════════════════════════════════════ */
+.reveal{
+  opacity:0;
+  transform:translate3d(0,1.5rem,0) scale(.98);
+  filter:blur(10px);
+  transition:
+    opacity 900ms var(--ease),
+    transform 900ms var(--ease),
+    filter 900ms var(--ease);
+  will-change:opacity,transform,filter;
+}
+.reveal.visible{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+
+.word-reveal .word{
+  display:inline-block;
+  opacity:0;
+  transform:translate3d(0,1rem,0);
+  filter:blur(8px);
+  transition:
+    opacity 800ms var(--ease),
+    transform 800ms var(--ease),
+    filter 800ms var(--ease);
+  will-change:opacity,transform,filter;
+}
+.word-reveal.visible .word{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
+
+@media(prefers-reduced-motion:reduce){
+  .reveal,.word-reveal .word{opacity:1;transform:none;filter:none;transition:none}
+}
+
+/* ═══════════════════════════════════════
+   NAVIGATION PILULE — glassmorphism
+═══════════════════════════════════════ */
+.nav{
+  position:fixed;inset-x:0;top:0;z-index:999;
+  pointer-events:none;
+}
+.nav-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.25rem 1.5rem;
+  pointer-events:auto;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:.75rem;text-decoration:none;
+}
+.nav-logo-mark{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(20px);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:.9rem;color:#fff;
+  transition:background 250ms;
+}
+.nav-logo:hover .nav-logo-mark{background:rgba(255,255,255,.13)}
+.nav-logo-name{
+  font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.6);
+  display:none;
+}
+@media(min-width:640px){.nav-logo-name{display:block}}
+
+.nav-links{
+  display:none;
+  align-items:center;
+  gap:0;
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(20px);
+  border-radius:999px;
+  padding:.3rem;
+}
+@media(min-width:768px){.nav-links{display:flex}}
+.nav-link{
+  padding:.45rem 1.1rem;
+  font-size:11px;letter-spacing:.06em;
+  color:rgba(255,255,255,.55);
+  text-decoration:none;border-radius:999px;
+  transition:background 200ms,color 200ms;
+}
+.nav-link:hover{background:rgba(255,255,255,.1);color:#fff}
+
+.nav-cta{
+  display:none;align-items:center;gap:.5rem;
+  padding:.6rem 1.4rem;
+  border-radius:999px;
+  background:#fff;
+  color:var(--dark2);
+  font-size:11px;letter-spacing:.06em;
+  font-weight:500;
+  text-decoration:none;
+  transition:background 250ms,transform 300ms var(--ease);
+}
+@media(min-width:640px){.nav-cta{display:flex}}
+.nav-cta:hover{background:#fef3ea}
+.nav-cta-arrow{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--dark2);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;
+  transition:transform 300ms var(--ease);
+}
+.nav-cta:hover .nav-cta-arrow{transform:rotate(45deg)}
+
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-video{
+  position:absolute;inset:0;
+}
+.hero-video video{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  min-width:100%;min-height:100%;
+  width:auto;height:auto;
+  object-fit:cover;
+  will-change:transform;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom,rgba(18,10,6,.45) 0%,transparent 45%),
+    radial-gradient(ellipse 120% 100% at 50% 50%,rgba(18,10,6,.55) 0%,rgba(18,10,6,.88) 100%);
+}
+.hero-glow{
+  position:absolute;
+  left:-6rem;top:6rem;
+  width:24rem;height:24rem;
+  border-radius:50%;
+  background:rgba(193,104,71,.18);
+  filter:blur(100px);
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;z-index:2;
+  max-width:900px;margin:0 auto;
+  padding:6rem 1.5rem 3rem;
+  display:flex;flex-direction:column;
+  align-items:center;text-align:center;
+  gap:2rem;
+}
+/* Badge animé */
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.75rem;
+  background:rgba(255,255,255,.07);
+  backdrop-filter:blur(20px);
+  border-radius:999px;padding:.45rem 1.1rem;
+  font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(255,255,255,.7);
+}
+.ping{position:relative;display:flex;width:8px;height:8px;flex-shrink:0}
+.ping-ring{
+  position:absolute;inset:0;border-radius:50%;
+  background:rgba(193,104,71,.8);
+  animation:ping 1.4s cubic-bezier(0,0,.2,1) infinite;
+}
+@keyframes ping{75%,100%{transform:scale(2);opacity:0}}
+.ping-dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--acc)}
+
+/* Titre — mot par mot */
+.hero-title{
+  font-family:var(--serif);
+  font-size:clamp(2.8rem,9vw,6.5rem);
+  font-weight:300;line-height:1.02;
+  color:#fff;
+  letter-spacing:-.01em;
+}
+.hero-title .line{display:block}
+.hero-title .accent{color:rgba(230,185,155,.9);font-style:italic}
+.hero-title .gold{color:rgba(210,180,100,.85)}
+
+.hero-sub{
+  font-size:clamp(.875rem,1.5vw,1rem);
+  color:rgba(255,255,255,.5);
+  max-width:46ch;line-height:1.75;
+  font-weight:300;
+}
+
+/* Bouton magnétique */
+.mag-btn{
+  display:inline-flex;align-items:center;gap:1rem;
+  padding:1rem 2rem;border-radius:999px;
+  background:#fff;color:var(--dark2);
+  font-size:12px;letter-spacing:.08em;font-weight:500;
+  text-decoration:none;
+  box-shadow:0 8px 40px rgba(193,104,71,.2);
+  transition:background 300ms,box-shadow 300ms,transform 300ms var(--ease);
+  cursor:pointer;border:none;
+}
+.mag-btn:hover{background:#fef3ea;box-shadow:0 12px 50px rgba(193,104,71,.3)}
+.mag-btn-icon{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--dark2);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;
+  transition:transform 300ms var(--ease);
+}
+.mag-btn:hover .mag-btn-icon{transform:rotate(45deg)}
+
+/* Bas du hero */
+.hero-foot{
+  position:absolute;bottom:2rem;inset-x:0;z-index:2;
+  max-width:1100px;margin:0 auto;padding:0 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:.5px solid rgba(255,255,255,.1);padding-top:1.25rem;
+}
+.hero-tags{
+  display:flex;gap:2rem;
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);
+}
+.hero-scroll{
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.5);
+  text-decoration:none;font-size:1.1rem;
+  transition:background 250ms,color 250ms;
+}
+.hero-scroll:hover{background:rgba(255,255,255,.1);color:#fff}
+
+
+/* ═══════════════════════════════════════
+   SECTION — PRESTATIONS CARDS
+═══════════════════════════════════════ */
+.section{padding:7rem 1.5rem;max-width:1100px;margin:0 auto}
+.section-label{
+  font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(193,104,71,.7);margin-bottom:1.5rem;
+}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(2rem,4vw,3.5rem);
+  font-weight:400;color:#fff;
+  line-height:1.1;max-width:16ch;
+  margin-bottom:3.5rem;
+}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+
+.pcard{
+  border-radius:2.5rem;
+  background:var(--card-dark);
+  padding:2.5rem 2rem;
+  text-decoration:none;display:flex;flex-direction:column;gap:1.25rem;
+  transition:background 300ms,transform 400ms var(--ease);
+  position:relative;
+}
+.pcard:hover{background:rgba(255,255,255,.07);transform:translateY(-4px)}
+
+.pcard-icon{
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;flex-shrink:0;
+  position:relative;
+}
+.pcard h3{
+  font-family:var(--serif);font-size:1.35rem;font-weight:400;
+  color:#fff;line-height:1.2;
+}
+.pcard p{font-size:.82rem;color:rgba(255,255,255,.45);line-height:1.7;flex:1;font-weight:300}
+.pcard-link{
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--acc);margin-top:.5rem;
+  display:flex;align-items:center;gap:.5rem;
+  transition:gap 250ms;
+}
+.pcard:hover .pcard-link{gap:.8rem}
+
+
+/* ═══════════════════════════════════════
+   SECTION — CITATION PANORAMIQUE
+═══════════════════════════════════════ */
+.quote-wrap{padding:0 1.5rem 7rem;max-width:1100px;margin:0 auto}
+.quote-block{
+  position:relative;overflow:hidden;
+  border-radius:3rem;
+  padding:6rem 3rem;
+  text-align:center;
+}
+.quote-bg{
+  position:absolute;inset:0;
+  background-image:url('/images/og-default.webp');
+  background-size:cover;background-position:center;
+  opacity:.25;
+  transition:transform 8s ease;
+}
+.quote-block:hover .quote-bg{transform:scale(1.04)}
+.quote-veil{position:absolute;inset:0;background:rgba(18,10,6,.65);backdrop-filter:blur(2px)}
+.quote-content{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.quote-icon{font-size:2.5rem;color:rgba(193,104,71,.35);margin-bottom:1.5rem;display:block}
+.quote-text{
+  font-family:var(--serif);
+  font-size:clamp(1.5rem,3.5vw,2.5rem);
+  font-weight:300;font-style:italic;
+  color:#fff;line-height:1.3;margin-bottom:2rem;
+}
+.quote-author{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--acc);display:flex;align-items:center;justify-content:center;gap:.75rem;
+}
+.quote-author::before,.quote-author::after{content:'';width:24px;height:.5px;background:var(--acc)}
+
+
+/* ═══════════════════════════════════════
+   SECTION — À PROPOS / SPLIT
+═══════════════════════════════════════ */
+.about-grid{
+  display:grid;gap:4rem;
+  grid-template-columns:1fr;
+  padding:0 1.5rem 7rem;max-width:1100px;margin:0 auto;
+}
+@media(min-width:768px){.about-grid{grid-template-columns:1fr 1.2fr;align-items:center}}
+
+.about-img{
+  position:relative;
+  aspect-ratio:4/5;border-radius:2.5rem;overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+}
+.about-img img{
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(30%);opacity:.85;
+  mix-blend-mode:lighten;
+  transition:transform 600ms var(--ease);
+}
+.about-img:hover img{transform:scale(1.03)}
+.about-img-veil{position:absolute;inset:0;background:rgba(18,10,6,.15)}
+
+.about-text{display:flex;flex-direction:column;gap:1.5rem}
+.about-label{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(193,104,71,.7)}
+.about-title{font-family:var(--serif);font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:400;color:#fff;line-height:1.15}
+.about-p{font-size:.875rem;color:rgba(255,255,255,.45);line-height:1.8;font-weight:300}
+.about-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  border-top:.5px solid rgba(255,255,255,.08);
+  padding-top:2rem;margin-top:.5rem;
+}
+.stat-val{font-family:var(--serif);font-size:2.25rem;font-weight:300;color:#fff}
+.stat-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.3rem}
+
+
+/* ═══════════════════════════════════════
+   SECTION — TÉMOIGNAGE
+═══════════════════════════════════════ */
+.testi-wrap{padding:0 1.5rem 7rem;max-width:1100px;margin:0 auto}
+.testi-grid{display:grid;gap:3rem;align-items:center}
+@media(min-width:768px){.testi-grid{grid-template-columns:1fr 1.2fr}}
+.testi-left{display:flex;flex-direction:column;gap:1rem}
+.testi-card{
+  border-radius:2.5rem;
+  background:var(--card-dark);
+  padding:3rem;
+  position:relative;
+}
+.testi-quote-icon{font-size:2rem;color:rgba(193,104,71,.2);display:block;margin-bottom:1.5rem;font-family:var(--serif)}
+.testi-text{
+  font-family:var(--serif);font-size:clamp(1.1rem,2.5vw,1.5rem);
+  font-weight:400;color:#fff;line-height:1.45;margin-bottom:2rem;
+  font-style:italic;
+}
+.testi-author{display:flex;align-items:center;gap:.875rem}
+.testi-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.06);
+  border:.5px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:rgba(255,255,255,.6);font-weight:500;
+}
+.testi-name{font-size:.8rem;color:#fff;font-weight:500}
+.testi-event{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.1rem}
+
+
+/* ═══════════════════════════════════════
+   FOOTER CTA
+═══════════════════════════════════════ */
+.footer-wrap{padding:0 1.5rem 3rem;max-width:1100px;margin:0 auto}
+.footer-cta{
+  position:relative;overflow:hidden;
+  border-radius:3rem;
+  background:linear-gradient(to bottom,rgba(255,255,255,.04),rgba(255,255,255,.02));
+  border:.5px solid rgba(255,255,255,.07);
+  padding:5rem 3rem;
+}
+.footer-glow{
+  position:absolute;right:-10rem;top:-10rem;
+  width:32rem;height:32rem;border-radius:50%;
+  background:rgba(193,104,71,.07);filter:blur(100px);pointer-events:none;
+}
+.footer-inner{position:relative;z-index:1;max-width:520px}
+.footer-logo{
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);color:#fff;font-size:.85rem;
+  margin-bottom:2rem;
+  position:relative;
+}
+.footer-title{font-family:var(--serif);font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:400;color:#fff;line-height:1.15;margin-bottom:1rem}
+.footer-sub{font-size:.85rem;color:rgba(255,255,255,.4);line-height:1.75;font-weight:300;margin-bottom:2.5rem;max-width:40ch}
+.footer-a{
+  display:inline-flex;align-items:center;gap:.75rem;
+  padding:.85rem 1.75rem;border-radius:999px;
+  background:var(--acc);color:#fff;
+  font-size:11px;letter-spacing:.1em;font-weight:500;
+  text-decoration:none;
+  transition:background 250ms,transform 300ms var(--ease);
+}
+.footer-a:hover{background:#a8572e}
+
+.footer-bottom{
+  display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;
+  border-top:.5px solid rgba(255,255,255,.06);
+  padding:1.5rem 3rem;gap:1rem;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);
+}
+
+/* ─── divider ligne lumineuse ─── */
+.light-line{
+  height:.5px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,.1),transparent);
+  margin:0 1.5rem;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<div class="nav">
+  <div class="nav-inner reveal">
+    <a href="#" class="nav-logo border-glow">
+      <div class="nav-logo-mark">RD</div>
+      <span class="nav-logo-name">Rozi Dance</span>
+    </a>
+    <nav class="nav-links border-glow">
+      <a href="#prestations" class="nav-link">Prestations</a>
+      <a href="#about" class="nav-link">À propos</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <a href="#contact" class="nav-cta mag-target">
+      Nous contacter
+      <div class="nav-cta-arrow">↗</div>
+    </a>
+  </div>
+</div>
+
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="hero">
+  <div class="hero-video">
+    <video autoplay muted loop playsinline disablepictureinpicture preload="none" id="hero-vid">
+      <source src="/videos/hero.mp4" type="video/mp4"/>
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge border-glow reveal">
+      <div class="ping"><span class="ping-ring"></span><span class="ping-dot"></span></div>
+      Belgique · Europe · 2025
+    </div>
+
+    <h1 class="hero-title word-reveal" id="hero-title">
+      <!-- généré par JS -->
+    </h1>
+
+    <p class="hero-sub reveal">
+      Duo artistique arménien — chant de la mariée, danse événementielle<br/>
+      et cours pour tous les niveaux.
+    </p>
+
+    <div class="reveal">
+      <a href="#prestations" class="mag-btn mag-target">
+        Découvrir nos prestations
+        <div class="mag-btn-icon">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-foot">
+    <div class="hero-tags">
+      <span>Chant</span>
+      <span class="hidden-xs">Danse</span>
+      <span>Mariages</span>
+    </div>
+    <a href="#prestations" class="hero-scroll">↓</a>
+  </div>
+</section>
+
+
+<!-- ─── PRESTATIONS ─── -->
+<div class="light-line"></div>
+<section id="prestations" style="padding:7rem 1.5rem 0">
+  <div class="section">
+    <p class="section-label reveal">Nos prestations</p>
+    <h2 class="section-title word-reveal">
+      <!-- généré par JS -->
+    </h2>
+    <div class="cards-grid">
+
+      <a href="#" class="pcard border-glow reveal" style="transition-delay:0ms">
+        <div class="pcard-icon border-glow">🕊</div>
+        <h3>Mariages & Événements</h3>
+        <p>Chant de la mariée, prise en charge de la cérémonie au banquet. Chaque prestation est conçue sur mesure pour votre journée.</p>
+        <span class="pcard-link">Voir les prestations →</span>
+      </a>
+
+      <a href="#" class="pcard border-glow reveal" style="transition-delay:80ms">
+        <div class="pcard-icon border-glow">🎶</div>
+        <h3>L'art du chant</h3>
+        <p>Soul, Jazz, Pop et répertoire arménien — une voix qui s'adapte à chaque atmosphère, de l'intime au grandiose.</p>
+        <span class="pcard-link">Voir les vidéos →</span>
+      </a>
+
+      <a href="#" class="pcard border-glow reveal" style="transition-delay:160ms">
+        <div class="pcard-icon border-glow">✦</div>
+        <h3>Cours de chant & danse</h3>
+        <p>Cours individuels et collectifs à tous les niveaux. En présentiel ou en ligne — apprenez à votre rythme.</p>
+        <span class="pcard-link">Voir les cours →</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── CITATION ─── -->
+<div class="light-line" style="margin-top:7rem"></div>
+<div class="quote-wrap" style="padding-top:7rem">
+  <div class="quote-block border-glow reveal">
+    <div class="quote-bg"></div>
+    <div class="quote-veil"></div>
+    <div class="quote-content">
+      <span class="quote-icon">"</span>
+      <p class="quote-text">
+        La musique arménienne n'est pas un souvenir.<br/>
+        C'est une présence vivante — dans chaque fête, dans chaque regard.
+      </p>
+      <div class="quote-author">Rozi Dance</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─── À PROPOS ─── -->
+<div class="light-line"></div>
+<div class="about-grid" id="about" style="padding-top:7rem">
+  <div class="about-img border-glow reveal">
+    <img src="/images/portrait-duo.webp"
+         onerror="this.src='/images/og-default.webp'"
+         alt="Rozi Dance — portrait"/>
+    <div class="about-img-veil"></div>
+  </div>
+  <div class="about-text reveal">
+    <p class="about-label">Notre histoire</p>
+    <h2 class="about-title">Deux voix, une tradition millénaire.</h2>
+    <p class="about-p">Rozi Dance est né d'une passion commune pour l'art arménien transmis de génération en génération. Depuis l'enfance initiés aux danses et chants traditionnels, nous portons un héritage musical et chorégraphique vivant.</p>
+    <p class="about-p">Que ce soit lors d'une cérémonie de mariage, d'un grand gala ou dans la chaleur d'un cours, nous mettons notre cœur et notre âme dans chaque performance.</p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-val">200+</div>
+        <div class="stat-label">Mariages accompagnés</div>
+      </div>
+      <div>
+        <div class="stat-val">4 ans</div>
+        <div class="stat-label">D'expérience artistique</div>
+      </div>
+      <div>
+        <div class="stat-val">8</div>
+        <div class="stat-label">Pays en Europe</div>
+      </div>
+      <div>
+        <div class="stat-val">100%</div>
+        <div class="stat-label">Avec le cœur</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─── TÉMOIGNAGE ─── -->
+<div class="light-line"></div>
+<div class="testi-wrap" style="padding-top:7rem">
+  <div class="testi-grid">
+    <div class="testi-left reveal">
+      <p class="about-label">Ce qu'ils en disent</p>
+      <h2 class="about-title" style="max-width:14ch">Des instants gravés à jamais.</h2>
+      <p class="about-p">Nos clients arrivent avec un rêve — ils repartent avec un souvenir inoubliable. Leurs mots sont notre plus belle récompense.</p>
+    </div>
+    <div class="testi-card border-glow reveal">
+      <span class="testi-quote-icon">"</span>
+      <p class="testi-text">Un moment de magie absolue. Les chants de Rozi Dance ont ému toute notre famille — un souvenir éternel.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AS</div>
+        <div>
+          <div class="testi-name">Ani & Saro</div>
+          <div class="testi-event">Mariage arménien, Bruxelles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─── FOOTER CTA ─── -->
+<div class="light-line"></div>
+<div class="footer-wrap" id="contact" style="padding-top:3rem">
+  <div class="footer-cta border-glow reveal">
+    <div class="footer-glow"></div>
+    <div class="footer-inner">
+      <div class="footer-logo border-glow">RD</div>
+      <h2 class="footer-title">Prêt à rendre votre événement inoubliable ?</h2>
+      <p class="footer-sub">Les disponibilités sont limitées. Contactez-nous pour vérifier les dates et construire ensemble votre programme sur mesure.</p>
+      <a href="mailto:abrahamyan.rose@mail.ru" class="footer-a mag-target">
+        Nous écrire ↗
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Rozi Dance. Tous droits réservés.</span>
+    <div style="display:flex;gap:1.5rem">
+      <a href="#" style="color:inherit;text-decoration:none;transition:color 200ms" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="this.style.color='inherit'">Instagram</a>
+      <a href="#" style="color:inherit;text-decoration:none;transition:color 200ms" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="this.style.color='inherit'">YouTube</a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ─── 1. LENIS SMOOTH SCROLL ─── */
+const lenis = new Lenis({
+  duration: 1.4,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothTouch: false,
+  touchMultiplier: 2,
+});
+function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+
+/* ─── 2. TITRE HERO — mot par mot ─── */
+const heroLines = [
+  { text: 'Bienvenue', classes: '' },
+  { text: 'dans le monde', classes: 'accent' },
+  { text: 'de Rozi · Dance', classes: 'gold' },
+];
+const heroEl = document.getElementById('hero-title');
+heroLines.forEach((line, li) => {
+  const lineEl = document.createElement('span');
+  lineEl.className = 'line';
+  line.text.split(' ').forEach((w, wi) => {
+    const span = document.createElement('span');
+    span.className = 'word' + (line.classes ? ' ' + line.classes : '');
+    span.textContent = w + ' ';
+    span.style.transitionDelay = (li * 3 + wi) * 90 + 'ms';
+    lineEl.appendChild(span);
+  });
+  heroEl.appendChild(lineEl);
+});
+heroEl.classList.add('word-reveal');
+setTimeout(() => heroEl.classList.add('visible'), 400);
+
+/* ─── 3. TITRE PRESTATIONS ─── */
+const sectionTitle = document.querySelector('.section-title');
+if (sectionTitle) {
+  const words = ['Cultivez', 'votre art,', 'vivez votre passion.'];
+  words.forEach((w, i) => {
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = w + ' ';
+    span.style.transitionDelay = i * 100 + 'ms';
+    sectionTitle.appendChild(span);
+  });
+}
+
+
+/* ─── 4. INTERSECTION OBSERVER — reveal ─── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+document.querySelectorAll('.reveal, .word-reveal:not(#hero-title)').forEach(el => obs.observe(el));
+
+
+/* ─── 5. PARALLAX HERO VIDEO ─── */
+const heroVid = document.getElementById('hero-vid');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (heroVid && y < window.innerHeight) {
+    heroVid.style.transform = `translate(-50%, calc(-50% + ${y * 0.18}px))`;
+  }
+}, { passive: true });
+
+
+/* ─── 6. MAGNETIC BUTTONS ─── */
+document.querySelectorAll('.mag-target').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width / 2) * .22;
+    const y = (e.clientY - r.top - r.height / 2) * .22;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+
+/* ─── 7. NAV reveal immédiat ─── */
+document.querySelector('.nav .reveal')?.classList.add('visible');
+</script>
+
+</body>
+</html>
