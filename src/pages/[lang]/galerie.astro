@@ -8,7 +8,6 @@ export function getStaticPaths() {
     { params: { lang: 'en' } },
     { params: { lang: 'nl' } },
     { params: { lang: 'ru' } },
-    { params: { lang: 'hy' } },
   ];
 }
 
@@ -34,7 +33,7 @@ const photos = [
 >
   <main class="galerie-page">
     <div class="galerie-hero section-container">
-      <a href={`/${lang}`} class="galerie-back">← {t.nav.prestations === 'Performances' ? 'Back' : lang === 'nl' ? 'Terug' : lang === 'ru' ? 'Назад' : lang === 'hy' ? 'Վերադառնալ' : 'Retour'}</a>
+      <a href={`/${lang}`} class="galerie-back">← {t.nav.prestations === 'Performances' ? 'Back' : lang === 'nl' ? 'Terug' : lang === 'ru' ? 'Назад' : 'Retour'}</a>
       <div class="galerie-header">
         <span class="eyebrow">{t.galerie.eyebrow}</span>
         <h1 class="galerie-title">{t.galerie.title}</h1>

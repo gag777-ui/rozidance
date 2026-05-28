@@ -5,7 +5,7 @@ import type { Lang } from '../../../i18n/utils';
 
 export async function getStaticPaths() {
   const fr = (await import('../../../i18n/fr.json')).default;
-  const langs = ['en', 'nl', 'ru', 'hy'];
+  const langs = ['en', 'nl', 'ru'];
   return langs.flatMap(lang =>
     fr.mariages.categories.map(cat => ({
       params: { lang, slug: cat.slug },

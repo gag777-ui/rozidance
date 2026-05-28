@@ -4,7 +4,7 @@ import type { Lang } from '../../i18n/utils';
 const currentLocale = (Astro.currentLocale ?? 'fr') as Lang;
 const currentPath = Astro.url.pathname;
 
-const nonDefaultLocales = ['en', 'nl', 'ru', 'hy'];
+const nonDefaultLocales = ['en', 'nl', 'ru'];
 
 let cleanPath = currentPath;
 for (const loc of nonDefaultLocales) {
@@ -29,7 +29,6 @@ const langs: { code: Lang; label: string }[] = [
   { code: 'en', label: 'EN' },
   { code: 'nl', label: 'NL' },
   { code: 'ru', label: 'RU' },
-  { code: 'hy', label: 'HY' },
 ];
 
 const current = langs.find(l => l.code === currentLocale)!;
