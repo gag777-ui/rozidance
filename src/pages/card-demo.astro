@@ -1,619 +1,660 @@
 ---
-// Page démo — 10 designs de cartes au choix
 const cards = [
-  { slug: 'chant-armenien',     title: 'Chant arménien',      description: 'Répertoire traditionnel et mélodies ancestrales transmises avec passion.' },
-  { slug: 'chant-jazz-soul-pop', title: 'Jazz · Soul · Pop',   description: 'Voix adaptée à chaque ambiance, de l\'intime au festif.' },
-  { slug: 'chant-de-mariage',   title: 'Chant de mariage',    description: 'Accompagnement vocal sur mesure pour votre plus beau jour.' },
-  { slug: 'danse-armenienne',   title: 'Danse arménienne',    description: 'Chorégraphies traditionnelles pleines de grâce et d\'énergie.' },
-  { slug: 'danse-en-groupe',    title: 'Danse en groupe',     description: 'Cours collectifs pour tous niveaux dans une ambiance chaleureuse.' },
-  { slug: 'cours-en-ligne',     title: 'Cours en ligne',      description: 'Apprenez depuis chez vous, à votre rythme, en visioconférence.' },
+  { slug: 'chant-armenien',      title: 'Chant arménien',     desc: 'Répertoire traditionnel transmis avec passion.' },
+  { slug: 'chant-jazz-soul-pop', title: 'Jazz · Soul · Pop',  desc: 'Voix adaptée à chaque ambiance, de l\'intime au festif.' },
+  { slug: 'chant-de-mariage',    title: 'Chant de mariage',   desc: 'Accompagnement vocal sur mesure pour votre plus beau jour.' },
+  { slug: 'danse-armenienne',    title: 'Danse arménienne',   desc: 'Chorégraphies traditionnelles pleines de grâce.' },
+  { slug: 'danse-en-groupe',     title: 'Danse en groupe',    desc: 'Cours collectifs pour tous niveaux.' },
+  { slug: 'cours-en-ligne',      title: 'Cours en ligne',     desc: 'Apprenez depuis chez vous, à votre rythme.' },
 ];
 ---
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Démo cartes — Rozi Dance</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Démo cartes artistiques — Rozi Dance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FAF7F2;--card:#F4EFE6;--dark:#1C1410;--acc:#C16847;--gold:#A8882A;
+  --border:rgba(92,74,56,.18);--muted:#9C8470;--sec:#5C4A38;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--dark);padding:0 0 8rem}
 
-    :root {
-      --color-bg-primary: #FAF7F2;
-      --color-bg-card: #F4EFE6;
-      --color-bg-section: #EDE6D9;
-      --color-text-primary: #1C1410;
-      --color-text-secondary: #5C4A38;
-      --color-text-muted: #9C8470;
-      --color-accent: #C16847;
-      --color-gold: #A8882A;
-      --color-border: rgba(92,74,56,0.18);
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
-      --font-sans: 'DM Sans', system-ui, sans-serif;
-      --radius-card: 8px;
-      --radius-btn: 2px;
-      --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
-    }
+/* ─── NAV ─── */
+.nav{
+  position:sticky;top:0;z-index:999;
+  background:rgba(250,247,242,.95);backdrop-filter:blur(12px);
+  border-bottom:.5px solid var(--border);
+  padding:.75rem 2rem;
+  display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;
+}
+.nav-title{font-family:var(--serif);font-size:.9rem;color:var(--muted);margin-right:.5rem;font-style:italic}
+.nav a{
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--sec);text-decoration:none;
+  padding:.3rem .7rem;border:.5px solid var(--border);border-radius:2px;
+  transition:all 180ms;white-space:nowrap;
+}
+.nav a:hover{color:var(--acc);border-color:var(--acc)}
 
-    body {
-      font-family: var(--font-sans);
-      background-color: var(--color-bg-primary);
-      color: var(--color-text-primary);
-      padding: 3rem 1.5rem 6rem;
-    }
+/* ─── WRAPPER SECTIONS ─── */
+.demo{padding:5rem 2rem 0;max-width:1200px;margin:0 auto}
+.label{margin-bottom:2rem;display:flex;flex-direction:column;gap:.25rem}
+.label-num{font-family:var(--serif);font-size:5rem;line-height:1;color:var(--acc);font-weight:300;opacity:.25;line-height:.9}
+.label-title{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--dark)}
+.label-sub{font-size:.8rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.g3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.g2{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:1.25rem}
+.g1{display:flex;flex-direction:column;gap:0}
+hr.divider{border:none;border-top:.5px solid var(--border);margin:5rem 0 0}
 
-    .demo-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(250,247,242,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 0.5px solid var(--color-border);
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin: -3rem -1.5rem 3rem;
-    }
 
-    .demo-nav a {
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-text-secondary);
-      text-decoration: none;
-      padding: 0.35rem 0.75rem;
-      border-radius: 2px;
-      border: 0.5px solid var(--color-border);
-      transition: all 200ms;
-    }
-    .demo-nav a:hover { color: var(--color-accent); border-color: var(--color-accent); }
+/* ══════════════════════════════════════════════════════
+   01 — OBLIQUE SLASH
+   Bande diagonale qui traverse la carte
+══════════════════════════════════════════════════════ */
+.a1{
+  position:relative;overflow:hidden;
+  background:var(--dark);border-radius:12px;
+  padding:2rem 1.75rem 1.75rem;
+  text-decoration:none;display:flex;flex-direction:column;gap:.75rem;
+  transition:transform 400ms cubic-bezier(.22,1,.36,1);
+  min-height:220px;
+}
+.a1::before{
+  content:'';position:absolute;
+  top:-60px;right:-40px;
+  width:180px;height:400px;
+  background:linear-gradient(to bottom,var(--acc),var(--gold));
+  opacity:.12;
+  transform:rotate(25deg);
+  transition:opacity 400ms,transform 400ms cubic-bezier(.22,1,.36,1);
+}
+.a1:hover{transform:translateY(-6px)}
+.a1:hover::before{opacity:.22;transform:rotate(25deg) translateX(-12px)}
+.a1-n{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.a1 h3{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:#fff;line-height:1.15;font-style:italic;position:relative}
+.a1 p{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.65;flex:1;position:relative}
+.a1-cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--acc);position:relative;margin-top:.25rem;
+  transition:gap 250ms;
+}
+.a1:hover .a1-cta{gap:.8rem}
 
-    .demo-section {
-      margin-bottom: 5rem;
-      scroll-margin-top: 4rem;
-    }
 
-    .demo-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.75rem;
-    }
-    .demo-label-num {
-      font-family: var(--font-serif);
-      font-size: 3rem;
-      line-height: 1;
-      color: var(--color-accent);
-      font-weight: 300;
-    }
-    .demo-label-text { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); }
+/* ══════════════════════════════════════════════════════
+   02 — TEXTE VERTICAL + GRAND NOMBRE
+   Titre rotatif sur l'axe gauche, feeling magazine
+══════════════════════════════════════════════════════ */
+.a2{
+  background:var(--card);border:.5px solid var(--border);border-radius:8px;
+  display:flex;align-items:stretch;overflow:hidden;
+  text-decoration:none;min-height:180px;
+  transition:transform 350ms cubic-bezier(.22,1,.36,1),border-color 300ms,box-shadow 350ms;
+}
+.a2:hover{transform:translateY(-5px);border-color:var(--acc);box-shadow:0 20px 50px rgba(193,104,71,.13)}
+.a2-side{
+  width:52px;flex-shrink:0;
+  background:var(--acc);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.a2-side-num{
+  font-family:var(--serif);font-size:2.5rem;font-weight:300;
+  color:rgba(255,255,255,.25);
+  writing-mode:vertical-rl;text-orientation:mixed;
+  transform:rotate(180deg);
+  user-select:none;
+}
+.a2-body{padding:1.5rem 1.5rem 1.5rem 1.25rem;display:flex;flex-direction:column;gap:.625rem;flex:1}
+.a2-tag{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.a2 h3{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--dark);line-height:1.2}
+.a2 p{font-size:.8rem;color:var(--sec);line-height:1.6;flex:1}
+.a2-arrow{margin-top:.5rem;font-size:.8rem;color:var(--muted);transition:color 250ms,letter-spacing 250ms}
+.a2:hover .a2-arrow{color:var(--acc);letter-spacing:.05em}
 
-    /* ─── GRILLE COMMUNE ─── */
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.25rem; }
-    .grid-1 { display: flex; flex-direction: column; gap: 0.75rem; }
 
-    /* ════════════════════════════════════════
-       1 — ÉDITORIALE ÉPURÉE
-    ════════════════════════════════════════ */
-    .c1 {
-      background: var(--color-bg-card);
-      border: 0.5px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 2rem 1.75rem 1.5rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 350ms var(--ease-out-soft), box-shadow 350ms var(--ease-out-soft);
-    }
-    .c1::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(to right, var(--color-accent), var(--color-gold));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 350ms var(--ease-out-soft);
-    }
-    .c1:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(43,31,21,0.1); }
-    .c1:hover::before { transform: scaleX(1); }
-    .c1-num { font-family: var(--font-serif); font-size: 0.8rem; color: var(--color-text-muted); letter-spacing: 0.1em; }
-    .c1 h3 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.2; }
-    .c1 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.65; flex: 1; }
-    .c1-arrow { margin-top: 0.5rem; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+/* ══════════════════════════════════════════════════════
+   03 — PURE TYPOGRAPHIE GIGANTESQUE
+   Le titre prend toute la place, minimal & bold
+══════════════════════════════════════════════════════ */
+.a3{
+  padding:2.5rem 2rem 2rem;
+  border-bottom:.5px solid var(--border);
+  text-decoration:none;display:block;
+  position:relative;overflow:hidden;
+  transition:background 300ms;
+}
+.a3::after{
+  content:'';position:absolute;
+  bottom:0;left:0;height:2px;width:0;
+  background:linear-gradient(to right,var(--acc),var(--gold));
+  transition:width 400ms cubic-bezier(.22,1,.36,1);
+}
+.a3:hover{background:rgba(193,104,71,.03)}
+.a3:hover::after{width:100%}
+.a3-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+.a3-num{font-family:var(--serif);font-size:.85rem;color:var(--muted);font-style:italic}
+.a3-circle{
+  width:36px;height:36px;border-radius:50%;
+  border:.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);
+  transition:background 300ms,border-color 300ms,color 300ms,transform 300ms;
+}
+.a3:hover .a3-circle{background:var(--acc);border-color:var(--acc);color:#fff;transform:rotate(45deg)}
+.a3 h3{
+  font-family:var(--serif);
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  font-weight:300;font-style:italic;
+  color:var(--dark);line-height:1.05;
+  margin-bottom:.75rem;
+}
+.a3 p{font-size:.85rem;color:var(--sec);line-height:1.65;max-width:50ch}
 
-    /* ════════════════════════════════════════
-       2 — BORDURE GAUCHE ACCENT
-    ════════════════════════════════════════ */
-    .c2 {
-      background: var(--color-bg-card);
-      border: 0.5px solid var(--color-border);
-      border-left: 3px solid transparent;
-      border-radius: var(--radius-card);
-      padding: 1.5rem 1.75rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.625rem;
-      transition: border-left-color 300ms, background 300ms, transform 300ms var(--ease-out-soft);
-    }
-    .c2:hover { border-left-color: var(--color-accent); background: var(--color-bg-section); transform: translateX(4px); }
-    .c2-eye { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent); }
-    .c2 h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--color-text-primary); }
-    .c2 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; }
 
-    /* ════════════════════════════════════════
-       3 — GRANDE TYPOGRAPHIE SERIF
-    ════════════════════════════════════════ */
-    .c3 {
-      padding: 2rem 0;
-      border-bottom: 0.5px solid var(--color-border);
-      text-decoration: none;
-      display: grid;
-      grid-template-columns: 3fr 1fr;
-      align-items: center;
-      gap: 1rem;
-      transition: opacity 300ms;
-      cursor: pointer;
-    }
-    .c3:first-child { border-top: 0.5px solid var(--color-border); }
-    .c3:hover .c3-title { color: var(--color-accent); }
-    .c3:hover .c3-btn { opacity: 1; transform: translateX(0); }
-    .c3-left { display: flex; flex-direction: column; gap: 0.5rem; }
-    .c3-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
-    .c3-title { font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 300; color: var(--color-text-primary); line-height: 1.1; transition: color 300ms; }
-    .c3 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; max-width: 40ch; }
-    .c3-btn {
-      justify-self: end;
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      border: 0.5px solid var(--color-accent);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--color-accent);
-      opacity: 0;
-      transform: translateX(-8px);
-      transition: opacity 300ms, transform 300ms var(--ease-out-soft);
-    }
+/* ══════════════════════════════════════════════════════
+   04 — GLASSMORPHISM SUR FOND TEXTURÉ
+   Fond sombre, verre givré, contour lumineux
+══════════════════════════════════════════════════════ */
+.glass-bg{
+  border-radius:16px;padding:2.5rem;
+  background:linear-gradient(135deg,#1a0f09 0%,#2d1a10 50%,#1a0f09 100%);
+  position:relative;overflow:hidden;
+}
+.glass-bg::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 20%,rgba(193,104,71,.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 80%,rgba(168,136,42,.1) 0%,transparent 50%);
+}
+.a4{
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;padding:1.75rem;
+  text-decoration:none;display:flex;flex-direction:column;gap:.75rem;
+  transition:background 350ms,border-color 350ms,transform 400ms cubic-bezier(.22,1,.36,1);
+  position:relative;
+}
+.a4:hover{
+  background:rgba(255,255,255,.1);
+  border-color:rgba(193,104,71,.5);
+  transform:translateY(-4px);
+}
+.a4-n{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.a4 h3{font-family:var(--serif);font-size:1.3rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.9);line-height:1.2}
+.a4 p{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.65;flex:1}
+.a4-dot{width:5px;height:5px;border-radius:50%;background:var(--acc);margin-top:.25rem}
 
-    /* ════════════════════════════════════════
-       4 — FOND PLEIN SOMBRE
-    ════════════════════════════════════════ */
-    .c4 {
-      background: var(--color-text-primary);
-      border-radius: var(--radius-card);
-      padding: 2rem 1.75rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      transition: background 300ms, transform 350ms var(--ease-out-soft);
-      position: relative;
-      overflow: hidden;
-    }
-    .c4::after {
-      content: '';
-      position: absolute;
-      bottom: -40px; right: -40px;
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 400ms, transform 400ms var(--ease-out-soft);
-      transform: scale(0.6);
-    }
-    .c4:hover { transform: translateY(-4px); }
-    .c4:hover::after { opacity: 0.3; transform: scale(1); }
-    .c4-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
-    .c4 h3 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 400; color: #fff; line-height: 1.2; }
-    .c4 p { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.65; flex: 1; }
-    .c4-link { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin-top: 0.5rem; }
 
-    /* ════════════════════════════════════════
-       5 — VIGNETTE PHOTO PLEIN FOND
-    ════════════════════════════════════════ */
-    .c5 {
-      position: relative;
-      border-radius: var(--radius-card);
-      overflow: hidden;
-      aspect-ratio: 4/3;
-      text-decoration: none;
-      display: block;
-    }
-    .c5 img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-out-soft); }
-    .c5:hover img { transform: scale(1.06); }
-    .c5-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(28,20,16,0.85) 0%, rgba(28,20,16,0.1) 55%, transparent 100%);
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 1.5rem;
-      gap: 0.4rem;
-    }
-    .c5-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
-    .c5 h3 { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 400; color: #fff; line-height: 1.2; }
-    .c5 p { font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.5; }
+/* ══════════════════════════════════════════════════════
+   05 — STACKED / PROFONDEUR
+   Cartes empilées avec décalage de pseudo-éléments
+══════════════════════════════════════════════════════ */
+.a5{
+  position:relative;text-decoration:none;display:block;
+  padding-bottom:.5rem;padding-right:.5rem;
+}
+.a5::before{
+  content:'';position:absolute;
+  bottom:0;right:0;
+  width:calc(100% - 8px);height:calc(100% - 8px);
+  background:var(--card);border:.5px solid var(--border);border-radius:10px;
+  transition:transform 350ms cubic-bezier(.22,1,.36,1);
+}
+.a5::after{
+  content:'';position:absolute;
+  bottom:4px;right:4px;
+  width:calc(100% - 16px);height:calc(100% - 16px);
+  background:#ede6d9;border:.5px solid var(--border);border-radius:10px;
+  transition:transform 350ms cubic-bezier(.22,1,.36,1);
+}
+.a5:hover::before{transform:translate(-4px,-4px)}
+.a5:hover::after{transform:translate(-8px,-8px)}
+.a5-inner{
+  position:relative;z-index:1;
+  background:#fff;border:.5px solid var(--border);border-radius:10px;
+  padding:1.75rem;display:flex;flex-direction:column;gap:.75rem;
+  transition:transform 350ms cubic-bezier(.22,1,.36,1),box-shadow 350ms;
+}
+.a5:hover .a5-inner{transform:translate(-4px,-4px);box-shadow:8px 8px 0 rgba(193,104,71,.12)}
+.a5-n{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.a5 h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--dark);line-height:1.2}
+.a5 p{font-size:.8rem;color:var(--sec);line-height:1.6}
 
-    /* ════════════════════════════════════════
-       6 — NUMÉRO GÉANT EN FOND
-    ════════════════════════════════════════ */
-    .c6 {
-      background: var(--color-bg-card);
-      border: 0.5px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 2rem 1.75rem 1.5rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 350ms var(--ease-out-soft), border-color 300ms;
-    }
-    .c6:hover { transform: translateY(-4px); border-color: var(--color-accent); }
-    .c6-bg-num {
-      position: absolute;
-      top: -0.5rem; right: 0.75rem;
-      font-family: var(--font-serif);
-      font-size: 7rem;
-      line-height: 1;
-      color: var(--color-border);
-      pointer-events: none;
-      user-select: none;
-      transition: color 300ms;
-    }
-    .c6:hover .c6-bg-num { color: rgba(193,104,71,0.08); }
-    .c6-tag {
-      display: inline-block;
-      font-size: 9px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      border: 0.5px solid currentColor;
-      padding: 0.2rem 0.5rem;
-      border-radius: 2px;
-      width: fit-content;
-    }
-    .c6 h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.2; position: relative; }
-    .c6 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; position: relative; }
 
-    /* ════════════════════════════════════════
-       7 — HORIZONTAL AVEC TIRET CENTRAL
-    ════════════════════════════════════════ */
-    .c7 {
-      background: var(--color-bg-card);
-      border: 0.5px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 1.25rem 1.5rem;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      transition: transform 300ms var(--ease-out-soft), border-color 300ms, box-shadow 300ms;
-    }
-    .c7:hover { transform: translateX(6px); border-color: var(--color-accent); box-shadow: 0 4px 20px rgba(193,104,71,0.1); }
-    .c7-num {
-      font-family: var(--font-serif);
-      font-size: 2rem;
-      font-weight: 300;
-      color: var(--color-accent);
-      line-height: 1;
-      flex-shrink: 0;
-      min-width: 2.5rem;
-    }
-    .c7-divider { width: 1px; height: 40px; background: var(--color-border); flex-shrink: 0; }
-    .c7-body { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
-    .c7 h3 { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 400; color: var(--color-text-primary); }
-    .c7 p { font-size: 0.8rem; color: var(--color-text-secondary); line-height: 1.55; }
-    .c7-arrow { color: var(--color-text-muted); flex-shrink: 0; transition: color 300ms, transform 300ms; }
-    .c7:hover .c7-arrow { color: var(--color-accent); transform: translateX(3px); }
+/* ══════════════════════════════════════════════════════
+   06 — REVEAL HOVER : fond couleur qui monte
+   Fond remonte en hover, texte change de couleur
+══════════════════════════════════════════════════════ */
+.a6{
+  position:relative;overflow:hidden;
+  border:.5px solid var(--border);border-radius:8px;
+  padding:2rem 1.75rem;
+  text-decoration:none;display:flex;flex-direction:column;gap:.75rem;
+  transition:border-color 300ms;
+}
+.a6::before{
+  content:'';position:absolute;
+  inset:0;background:var(--dark);
+  transform:translateY(100%);
+  transition:transform 450ms cubic-bezier(.22,1,.36,1);
+  z-index:0;
+}
+.a6:hover{border-color:var(--dark)}
+.a6:hover::before{transform:translateY(0)}
+.a6>*{position:relative;z-index:1}
+.a6-n{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:color 300ms}
+.a6:hover .a6-n{color:rgba(255,255,255,.35)}
+.a6 h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;font-style:italic;color:var(--dark);line-height:1.2;transition:color 300ms}
+.a6:hover h3{color:#fff}
+.a6 p{font-size:.8rem;color:var(--sec);line-height:1.6;transition:color 300ms}
+.a6:hover p{color:rgba(255,255,255,.5)}
+.a6-bar{height:2px;background:var(--acc);width:32px;transition:width 350ms cubic-bezier(.22,1,.36,1)}
+.a6:hover .a6-bar{width:100%}
 
-    /* ════════════════════════════════════════
-       8 — COINS ACCENT ANIMÉS
-    ════════════════════════════════════════ */
-    .c8 {
-      background: transparent;
-      padding: 1.75rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      position: relative;
-    }
-    .c8::before, .c8::after,
-    .c8 .c8-corner-br, .c8 .c8-corner-tl {
-      content: '';
-      position: absolute;
-      width: 16px; height: 16px;
-      transition: width 300ms var(--ease-out-soft), height 300ms var(--ease-out-soft);
-    }
-    .c8::before { top: 0; left: 0; border-top: 1.5px solid var(--color-accent); border-left: 1.5px solid var(--color-accent); }
-    .c8::after  { top: 0; right: 0; border-top: 1.5px solid var(--color-accent); border-right: 1.5px solid var(--color-accent); }
-    .c8 .c8-corner-br { bottom: 0; right: 0; border-bottom: 1.5px solid var(--color-accent); border-right: 1.5px solid var(--color-accent); }
-    .c8 .c8-corner-tl { bottom: 0; left: 0; border-bottom: 1.5px solid var(--color-accent); border-left: 1.5px solid var(--color-accent); }
-    .c8:hover::before, .c8:hover::after,
-    .c8:hover .c8-corner-br, .c8:hover .c8-corner-tl { width: 32px; height: 32px; }
-    .c8-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
-    .c8 h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--color-text-primary); }
-    .c8 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; }
 
-    /* ════════════════════════════════════════
-       9 — DÉGRADÉ FOND SUBTIL
-    ════════════════════════════════════════ */
-    .c9 {
-      border-radius: var(--radius-card);
-      padding: 2rem 1.75rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      border: 0.5px solid transparent;
-      transition: transform 350ms var(--ease-out-soft), border-color 300ms;
-    }
-    .c9:nth-child(1) { background: linear-gradient(135deg, #faf1e8 0%, #f5e8d8 100%); }
-    .c9:nth-child(2) { background: linear-gradient(135deg, #f0ede8 0%, #e8e0d5 100%); }
-    .c9:nth-child(3) { background: linear-gradient(135deg, #f5ede3 0%, #ede2d5 100%); }
-    .c9:nth-child(4) { background: linear-gradient(135deg, #f0ede8 0%, #e8e0d5 100%); }
-    .c9:nth-child(5) { background: linear-gradient(135deg, #faf1e8 0%, #f5e8d8 100%); }
-    .c9:nth-child(6) { background: linear-gradient(135deg, #f5ede3 0%, #ede2d5 100%); }
-    .c9:hover { transform: translateY(-3px); border-color: var(--color-accent); }
-    .c9-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); }
-    .c9 h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--color-text-primary); }
-    .c9 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; flex: 1; }
-    .c9-link { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+/* ══════════════════════════════════════════════════════
+   07 — CINÉMATIQUE HORIZONTALE
+   Like a film poster, aspect cinéma
+══════════════════════════════════════════════════════ */
+.a7{
+  background:var(--dark);border-radius:4px;
+  display:flex;overflow:hidden;
+  text-decoration:none;
+  transition:transform 350ms cubic-bezier(.22,1,.36,1),box-shadow 350ms;
+  position:relative;
+}
+.a7:hover{transform:translateY(-5px);box-shadow:0 24px 60px rgba(28,20,16,.4)}
+.a7-accent{
+  width:6px;flex-shrink:0;
+  background:linear-gradient(to bottom,var(--acc),var(--gold));
+}
+.a7-body{padding:1.75rem;display:flex;flex-direction:column;gap:.625rem;flex:1}
+.a7-meta{display:flex;align-items:center;gap:.75rem}
+.a7-num{font-family:var(--serif);font-size:.85rem;font-style:italic;color:rgba(255,255,255,.3)}
+.a7-sep{width:1px;height:12px;background:rgba(255,255,255,.1)}
+.a7-tag{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.a7 h3{font-family:var(--serif);font-size:1.4rem;font-weight:300;font-style:italic;color:#fff;line-height:1.15}
+.a7 p{font-size:.78rem;color:rgba(255,255,255,.4);line-height:1.6;flex:1}
+.a7-cta{
+  margin-top:.75rem;align-self:flex-start;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;padding:.45rem 1rem;
+  border:.5px solid rgba(255,255,255,.2);border-radius:2px;
+  transition:background 250ms,border-color 250ms;
+}
+.a7:hover .a7-cta{background:var(--acc);border-color:var(--acc)}
 
-    /* ════════════════════════════════════════
-       10 — BENTO GRID MAGAZINE
-    ════════════════════════════════════════ */
-    .bento {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto;
-      gap: 1rem;
-    }
-    .c10 {
-      background: var(--color-bg-card);
-      border: 0.5px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 1.75rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.625rem;
-      transition: transform 350ms var(--ease-out-soft), border-color 300ms;
-    }
-    .c10:hover { transform: translateY(-3px); border-color: var(--color-accent); }
-    .c10.large { grid-column: span 2; background: var(--color-text-primary); }
-    .c10.tall { grid-row: span 2; background: var(--color-bg-section); }
-    .c10-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
-    .c10.large .c10-num { color: rgba(255,255,255,0.35); }
-    .c10 h3 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.2; }
-    .c10.large h3 { font-size: 1.75rem; color: #fff; }
-    .c10 p { font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.6; flex: 1; }
-    .c10.large p { color: rgba(255,255,255,0.55); }
-    .c10-link { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin-top: auto; }
 
-    @media (max-width: 640px) {
-      .bento { grid-template-columns: 1fr 1fr; }
-      .c10.large { grid-column: span 2; }
-      .c10.tall { grid-row: span 1; }
-    }
-  </style>
+/* ══════════════════════════════════════════════════════
+   08 — MASQUE CIRCULAIRE
+   Cercle de couleur en fond, s'agrandit au hover
+══════════════════════════════════════════════════════ */
+.a8{
+  position:relative;overflow:hidden;
+  border:.5px solid var(--border);border-radius:16px;
+  padding:2rem 1.75rem 1.75rem;
+  text-decoration:none;display:flex;flex-direction:column;gap:.75rem;
+  background:var(--card);
+  transition:border-color 350ms,transform 400ms cubic-bezier(.22,1,.36,1);
+}
+.a8::before{
+  content:'';position:absolute;
+  bottom:-80px;right:-80px;
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,var(--acc) 0%,transparent 70%);
+  opacity:0;
+  transform:scale(.5);
+  transition:opacity 500ms,transform 500ms cubic-bezier(.22,1,.36,1);
+}
+.a8:hover{border-color:rgba(193,104,71,.3);transform:translateY(-4px)}
+.a8:hover::before{opacity:.15;transform:scale(2.5)}
+.a8-n{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.a8 h3{font-family:var(--serif);font-size:1.35rem;font-weight:400;color:var(--dark);line-height:1.2;position:relative}
+.a8 p{font-size:.82rem;color:var(--sec);line-height:1.65;flex:1;position:relative}
+.a8-line{height:.5px;background:linear-gradient(to right,var(--acc),transparent);width:48px;margin-top:.5rem;transition:width 400ms cubic-bezier(.22,1,.36,1)}
+.a8:hover .a8-line{width:100%}
+
+
+/* ══════════════════════════════════════════════════════
+   09 — CAPSULE ARRONDIE BOLD
+   Design contemporain, très arrondi, couleur forte
+══════════════════════════════════════════════════════ */
+.a9{
+  border-radius:999px;
+  padding:1.75rem 2.5rem;
+  text-decoration:none;
+  display:flex;align-items:center;gap:2rem;
+  border:.5px solid var(--border);
+  background:var(--card);
+  transition:transform 350ms cubic-bezier(.22,1,.36,1),background 300ms,border-color 300ms,box-shadow 350ms;
+  position:relative;overflow:hidden;
+}
+.a9::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:0;background:var(--dark);border-radius:999px 0 0 999px;
+  transition:width 400ms cubic-bezier(.22,1,.36,1);
+}
+.a9:hover{transform:scale(1.02);border-color:var(--dark);box-shadow:0 12px 40px rgba(28,20,16,.12)}
+.a9:hover::before{width:70px}
+.a9-num{
+  font-family:var(--serif);font-size:2rem;font-weight:300;
+  color:var(--acc);flex-shrink:0;width:48px;text-align:center;
+  position:relative;z-index:1;
+  transition:color 400ms;
+}
+.a9:hover .a9-num{color:#fff}
+.a9-body{flex:1;display:flex;flex-direction:column;gap:.2rem;position:relative;z-index:1}
+.a9 h3{font-family:var(--serif);font-size:1.1rem;font-weight:400;color:var(--dark);transition:color 300ms}
+.a9 p{font-size:.78rem;color:var(--sec);line-height:1.5;transition:color 300ms}
+.a9-arr{flex-shrink:0;color:var(--muted);position:relative;z-index:1;transition:color 250ms,transform 250ms}
+.a9:hover .a9-arr{color:var(--acc);transform:translateX(4px)}
+
+
+/* ══════════════════════════════════════════════════════
+   10 — BLUEPRINT / ARCHITECTURAL
+   Lignes de grille, feeling plan d'architecte
+══════════════════════════════════════════════════════ */
+.blueprint-bg{
+  background:#0e1a2b;border-radius:16px;padding:2.5rem;
+  position:relative;overflow:hidden;
+}
+.blueprint-bg::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(100,160,220,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(100,160,220,.07) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.a10{
+  background:rgba(14,26,43,.6);
+  border:1px solid rgba(100,160,220,.15);
+  border-radius:8px;
+  padding:1.75rem;
+  text-decoration:none;
+  display:flex;flex-direction:column;gap:.75rem;
+  position:relative;overflow:hidden;
+  transition:border-color 300ms,background 300ms,transform 400ms cubic-bezier(.22,1,.36,1);
+}
+.a10::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,rgba(100,160,220,.6),transparent);
+  opacity:0;transition:opacity 300ms;
+}
+.a10:hover{border-color:rgba(100,160,220,.5);background:rgba(14,26,43,.9);transform:translateY(-3px)}
+.a10:hover::before{opacity:1}
+.a10-cross{
+  position:absolute;top:.75rem;right:.75rem;
+  width:14px;height:14px;opacity:.3;
+}
+.a10-cross::before,.a10-cross::after{
+  content:'';position:absolute;
+  background:rgba(100,160,220,.8);
+}
+.a10-cross::before{width:1px;height:100%;left:50%;transform:translateX(-50%)}
+.a10-cross::after{height:1px;width:100%;top:50%;transform:translateY(-50%)}
+.a10-ref{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(100,160,220,.4);font-family:monospace}
+.a10 h3{font-family:var(--serif);font-size:1.25rem;font-weight:300;font-style:italic;color:rgba(220,235,255,.9);line-height:1.2}
+.a10 p{font-size:.78rem;color:rgba(150,180,220,.5);line-height:1.65;flex:1}
+.a10-measure{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:9px;letter-spacing:.12em;color:rgba(100,160,220,.35);font-family:monospace;
+  margin-top:.25rem;
+}
+.a10-measure::before,.a10-measure::after{content:'';flex:1;height:.5px;background:rgba(100,160,220,.2)}
+
+@media(max-width:640px){
+  .demo{padding:4rem 1.25rem 0}
+  .g3,.g2{grid-template-columns:1fr}
+  .a9{border-radius:12px;padding:1.25rem 1.5rem}
+}
+</style>
 </head>
 <body>
 
-  <nav class="demo-nav">
-    <a href="#s1">1 — Épurée</a>
-    <a href="#s2">2 — Bordure gauche</a>
-    <a href="#s3">3 — Liste serif</a>
-    <a href="#s4">4 — Fond sombre</a>
-    <a href="#s5">5 — Photo plein fond</a>
-    <a href="#s6">6 — Numéro géant</a>
-    <a href="#s7">7 — Horizontale</a>
-    <a href="#s8">8 — Coins animés</a>
-    <a href="#s9">9 — Dégradé</a>
-    <a href="#s10">10 — Bento grid</a>
-  </nav>
+<nav class="nav">
+  <span class="nav-title">Rozi Dance — Démo cartes</span>
+  <a href="#s01">01</a><a href="#s02">02</a><a href="#s03">03</a>
+  <a href="#s04">04</a><a href="#s05">05</a><a href="#s06">06</a>
+  <a href="#s07">07</a><a href="#s08">08</a><a href="#s09">09</a>
+  <a href="#s10">10</a>
+</nav>
 
-  <!-- ─── 1 ─── -->
-  <section class="demo-section" id="s1">
-    <div class="demo-label">
-      <span class="demo-label-num">01</span>
-      <span class="demo-label-text">Éditoriale épurée — ligne accent au top au hover</span>
-    </div>
-    <div class="grid-3">
-      {cards.map((c, i) => (
-        <a href="#" class="c1">
-          <span class="c1-num">{String(i+1).padStart(2,'0')}</span>
+<!-- 01 -->
+<div class="demo" id="s01">
+  <div class="label">
+    <div class="label-num">01</div>
+    <div class="label-title">Sombre & reflet diagonal</div>
+    <div class="label-sub">Fond noir, bande lumineuse qui glisse au hover</div>
+  </div>
+  <div class="g3">
+    {cards.map((c,i)=>(
+      <a href="#" class="a1">
+        <span class="a1-n">Cours — {String(i+1).padStart(2,'0')}</span>
+        <h3>{c.title}</h3>
+        <p>{c.desc}</p>
+        <span class="a1-cta">Découvrir →</span>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="divider"/>
+
+<!-- 02 -->
+<div class="demo" id="s02">
+  <div class="label">
+    <div class="label-num">02</div>
+    <div class="label-title">Bande latérale couleur</div>
+    <div class="label-sub">Accent vertical à gauche, monte au hover</div>
+  </div>
+  <div class="g3">
+    {cards.map((c,i)=>(
+      <a href="#" class="a2">
+        <div class="a2-side"><span class="a2-side-num">{String(i+1).padStart(2,'0')}</span></div>
+        <div class="a2-body">
+          <span class="a2-tag">Rozi Dance</span>
           <h3>{c.title}</h3>
-          <p>{c.description}</p>
-          <span class="c1-arrow">Voir →</span>
-        </a>
-      ))}
-    </div>
-  </section>
+          <p>{c.desc}</p>
+          <span class="a2-arrow">En savoir plus ›</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="divider"/>
 
-  <!-- ─── 2 ─── -->
-  <section class="demo-section" id="s2">
-    <div class="demo-label">
-      <span class="demo-label-num">02</span>
-      <span class="demo-label-text">Bordure gauche accent — glisse vers la droite</span>
-    </div>
-    <div class="grid-3">
-      {cards.map((c, i) => (
-        <a href="#" class="c2">
-          <span class="c2-eye">Cours {String(i+1).padStart(2,'0')}</span>
-          <h3>{c.title}</h3>
-          <p>{c.description}</p>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- ─── 3 ─── -->
-  <section class="demo-section" id="s3">
-    <div class="demo-label">
-      <span class="demo-label-num">03</span>
-      <span class="demo-label-text">Liste typographique — grand titre serif, bouton rond au hover</span>
-    </div>
-    <div class="grid-1">
-      {cards.map((c, i) => (
-        <a href="#" class="c3">
-          <div class="c3-left">
-            <span class="c3-num">{String(i+1).padStart(2,'0')}</span>
-            <span class="c3-title">{c.title}</span>
-            <p>{c.description}</p>
-          </div>
-          <div class="c3-btn">
-            <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+<!-- 03 -->
+<div class="demo" id="s03">
+  <div class="label">
+    <div class="label-num">03</div>
+    <div class="label-title">Typo géante — style éditorial</div>
+    <div class="label-sub">Titre en très grand, ligne accent qui s'étend</div>
+  </div>
+  <div class="g1">
+    {cards.map((c,i)=>(
+      <a href="#" class="a3">
+        <div class="a3-top">
+          <span class="a3-num">No. {String(i+1).padStart(2,'0')}</span>
+          <div class="a3-circle">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-        </a>
-      ))}
-    </div>
-  </section>
+        </div>
+        <h3>{c.title}</h3>
+        <p>{c.desc}</p>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="divider"/>
 
-  <!-- ─── 4 ─── -->
-  <section class="demo-section" id="s4">
-    <div class="demo-label">
-      <span class="demo-label-num">04</span>
-      <span class="demo-label-text">Fond sombre — halo accent en bas à droite au hover</span>
-    </div>
-    <div class="grid-3">
-      {cards.map((c, i) => (
-        <a href="#" class="c4">
-          <span class="c4-num">{String(i+1).padStart(2,'0')}</span>
+<!-- 04 -->
+<div class="demo" id="s04">
+  <div class="label">
+    <div class="label-num">04</div>
+    <div class="label-title">Glassmorphisme sur fond texturé</div>
+    <div class="label-sub">Verre givré, fond sombre chaud</div>
+  </div>
+  <div class="glass-bg">
+    <div class="g3" style="position:relative;z-index:1">
+      {cards.map((c,i)=>(
+        <a href="#" class="a4">
+          <span class="a4-n">Cours {String(i+1).padStart(2,'0')}</span>
           <h3>{c.title}</h3>
-          <p>{c.description}</p>
-          <span class="c4-link">En savoir plus →</span>
+          <p>{c.desc}</p>
+          <div class="a4-dot"></div>
         </a>
       ))}
     </div>
-  </section>
+  </div>
+</div>
+<hr class="divider"/>
 
-  <!-- ─── 5 ─── -->
-  <section class="demo-section" id="s5">
-    <div class="demo-label">
-      <span class="demo-label-num">05</span>
-      <span class="demo-label-text">Photo plein fond — dégradé bas, zoom au hover</span>
-    </div>
-    <div class="grid-3">
-      {cards.map((c, i) => (
-        <a href="#" class="c5">
-          <img src="/images/reel-cover.webp" alt={c.title} loading="lazy" />
-          <div class="c5-overlay">
-            <span class="c5-num">{String(i+1).padStart(2,'0')}</span>
-            <h3>{c.title}</h3>
-            <p>{c.description}</p>
+<!-- 05 -->
+<div class="demo" id="s05">
+  <div class="label">
+    <div class="label-num">05</div>
+    <div class="label-title">Cartes empilées — effet profondeur</div>
+    <div class="label-sub">3 couches décalées, s'écartent au hover</div>
+  </div>
+  <div class="g3">
+    {cards.map((c,i)=>(
+      <a href="#" class="a5">
+        <div class="a5-inner">
+          <span class="a5-n">Cours {String(i+1).padStart(2,'0')}</span>
+          <h3>{c.title}</h3>
+          <p>{c.desc}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="divider"/>
+
+<!-- 06 -->
+<div class="demo" id="s06">
+  <div class="label">
+    <div class="label-num">06</div>
+    <div class="label-title">Fond qui remonte — reveal sombre</div>
+    <div class="label-sub">Le fond noir monte, le texte passe en blanc</div>
+  </div>
+  <div class="g3">
+    {cards.map((c,i)=>(
+      <a href="#" class="a6">
+        <span class="a6-n">{String(i+1).padStart(2,'0')} — Rozi Dance</span>
+        <h3>{c.title}</h3>
+        <p>{c.desc}</p>
+        <div class="a6-bar"></div>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="divider"/>
+
+<!-- 07 -->
+<div class="demo" id="s07">
+  <div class="label">
+    <div class="label-num">07</div>
+    <div class="label-title">Cinématique — affiche de film</div>
+    <div class="label-sub">Fond noir, bande couleur verticale, bouton CTA</div>
+  </div>
+  <div class="g2">
+    {cards.map((c,i)=>(
+      <a href="#" class="a7">
+        <div class="a7-accent"></div>
+        <div class="a7-body">
+          <div class="a7-meta">
+            <span class="a7-num">{String(i+1).padStart(2,'0')}</span>
+            <div class="a7-sep"></div>
+            <span class="a7-tag">Cours</span>
           </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- ─── 6 ─── -->
-  <section class="demo-section" id="s6">
-    <div class="demo-label">
-      <span class="demo-label-num">06</span>
-      <span class="demo-label-text">Numéro géant en fond — tag label, bordure accent au hover</span>
-    </div>
-    <div class="grid-3">
-      {cards.map((c, i) => (
-        <a href="#" class="c6">
-          <span class="c6-bg-num">{String(i+1).padStart(2,'0')}</span>
-          <span class="c6-tag">Cours</span>
           <h3>{c.title}</h3>
-          <p>{c.description}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+          <p>{c.desc}</p>
+          <span class="a7-cta">Réserver</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="divider"/>
 
-  <!-- ─── 7 ─── -->
-  <section class="demo-section" id="s7">
-    <div class="demo-label">
-      <span class="demo-label-num">07</span>
-      <span class="demo-label-text">Horizontale — numéro accent, glisse à droite</span>
-    </div>
-    <div class="grid-2">
-      {cards.map((c, i) => (
-        <a href="#" class="c7">
-          <span class="c7-num">{String(i+1).padStart(2,'0')}</span>
-          <div class="c7-divider"></div>
-          <div class="c7-body">
-            <h3>{c.title}</h3>
-            <p>{c.description}</p>
-          </div>
-          <svg class="c7-arrow" width="18" height="18" viewBox="0 0 14 14" fill="none">
-            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      ))}
-    </div>
-  </section>
+<!-- 08 -->
+<div class="demo" id="s08">
+  <div class="label">
+    <div class="label-num">08</div>
+    <div class="label-title">Halo circulaire en fond</div>
+    <div class="label-sub">Cercle accent qui s'agrandit au hover, ligne qui s'étend</div>
+  </div>
+  <div class="g3">
+    {cards.map((c,i)=>(
+      <a href="#" class="a8">
+        <span class="a8-n">{String(i+1).padStart(2,'0')}</span>
+        <h3>{c.title}</h3>
+        <p>{c.desc}</p>
+        <div class="a8-line"></div>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="divider"/>
 
-  <!-- ─── 8 ─── -->
-  <section class="demo-section" id="s8">
-    <div class="demo-label">
-      <span class="demo-label-num">08</span>
-      <span class="demo-label-text">Coins animés — grandit au hover</span>
-    </div>
-    <div class="grid-3">
-      {cards.map((c, i) => (
-        <a href="#" class="c8">
-          <div class="c8-corner-br"></div>
-          <div class="c8-corner-tl"></div>
-          <span class="c8-num">{String(i+1).padStart(2,'0')}</span>
+<!-- 09 -->
+<div class="demo" id="s09">
+  <div class="label">
+    <div class="label-num">09</div>
+    <div class="label-title">Capsule arrondie — fond révélé</div>
+    <div class="label-sub">Forme pill, fond sombre qui entre par la gauche</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:.75rem">
+    {cards.map((c,i)=>(
+      <a href="#" class="a9">
+        <span class="a9-num">{String(i+1).padStart(2,'0')}</span>
+        <div class="a9-body">
           <h3>{c.title}</h3>
-          <p>{c.description}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+          <p>{c.desc}</p>
+        </div>
+        <svg class="a9-arr" width="18" height="18" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="divider"/>
 
-  <!-- ─── 9 ─── -->
-  <section class="demo-section" id="s9">
-    <div class="demo-label">
-      <span class="demo-label-num">09</span>
-      <span class="demo-label-text">Dégradé de fond — chaque carte a sa teinte</span>
-    </div>
-    <div class="grid-3">
-      {cards.map((c, i) => (
-        <a href="#" class="c9">
-          <div class="c9-dot"></div>
+<!-- 10 -->
+<div class="demo" id="s10">
+  <div class="label">
+    <div class="label-num">10</div>
+    <div class="label-title">Blueprint architectural</div>
+    <div class="label-sub">Fond nuit, grille technique, lignes lumineuses</div>
+  </div>
+  <div class="blueprint-bg">
+    <div class="g3" style="position:relative;z-index:1">
+      {cards.map((c,i)=>(
+        <a href="#" class="a10">
+          <div class="a10-cross"></div>
+          <span class="a10-ref">RD-{String(i+1).padStart(3,'0')}</span>
           <h3>{c.title}</h3>
-          <p>{c.description}</p>
-          <span class="c9-link">Voir →</span>
+          <p>{c.desc}</p>
+          <div class="a10-measure">────</div>
         </a>
       ))}
     </div>
-  </section>
-
-  <!-- ─── 10 ─── -->
-  <section class="demo-section" id="s10">
-    <div class="demo-label">
-      <span class="demo-label-num">10</span>
-      <span class="demo-label-text">Bento grid — tailles variées, style magazine</span>
-    </div>
-    <div class="bento">
-      {cards.map((c, i) => (
-        <a href="#" class={`c10 ${i === 0 ? 'large' : i === 3 ? 'tall' : ''}`}>
-          <span class="c10-num">{String(i+1).padStart(2,'0')}</span>
-          <h3>{c.title}</h3>
-          <p>{c.description}</p>
-          <span class="c10-link">Voir →</span>
-        </a>
-      ))}
-    </div>
-  </section>
+  </div>
+</div>
 
 </body>
 </html>
