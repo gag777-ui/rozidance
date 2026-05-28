@@ -3,57 +3,25 @@ import Layout from '../../layouts/Layout.astro';
 import { getTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/utils';
 
-const categories = [
-  {
-    slug: 'danse-de-la-mariee',
-    title: 'Danse de la mariée',
-    description: 'La danse traditionnelle arménienne de la mariée, grâce et émotion réunies.',
-    count: 6,
-  },
-  {
-    slug: 'chant-de-la-mariee',
-    title: 'Chant de la mariée',
-    description: 'Des chants traditionnels et contemporains pour accompagner les plus beaux moments.',
-    count: 4,
-  },
-  {
-    slug: 'danse-de-mariage',
-    title: 'Danse de mariage',
-    description: 'Performances de groupe pour animer votre banquet et faire vibrer vos invités.',
-    count: 10,
-  },
-  {
-    slug: 'musiciens',
-    title: 'Nos musiciens',
-    description: "Des musiciens qui subliment chaque performance avec leur talent et leur sensibilité.",
-    count: 2,
-  },
-];
-
 export async function getStaticPaths() {
-  const cats = [
-    { slug: 'danse-de-la-mariee', title: 'Danse de la mariée', description: 'La danse traditionnelle arménienne de la mariée, grâce et émotion réunies.', count: 6 },
-    { slug: 'chant-de-la-mariee', title: 'Chant de la mariée', description: 'Des chants traditionnels et contemporains pour accompagner les plus beaux moments.', count: 4 },
-    { slug: 'danse-de-mariage', title: 'Danse de mariage', description: 'Performances de groupe pour animer votre banquet et faire vibrer vos invités.', count: 10 },
-    { slug: 'musiciens', title: 'Nos musiciens', description: "Des musiciens qui subliment chaque performance avec leur talent et leur sensibilité.", count: 2 },
-  ];
-  return cats.map(cat => ({
+  const fr = (await import('../../i18n/fr.json')).default;
+  return fr.mariages.categories.map(cat => ({
     params: { slug: cat.slug },
-    props: { cat },
+    props: { slug: cat.slug },
   }));
 }
 
-const { cat } = Astro.props;
+const { slug } = Astro.props;
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
+const t = getTranslations(lang);
+const s = t.mariagesSlug;
 const base = lang === 'fr' ? '' : `/${lang}`;
 
+const cat = t.mariages.categories.find(c => c.slug === slug)!;
 const reels: string[] = Array.from({ length: cat.count }, () => '#');
 ---
 
-<Layout
-  title={`${cat.title} — Rozi Dance`}
-  description={cat.description}
->
+<Layout title={`${cat.title} — Rozi Dance`} description={cat.description}>
   <!-- Hero -->
   <section class="cat-hero">
     <div class="section-container cat-hero-inner">
@@ -61,9 +29,9 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Mariages & Événements
+        {s.backLink}
       </a>
-      <span class="eyebrow">Prestations</span>
+      <span class="eyebrow">{s.eyebrow}</span>
       <h1>{cat.title}</h1>
       <p class="hero-subtitle">{cat.description}</p>
     </div>
@@ -78,18 +46,12 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
             href={href}
             class="reel-card reveal"
             style={`transition-delay: ${i * 50}ms`}
-            aria-label={`${cat.title} — vidéo ${i + 1}`}
+            aria-label={`${cat.title} — ${s.videoLabel} ${i + 1}`}
             target={href !== '#' ? '_blank' : undefined}
             rel={href !== '#' ? 'noopener noreferrer' : undefined}
           >
             <div class="reel-thumb">
-              <img
-                src="/images/reel-cover.webp"
-                alt={`${cat.title} ${i + 1}`}
-                loading="lazy"
-                width="300"
-                height="533"
-              />
+              <img src="/images/reel-cover.webp" alt={`${cat.title} ${i + 1}`} loading="lazy" width="300" height="533" />
               <div class="reel-overlay">
                 <svg class="reel-ig-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.4"/>
@@ -107,18 +69,18 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
   <!-- CTA -->
   <section class="cat-cta">
     <div class="section-container cat-cta-inner reveal-fade">
-      <span class="eyebrow">Votre journée</span>
-      <h2>Une prestation sur mesure ?</h2>
-      <p>Contactez-nous pour discuter de votre programme et créer quelque chose d'unique.</p>
+      <span class="eyebrow">{s.ctaEyebrow}</span>
+      <h2>{s.ctaTitle}</h2>
+      <p>{s.ctaText}</p>
       <div class="cta-actions">
         <a href={`${base || '/'}#contact`} class="cta-btn cta-primary">
-          Nous contacter
+          {s.ctaBtn}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
         <a href={`${base}/mariages`} class="cta-btn cta-secondary">
-          Voir toutes les prestations
+          {s.ctaBtnSecondary}
         </a>
       </div>
     </div>
@@ -126,18 +88,13 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
 </Layout>
 
 <style>
-  /* ── Hero ── */
   .cat-hero {
     padding-block: var(--spacing-section);
     background-color: var(--color-bg-section);
     border-bottom: 0.5px solid var(--color-border);
   }
 
-  .cat-hero-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+  .cat-hero-inner { display: flex; flex-direction: column; gap: 1rem; }
 
   .back-link {
     display: inline-flex;
@@ -171,10 +128,7 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
     margin: 0;
   }
 
-  /* ── Reels grid ── */
-  .reels-section {
-    padding-block: var(--spacing-section);
-  }
+  .reels-section { padding-block: var(--spacing-section); }
 
   .reels-grid {
     display: grid;
@@ -182,24 +136,10 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
     gap: 1rem;
   }
 
-  @media (min-width: 640px) {
-    .reels-grid {
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-      gap: 1.25rem;
-    }
-  }
+  @media (min-width: 640px) { .reels-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1.25rem; } }
+  @media (min-width: 1024px) { .reels-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } }
 
-  @media (min-width: 1024px) {
-    .reels-grid {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-  }
-
-  /* ── Reel card ── */
-  .reel-card {
-    display: block;
-    text-decoration: none;
-  }
+  .reel-card { display: block; text-decoration: none; }
 
   .reel-thumb {
     position: relative;
@@ -210,13 +150,7 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
     border: 0.5px solid var(--color-border);
   }
 
-  .reel-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 500ms var(--ease-out-soft);
-  }
+  .reel-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 500ms var(--ease-out-soft); }
 
   .reel-overlay {
     position: absolute;
@@ -229,14 +163,11 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
     transition: opacity 300ms var(--ease-out-soft);
   }
 
-  .reel-ig-icon {
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
-  }
+  .reel-ig-icon { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
 
   .reel-card:hover .reel-thumb img { transform: scale(1.04); }
   .reel-card:hover .reel-overlay { opacity: 1; }
 
-  /* ── CTA ── */
   .cat-cta {
     padding-block: var(--spacing-section);
     background-color: var(--color-bg-section);
@@ -259,21 +190,9 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
     margin: 0;
   }
 
-  .cat-cta p {
-    font-size: 1rem;
-    color: var(--color-text-secondary);
-    line-height: 1.7;
-    max-width: 50ch;
-    margin: 0;
-  }
+  .cat-cta p { font-size: 1rem; color: var(--color-text-secondary); line-height: 1.7; max-width: 50ch; margin: 0; }
 
-  .cta-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    justify-content: center;
-    margin-top: 0.5rem;
-  }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-top: 0.5rem; }
 
   .cta-btn {
     display: inline-flex;
@@ -288,24 +207,9 @@ const reels: string[] = Array.from({ length: cat.count }, () => '#');
     transition: background-color 300ms var(--ease-out-soft), gap 250ms var(--ease-out-soft), color 300ms var(--ease-out-soft);
   }
 
-  .cta-primary {
-    background-color: var(--color-accent);
-    color: white;
-  }
+  .cta-primary { background-color: var(--color-accent); color: white; }
+  .cta-primary:hover { background-color: color-mix(in srgb, var(--color-accent) 85%, black); gap: 0.75rem; }
 
-  .cta-primary:hover {
-    background-color: color-mix(in srgb, var(--color-accent) 85%, black);
-    gap: 0.75rem;
-  }
-
-  .cta-secondary {
-    background-color: transparent;
-    color: var(--color-text-primary);
-    border: 0.5px solid var(--color-border);
-  }
-
-  .cta-secondary:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-  }
+  .cta-secondary { background-color: transparent; color: var(--color-text-primary); border: 0.5px solid var(--color-border); }
+  .cta-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); }
 </style>

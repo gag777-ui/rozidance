@@ -1,37 +1,48 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getTranslations } from '../i18n/utils';
-import type { Lang } from '../i18n/utils';
-const lang = (Astro.currentLocale ?? 'fr') as Lang;
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'nl' } },
+    { params: { lang: 'ru' } },
+    { params: { lang: 'hy' } },
+  ];
+}
+
+const lang = (Astro.currentLocale ?? Astro.params.lang ?? 'fr') as Lang;
 const t = getTranslations(lang);
-const c = t.chant;
-const base = lang === 'fr' ? '' : `/${lang}`;
+const m = t.mariages;
 ---
 
-<Layout title={c.pageTitle} description={c.pageDescription}>
+<Layout title={m.pageTitle} description={m.pageDescription}>
   <!-- Hero -->
-  <section class="chant-hero">
-    <div class="section-container chant-hero-inner">
-      <a href={`${base || '/'}#prestations`} class="back-link">
+  <section class="mariages-hero">
+    <div class="section-container mariages-hero-inner">
+      <a href={`/${lang}#prestations`} class="back-link">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         {t.nav.prestations}
       </a>
-      <span class="eyebrow">{c.heroEyebrow}</span>
-      <h1>{c.heroTitle}</h1>
-      <p class="hero-subtitle">{c.heroSubtitle}</p>
+      <span class="eyebrow">{m.heroEyebrow}</span>
+      <h1>{m.heroTitle}</h1>
+      <p class="hero-subtitle">{m.heroSubtitle}</p>
     </div>
   </section>
 
-  <!-- 3 category cards -->
+  <!-- 4 category cards -->
   <section class="categories-section">
     <div class="section-container">
       <div class="categories-grid">
-        {c.categories.map((cat, i) => (
-          <div
+        {m.categories.map((cat, i) => (
+          <a
+            href={`/${lang}/mariages/${cat.slug}`}
             class="category-card reveal"
             style={`transition-delay: ${i * 100}ms`}
+            aria-label={cat.title}
           >
             <div class="card-accent-bar"></div>
             <div class="card-body">
@@ -42,26 +53,26 @@ const base = lang === 'fr' ? '' : `/${lang}`;
               <h2 class="card-title">{cat.title}</h2>
               <p class="card-desc">{cat.description}</p>
               <span class="card-link">
-                {c.cardLink}
+                {m.cardLink}
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="card-arrow">
                   <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="chant-cta">
-    <div class="section-container chant-cta-inner reveal-fade">
-      <span class="eyebrow">{c.ctaEyebrow}</span>
-      <h2>{c.ctaTitle}</h2>
-      <p>{c.ctaText}</p>
-      <a href={`${base || '/'}#contact`} class="cta-btn">
-        {c.ctaBtn}
+  <section class="mariages-cta">
+    <div class="section-container mariages-cta-inner reveal-fade">
+      <span class="eyebrow">{m.ctaEyebrow}</span>
+      <h2>{m.ctaTitle}</h2>
+      <p>{m.ctaText}</p>
+      <a href={`/${lang}#contact`} class="cta-btn">
+        {m.ctaBtn}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -71,13 +82,17 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 </Layout>
 
 <style>
-  .chant-hero {
+  .mariages-hero {
     padding-block: var(--spacing-section);
     background-color: var(--color-bg-section);
     border-bottom: 0.5px solid var(--color-border);
   }
 
-  .chant-hero-inner { display: flex; flex-direction: column; gap: 1rem; }
+  .mariages-hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
   .back-link {
     display: inline-flex;
@@ -94,7 +109,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .back-link:hover { color: var(--color-accent); gap: 0.6rem; }
 
-  .chant-hero h1 {
+  .mariages-hero h1 {
     font-family: var(--font-serif);
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 400;
@@ -119,7 +134,8 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     gap: 1.25rem;
   }
 
-  @media (min-width: 600px) { .categories-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 600px) { .categories-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .categories-grid { grid-template-columns: repeat(4, 1fr); } }
 
   .category-card {
     position: relative;
@@ -129,6 +145,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     border: 0.5px solid var(--color-border);
     border-radius: var(--radius-card);
     overflow: hidden;
+    text-decoration: none;
     transition: transform 400ms var(--ease-out-soft), border-color 400ms var(--ease-out-soft), box-shadow 400ms var(--ease-out-soft);
   }
 
@@ -207,13 +224,13 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   .card-arrow { flex-shrink: 0; transition: transform 250ms var(--ease-out-soft); }
   .category-card:hover .card-arrow { transform: translateX(3px); }
 
-  .chant-cta {
+  .mariages-cta {
     padding-block: var(--spacing-section);
     background-color: var(--color-bg-section);
     border-top: 0.5px solid var(--color-border);
   }
 
-  .chant-cta-inner {
+  .mariages-cta-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -221,7 +238,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     gap: 1.25rem;
   }
 
-  .chant-cta h2 {
+  .mariages-cta h2 {
     font-family: var(--font-serif);
     font-size: clamp(1.75rem, 3.5vw, 2.75rem);
     font-weight: 400;
@@ -229,7 +246,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     margin: 0;
   }
 
-  .chant-cta p { font-size: 1rem; color: var(--color-text-secondary); line-height: 1.7; max-width: 50ch; margin: 0; }
+  .mariages-cta p { font-size: 1rem; color: var(--color-text-secondary); line-height: 1.7; max-width: 50ch; margin: 0; }
 
   .cta-btn {
     display: inline-flex;

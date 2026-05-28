@@ -1,39 +1,41 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getTranslations } from '../../i18n/utils';
-import type { Lang } from '../../i18n/utils';
+import Layout from '../../../layouts/Layout.astro';
+import { getTranslations } from '../../../i18n/utils';
+import type { Lang } from '../../../i18n/utils';
 
 export async function getStaticPaths() {
-  const fr = (await import('../../i18n/fr.json')).default;
-  return fr.cours.cards.map(card => ({
-    params: { slug: card.slug },
-    props: { slug: card.slug },
-  }));
+  const fr = (await import('../../../i18n/fr.json')).default;
+  const langs = ['en', 'nl', 'ru', 'hy'];
+  return langs.flatMap(lang =>
+    fr.mariages.categories.map(cat => ({
+      params: { lang, slug: cat.slug },
+      props: { slug: cat.slug },
+    }))
+  );
 }
 
 const { slug } = Astro.props;
-const lang = (Astro.currentLocale ?? 'fr') as Lang;
+const lang = (Astro.currentLocale ?? Astro.params.lang ?? 'fr') as Lang;
 const t = getTranslations(lang);
-const s = t.coursSlug;
-const base = lang === 'fr' ? '' : `/${lang}`;
+const s = t.mariagesSlug;
 
-const card = t.cours.cards.find(c => c.slug === slug)!;
-const reels: string[] = Array.from({ length: 6 }, () => '#');
+const cat = t.mariages.categories.find(c => c.slug === slug)!;
+const reels: string[] = Array.from({ length: cat.count }, () => '#');
 ---
 
-<Layout title={`${card.title} — Rozi Dance`} description={card.description}>
+<Layout title={`${cat.title} — Rozi Dance`} description={cat.description}>
   <!-- Hero -->
   <section class="cat-hero">
     <div class="section-container cat-hero-inner">
-      <a href={`${base}/cours`} class="back-link">
+      <a href={`/${lang}/mariages`} class="back-link">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         {s.backLink}
       </a>
       <span class="eyebrow">{s.eyebrow}</span>
-      <h1>{card.title}</h1>
-      <p class="hero-subtitle">{card.description}</p>
+      <h1>{cat.title}</h1>
+      <p class="hero-subtitle">{cat.description}</p>
     </div>
   </section>
 
@@ -46,12 +48,12 @@ const reels: string[] = Array.from({ length: 6 }, () => '#');
             href={href}
             class="reel-card reveal"
             style={`transition-delay: ${i * 50}ms`}
-            aria-label={`${card.title} — ${s.videoLabel} ${i + 1}`}
+            aria-label={`${cat.title} — ${s.videoLabel} ${i + 1}`}
             target={href !== '#' ? '_blank' : undefined}
             rel={href !== '#' ? 'noopener noreferrer' : undefined}
           >
             <div class="reel-thumb">
-              <img src="/images/reel-cover.webp" alt={`${card.title} ${i + 1}`} loading="lazy" width="300" height="533" />
+              <img src="/images/reel-cover.webp" alt={`${cat.title} ${i + 1}`} loading="lazy" width="300" height="533" />
               <div class="reel-overlay">
                 <svg class="reel-ig-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.4"/>
@@ -73,13 +75,13 @@ const reels: string[] = Array.from({ length: 6 }, () => '#');
       <h2>{s.ctaTitle}</h2>
       <p>{s.ctaText}</p>
       <div class="cta-actions">
-        <a href={`${base || '/'}#contact`} class="cta-btn cta-primary">
+        <a href={`/${lang}#contact`} class="cta-btn cta-primary">
           {s.ctaBtn}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
-        <a href={`${base}/cours`} class="cta-btn cta-secondary">
+        <a href={`/${lang}/mariages`} class="cta-btn cta-secondary">
           {s.ctaBtnSecondary}
         </a>
       </div>

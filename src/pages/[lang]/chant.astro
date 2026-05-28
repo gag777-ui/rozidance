@@ -1,18 +1,27 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getTranslations } from '../i18n/utils';
-import type { Lang } from '../i18n/utils';
-const lang = (Astro.currentLocale ?? 'fr') as Lang;
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'nl' } },
+    { params: { lang: 'ru' } },
+    { params: { lang: 'hy' } },
+  ];
+}
+
+const lang = (Astro.currentLocale ?? Astro.params.lang ?? 'fr') as Lang;
 const t = getTranslations(lang);
 const c = t.chant;
-const base = lang === 'fr' ? '' : `/${lang}`;
 ---
 
 <Layout title={c.pageTitle} description={c.pageDescription}>
   <!-- Hero -->
   <section class="chant-hero">
     <div class="section-container chant-hero-inner">
-      <a href={`${base || '/'}#prestations`} class="back-link">
+      <a href={`/${lang}#prestations`} class="back-link">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -60,7 +69,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       <span class="eyebrow">{c.ctaEyebrow}</span>
       <h2>{c.ctaTitle}</h2>
       <p>{c.ctaText}</p>
-      <a href={`${base || '/'}#contact`} class="cta-btn">
+      <a href={`/${lang}#contact`} class="cta-btn">
         {c.ctaBtn}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>

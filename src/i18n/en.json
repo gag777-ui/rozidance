@@ -211,7 +211,55 @@
     ],
     "ctaTitle": "Ready to start?",
     "ctaSubtitle": "Contact us to choose the option that suits you.",
-    "ctaBtn": "Contact us"
+    "ctaBtn": "Contact us",
+    "cardLink": "Watch videos",
+    "chantList": [
+      "Traditional Armenian repertoire",
+      "Popular international songs",
+      "Vocal technique adapted to your voice",
+      "All levels — beginner to advanced",
+      "Individual or group lessons",
+      "In person or remotely"
+    ],
+    "danseList": [
+      "Armenian folk dances",
+      "Choreographies for events",
+      "Group and individual dance",
+      "All levels, all ages",
+      "Warm and welcoming atmosphere"
+    ],
+    "cards": [
+      {
+        "slug": "chant-armenien",
+        "title": "Armenian singing",
+        "description": "We are proud to share our art and passion with each student, whatever their level."
+      },
+      {
+        "slug": "chant-jazz-soul-pop",
+        "title": "Jazz · Soul · Pop singing",
+        "description": "We are proud to share our art and passion with each student, whatever their level."
+      },
+      {
+        "slug": "chant-de-mariage",
+        "title": "Wedding singing",
+        "description": "We are proud to share our art and passion with each student, whatever their level."
+      },
+      {
+        "slug": "danse-armenienne",
+        "title": "Armenian dance",
+        "description": "We are proud to share our art and passion with each student, whatever their level."
+      },
+      {
+        "slug": "danse-en-groupe",
+        "title": "Group dance",
+        "description": "We are proud to share our art and passion with each student, whatever their level."
+      },
+      {
+        "slug": "cours-en-ligne",
+        "title": "Online lessons",
+        "description": "We are proud to share our art and passion with each student, whatever their level."
+      }
+    ]
   },
   "footer": {
     "tagline": "The Armenian soul in motion.",
@@ -225,5 +273,91 @@
     "title": "Page not found",
     "description": "The page you're looking for doesn't exist or has been moved.",
     "cta": "Back to home"
+  },
+  "mariages": {
+    "pageTitle": "Weddings & Events — Rozi Dance",
+    "pageDescription": "Discover our wedding performances: bridal dance, bridal singing, wedding dance and musicians. Rozi Dance, based in Belgium, available throughout Europe.",
+    "heroEyebrow": "Weddings & Events",
+    "heroTitle": "Our services",
+    "heroSubtitle": "From the bridal dressing ceremony to the banquet, we accompany every step of your day with grace and emotion.",
+    "backLink": "Performances",
+    "cardLink": "Services",
+    "ctaEyebrow": "Your day",
+    "ctaTitle": "Let's talk about your wedding",
+    "ctaText": "Each performance is designed to measure. Contact us to build the programme that matches your vision.",
+    "ctaBtn": "Contact us",
+    "categories": [
+      {
+        "slug": "danse-de-la-mariee",
+        "title": "Bridal dance",
+        "description": "The traditional Armenian bridal dance, grace and emotion united.",
+        "count": 6
+      },
+      {
+        "slug": "chant-de-la-mariee",
+        "title": "Bridal singing",
+        "description": "Traditional and contemporary songs to accompany the most beautiful moments.",
+        "count": 4
+      },
+      {
+        "slug": "danse-de-mariage",
+        "title": "Wedding dance",
+        "description": "Group performances to animate your banquet and move your guests.",
+        "count": 10
+      },
+      {
+        "slug": "musiciens",
+        "title": "Our musicians",
+        "description": "Musicians who elevate each performance with their talent and sensitivity.",
+        "count": 2
+      }
+    ]
+  },
+  "chant": {
+    "pageTitle": "The art of singing — Rozi Dance",
+    "pageDescription": "Jazz, Soul and Pop singing for your weddings and events. Rozi Dance, based in Belgium, available throughout Europe.",
+    "heroEyebrow": "The art of singing",
+    "heroTitle": "Our songs",
+    "heroSubtitle": "A voice for every occasion — Soul, Pop or Jazz, in several languages, to accompany your most precious moments.",
+    "backLink": "Performances",
+    "cardLink": "Enter",
+    "ctaEyebrow": "Your event",
+    "ctaTitle": "Let's talk about your occasion",
+    "ctaText": "Each performance is adapted to your wishes. Contact us for a personalised programme.",
+    "ctaBtn": "Contact us",
+    "categories": [
+      {
+        "title": "Soul singing",
+        "description": "A voice that touches the soul. Soul pieces full of emotion for your most intense moments."
+      },
+      {
+        "title": "Pop singing",
+        "description": "Covers and original Pop songs to energise your celebrations with modern flair."
+      },
+      {
+        "title": "Jazz singing",
+        "description": "The elegance of Jazz to accompany your cocktails, dinners and receptions with class."
+      }
+    ]
+  },
+  "mariagesSlug": {
+    "backLink": "Weddings & Events",
+    "eyebrow": "Performances",
+    "videoLabel": "video",
+    "ctaEyebrow": "Your day",
+    "ctaTitle": "A bespoke performance?",
+    "ctaText": "Contact us to discuss your programme and create something unique.",
+    "ctaBtn": "Contact us",
+    "ctaBtnSecondary": "View all performances"
+  },
+  "coursSlug": {
+    "backLink": "Lessons",
+    "eyebrow": "Singing & dance lessons",
+    "videoLabel": "video",
+    "ctaEyebrow": "Enrol",
+    "ctaTitle": "Ready to start?",
+    "ctaText": "Contact us to choose the option that suits you and define your programme.",
+    "ctaBtn": "Contact us",
+    "ctaBtnSecondary": "View all lessons"
   }
 }

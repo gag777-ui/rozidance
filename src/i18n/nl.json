@@ -211,7 +211,55 @@
     ],
     "ctaTitle": "Klaar om te beginnen?",
     "ctaSubtitle": "Contacteer ons om de formule te kiezen die bij u past.",
-    "ctaBtn": "Neem contact op"
+    "ctaBtn": "Neem contact op",
+    "cardLink": "Video's bekijken",
+    "chantList": [
+      "Traditioneel Armeens repertoire",
+      "Populaire internationale liederen",
+      "Stemtechniek aangepast aan uw stem",
+      "Alle niveaus — beginner tot gevorderde",
+      "Individuele of groepslessen",
+      "Persoonlijk of online"
+    ],
+    "danseList": [
+      "Armeense volksdansen",
+      "Choreografieën voor evenementen",
+      "Groeps- en individuele dans",
+      "Alle niveaus, alle leeftijden",
+      "Warme en gastvrije sfeer"
+    ],
+    "cards": [
+      {
+        "slug": "chant-armenien",
+        "title": "Armeense zang",
+        "description": "We zijn trots om onze kunst en passie te delen met elke leerling, welk niveau dan ook."
+      },
+      {
+        "slug": "chant-jazz-soul-pop",
+        "title": "Jazz · Soul · Pop-zang",
+        "description": "We zijn trots om onze kunst en passie te delen met elke leerling, welk niveau dan ook."
+      },
+      {
+        "slug": "chant-de-mariage",
+        "title": "Huwelijkszang",
+        "description": "We zijn trots om onze kunst en passie te delen met elke leerling, welk niveau dan ook."
+      },
+      {
+        "slug": "danse-armenienne",
+        "title": "Armeense dans",
+        "description": "We zijn trots om onze kunst en passie te delen met elke leerling, welk niveau dan ook."
+      },
+      {
+        "slug": "danse-en-groupe",
+        "title": "Groepsdans",
+        "description": "We zijn trots om onze kunst en passie te delen met elke leerling, welk niveau dan ook."
+      },
+      {
+        "slug": "cours-en-ligne",
+        "title": "Online lessen",
+        "description": "We zijn trots om onze kunst en passie te delen met elke leerling, welk niveau dan ook."
+      }
+    ]
   },
   "footer": {
     "tagline": "De Armeense ziel in beweging.",
@@ -225,5 +273,91 @@
     "title": "Pagina niet gevonden",
     "description": "De pagina die u zoekt bestaat niet of is verplaatst.",
     "cta": "Terug naar huis"
+  },
+  "mariages": {
+    "pageTitle": "Huwelijken & Evenementen — Rozi Dance",
+    "pageDescription": "Ontdek onze huwelijksprestaties: bruidsdans, bruidszang, huwelijksdans en muzikanten. Rozi Dance, gevestigd in België, actief door heel Europa.",
+    "heroEyebrow": "Huwelijken & Evenementen",
+    "heroTitle": "Onze diensten",
+    "heroSubtitle": "Van de aankleedceremonie van de bruid tot het banket begeleiden wij elke stap van uw dag met gratie en emotie.",
+    "backLink": "Optredens",
+    "cardLink": "Diensten",
+    "ctaEyebrow": "Uw dag",
+    "ctaTitle": "Laten we praten over uw huwelijk",
+    "ctaText": "Elk optreden is op maat gemaakt. Contacteer ons om het programma te bouwen dat overeenkomt met uw visie.",
+    "ctaBtn": "Neem contact op",
+    "categories": [
+      {
+        "slug": "danse-de-la-mariee",
+        "title": "Bruidsdans",
+        "description": "De traditionele Armeense bruidsdans, gratie en emotie verenigd.",
+        "count": 6
+      },
+      {
+        "slug": "chant-de-la-mariee",
+        "title": "Bruidszang",
+        "description": "Traditionele en hedendaagse liederen om de mooiste momenten te begeleiden.",
+        "count": 4
+      },
+      {
+        "slug": "danse-de-mariage",
+        "title": "Huwelijksdans",
+        "description": "Groepsoptredens om uw banket te animeren en uw gasten te ontroeren.",
+        "count": 10
+      },
+      {
+        "slug": "musiciens",
+        "title": "Onze muzikanten",
+        "description": "Muzikanten die elk optreden verheffen met hun talent en gevoeligheid.",
+        "count": 2
+      }
+    ]
+  },
+  "chant": {
+    "pageTitle": "De kunst van het zingen — Rozi Dance",
+    "pageDescription": "Jazz, Soul en Pop-zang voor uw huwelijken en evenementen. Rozi Dance, gevestigd in België, actief door heel Europa.",
+    "heroEyebrow": "De kunst van het zingen",
+    "heroTitle": "Onze zang",
+    "heroSubtitle": "Een stem voor elke gelegenheid — Soul, Pop of Jazz, in meerdere talen, om uw meest kostbare momenten te begeleiden.",
+    "backLink": "Optredens",
+    "cardLink": "Betreden",
+    "ctaEyebrow": "Uw evenement",
+    "ctaTitle": "Laten we praten over uw gelegenheid",
+    "ctaText": "Elk optreden is aangepast aan uw wensen. Contacteer ons voor een persoonlijk programma.",
+    "ctaBtn": "Neem contact op",
+    "categories": [
+      {
+        "title": "Soul-zang",
+        "description": "Een stem die de ziel raakt. Soul-nummers vol emotie voor uw meest intense momenten."
+      },
+      {
+        "title": "Pop-zang",
+        "description": "Covers en originele popmuziek om uw feesten te animeren met energie en moderniteit."
+      },
+      {
+        "title": "Jazz-zang",
+        "description": "De elegantie van Jazz om uw cocktails, diners en recepties met klasse te begeleiden."
+      }
+    ]
+  },
+  "mariagesSlug": {
+    "backLink": "Huwelijken & Evenementen",
+    "eyebrow": "Optredens",
+    "videoLabel": "video",
+    "ctaEyebrow": "Uw dag",
+    "ctaTitle": "Een optreden op maat?",
+    "ctaText": "Contacteer ons om uw programma te bespreken en iets unieks te creëren.",
+    "ctaBtn": "Neem contact op",
+    "ctaBtnSecondary": "Alle optredens bekijken"
+  },
+  "coursSlug": {
+    "backLink": "Lessen",
+    "eyebrow": "Zang- & danslessen",
+    "videoLabel": "video",
+    "ctaEyebrow": "Inschrijven",
+    "ctaTitle": "Klaar om te beginnen?",
+    "ctaText": "Contacteer ons om de formule te kiezen die bij u past en uw programma te bepalen.",
+    "ctaBtn": "Neem contact op",
+    "ctaBtnSecondary": "Alle lessen bekijken"
   }
 }

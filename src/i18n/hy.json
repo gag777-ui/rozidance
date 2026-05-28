@@ -211,7 +211,55 @@
     ],
     "ctaTitle": "Պատրա՞ստ եք սկսել:",
     "ctaSubtitle": "Կապ հաստատեք մեզ հետ ճիշտ ձեւաչափ ընտրելու համար:",
-    "ctaBtn": "Կապ հաստատել"
+    "ctaBtn": "Կապ հաստատել",
+    "cardLink": "Tesel videoner",
+    "chantList": [
+      "Avandakan hay repertuarę",
+      "Shahshetvats mijazgayin yerger",
+      "Dzer dzaynin hаrmarеcvats vocal texnika",
+      "Bolor mакаrаknerę — sksngkicits avanderi",
+      "Anhatakan kam khmbain daserę",
+      "Ugghaki kam aрcаnc"
+    ],
+    "danseList": [
+      "Hay zhoghovrdakan parery",
+      "Choreographianer mijocacarumnererov",
+      "Khmbain ev anhatakan par",
+      "Bolor mакаrаknerę, bolor toyliкnerę",
+      "Jerm ev kazenкer mthnolorty"
+    ],
+    "cards": [
+      {
+        "slug": "chant-armenien",
+        "title": "Hay yerg",
+        "description": "Menq hertsk ounеnk mer arvesty ev кrqy kaycarelu yuraqanchyour usoghits hет:"
+      },
+      {
+        "slug": "chant-jazz-soul-pop",
+        "title": "Jazz · Soul · Pop yerg",
+        "description": "Menq hertsk ounеnk mer arvesty ev кrqy kaycarelu yuraqanchyour usoghits hет:"
+      },
+      {
+        "slug": "chant-de-mariage",
+        "title": "Harsnekani yerg",
+        "description": "Menq hertsk ounеnk mer arvesty ev кrqy kaycarelu yuraqanchyour usoghits hет:"
+      },
+      {
+        "slug": "danse-armenienne",
+        "title": "Hay par",
+        "description": "Menq hertsk ounеnk mer arvesty ev кrqy kaycarelu yuraqanchyour usoghits hет:"
+      },
+      {
+        "slug": "danse-en-groupe",
+        "title": "Khmbain par",
+        "description": "Menq hertsk ounеnk mer arvesty ev кrqy kaycarelu yuraqanchyour usoghits hет:"
+      },
+      {
+        "slug": "cours-en-ligne",
+        "title": "Arcank daserę",
+        "description": "Menq hertsk ounеnk mer arvesty ev кrqy kaycarelu yuraqanchyour usoghits hет:"
+      }
+    ]
   },
   "footer": {
     "tagline": "Հայկական հոգին շարժման մեջ:",
@@ -225,5 +273,91 @@
     "title": "Էջը չի գտնվել",
     "description": "Փնտրված էջը գոյություն չունի կամ տեղափոխվել է:",
     "cta": "Վերադառնալ գլխավոր"
+  },
+  "mariages": {
+    "pageTitle": "Հarsniqner & Мijocacarumner — Rozi Dance",
+    "pageDescription": "Բachahetseq mer harsnekani elouythnerę: harsni par, harsni yerg, harsnekani par ev yereazshtoghner:",
+    "heroEyebrow": "Հarsniqner & Мijocacarumner",
+    "heroTitle": "Мer itsaytsouмnerę",
+    "heroSubtitle": "Հarsni hagnvelou araragoutyounicę minchev bankety, menq ouzeq dzez orvam yerkouhin katareleloutyamb:",
+    "backLink": "Ծararayoutyounner",
+    "cardLink": "Itsaytsouмner",
+    "ctaEyebrow": "Dzez ore",
+    "ctaTitle": "Khosenq dzez harsniqneri masin",
+    "ctaText": "Yuraqanchyour elouythę naxaqrvats e dzez tsanouthoutyounnerov: Kap hastatets anhatakan tsragir karqelou hamar:",
+    "ctaBtn": "Կap հastatvel",
+    "categories": [
+      {
+        "slug": "danse-de-la-mariee",
+        "title": "Հarsni pary",
+        "description": "Avandakan hay harsni pary — shrnorhk ev hertskabanoutyoun hamakhmbvel:",
+        "count": 6
+      },
+      {
+        "slug": "chant-de-la-mariee",
+        "title": "Հarsni yergy",
+        "description": "Avandakan ev zamanakakits yerger amen gexetsikin oughekelou hamar:",
+        "count": 4
+      },
+      {
+        "slug": "danse-de-mariage",
+        "title": "Harsnekani pary",
+        "description": "Khmbain elouythner dzez bankety karqavorelou ev hyvererov sharzoumelou hamar:",
+        "count": 10
+      },
+      {
+        "slug": "musiciens",
+        "title": "Мer yerazshtouqnerę",
+        "description": "Yerazshtouqner, or barchracnouм yuraqanchyour elouythę irentz taroulambov:",
+        "count": 2
+      }
+    ]
+  },
+  "chant": {
+    "pageTitle": "Yergartoutyan arvesty — Rozi Dance",
+    "pageDescription": "Jazz, Soul ev Pop yerg dzez harsniqnerov ev mijocacarumnererov hamar:",
+    "heroEyebrow": "Yergartoutyan arvesty",
+    "heroTitle": "Мer yergerę",
+    "heroSubtitle": "Dzayn yuraqanchyour ariti hamar — Soul, Pop kam Jazz, mi qani lezounerov, dzez amenakarev paherov ougekelou hamar:",
+    "backLink": "Ծararayoutyounner",
+    "cardLink": "Mtel",
+    "ctaEyebrow": "Dzez mijocacarouмę",
+    "ctaTitle": "Khosenq dzez aritji masin",
+    "ctaText": "Yuraqanchyour elouythę hармареcvats e dzez tsanouthoutyounnerov: Kap hastatets anhatakan tsragri hamar:",
+    "ctaBtn": "Կap հastatvel",
+    "categories": [
+      {
+        "title": "Soul yerg",
+        "description": "Dzayn, vor toghnoum e hoyin: Soul yerger licq litsov dzez amo uzheghoutouynjeri hamar:"
+      },
+      {
+        "title": "Pop yerg",
+        "description": "Kayner ev original pop yerger dzez tonostoutyounnerę karqavorelou hamar yev aramanoutyan:"
+      },
+      {
+        "title": "Jazz yerg",
+        "description": "Jazi elegantoutyounę dzez kokteyler, khebouyt ev qokteyler vasnetsgadzoutyamb oughekelou hamar:"
+      }
+    ]
+  },
+  "mariagesSlug": {
+    "backLink": "Հarsniqner & Мijocacarumner",
+    "eyebrow": "Ծararayoutyounner",
+    "videoLabel": "video",
+    "ctaEyebrow": "Dzez ore",
+    "ctaTitle": "Anhatakan elouyt?",
+    "ctaText": "Kap hastatets dzez tsragri ev inchvor eзakani baneri karqaravelou hamar:",
+    "ctaBtn": "Կap հastatvel",
+    "ctaBtnSecondary": "Tesel bolor elouythnerę"
+  },
+  "coursSlug": {
+    "backLink": "Դaserę",
+    "eyebrow": "Yerg ev par — daserę",
+    "videoLabel": "video",
+    "ctaEyebrow": "Gransvel",
+    "ctaTitle": "Pataraszt eq sksnel?",
+    "ctaText": "Kap hastatets tzez hamar hamapataskhantskiq tsragir kaycarelou hamar:",
+    "ctaBtn": "Կap հastatvel",
+    "ctaBtnSecondary": "Tesel bolor daserę"
   }
 }

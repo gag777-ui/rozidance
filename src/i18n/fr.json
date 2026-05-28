@@ -211,7 +211,55 @@
     ],
     "ctaTitle": "Prêt à commencer ?",
     "ctaSubtitle": "Contactez-nous pour choisir la formule qui vous convient.",
-    "ctaBtn": "Nous contacter"
+    "ctaBtn": "Nous contacter",
+    "cardLink": "Voir les vidéos",
+    "chantList": [
+      "Répertoire arménien traditionnel",
+      "Chants internationaux populaires",
+      "Technique vocale adaptée à votre voix",
+      "Tous niveaux — débutant à avancé",
+      "Cours individuels ou en groupe",
+      "En présentiel ou à distance"
+    ],
+    "danseList": [
+      "Danses folkloriques arméniennes",
+      "Chorégraphies pour événements",
+      "Danse en groupe et individuelle",
+      "Tous niveaux, tous âges",
+      "Ambiance chaleureuse et bienveillante"
+    ],
+    "cards": [
+      {
+        "slug": "chant-armenien",
+        "title": "Chant arménien",
+        "description": "Nous sommes fiers de transmettre notre art et notre passion à chaque élève, quel que soit son niveau."
+      },
+      {
+        "slug": "chant-jazz-soul-pop",
+        "title": "Chant Jazz · Soul · Pop",
+        "description": "Nous sommes fiers de transmettre notre art et notre passion à chaque élève, quel que soit son niveau."
+      },
+      {
+        "slug": "chant-de-mariage",
+        "title": "Chant de mariage",
+        "description": "Nous sommes fiers de transmettre notre art et notre passion à chaque élève, quel que soit son niveau."
+      },
+      {
+        "slug": "danse-armenienne",
+        "title": "Danse arménienne",
+        "description": "Nous sommes fiers de transmettre notre art et notre passion à chaque élève, quel que soit son niveau."
+      },
+      {
+        "slug": "danse-en-groupe",
+        "title": "Danse en groupe",
+        "description": "Nous sommes fiers de transmettre notre art et notre passion à chaque élève, quel que soit son niveau."
+      },
+      {
+        "slug": "cours-en-ligne",
+        "title": "Cours en ligne",
+        "description": "Nous sommes fiers de transmettre notre art et notre passion à chaque élève, quel que soit son niveau."
+      }
+    ]
   },
   "footer": {
     "tagline": "L'âme arménienne en mouvement.",
@@ -225,5 +273,91 @@
     "title": "Page introuvable",
     "description": "La page que vous cherchez n'existe pas ou a été déplacée.",
     "cta": "Retour à l'accueil"
+  },
+  "mariages": {
+    "pageTitle": "Mariages & Événements — Rozi Dance",
+    "pageDescription": "Découvrez nos prestations pour mariages : danse de la mariée, chant, danse de mariage et musiciens. Rozi Dance, basée en Belgique, disponible partout en Europe.",
+    "heroEyebrow": "Mariages & Événements",
+    "heroTitle": "Nos services",
+    "heroSubtitle": "De la cérémonie d'habillage au banquet, nous accompagnons chaque étape de votre journée avec grâce et émotion.",
+    "backLink": "Prestations",
+    "cardLink": "Services",
+    "ctaEyebrow": "Votre journée",
+    "ctaTitle": "Parlons de votre mariage",
+    "ctaText": "Chaque prestation est conçue sur mesure. Contactez-nous pour construire le programme qui correspond à votre vision.",
+    "ctaBtn": "Nous contacter",
+    "categories": [
+      {
+        "slug": "danse-de-la-mariee",
+        "title": "Danse de la mariée",
+        "description": "La danse traditionnelle arménienne de la mariée, grâce et émotion réunies.",
+        "count": 6
+      },
+      {
+        "slug": "chant-de-la-mariee",
+        "title": "Chant de la mariée",
+        "description": "Des chants traditionnels et contemporains pour accompagner les plus beaux moments.",
+        "count": 4
+      },
+      {
+        "slug": "danse-de-mariage",
+        "title": "Danse de mariage",
+        "description": "Performances de groupe pour animer votre banquet et faire vibrer vos invités.",
+        "count": 10
+      },
+      {
+        "slug": "musiciens",
+        "title": "Nos musiciens",
+        "description": "Des musiciens qui subliment chaque performance avec leur talent et leur sensibilité.",
+        "count": 2
+      }
+    ]
+  },
+  "chant": {
+    "pageTitle": "L'art du chant — Rozi Dance",
+    "pageDescription": "Chant Jazz, Soul et Pop pour vos mariages et événements. Rozi Dance, basée en Belgique, disponible partout en Europe.",
+    "heroEyebrow": "L'art du chant",
+    "heroTitle": "Nos chants",
+    "heroSubtitle": "Une voix pour chaque occasion — Soul, Pop ou Jazz, en plusieurs langues, pour accompagner vos moments les plus précieux.",
+    "backLink": "Prestations",
+    "cardLink": "Entrer",
+    "ctaEyebrow": "Votre événement",
+    "ctaTitle": "Parlons de votre occasion",
+    "ctaText": "Chaque prestation est adaptée à vos souhaits. Contactez-nous pour un programme personnalisé.",
+    "ctaBtn": "Nous contacter",
+    "categories": [
+      {
+        "title": "Chant Soul",
+        "description": "Une voix qui touche l'âme. Des morceaux Soul empreints d'émotion pour vos moments les plus intenses."
+      },
+      {
+        "title": "Chant Pop",
+        "description": "Des reprises et créations Pop pour animer vos célébrations avec énergie et modernité."
+      },
+      {
+        "title": "Chant Jazz",
+        "description": "L'élégance du Jazz pour accompagner vos cocktails, dîners et réceptions avec classe."
+      }
+    ]
+  },
+  "mariagesSlug": {
+    "backLink": "Mariages & Événements",
+    "eyebrow": "Prestations",
+    "videoLabel": "vidéo",
+    "ctaEyebrow": "Votre journée",
+    "ctaTitle": "Une prestation sur mesure ?",
+    "ctaText": "Contactez-nous pour discuter de votre programme et créer quelque chose d'unique.",
+    "ctaBtn": "Nous contacter",
+    "ctaBtnSecondary": "Voir toutes les prestations"
+  },
+  "coursSlug": {
+    "backLink": "Cours",
+    "eyebrow": "Cours de chant & danse",
+    "videoLabel": "vidéo",
+    "ctaEyebrow": "S'inscrire",
+    "ctaTitle": "Prêt à commencer ?",
+    "ctaText": "Contactez-nous pour choisir la formule qui vous convient et définir votre programme.",
+    "ctaBtn": "Nous contacter",
+    "ctaBtnSecondary": "Voir tous les cours"
   }
 }
