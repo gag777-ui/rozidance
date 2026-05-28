@@ -1,11 +1,11 @@
 ---
 const cards = [
-  { slug: 'chant-armenien',      title: 'Chant arménien',    init:'C', desc: 'Répertoire traditionnel transmis avec passion et mémoire.' },
-  { slug: 'chant-jazz-soul-pop', title: 'Jazz · Soul · Pop', init:'J', desc: 'Voix adaptée à chaque ambiance, de l\'intime au festif.' },
-  { slug: 'chant-de-mariage',    title: 'Chant de mariage',  init:'M', desc: 'Accompagnement vocal sur mesure pour votre plus beau jour.' },
-  { slug: 'danse-armenienne',    title: 'Danse arménienne',  init:'D', desc: 'Chorégraphies traditionnelles pleines de grâce et d\'énergie.' },
-  { slug: 'danse-en-groupe',     title: 'Danse en groupe',   init:'G', desc: 'Cours collectifs pour tous niveaux dans une atmosphère chaleureuse.' },
-  { slug: 'cours-en-ligne',      title: 'Cours en ligne',    init:'L', desc: 'Apprenez depuis chez vous, à votre rythme, en visioconférence.' },
+  { slug: 'chant-armenien',      title: 'Chant arménien',    desc: 'Répertoire traditionnel transmis avec passion.' },
+  { slug: 'chant-jazz-soul-pop', title: 'Jazz · Soul · Pop', desc: 'Voix adaptée à chaque ambiance, de l\'intime au festif.' },
+  { slug: 'chant-de-mariage',    title: 'Chant de mariage',  desc: 'Accompagnement vocal sur mesure pour votre plus beau jour.' },
+  { slug: 'danse-armenienne',    title: 'Danse arménienne',  desc: 'Chorégraphies traditionnelles pleines de grâce.' },
+  { slug: 'danse-en-groupe',     title: 'Danse en groupe',   desc: 'Cours collectifs pour tous niveaux.' },
+  { slug: 'cours-en-ligne',      title: 'Cours en ligne',    desc: 'Apprenez depuis chez vous, à votre rythme.' },
 ];
 ---
 <!DOCTYPE html>
@@ -27,417 +27,310 @@ const cards = [
   --soft:cubic-bezier(.22,1,.36,1);
 }
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--bg);color:var(--dark);padding-bottom:10rem;overflow-x:hidden}
+body{
+  font-family:var(--sans);
+  background:var(--bg);color:var(--dark);
+  padding-bottom:8rem;
+  -webkit-tap-highlight-color:transparent;
+}
 
+/* ─── NAV ─── */
 .nav{
   position:sticky;top:0;z-index:999;
-  background:rgba(250,247,242,.94);backdrop-filter:blur(14px);
+  background:rgba(250,247,242,.96);backdrop-filter:blur(14px);
   border-bottom:.5px solid var(--border);
-  padding:.6rem 2rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;
+  padding:.6rem 1.25rem;
+  display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;
 }
-.nav em{font-family:var(--serif);font-size:.85rem;color:var(--muted);font-style:italic;margin-right:.75rem}
+.nav em{font-family:var(--serif);font-size:.85rem;color:var(--muted);font-style:italic;margin-right:.5rem;white-space:nowrap}
 .nav a{
-  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--sec);text-decoration:none;
-  padding:.28rem .65rem;border:.5px solid var(--border);border-radius:2px;
+  padding:.32rem .7rem;border:.5px solid var(--border);border-radius:20px;
   transition:all 170ms;
 }
-.nav a:hover{color:var(--acc);border-color:var(--acc)}
+.nav a:hover,.nav a:active{color:var(--acc);border-color:var(--acc);background:rgba(193,104,71,.05)}
 
-.block{padding:5rem 2rem 0;max-width:1180px;margin:0 auto;scroll-margin-top:3.5rem}
-.tag{
-  display:flex;align-items:flex-end;gap:1rem;margin-bottom:2.5rem;
-  border-left:2px solid var(--acc);padding-left:1.25rem;
-}
-.tag-n{font-family:var(--serif);font-size:4.5rem;font-weight:300;line-height:.85;color:var(--acc);opacity:.2}
-.tag-info{display:flex;flex-direction:column;gap:.2rem}
-.tag-title{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:var(--dark)}
-.tag-sub{font-size:.75rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
-
-.sep{border:none;border-top:.5px solid var(--border);max-width:1180px;margin:0 auto}
-.g3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
-.g2{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:1.25rem}
+/* ─── BLOCS ─── */
+.block{padding:4rem 1.25rem 0;max-width:700px;margin:0 auto;scroll-margin-top:3.5rem}
+.tag{margin-bottom:2rem;padding-bottom:1rem;border-bottom:.5px solid var(--border)}
+.tag-n{font-family:var(--serif);font-size:.75rem;color:var(--acc);letter-spacing:.1em}
+.tag-title{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--dark);margin:.2rem 0 .25rem}
+.tag-sub{font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+.sep{border:none;border-top:.5px solid var(--border);max-width:700px;margin:0 auto}
+.col{display:flex;flex-direction:column;gap:1rem}
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
 
 
 /* ══════════════════════════════════════════
-   01 — LA FLAMME
-   Feu qui monte dans le fond, asymétrie forte
+   A — TICKET DE SPECTACLE
+   Billet avec souche, tirets de découpe
 ══════════════════════════════════════════ */
-.f1{
-  position:relative;overflow:hidden;border-radius:16px;
-  background:#120a06;
-  padding:0;text-decoration:none;display:block;
-  aspect-ratio:3/4;
-  transition:transform 500ms var(--soft);
+.ta{
+  display:flex;align-items:stretch;
+  background:var(--ivory);
+  border-radius:10px;border:.5px solid var(--border);
+  overflow:hidden;text-decoration:none;
+  transition:transform 300ms var(--soft),box-shadow 300ms var(--soft);
+  -webkit-tap-highlight-color:transparent;
 }
-.f1:hover{transform:scale(1.02)}
-.f1-fire{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 80% 60% at 30% 110%,rgba(193,104,71,.9) 0%,rgba(168,136,42,.4) 35%,transparent 65%),
-    radial-gradient(ellipse 50% 40% at 70% 120%,rgba(193,104,71,.5) 0%,transparent 55%);
-  animation:fire 3s ease-in-out infinite alternate;
-  transform-origin:bottom center;
-}
-@keyframes fire{
-  0%{transform:scaleX(1) skewX(0deg);opacity:.8}
-  33%{transform:scaleX(1.05) skewX(-2deg);opacity:1}
-  66%{transform:scaleX(.97) skewX(1.5deg);opacity:.85}
-  100%{transform:scaleX(1.03) skewX(-1deg);opacity:.9}
-}
-.f1:hover .f1-fire{animation-duration:1.2s}
-.f1-num{
-  position:absolute;top:1.25rem;right:1.25rem;
-  font-family:var(--serif);font-size:5rem;font-weight:300;line-height:1;
-  color:rgba(255,255,255,.06);user-select:none;
-}
-.f1-body{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:2rem 1.75rem 1.75rem;
-  background:linear-gradient(to top,rgba(12,7,4,.95) 0%,rgba(12,7,4,.6) 60%,transparent 100%);
-  display:flex;flex-direction:column;gap:.5rem;
-}
-.f1-eye{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(193,104,71,.7)}
-.f1 h3{font-family:var(--serif);font-size:1.5rem;font-weight:300;font-style:italic;color:#fff;line-height:1.1}
-.f1 p{font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.6}
+.ta:active{transform:scale(.98);box-shadow:0 2px 12px rgba(28,20,16,.08)}
+.ta:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(28,20,16,.1)}
 
-
-/* ══════════════════════════════════════════
-   02 — COUTURE OBLIQUE
-   Diagonale décalée, deux univers dans une carte
-══════════════════════════════════════════ */
-.f2{
-  position:relative;overflow:hidden;border-radius:12px;
-  background:var(--ivory);border:.5px solid var(--border);
-  min-height:220px;text-decoration:none;display:flex;
-  transition:box-shadow 400ms var(--soft),transform 400ms var(--soft);
-}
-.f2:hover{box-shadow:0 20px 60px rgba(28,20,16,.12);transform:translateY(-5px)}
-.f2-dark{
-  position:absolute;
-  top:0;right:0;bottom:0;
-  width:42%;
-  background:var(--dark);
-  clip-path:polygon(25% 0%,100% 0%,100% 100%,0% 100%);
-  transition:width 450ms var(--soft),clip-path 450ms var(--soft);
-}
-.f2:hover .f2-dark{width:48%;clip-path:polygon(20% 0%,100% 0%,100% 100%,0% 100%)}
-.f2-body{position:relative;z-index:1;padding:1.75rem;display:flex;flex-direction:column;gap:.625rem;flex:1;max-width:68%}
-.f2-n{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.f2 h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--dark);line-height:1.2}
-.f2 p{font-size:.8rem;color:var(--sec);line-height:1.6}
-.f2-badge{
-  position:absolute;z-index:2;
-  top:50%;right:calc(42% - 22px);
-  transform:translateY(-50%);
-  width:44px;height:44px;border-radius:50%;
+.ta-stub{
+  width:64px;flex-shrink:0;
   background:var(--acc);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;
+  padding:.75rem .4rem;
+  position:relative;
+}
+.ta-stub::after{
+  content:'';position:absolute;
+  top:0;right:-1px;bottom:0;
+  border-right:2px dashed rgba(255,255,255,.25);
+}
+.ta-stub-num{
+  font-family:var(--serif);font-size:1.5rem;font-weight:600;color:rgba(255,255,255,.9);line-height:1;
+}
+.ta-stub-rot{
+  font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+  writing-mode:vertical-rl;transform:rotate(180deg);
+}
+.ta-hole{
+  position:absolute;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--bg);
+  border:.5px solid rgba(255,255,255,.15);
+}
+.ta-hole-t{top:-8px;right:-8px}
+.ta-hole-b{bottom:-8px;right:-8px}
+
+.ta-body{flex:1;padding:1.25rem 1.25rem 1.25rem 1.5rem;display:flex;flex-direction:column;gap:.45rem}
+.ta-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.ta h3{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--dark);line-height:1.15}
+.ta p{font-size:.78rem;color:var(--sec);line-height:1.55}
+.ta-row{display:flex;align-items:center;gap:.625rem;margin-top:.25rem}
+.ta-tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;background:rgba(193,104,71,.1);color:var(--acc);border-radius:2px}
+
+
+/* ══════════════════════════════════════════
+   B — STORY / PLEIN ÉCRAN VERTICAL
+   Format 9:16, gradient vivant, text en bas
+══════════════════════════════════════════ */
+.tb-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.625rem;
+}
+.tb{
+  position:relative;overflow:hidden;
+  border-radius:14px;
+  aspect-ratio:9/16;
+  text-decoration:none;display:block;
+  transition:transform 300ms var(--soft);
+}
+.tb:active{transform:scale(.97)}
+.tb:hover{transform:scale(1.02)}
+
+.tb:nth-child(1) .tb-bg{background:linear-gradient(160deg,#2d1510 0%,#C16847 60%,#A8882A 100%)}
+.tb:nth-child(2) .tb-bg{background:linear-gradient(160deg,#0e1a10 0%,#2d4a2a 50%,#1a3020 100%)}
+.tb:nth-child(3) .tb-bg{background:linear-gradient(160deg,#0a0a18 0%,#1a1535 55%,#C16847 100%)}
+.tb:nth-child(4) .tb-bg{background:linear-gradient(160deg,#1a0e08 0%,#3d2010 55%,#C16847 100%)}
+.tb:nth-child(5) .tb-bg{background:linear-gradient(160deg,#0d1218 0%,#1c2840 55%,#A8882A 100%)}
+.tb:nth-child(6) .tb-bg{background:linear-gradient(160deg,#180810 0%,#3a1525 55%,#C16847 100%)}
+
+.tb-bg{position:absolute;inset:0}
+.tb-glow{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 50% at 50% 100%,rgba(0,0,0,.7) 0%,transparent 70%);
+}
+.tb-body{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:1rem .875rem;
+  display:flex;flex-direction:column;gap:.3rem;
+}
+.tb-n{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.tb h3{font-family:var(--serif);font-size:1rem;font-weight:300;font-style:italic;color:#fff;line-height:1.1}
+.tb-arr{
+  margin-top:.25rem;
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,.12);border:.5px solid rgba(255,255,255,.2);
   display:flex;align-items:center;justify-content:center;
   color:#fff;
-  box-shadow:0 4px 20px rgba(193,104,71,.4);
-  transition:right 450ms var(--soft),transform 450ms var(--soft);
 }
-.f2:hover .f2-badge{right:calc(48% - 22px)}
 
 
 /* ══════════════════════════════════════════
-   03 — INITIALE MONUMENTALE
-   La première lettre déborde, très éditorial
+   C — CARTE MINIMALISTE SWISS
+   Typographie seule, grille stricte, espace
 ══════════════════════════════════════════ */
-.f3-wrap{display:flex;flex-direction:column;gap:0}
-.f3{
-  position:relative;
-  padding:1.75rem 1.75rem 1.75rem 5.5rem;
-  border-bottom:.5px solid var(--border);
-  text-decoration:none;display:block;
-  overflow:visible;
-  transition:background 300ms;
-}
-.f3:hover{background:rgba(193,104,71,.03)}
-.f3-init{
-  position:absolute;
-  left:-.25rem;top:50%;transform:translateY(-50%);
-  font-family:var(--serif);font-size:6.5rem;font-weight:600;
-  color:var(--border);line-height:1;
-  pointer-events:none;user-select:none;
-  transition:color 350ms,transform 350ms var(--soft);
-}
-.f3:hover .f3-init{color:rgba(193,104,71,.12);transform:translateY(-50%) scale(1.08)}
-.f3-n{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);margin-bottom:.35rem}
-.f3 h3{font-family:var(--serif);font-size:1.5rem;font-weight:300;font-style:italic;color:var(--dark);line-height:1.1;margin-bottom:.5rem}
-.f3 p{font-size:.82rem;color:var(--sec);line-height:1.6;max-width:55ch}
-.f3-arr{
-  position:absolute;right:1.75rem;top:50%;transform:translateY(-50%);
-  width:36px;height:36px;border-radius:50%;border:.5px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--muted);
-  transition:all 300ms var(--soft);opacity:0;
-}
-.f3:hover .f3-arr{opacity:1;background:var(--acc);border-color:var(--acc);color:#fff;transform:translateY(-50%) rotate(-45deg)}
-
-
-/* ══════════════════════════════════════════
-   04 — INVITATION DORÉE
-   Style carton d'invitation haut de gamme
-══════════════════════════════════════════ */
-.f4{
-  background:var(--ivory);
-  border:1px solid rgba(168,136,42,.25);
-  border-radius:4px;
-  padding:2.5rem 2rem;
-  text-decoration:none;
-  display:flex;flex-direction:column;
-  align-items:flex-start;
-  gap:.875rem;
-  position:relative;overflow:hidden;
-  transition:box-shadow 400ms var(--soft),transform 400ms var(--soft);
-}
-.f4::before,.f4::after{
-  content:'';position:absolute;
-  width:40px;height:40px;
-}
-.f4::before{top:12px;left:12px;border-top:1px solid rgba(168,136,42,.4);border-left:1px solid rgba(168,136,42,.4)}
-.f4::after{bottom:12px;right:12px;border-bottom:1px solid rgba(168,136,42,.4);border-right:1px solid rgba(168,136,42,.4)}
-.f4-shimmer{
-  position:absolute;inset:0;
-  background:linear-gradient(105deg,transparent 40%,rgba(168,136,42,.08) 50%,transparent 60%);
-  transform:translateX(-100%);
-  transition:transform 600ms var(--soft);
-}
-.f4:hover .f4-shimmer{transform:translateX(100%)}
-.f4:hover{box-shadow:0 16px 48px rgba(168,136,42,.12);transform:translateY(-4px)}
-.f4-orn{width:24px;height:1px;background:linear-gradient(to right,var(--gold),rgba(168,136,42,.3))}
-.f4-eye{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-.f4 h3{font-family:var(--serif);font-size:1.35rem;font-weight:400;font-style:italic;color:var(--dark);line-height:1.2}
-.f4 p{font-size:.8rem;color:var(--sec);line-height:1.7;font-style:italic}
-.f4-cta{
-  margin-top:.25rem;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);display:flex;align-items:center;gap:.5rem;
-  transition:gap 250ms;
-}
-.f4:hover .f4-cta{gap:.8rem}
-
-
-/* ══════════════════════════════════════════
-   05 — SCÈNE & RIDEAU
-   Rideau qui se lève, révèle le fond sombre
-══════════════════════════════════════════ */
-.f5{
-  position:relative;overflow:hidden;border-radius:10px;
-  background:var(--dark);
-  min-height:240px;text-decoration:none;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  transition:transform 400ms var(--soft);
-}
-.f5:hover{transform:translateY(-5px)}
-.f5-curtain{
-  position:absolute;inset:0;
+.tc{
   background:var(--card);
-  transform-origin:top center;
-  transition:transform 600ms var(--soft);
-  border-radius:10px;
-}
-.f5:hover .f5-curtain{transform:scaleY(0)}
-.f5-front{
-  position:absolute;inset:0;padding:1.75rem;
-  display:flex;flex-direction:column;justify-content:flex-end;gap:.5rem;
-  z-index:1;
-}
-.f5-n{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
-.f5 h3{font-family:var(--serif);font-size:1.4rem;font-weight:300;font-style:italic;color:#fff;line-height:1.1}
-.f5 p{font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.6}
-.f5-curtain-text{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
-  padding:1.75rem;gap:.5rem;
-  transition:opacity 200ms;
-}
-.f5:hover .f5-curtain-text{opacity:0}
-.f5-ct-n{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc)}
-.f5-ct h3{font-family:var(--serif);font-size:1.35rem;font-weight:400;color:var(--dark);line-height:1.2}
-.f5-ct p{font-size:.8rem;color:var(--sec);line-height:1.6}
-
-
-/* ══════════════════════════════════════════
-   06 — NÉGATIF PHOTOGRAPHIQUE
-   La carte s'inverse comme un négatif photo
-══════════════════════════════════════════ */
-.f6{
-  background:var(--dark);border-radius:8px;
-  padding:2rem 1.75rem;text-decoration:none;
-  display:flex;flex-direction:column;gap:.75rem;
-  position:relative;overflow:hidden;
-  transition:transform 400ms var(--soft);
-}
-.f6::before{
-  content:'';position:absolute;inset:0;
-  background:var(--ivory);
-  opacity:0;
-  transition:opacity 400ms;
-  z-index:0;
-}
-.f6:hover::before{opacity:1}
-.f6:hover{transform:scale(1.02)}
-.f6>*{position:relative;z-index:1;transition:color 400ms}
-.f6-n{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
-.f6:hover .f6-n{color:var(--muted)}
-.f6 h3{font-family:var(--serif);font-size:1.4rem;font-weight:300;font-style:italic;color:#fff;line-height:1.15}
-.f6:hover h3{color:var(--dark)}
-.f6 p{font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.65;flex:1}
-.f6:hover p{color:var(--sec)}
-.f6-line{height:1px;background:rgba(255,255,255,.15);transition:background 400ms}
-.f6:hover .f6-line{background:var(--border)}
-.f6-link{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
-
-
-/* ══════════════════════════════════════════
-   07 — PLAN CINÉMATOGRAPHIQUE
-   Pellicule, scan-line, feeling cinéma arménien
-══════════════════════════════════════════ */
-.f7{
-  background:#0a0604;
-  border-radius:0;padding:0;text-decoration:none;
-  display:flex;overflow:hidden;
+  border-radius:0;
+  border-left:3px solid transparent;
+  padding:1.5rem 1.5rem 1.5rem 1.75rem;
+  text-decoration:none;display:grid;
+  grid-template-columns:auto 1fr;
+  grid-template-rows:auto auto;
+  gap:.25rem 1.25rem;
+  align-items:start;
+  transition:border-left-color 250ms,background 250ms;
   position:relative;
-  transition:transform 400ms var(--soft);
 }
-.f7:hover{transform:scale(1.015)}
-.f7-film{
-  width:28px;flex-shrink:0;
-  background:repeating-linear-gradient(
-    to bottom,
-    #111 0px,#111 8px,
-    transparent 8px,transparent 12px
-  );
-  border-right:1px solid rgba(255,255,255,.06);
-}
-.f7-scan{
-  position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 0%,rgba(255,255,255,.04) 50%,transparent 100%);
-  height:30%;width:100%;
-  animation:scan 4s linear infinite;
-  pointer-events:none;
-}
-@keyframes scan{0%{top:-30%}100%{top:130%}}
-.f7-body{flex:1;padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:.625rem}
-.f7-meta{font-family:monospace;font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.2)}
-.f7 h3{font-family:var(--serif);font-size:1.3rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.88);line-height:1.15}
-.f7 p{font-size:.75rem;color:rgba(255,255,255,.3);line-height:1.65;flex:1}
-.f7-tc{font-family:monospace;font-size:8px;color:rgba(193,104,71,.5);margin-top:.25rem}
-
-
-/* ══════════════════════════════════════════
-   08 — ARABESQUE ORNÉE
-   Inspiré de l'art décoratif arménien
-══════════════════════════════════════════ */
-.f8{
-  background:var(--ivory);
-  border-radius:12px;border:.5px solid var(--border);
-  padding:2.25rem 1.75rem 1.75rem 1.75rem;
-  text-decoration:none;display:flex;flex-direction:column;gap:.875rem;
-  position:relative;overflow:hidden;
-  transition:transform 400ms var(--soft),box-shadow 400ms var(--soft);
-}
-.f8:hover{transform:translateY(-5px);box-shadow:0 24px 60px rgba(168,136,42,.1)}
-.f8-orn{
-  position:absolute;top:0;right:0;
-  width:80px;height:80px;
-  opacity:.07;
-  transition:opacity 400ms,transform 500ms var(--soft);
-}
-.f8:hover .f8-orn{opacity:.14;transform:scale(1.1) rotate(10deg)}
-.f8-rule{
-  height:.5px;width:100%;
-  background:linear-gradient(to right,var(--gold),var(--acc),transparent);
-  margin-bottom:.25rem;
-}
-.f8-n{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
-.f8 h3{font-family:var(--serif);font-size:1.35rem;font-weight:400;font-style:italic;color:var(--dark);line-height:1.2}
-.f8 p{font-size:.82rem;color:var(--sec);line-height:1.68}
-.f8-footer{display:flex;align-items:center;gap:.75rem;margin-top:.25rem}
-.f8-dot{width:4px;height:4px;border-radius:50%;background:var(--gold)}
-.f8-link{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);transition:letter-spacing 250ms}
-.f8:hover .f8-link{letter-spacing:.22em}
-
-
-/* ══════════════════════════════════════════
-   09 — OMBRE DRAMATIQUE
-   La carte est poussée dans la page, ombre massive
-══════════════════════════════════════════ */
-.f9{
-  background:#fff;border-radius:6px;
-  border:.5px solid var(--border);
-  padding:2rem 1.75rem;
-  text-decoration:none;display:flex;flex-direction:column;gap:.75rem;
-  position:relative;
-  box-shadow:
-    3px 3px 0 rgba(193,104,71,.1),
-    6px 6px 0 rgba(193,104,71,.06),
-    9px 9px 0 rgba(193,104,71,.03);
-  transition:transform 400ms var(--soft),box-shadow 400ms var(--soft);
-}
-.f9:hover{
-  transform:translate(-5px,-5px);
-  box-shadow:
-    8px 8px 0 rgba(193,104,71,.18),
-    16px 16px 0 rgba(193,104,71,.1),
-    24px 24px 0 rgba(193,104,71,.05);
-}
-.f9-n{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc)}
-.f9 h3{font-family:var(--serif);font-size:1.35rem;font-weight:400;color:var(--dark);line-height:1.2}
-.f9 p{font-size:.82rem;color:var(--sec);line-height:1.65;flex:1}
-.f9-bar{
-  height:2px;width:32px;
-  background:var(--acc);
-  transition:width 400ms var(--soft);
-}
-.f9:hover .f9-bar{width:100%}
-
-
-/* ══════════════════════════════════════════
-   10 — TEXTE QUI RESPIRE
-   Layout presque sans cadre, typo seule, espace négatif
-══════════════════════════════════════════ */
-.f10-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  grid-template-rows:auto;
-  gap:0;
-}
-.f10{
-  padding:2.5rem 2rem;
-  border:.25px solid var(--border);
-  text-decoration:none;display:flex;flex-direction:column;gap:.625rem;
-  position:relative;overflow:hidden;
-  transition:background 300ms;
-}
-.f10:nth-child(1){grid-column:1/3;border-bottom:none}
-.f10:nth-child(2){grid-column:3;background:var(--dark)}
-.f10:nth-child(3){grid-column:1}
-.f10:nth-child(4){grid-column:2/4;background:var(--acc)}
-.f10:nth-child(5){grid-column:1/2}
-.f10:nth-child(6){grid-column:2/4}
-.f10::after{
+.tc::after{
   content:'';position:absolute;
-  inset:0;background:rgba(193,104,71,.04);
-  opacity:0;transition:opacity 250ms;
+  bottom:0;left:0;right:0;height:.5px;
+  background:var(--border);
 }
-.f10:nth-child(2)::after,.f10:nth-child(4)::after{background:rgba(255,255,255,.06)}
-.f10:hover::after{opacity:1}
-.f10-n{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--acc);position:relative;z-index:1}
-.f10:nth-child(2) .f10-n{color:rgba(255,255,255,.3)}
-.f10:nth-child(4) .f10-n{color:rgba(255,255,255,.5)}
-.f10 h3{font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.5rem);font-weight:400;font-style:italic;color:var(--dark);line-height:1.15;position:relative;z-index:1}
-.f10:nth-child(2) h3,.f10:nth-child(4) h3{color:#fff}
-.f10 p{font-size:.78rem;color:var(--sec);line-height:1.65;position:relative;z-index:1}
-.f10:nth-child(2) p{color:rgba(255,255,255,.4)}
-.f10:nth-child(4) p{color:rgba(255,255,255,.65)}
+.tc:active,.tc:hover{
+  border-left-color:var(--acc);
+  background:rgba(193,104,71,.04);
+}
+.tc-n{
+  font-family:var(--serif);font-size:2.5rem;font-weight:300;
+  color:var(--border);line-height:1;
+  grid-row:1/3;align-self:center;
+  transition:color 250ms;
+  user-select:none;
+}
+.tc:hover .tc-n,.tc:active .tc-n{color:rgba(193,104,71,.2)}
+.tc h3{font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--dark);line-height:1.2;align-self:end}
+.tc p{font-size:.78rem;color:var(--sec);line-height:1.55;align-self:start}
+.tc-arrow{
+  position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);
+  color:var(--border);transition:color 250ms,transform 250ms;
+}
+.tc:hover .tc-arrow,.tc:active .tc-arrow{color:var(--acc);transform:translateY(-50%) translateX(3px)}
 
-@media(max-width:700px){
-  .f10-grid{grid-template-columns:1fr}
-  .f10:nth-child(n){grid-column:1}
-  .f3{padding-left:4.5rem}
-  .f3-init{font-size:4.5rem}
+
+/* ══════════════════════════════════════════
+   D — CARTE ACCORDÉON
+   Se déplie sur tap, contenu caché au départ
+   (utilise :focus-within pour mobile)
+══════════════════════════════════════════ */
+.td{
+  background:var(--dark);border-radius:12px;
+  overflow:hidden;
+  text-decoration:none;display:block;
+  position:relative;
+}
+.td-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.25rem 1.5rem;gap:1rem;
+  cursor:pointer;
+}
+.td-left{display:flex;align-items:center;gap:1rem}
+.td-num{
+  font-family:var(--serif);font-size:1.75rem;font-weight:300;
+  color:var(--acc);line-height:1;flex-shrink:0;
+}
+.td h3{font-family:var(--serif);font-size:1.1rem;font-weight:300;font-style:italic;color:#fff;line-height:1.2}
+.td-plus{
+  width:32px;height:32px;border-radius:50%;
+  border:.5px solid rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  color:rgba(255,255,255,.5);
+  font-size:1.1rem;line-height:1;
+  transition:transform 350ms var(--soft),background 300ms,color 300ms;
+}
+.td-body{
+  max-height:0;overflow:hidden;
+  transition:max-height 400ms var(--soft);
+  padding:0 1.5rem;
+}
+.td p{font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.65;padding-bottom:1.25rem}
+.td-tag{
+  display:inline-block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--acc);border:.5px solid rgba(193,104,71,.4);
+  padding:.2rem .55rem;border-radius:2px;margin-bottom:.875rem;
+}
+/* ouverture au hover sur desktop, :active sur mobile */
+.td:hover .td-body,
+.td:focus-within .td-body,
+.td.open .td-body{max-height:200px}
+.td:hover .td-plus,
+.td:focus-within .td-plus,
+.td.open .td-plus{transform:rotate(45deg);background:var(--acc);border-color:var(--acc);color:#fff}
+.td:active .td-body{max-height:200px}
+.td:active .td-plus{transform:rotate(45deg);background:var(--acc);border-color:var(--acc);color:#fff}
+.td-line{height:.5px;background:rgba(255,255,255,.06);margin:0 1.5rem}
+
+
+/* ══════════════════════════════════════════
+   E — TUILE MAGAZINE MOSAÏQUE
+   Grille brisée, 3 tailles différentes
+   Chaque tuile a sa couleur et sa typo
+══════════════════════════════════════════ */
+.te-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto;
+  gap:.625rem;
+}
+.te{
+  border-radius:12px;overflow:hidden;
+  text-decoration:none;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:1.25rem;
+  min-height:140px;
+  position:relative;
+  transition:transform 300ms var(--soft);
+}
+.te:active{transform:scale(.97)}
+.te:hover{transform:scale(1.02)}
+
+/* tailles */
+.te:nth-child(1){grid-column:1/3;min-height:180px}
+.te:nth-child(4){grid-column:1/3;min-height:160px}
+
+/* couleurs */
+.te:nth-child(1){background:var(--dark)}
+.te:nth-child(2){background:#2a1a0e}
+.te:nth-child(3){background:var(--acc)}
+.te:nth-child(4){background:#f0e8da;border:.5px solid var(--border)}
+.te:nth-child(5){background:#1a1020}
+.te:nth-child(6){background:var(--gold)}
+
+.te-n{
+  font-family:var(--serif);font-size:.7rem;letter-spacing:.14em;
+  margin-bottom:.35rem;opacity:.5;
+}
+.te:nth-child(4) .te-n{color:var(--sec)}
+.te:not(:nth-child(4)) .te-n{color:#fff}
+
+.te h3{
+  font-family:var(--serif);font-size:clamp(.95rem,2.5vw,1.25rem);
+  font-weight:400;line-height:1.15;
+}
+.te:nth-child(4) h3{color:var(--dark);font-style:italic}
+.te:not(:nth-child(4)) h3{color:#fff;font-weight:300;font-style:italic}
+
+.te p{
+  font-size:.72rem;line-height:1.5;margin-top:.3rem;
+}
+.te:nth-child(4) p{color:var(--sec)}
+.te:not(:nth-child(4)) p{color:rgba(255,255,255,.5)}
+
+/* ornement coin */
+.te::before{
+  content:'';position:absolute;top:.875rem;right:.875rem;
+  width:8px;height:8px;border-radius:50%;
+  transition:transform 300ms;
+}
+.te:nth-child(1)::before{background:var(--acc)}
+.te:nth-child(2)::before{background:var(--gold)}
+.te:nth-child(3)::before{background:rgba(255,255,255,.5)}
+.te:nth-child(4)::before{background:var(--gold)}
+.te:nth-child(5)::before{background:var(--acc)}
+.te:nth-child(6)::before{background:rgba(255,255,255,.5)}
+.te:hover::before,.te:active::before{transform:scale(1.6)}
+
+@media(min-width:640px){
+  .block{padding:4rem 2rem 0}
+  .tb-grid{grid-template-columns:repeat(6,1fr)}
+  .tc-n{font-size:3rem}
+  .te:nth-child(1){min-height:220px}
 }
 </style>
 </head>
@@ -445,113 +338,65 @@ body{font-family:var(--sans);background:var(--bg);color:var(--dark);padding-bott
 
 <nav class="nav">
   <em>Rozi Dance</em>
-  <a href="#s01">01</a><a href="#s02">02</a><a href="#s03">03</a>
-  <a href="#s04">04</a><a href="#s05">05</a><a href="#s06">06</a>
-  <a href="#s07">07</a><a href="#s08">08</a><a href="#s09">09</a>
-  <a href="#s10">10</a>
+  <a href="#sa">A</a>
+  <a href="#sb">B</a>
+  <a href="#sc">C</a>
+  <a href="#sd">D</a>
+  <a href="#se">E</a>
 </nav>
 
 
-<!-- 01 ─ FLAMME -->
-<div class="block" id="s01">
-  <div class="tag"><span class="tag-n">01</span><div class="tag-info"><div class="tag-title">La flamme — feu animé en fond</div><div class="tag-sub">Gradient qui brûle, title en bas à gauche</div></div></div>
-  <div class="g3">
+<!-- A — TICKET -->
+<div class="block" id="sa">
+  <div class="tag">
+    <div class="tag-n">Design A</div>
+    <div class="tag-title">Ticket de spectacle</div>
+    <div class="tag-sub">Souche colorée · tirets de découpe · format billet</div>
+  </div>
+  <div class="col">
     {cards.map((c,i)=>(
-      <a href="#" class="f1">
-        <div class="f1-fire"></div>
-        <span class="f1-num">{String(i+1).padStart(2,'0')}</span>
-        <div class="f1-body">
-          <span class="f1-eye">Rozi Dance</span>
+      <a href="#" class="ta">
+        <div class="ta-stub">
+          <div class="ta-hole ta-hole-t"></div>
+          <div class="ta-hole ta-hole-b"></div>
+          <span class="ta-stub-num">{String(i+1).padStart(2,'0')}</span>
+          <span class="ta-stub-rot">Rozi Dance</span>
+        </div>
+        <div class="ta-body">
+          <span class="ta-label">Cours — Belgique</span>
           <h3>{c.title}</h3>
           <p>{c.desc}</p>
-        </div>
-      </a>
-    ))}
-  </div>
-</div>
-<hr class="sep"/>
-
-<!-- 02 ─ COUTURE OBLIQUE -->
-<div class="block" id="s02">
-  <div class="tag"><span class="tag-n">02</span><div class="tag-info"><div class="tag-title">Couture oblique — deux univers</div><div class="tag-sub">Diagonale décalée, badge cercle à la jonction</div></div></div>
-  <div class="g3">
-    {cards.map((c,i)=>(
-      <a href="#" class="f2">
-        <div class="f2-dark"></div>
-        <div class="f2-body">
-          <span class="f2-n">{String(i+1).padStart(2,'0')}</span>
-          <h3>{c.title}</h3>
-          <p>{c.desc}</p>
-        </div>
-        <div class="f2-badge">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </a>
-    ))}
-  </div>
-</div>
-<hr class="sep"/>
-
-<!-- 03 ─ INITIALE MONUMENTALE -->
-<div class="block" id="s03">
-  <div class="tag"><span class="tag-n">03</span><div class="tag-info"><div class="tag-title">Initiale monumentale</div><div class="tag-sub">La lettre déborde, bouton cercle au hover</div></div></div>
-  <div class="f3-wrap">
-    {cards.map((c,i)=>(
-      <a href="#" class="f3">
-        <span class="f3-init">{c.init}</span>
-        <span class="f3-n">{String(i+1).padStart(2,'0')} — Cours</span>
-        <h3>{c.title}</h3>
-        <p>{c.desc}</p>
-        <div class="f3-arr">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </a>
-    ))}
-  </div>
-</div>
-<hr class="sep"/>
-
-<!-- 04 ─ INVITATION DORÉE -->
-<div class="block" id="s04">
-  <div class="tag"><span class="tag-n">04</span><div class="tag-info"><div class="tag-title">Invitation dorée — papier luxe</div><div class="tag-sub">Shimmer au hover, coins dorés, style mariage</div></div></div>
-  <div class="g3">
-    {cards.map((c,i)=>(
-      <a href="#" class="f4">
-        <div class="f4-shimmer"></div>
-        <div class="f4-orn"></div>
-        <span class="f4-eye">Rozi Dance — {String(i+1).padStart(2,'0')}</span>
-        <h3>{c.title}</h3>
-        <p>{c.desc}</p>
-        <span class="f4-cta">Découvrir →</span>
-      </a>
-    ))}
-  </div>
-</div>
-<hr class="sep"/>
-
-<!-- 05 ─ RIDEAU DE SCÈNE -->
-<div class="block" id="s05">
-  <div class="tag"><span class="tag-n">05</span><div class="tag-info"><div class="tag-title">Rideau de scène — théâtre</div><div class="tag-sub">Le rideau se lève, révèle le fond sombre</div></div></div>
-  <div class="g3">
-    {cards.map((c,i)=>(
-      <a href="#" class="f5">
-        <div class="f5-curtain">
-          <div class="f5-curtain-text">
-            <span class="f5-ct-n">{String(i+1).padStart(2,'0')}</span>
-            <div class="f5-ct">
-              <h3>{c.title}</h3>
-              <p style="font-size:.8rem;color:var(--sec);line-height:1.6;margin-top:.4rem">{c.desc}</p>
-            </div>
+          <div class="ta-row">
+            <span class="ta-tag">Réserver</span>
           </div>
         </div>
-        <div class="f5-front">
-          <span class="f5-n">{String(i+1).padStart(2,'0')}</span>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="sep"/>
+
+
+<!-- B — STORY -->
+<div class="block" id="sb">
+  <div class="tag">
+    <div class="tag-n">Design B</div>
+    <div class="tag-title">Format story vertical</div>
+    <div class="tag-sub">9:16 · gradient vivant · natif mobile</div>
+  </div>
+  <div class="tb-grid">
+    {cards.map((c,i)=>(
+      <a href="#" class="tb">
+        <div class="tb-bg"></div>
+        <div class="tb-glow"></div>
+        <div class="tb-body">
+          <span class="tb-n">0{i+1}</span>
           <h3>{c.title}</h3>
-          <p>{c.desc}</p>
+          <div class="tb-arr">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
         </div>
       </a>
     ))}
@@ -559,92 +404,70 @@ body{font-family:var(--sans);background:var(--bg);color:var(--dark);padding-bott
 </div>
 <hr class="sep"/>
 
-<!-- 06 ─ NÉGATIF PHOTO -->
-<div class="block" id="s06">
-  <div class="tag"><span class="tag-n">06</span><div class="tag-info"><div class="tag-title">Négatif photographique</div><div class="tag-sub">Fond sombre → ivoire au hover, tout s'inverse</div></div></div>
-  <div class="g3">
+
+<!-- C — SWISS -->
+<div class="block" id="sc">
+  <div class="tag">
+    <div class="tag-n">Design C</div>
+    <div class="tag-title">Typographie Swiss minimaliste</div>
+    <div class="tag-sub">Grand numéro · liste épurée · bordure gauche au tap</div>
+  </div>
+  <div style="border-top:.5px solid var(--border)">
     {cards.map((c,i)=>(
-      <a href="#" class="f6">
-        <span class="f6-n">{String(i+1).padStart(2,'0')} — Cours</span>
+      <a href="#" class="tc">
+        <span class="tc-n">{String(i+1).padStart(2,'0')}</span>
         <h3>{c.title}</h3>
         <p>{c.desc}</p>
-        <div class="f6-line"></div>
-        <span class="f6-link">Voir →</span>
-      </a>
-    ))}
-  </div>
-</div>
-<hr class="sep"/>
-
-<!-- 07 ─ PELLICULE -->
-<div class="block" id="s07">
-  <div class="tag"><span class="tag-n">07</span><div class="tag-info"><div class="tag-title">Pellicule cinématographique</div><div class="tag-sub">Scan-line animé, bande perforée, timecode</div></div></div>
-  <div class="g2">
-    {cards.map((c,i)=>(
-      <a href="#" class="f7">
-        <div class="f7-film"></div>
-        <div class="f7-scan"></div>
-        <div class="f7-body">
-          <div class="f7-meta">RZD — {String(i+1).padStart(3,'0')} — COURS</div>
-          <h3>{c.title}</h3>
-          <p>{c.desc}</p>
-          <div class="f7-tc">TC 00:{String(i*12).padStart(2,'0')}:00:00</div>
-        </div>
-      </a>
-    ))}
-  </div>
-</div>
-<hr class="sep"/>
-
-<!-- 08 ─ ARABESQUE -->
-<div class="block" id="s08">
-  <div class="tag"><span class="tag-n">08</span><div class="tag-info"><div class="tag-title">Arabesque ornée — art arménien</div><div class="tag-sub">Motif géométrique, filet doré, shimmer discret</div></div></div>
-  <div class="g3">
-    {cards.map((c,i)=>(
-      <a href="#" class="f8">
-        <svg class="f8-orn" viewBox="0 0 80 80" fill="none">
-          <circle cx="40" cy="40" r="35" stroke="#A8882A" stroke-width=".5"/>
-          <circle cx="40" cy="40" r="25" stroke="#A8882A" stroke-width=".5"/>
-          <path d="M40 5 L75 40 L40 75 L5 40 Z" stroke="#A8882A" stroke-width=".5"/>
-          <path d="M40 15 L65 40 L40 65 L15 40 Z" stroke="#A8882A" stroke-width=".3"/>
+        <svg class="tc-arrow" width="16" height="16" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <div class="f8-rule"></div>
-        <span class="f8-n">{String(i+1).padStart(2,'0')} — Rozi Dance</span>
-        <h3>{c.title}</h3>
-        <p>{c.desc}</p>
-        <div class="f8-footer">
-          <div class="f8-dot"></div>
-          <span class="f8-link">En savoir plus</span>
+      </a>
+    ))}
+  </div>
+</div>
+<hr class="sep"/>
+
+
+<!-- D — ACCORDÉON -->
+<div class="block" id="sd">
+  <div class="tag">
+    <div class="tag-n">Design D</div>
+    <div class="tag-title">Accordéon dépliable</div>
+    <div class="tag-sub">Fond sombre · description cachée · se déploie au tap</div>
+  </div>
+  <div class="col">
+    {cards.map((c,i)=>(
+      <div class="td">
+        {i > 0 && <div class="td-line"></div>}
+        <div class="td-head">
+          <div class="td-left">
+            <span class="td-num">{String(i+1).padStart(2,'0')}</span>
+            <h3>{c.title}</h3>
+          </div>
+          <div class="td-plus">+</div>
         </div>
-      </a>
+        <div class="td-body">
+          <span class="td-tag">Cours</span>
+          <p>{c.desc}</p>
+        </div>
+      </div>
     ))}
   </div>
 </div>
 <hr class="sep"/>
 
-<!-- 09 ─ OMBRE DRAMATIQUE -->
-<div class="block" id="s09">
-  <div class="tag"><span class="tag-n">09</span><div class="tag-info"><div class="tag-title">Ombre dramatique décalée</div><div class="tag-sub">3 couches d'ombre colorée, s'amplifie au hover</div></div></div>
-  <div class="g3" style="padding:0 1rem 1rem 0">
-    {cards.map((c,i)=>(
-      <a href="#" class="f9">
-        <span class="f9-n">{String(i+1).padStart(2,'0')} — Cours</span>
-        <h3>{c.title}</h3>
-        <p>{c.desc}</p>
-        <div class="f9-bar"></div>
-      </a>
-    ))}
-  </div>
-</div>
-<hr class="sep"/>
 
-<!-- 10 ─ GRILLE ÉDITORIALE ASYMÉTRIQUE -->
-<div class="block" id="s10">
-  <div class="tag"><span class="tag-n">10</span><div class="tag-info"><div class="tag-title">Grille asymétrique — magazine</div><div class="tag-sub">Blocs de tailles variées, 3 fonds différents</div></div></div>
-  <div class="f10-grid">
+<!-- E — MOSAÏQUE -->
+<div class="block" id="se">
+  <div class="tag">
+    <div class="tag-n">Design E</div>
+    <div class="tag-title">Mosaïque magazine</div>
+    <div class="tag-sub">Grille brisée · 3 fonds · tailles variées</div>
+  </div>
+  <div class="te-grid">
     {cards.map((c,i)=>(
-      <a href="#" class="f10">
-        <span class="f10-n">{String(i+1).padStart(2,'0')}</span>
+      <a href="#" class="te">
+        <span class="te-n">0{i+1} — Rozi Dance</span>
         <h3>{c.title}</h3>
         <p>{c.desc}</p>
       </a>
