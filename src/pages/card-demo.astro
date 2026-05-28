@@ -1,0 +1,619 @@
+---
+// Page démo — 10 designs de cartes au choix
+const cards = [
+  { slug: 'chant-armenien',     title: 'Chant arménien',      description: 'Répertoire traditionnel et mélodies ancestrales transmises avec passion.' },
+  { slug: 'chant-jazz-soul-pop', title: 'Jazz · Soul · Pop',   description: 'Voix adaptée à chaque ambiance, de l\'intime au festif.' },
+  { slug: 'chant-de-mariage',   title: 'Chant de mariage',    description: 'Accompagnement vocal sur mesure pour votre plus beau jour.' },
+  { slug: 'danse-armenienne',   title: 'Danse arménienne',    description: 'Chorégraphies traditionnelles pleines de grâce et d\'énergie.' },
+  { slug: 'danse-en-groupe',    title: 'Danse en groupe',     description: 'Cours collectifs pour tous niveaux dans une ambiance chaleureuse.' },
+  { slug: 'cours-en-ligne',     title: 'Cours en ligne',      description: 'Apprenez depuis chez vous, à votre rythme, en visioconférence.' },
+];
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Démo cartes — Rozi Dance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg-primary: #FAF7F2;
+      --color-bg-card: #F4EFE6;
+      --color-bg-section: #EDE6D9;
+      --color-text-primary: #1C1410;
+      --color-text-secondary: #5C4A38;
+      --color-text-muted: #9C8470;
+      --color-accent: #C16847;
+      --color-gold: #A8882A;
+      --color-border: rgba(92,74,56,0.18);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'DM Sans', system-ui, sans-serif;
+      --radius-card: 8px;
+      --radius-btn: 2px;
+      --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    .demo-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 0.5px solid var(--color-border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: -3rem -1.5rem 3rem;
+    }
+
+    .demo-nav a {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      padding: 0.35rem 0.75rem;
+      border-radius: 2px;
+      border: 0.5px solid var(--color-border);
+      transition: all 200ms;
+    }
+    .demo-nav a:hover { color: var(--color-accent); border-color: var(--color-accent); }
+
+    .demo-section {
+      margin-bottom: 5rem;
+      scroll-margin-top: 4rem;
+    }
+
+    .demo-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .demo-label-num {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--color-accent);
+      font-weight: 300;
+    }
+    .demo-label-text { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); }
+
+    /* ─── GRILLE COMMUNE ─── */
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.25rem; }
+    .grid-1 { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    /* ════════════════════════════════════════
+       1 — ÉDITORIALE ÉPURÉE
+    ════════════════════════════════════════ */
+    .c1 {
+      background: var(--color-bg-card);
+      border: 0.5px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 2rem 1.75rem 1.5rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 350ms var(--ease-out-soft), box-shadow 350ms var(--ease-out-soft);
+    }
+    .c1::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--color-accent), var(--color-gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 350ms var(--ease-out-soft);
+    }
+    .c1:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(43,31,21,0.1); }
+    .c1:hover::before { transform: scaleX(1); }
+    .c1-num { font-family: var(--font-serif); font-size: 0.8rem; color: var(--color-text-muted); letter-spacing: 0.1em; }
+    .c1 h3 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.2; }
+    .c1 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.65; flex: 1; }
+    .c1-arrow { margin-top: 0.5rem; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+
+    /* ════════════════════════════════════════
+       2 — BORDURE GAUCHE ACCENT
+    ════════════════════════════════════════ */
+    .c2 {
+      background: var(--color-bg-card);
+      border: 0.5px solid var(--color-border);
+      border-left: 3px solid transparent;
+      border-radius: var(--radius-card);
+      padding: 1.5rem 1.75rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      transition: border-left-color 300ms, background 300ms, transform 300ms var(--ease-out-soft);
+    }
+    .c2:hover { border-left-color: var(--color-accent); background: var(--color-bg-section); transform: translateX(4px); }
+    .c2-eye { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent); }
+    .c2 h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--color-text-primary); }
+    .c2 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; }
+
+    /* ════════════════════════════════════════
+       3 — GRANDE TYPOGRAPHIE SERIF
+    ════════════════════════════════════════ */
+    .c3 {
+      padding: 2rem 0;
+      border-bottom: 0.5px solid var(--color-border);
+      text-decoration: none;
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      align-items: center;
+      gap: 1rem;
+      transition: opacity 300ms;
+      cursor: pointer;
+    }
+    .c3:first-child { border-top: 0.5px solid var(--color-border); }
+    .c3:hover .c3-title { color: var(--color-accent); }
+    .c3:hover .c3-btn { opacity: 1; transform: translateX(0); }
+    .c3-left { display: flex; flex-direction: column; gap: 0.5rem; }
+    .c3-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
+    .c3-title { font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 300; color: var(--color-text-primary); line-height: 1.1; transition: color 300ms; }
+    .c3 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; max-width: 40ch; }
+    .c3-btn {
+      justify-self: end;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 0.5px solid var(--color-accent);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 300ms, transform 300ms var(--ease-out-soft);
+    }
+
+    /* ════════════════════════════════════════
+       4 — FOND PLEIN SOMBRE
+    ════════════════════════════════════════ */
+    .c4 {
+      background: var(--color-text-primary);
+      border-radius: var(--radius-card);
+      padding: 2rem 1.75rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: background 300ms, transform 350ms var(--ease-out-soft);
+      position: relative;
+      overflow: hidden;
+    }
+    .c4::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 400ms, transform 400ms var(--ease-out-soft);
+      transform: scale(0.6);
+    }
+    .c4:hover { transform: translateY(-4px); }
+    .c4:hover::after { opacity: 0.3; transform: scale(1); }
+    .c4-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+    .c4 h3 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 400; color: #fff; line-height: 1.2; }
+    .c4 p { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.65; flex: 1; }
+    .c4-link { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin-top: 0.5rem; }
+
+    /* ════════════════════════════════════════
+       5 — VIGNETTE PHOTO PLEIN FOND
+    ════════════════════════════════════════ */
+    .c5 {
+      position: relative;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      text-decoration: none;
+      display: block;
+    }
+    .c5 img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-out-soft); }
+    .c5:hover img { transform: scale(1.06); }
+    .c5-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,20,16,0.85) 0%, rgba(28,20,16,0.1) 55%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.5rem;
+      gap: 0.4rem;
+    }
+    .c5-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .c5 h3 { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 400; color: #fff; line-height: 1.2; }
+    .c5 p { font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.5; }
+
+    /* ════════════════════════════════════════
+       6 — NUMÉRO GÉANT EN FOND
+    ════════════════════════════════════════ */
+    .c6 {
+      background: var(--color-bg-card);
+      border: 0.5px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 2rem 1.75rem 1.5rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 350ms var(--ease-out-soft), border-color 300ms;
+    }
+    .c6:hover { transform: translateY(-4px); border-color: var(--color-accent); }
+    .c6-bg-num {
+      position: absolute;
+      top: -0.5rem; right: 0.75rem;
+      font-family: var(--font-serif);
+      font-size: 7rem;
+      line-height: 1;
+      color: var(--color-border);
+      pointer-events: none;
+      user-select: none;
+      transition: color 300ms;
+    }
+    .c6:hover .c6-bg-num { color: rgba(193,104,71,0.08); }
+    .c6-tag {
+      display: inline-block;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      border: 0.5px solid currentColor;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      width: fit-content;
+    }
+    .c6 h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.2; position: relative; }
+    .c6 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; position: relative; }
+
+    /* ════════════════════════════════════════
+       7 — HORIZONTAL AVEC TIRET CENTRAL
+    ════════════════════════════════════════ */
+    .c7 {
+      background: var(--color-bg-card);
+      border: 0.5px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 1.25rem 1.5rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: transform 300ms var(--ease-out-soft), border-color 300ms, box-shadow 300ms;
+    }
+    .c7:hover { transform: translateX(6px); border-color: var(--color-accent); box-shadow: 0 4px 20px rgba(193,104,71,0.1); }
+    .c7-num {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--color-accent);
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 2.5rem;
+    }
+    .c7-divider { width: 1px; height: 40px; background: var(--color-border); flex-shrink: 0; }
+    .c7-body { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
+    .c7 h3 { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 400; color: var(--color-text-primary); }
+    .c7 p { font-size: 0.8rem; color: var(--color-text-secondary); line-height: 1.55; }
+    .c7-arrow { color: var(--color-text-muted); flex-shrink: 0; transition: color 300ms, transform 300ms; }
+    .c7:hover .c7-arrow { color: var(--color-accent); transform: translateX(3px); }
+
+    /* ════════════════════════════════════════
+       8 — COINS ACCENT ANIMÉS
+    ════════════════════════════════════════ */
+    .c8 {
+      background: transparent;
+      padding: 1.75rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+    }
+    .c8::before, .c8::after,
+    .c8 .c8-corner-br, .c8 .c8-corner-tl {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      transition: width 300ms var(--ease-out-soft), height 300ms var(--ease-out-soft);
+    }
+    .c8::before { top: 0; left: 0; border-top: 1.5px solid var(--color-accent); border-left: 1.5px solid var(--color-accent); }
+    .c8::after  { top: 0; right: 0; border-top: 1.5px solid var(--color-accent); border-right: 1.5px solid var(--color-accent); }
+    .c8 .c8-corner-br { bottom: 0; right: 0; border-bottom: 1.5px solid var(--color-accent); border-right: 1.5px solid var(--color-accent); }
+    .c8 .c8-corner-tl { bottom: 0; left: 0; border-bottom: 1.5px solid var(--color-accent); border-left: 1.5px solid var(--color-accent); }
+    .c8:hover::before, .c8:hover::after,
+    .c8:hover .c8-corner-br, .c8:hover .c8-corner-tl { width: 32px; height: 32px; }
+    .c8-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
+    .c8 h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--color-text-primary); }
+    .c8 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; }
+
+    /* ════════════════════════════════════════
+       9 — DÉGRADÉ FOND SUBTIL
+    ════════════════════════════════════════ */
+    .c9 {
+      border-radius: var(--radius-card);
+      padding: 2rem 1.75rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      border: 0.5px solid transparent;
+      transition: transform 350ms var(--ease-out-soft), border-color 300ms;
+    }
+    .c9:nth-child(1) { background: linear-gradient(135deg, #faf1e8 0%, #f5e8d8 100%); }
+    .c9:nth-child(2) { background: linear-gradient(135deg, #f0ede8 0%, #e8e0d5 100%); }
+    .c9:nth-child(3) { background: linear-gradient(135deg, #f5ede3 0%, #ede2d5 100%); }
+    .c9:nth-child(4) { background: linear-gradient(135deg, #f0ede8 0%, #e8e0d5 100%); }
+    .c9:nth-child(5) { background: linear-gradient(135deg, #faf1e8 0%, #f5e8d8 100%); }
+    .c9:nth-child(6) { background: linear-gradient(135deg, #f5ede3 0%, #ede2d5 100%); }
+    .c9:hover { transform: translateY(-3px); border-color: var(--color-accent); }
+    .c9-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); }
+    .c9 h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--color-text-primary); }
+    .c9 p { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; flex: 1; }
+    .c9-link { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+
+    /* ════════════════════════════════════════
+       10 — BENTO GRID MAGAZINE
+    ════════════════════════════════════════ */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 1rem;
+    }
+    .c10 {
+      background: var(--color-bg-card);
+      border: 0.5px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 1.75rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      transition: transform 350ms var(--ease-out-soft), border-color 300ms;
+    }
+    .c10:hover { transform: translateY(-3px); border-color: var(--color-accent); }
+    .c10.large { grid-column: span 2; background: var(--color-text-primary); }
+    .c10.tall { grid-row: span 2; background: var(--color-bg-section); }
+    .c10-num { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
+    .c10.large .c10-num { color: rgba(255,255,255,0.35); }
+    .c10 h3 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.2; }
+    .c10.large h3 { font-size: 1.75rem; color: #fff; }
+    .c10 p { font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.6; flex: 1; }
+    .c10.large p { color: rgba(255,255,255,0.55); }
+    .c10-link { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin-top: auto; }
+
+    @media (max-width: 640px) {
+      .bento { grid-template-columns: 1fr 1fr; }
+      .c10.large { grid-column: span 2; }
+      .c10.tall { grid-row: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="demo-nav">
+    <a href="#s1">1 — Épurée</a>
+    <a href="#s2">2 — Bordure gauche</a>
+    <a href="#s3">3 — Liste serif</a>
+    <a href="#s4">4 — Fond sombre</a>
+    <a href="#s5">5 — Photo plein fond</a>
+    <a href="#s6">6 — Numéro géant</a>
+    <a href="#s7">7 — Horizontale</a>
+    <a href="#s8">8 — Coins animés</a>
+    <a href="#s9">9 — Dégradé</a>
+    <a href="#s10">10 — Bento grid</a>
+  </nav>
+
+  <!-- ─── 1 ─── -->
+  <section class="demo-section" id="s1">
+    <div class="demo-label">
+      <span class="demo-label-num">01</span>
+      <span class="demo-label-text">Éditoriale épurée — ligne accent au top au hover</span>
+    </div>
+    <div class="grid-3">
+      {cards.map((c, i) => (
+        <a href="#" class="c1">
+          <span class="c1-num">{String(i+1).padStart(2,'0')}</span>
+          <h3>{c.title}</h3>
+          <p>{c.description}</p>
+          <span class="c1-arrow">Voir →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ─── 2 ─── -->
+  <section class="demo-section" id="s2">
+    <div class="demo-label">
+      <span class="demo-label-num">02</span>
+      <span class="demo-label-text">Bordure gauche accent — glisse vers la droite</span>
+    </div>
+    <div class="grid-3">
+      {cards.map((c, i) => (
+        <a href="#" class="c2">
+          <span class="c2-eye">Cours {String(i+1).padStart(2,'0')}</span>
+          <h3>{c.title}</h3>
+          <p>{c.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ─── 3 ─── -->
+  <section class="demo-section" id="s3">
+    <div class="demo-label">
+      <span class="demo-label-num">03</span>
+      <span class="demo-label-text">Liste typographique — grand titre serif, bouton rond au hover</span>
+    </div>
+    <div class="grid-1">
+      {cards.map((c, i) => (
+        <a href="#" class="c3">
+          <div class="c3-left">
+            <span class="c3-num">{String(i+1).padStart(2,'0')}</span>
+            <span class="c3-title">{c.title}</span>
+            <p>{c.description}</p>
+          </div>
+          <div class="c3-btn">
+            <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ─── 4 ─── -->
+  <section class="demo-section" id="s4">
+    <div class="demo-label">
+      <span class="demo-label-num">04</span>
+      <span class="demo-label-text">Fond sombre — halo accent en bas à droite au hover</span>
+    </div>
+    <div class="grid-3">
+      {cards.map((c, i) => (
+        <a href="#" class="c4">
+          <span class="c4-num">{String(i+1).padStart(2,'0')}</span>
+          <h3>{c.title}</h3>
+          <p>{c.description}</p>
+          <span class="c4-link">En savoir plus →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ─── 5 ─── -->
+  <section class="demo-section" id="s5">
+    <div class="demo-label">
+      <span class="demo-label-num">05</span>
+      <span class="demo-label-text">Photo plein fond — dégradé bas, zoom au hover</span>
+    </div>
+    <div class="grid-3">
+      {cards.map((c, i) => (
+        <a href="#" class="c5">
+          <img src="/images/reel-cover.webp" alt={c.title} loading="lazy" />
+          <div class="c5-overlay">
+            <span class="c5-num">{String(i+1).padStart(2,'0')}</span>
+            <h3>{c.title}</h3>
+            <p>{c.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ─── 6 ─── -->
+  <section class="demo-section" id="s6">
+    <div class="demo-label">
+      <span class="demo-label-num">06</span>
+      <span class="demo-label-text">Numéro géant en fond — tag label, bordure accent au hover</span>
+    </div>
+    <div class="grid-3">
+      {cards.map((c, i) => (
+        <a href="#" class="c6">
+          <span class="c6-bg-num">{String(i+1).padStart(2,'0')}</span>
+          <span class="c6-tag">Cours</span>
+          <h3>{c.title}</h3>
+          <p>{c.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ─── 7 ─── -->
+  <section class="demo-section" id="s7">
+    <div class="demo-label">
+      <span class="demo-label-num">07</span>
+      <span class="demo-label-text">Horizontale — numéro accent, glisse à droite</span>
+    </div>
+    <div class="grid-2">
+      {cards.map((c, i) => (
+        <a href="#" class="c7">
+          <span class="c7-num">{String(i+1).padStart(2,'0')}</span>
+          <div class="c7-divider"></div>
+          <div class="c7-body">
+            <h3>{c.title}</h3>
+            <p>{c.description}</p>
+          </div>
+          <svg class="c7-arrow" width="18" height="18" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ─── 8 ─── -->
+  <section class="demo-section" id="s8">
+    <div class="demo-label">
+      <span class="demo-label-num">08</span>
+      <span class="demo-label-text">Coins animés — grandit au hover</span>
+    </div>
+    <div class="grid-3">
+      {cards.map((c, i) => (
+        <a href="#" class="c8">
+          <div class="c8-corner-br"></div>
+          <div class="c8-corner-tl"></div>
+          <span class="c8-num">{String(i+1).padStart(2,'0')}</span>
+          <h3>{c.title}</h3>
+          <p>{c.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ─── 9 ─── -->
+  <section class="demo-section" id="s9">
+    <div class="demo-label">
+      <span class="demo-label-num">09</span>
+      <span class="demo-label-text">Dégradé de fond — chaque carte a sa teinte</span>
+    </div>
+    <div class="grid-3">
+      {cards.map((c, i) => (
+        <a href="#" class="c9">
+          <div class="c9-dot"></div>
+          <h3>{c.title}</h3>
+          <p>{c.description}</p>
+          <span class="c9-link">Voir →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ─── 10 ─── -->
+  <section class="demo-section" id="s10">
+    <div class="demo-label">
+      <span class="demo-label-num">10</span>
+      <span class="demo-label-text">Bento grid — tailles variées, style magazine</span>
+    </div>
+    <div class="bento">
+      {cards.map((c, i) => (
+        <a href="#" class={`c10 ${i === 0 ? 'large' : i === 3 ? 'tall' : ''}`}>
+          <span class="c10-num">{String(i+1).padStart(2,'0')}</span>
+          <h3>{c.title}</h3>
+          <p>{c.description}</p>
+          <span class="c10-link">Voir →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+</body>
+</html>
