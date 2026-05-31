@@ -249,21 +249,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         });
 
         // ── Section title word-by-word reveal ──
-        document.querySelectorAll<HTMLElement>('.section-title:not([data-gsap-split])').forEach(title => {
+        document.querySelectorAll<HTMLElement>('.section-title').forEach(title => {
           const parentHeader = title.closest('.section-header');
           if (!parentHeader) return;
 
-          title.dataset.gsapSplit = 'true';
-          const raw = title.innerHTML;
-
-          // Wrap each word in a mask span
-          title.innerHTML = raw.replace(
-            /(<[^>]+>)|([^<\s][^<]*[^<\s]|[^<\s])/g,
-            (match, tag, word) => {
-              if (tag) return tag;
-              return `<span class="tw-wrap" aria-hidden="true" style="display:inline-block;overflow:hidden;vertical-align:bottom"><span class="tw-inner" style="display:inline-block">${word}</span></span>`;
-            }
-          );
+          if (!title.dataset.gsapSplit) {
+            title.dataset.gsapSplit = 'true';
+            const raw = title.innerHTML;
+            title.innerHTML = raw.replace(
+              /(<[^>]+>)|([^<\s][^<]*[^<\s]|[^<\s])/g,
+              (match, tag, word) => {
+                if (tag) return tag;
+                return `<span class="tw-wrap" aria-hidden="true" style="display:inline-block;overflow:hidden;vertical-align:bottom"><span class="tw-inner" style="display:inline-block">${word}</span></span>`;
+              }
+            );
+          }
 
           const inners = title.querySelectorAll<HTMLElement>('.tw-inner');
           gsap.set(inners, { yPercent: 105 });
