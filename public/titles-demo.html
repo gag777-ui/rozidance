@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rozi Dance — Démo couleur titres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #F7F1E6;
+  --card: #FBF6EC;
+  --text: #2B1F15;
+  --sub: #6B5645;
+  --muted: #B8A689;
+  --accent: #C16847;
+  --gold: #A88753;
+  --gold-l: #D4AD70;
+  --border: #E5D7BE;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+
+html { -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); font-family: var(--sans); color: var(--text); }
+
+/* ── Nav ── */
+.nav {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; gap: 0;
+  background: rgba(247,241,230,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+  overflow-x: auto; scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  padding: 1rem 1.5rem;
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 250ms, border-color 250ms;
+}
+.nav a.on { color: var(--accent); border-bottom-color: var(--accent); }
+.nav a:hover { color: var(--text); }
+
+/* ── Section ── */
+.demo { padding: 5rem 1.5rem 4rem; max-width: 800px; margin: 0 auto; }
+.label {
+  display: inline-block;
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: #7A5C20; background: rgba(168,135,83,0.1);
+  border: 0.5px solid rgba(168,135,83,0.22); border-radius: 999px;
+  padding: 0.28rem 0.85rem; margin-bottom: 1rem;
+}
+.divider {
+  height: 0.5px; background: var(--border); margin: 3rem 0;
+}
+
+/* ── Section header mock ── */
+.section-header {
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.5rem; margin-bottom: 2rem;
+}
+.eyebrow {
+  font-size: 0.65rem; font-style: italic; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #7A5C20;
+  border-bottom: 0.5px solid var(--gold-l); padding-bottom: 0.15rem;
+}
+.section-subtitle {
+  font-size: 0.95rem; color: var(--sub); font-style: italic; margin-top: 0.25rem;
+}
+
+/* Taille commune des titres */
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0;
+}
+
+/* ── V0 — Actuel (référence) ── */
+.title-current { color: var(--text); }
+
+/* ── V1 — Couleur hero exacte adaptée ── */
+/* rgba(220,190,165,0.88) sur fond sombre → version opaque + foncée sur fond clair */
+.title-warm { color: #A8714A; }
+
+/* ── V2 — Or du site ── */
+.title-gold { color: var(--gold); }
+
+/* ── V3 — Dégradé or → terracotta (texte gradient) ── */
+.title-gradient {
+  background: linear-gradient(135deg, #A88753 0%, #C16847 55%, #A85638 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Carte de texte pour le contexte */
+.ctx {
+  background: var(--card); border: 0.5px solid var(--border);
+  border-radius: 12px; padding: 1.5rem 1.75rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.ctx p { font-size: 0.9rem; color: var(--sub); line-height: 1.75; }
+.ctx-row { display: flex; gap: 1rem; align-items: baseline; }
+.badge {
+  font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: var(--sans); font-weight: 500;
+  background: rgba(43,31,21,0.07); border-radius: 4px;
+  padding: 0.18rem 0.5rem; color: var(--sub); flex-shrink: 0;
+}
+
+/* Hero reference strip */
+.hero-ref {
+  background: linear-gradient(135deg, #2B1F15, #1A100A);
+  border-radius: 12px; padding: 2rem 2rem 1.5rem;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.5rem; margin-bottom: 1.5rem;
+}
+.hero-ref-label {
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); margin-bottom: 0.25rem;
+}
+.hero-ref-text {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 300; line-height: 1.1;
+  color: rgba(220, 190, 165, 0.88);
+}
+
+/* Scroll spy */
+section { scroll-margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#ref" class="on">Référence hero</a>
+  <a href="#v0">Actuel</a>
+  <a href="#v1">Chaud adapté</a>
+  <a href="#v2">Or du site</a>
+  <a href="#v3">Dégradé</a>
+</nav>
+
+
+<!-- Référence : couleur hero -->
+<section id="ref" class="demo">
+  <span class="label">Référence</span>
+  <p style="font-size:0.85rem;color:var(--sub);margin-bottom:1.25rem;font-style:italic;">
+    C'est cette couleur sur fond sombre dans le hero :
+  </p>
+  <div class="hero-ref">
+    <span class="hero-ref-label">Hero — "dans le monde de"</span>
+    <span class="hero-ref-text">dans le monde de</span>
+    <span class="hero-ref-text" style="font-size:1rem;opacity:0.6;">rgba(220, 190, 165, 0.88)</span>
+  </div>
+</section>
+
+<div style="max-width:800px;margin:0 auto;padding:0 1.5rem"><div class="divider"></div></div>
+
+
+<!-- V0 : actuel -->
+<section id="v0" class="demo">
+  <span class="label">Version actuelle — référence</span>
+
+  <div class="section-header">
+    <span class="eyebrow">Ce que nous proposons</span>
+    <h2 class="section-title title-current">Présentation</h2>
+    <p class="section-subtitle">Duo artistique pour mariages, célébrations et événements.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <span class="eyebrow">Moments capturés</span>
+    <h2 class="section-title title-current">Galerie</h2>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <span class="eyebrow">Ce que disent nos clients</span>
+    <h2 class="section-title title-current">Ils nous ont fait confiance</h2>
+  </div>
+
+  <div class="ctx" style="margin-top:2rem">
+    <div class="ctx-row">
+      <span class="badge">Couleur</span>
+      <code style="font-size:0.8rem;color:var(--sub)">#2B1F15 — var(--color-text-primary)</code>
+    </div>
+    <p>Brun espresso foncé. Lisible, sobre, mais sans chaleur particulière.</p>
+  </div>
+</section>
+
+<div style="max-width:800px;margin:0 auto;padding:0 1.5rem"><div class="divider"></div></div>
+
+
+<!-- V1 : chaud adapté -->
+<section id="v1" class="demo">
+  <span class="label">Option 1 — Chaud adapté du hero</span>
+
+  <div class="section-header">
+    <span class="eyebrow">Ce que nous proposons</span>
+    <h2 class="section-title title-warm">Présentation</h2>
+    <p class="section-subtitle">Duo artistique pour mariages, célébrations et événements.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <span class="eyebrow">Moments capturés</span>
+    <h2 class="section-title title-warm">Galerie</h2>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <span class="eyebrow">Ce que disent nos clients</span>
+    <h2 class="section-title title-warm">Ils nous ont fait confiance</h2>
+  </div>
+
+  <div class="ctx" style="margin-top:2rem">
+    <div class="ctx-row">
+      <span class="badge">Couleur</span>
+      <code style="font-size:0.8rem;color:var(--sub)">#A8714A — version opaque du hero adaptée fond clair</code>
+    </div>
+    <p>Le rgba(220,190,165,0.88) du hero, rendu opaque et légèrement foncé pour rester lisible sur fond ivoire. Garde le même registre chaleureux.</p>
+  </div>
+</section>
+
+<div style="max-width:800px;margin:0 auto;padding:0 1.5rem"><div class="divider"></div></div>
+
+
+<!-- V2 : or du site -->
+<section id="v2" class="demo">
+  <span class="label">Option 2 — Or du site</span>
+
+  <div class="section-header">
+    <span class="eyebrow">Ce que nous proposons</span>
+    <h2 class="section-title title-gold">Présentation</h2>
+    <p class="section-subtitle">Duo artistique pour mariages, célébrations et événements.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <span class="eyebrow">Moments capturés</span>
+    <h2 class="section-title title-gold">Galerie</h2>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <span class="eyebrow">Ce que disent nos clients</span>
+    <h2 class="section-title title-gold">Ils nous ont fait confiance</h2>
+  </div>
+
+  <div class="ctx" style="margin-top:2rem">
+    <div class="ctx-row">
+      <span class="badge">Couleur</span>
+      <code style="font-size:0.8rem;color:var(--sub)">#A88753 — var(--color-gold)</code>
+    </div>
+    <p>La couleur or déjà utilisée pour les eyebrows et accents. Cohérent, chaud, élégant.</p>
+  </div>
+</section>
+
+<div style="max-width:800px;margin:0 auto;padding:0 1.5rem"><div class="divider"></div></div>
+
+
+<!-- V3 : dégradé -->
+<section id="v3" class="demo">
+  <span class="label">Option 3 — Dégradé or → terracotta</span>
+
+  <div class="section-header">
+    <span class="eyebrow">Ce que nous proposons</span>
+    <h2 class="section-title title-gradient">Présentation</h2>
+    <p class="section-subtitle">Duo artistique pour mariages, célébrations et événements.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <span class="eyebrow">Moments capturés</span>
+    <h2 class="section-title title-gradient">Galerie</h2>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <span class="eyebrow">Ce que disent nos clients</span>
+    <h2 class="section-title title-gradient">Ils nous ont fait confiance</h2>
+  </div>
+
+  <div class="ctx" style="margin-top:2rem">
+    <div class="ctx-row">
+      <span class="badge">Couleur</span>
+      <code style="font-size:0.8rem;color:var(--sub)">gradient: #A88753 → #C16847 → #A85638</code>
+    </div>
+    <p>Texte en dégradé or → terracotta. Plus dramatique, très premium. Fonctionne surtout sur les titres longs.</p>
+  </div>
+</section>
+
+
+<script>
+const links = document.querySelectorAll('.nav a');
+const sections = document.querySelectorAll('section');
+new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { threshold: 0.4 }).observe.call({ observe: el => el });
+
+// Proper
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

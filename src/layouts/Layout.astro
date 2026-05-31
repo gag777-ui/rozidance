@@ -139,9 +139,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         dismissLoader();
       });
 
-      // ── Scroll position au changement de page ──
-      // scroll-behavior:smooth interfère avec View Transitions : on le coupe
-      // pendant le swap pour que le scroll-to-top soit instantané.
+      // ── Scroll position ──
+      // Désactive la restauration auto du navigateur (évite le saut vers
+      // la section Prestations lors d'un refresh).
+      history.scrollRestoration = 'manual';
+
+      // Sur refresh / chargement initial : scroll en haut, retire le hash
+      // de navigation interne (ex: /#prestations) sans recharger la page.
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + (window.location.search || ''));
+      }
+      window.scrollTo(0, 0);
+
+      // View Transitions : scroll en haut sauf si l'URL cible a un vrai hash
       document.addEventListener('astro:before-swap', () => {
         document.documentElement.style.scrollBehavior = 'auto';
       });
@@ -149,7 +159,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         if (!window.location.hash) {
           window.scrollTo(0, 0);
         }
-        // Rétablit le smooth scroll après que le DOM est stable
         requestAnimationFrame(() => {
           document.documentElement.style.scrollBehavior = '';
         });
