@@ -158,7 +158,8 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
     border: 0.5px solid var(--color-border);
   }
 
-  .reel-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform 500ms var(--ease-out-soft); padding: 0.75rem; }
+  .reel-thumb img { width: 55%; height: auto; object-fit: contain; display: block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: transform 500ms var(--ease-out-soft); }
+  .reel-card:hover .reel-thumb img { transform: translate(-50%, -50%) scale(1.04); }
 
   .reel-overlay {
     position: absolute;
@@ -173,7 +174,6 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
 
   .reel-ig-icon { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
 
-  .reel-card:hover .reel-thumb img { transform: scale(1.04); }
   .reel-card:hover .reel-overlay { opacity: 1; }
 
   .reel-label {
