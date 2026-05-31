@@ -18,7 +18,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       loop
       playsinline
       disablepictureinpicture
-      preload="none"
+      preload="metadata"
     >
       <source src="/videos/hero.mp4" type="video/mp4" />
     </video>
@@ -306,6 +306,37 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 </style>
 
 <script>
+  // Force video playback on mobile and after View Transitions
+  function initHeroVideo() {
+    const video = document.querySelector<HTMLVideoElement>('.hero-bg-video');
+    if (!video) return;
+
+    const tryPlay = () => {
+      const p = video.play();
+      if (p !== undefined) {
+        p.catch(() => {
+          // Autoplay blocked — replay on first user gesture
+          const resume = () => video.play();
+          document.addEventListener('touchstart', resume, { once: true });
+          document.addEventListener('pointerdown', resume, { once: true });
+        });
+      }
+    };
+
+    // After a View Transition swap the <video> element is brand-new and the
+    // browser hasn't fetched any data yet — readyState is 0. Calling play()
+    // immediately fails silently. load() kicks off the fetch; canplay fires
+    // as soon as enough data is buffered to start playback.
+    if (video.readyState >= 3) {
+      tryPlay();
+    } else {
+      video.addEventListener('canplay', tryPlay, { once: true });
+      video.load();
+    }
+  }
+
+  document.addEventListener('astro:page-load', initHeroVideo);
+
   const FULL_TEXT = 'Rozi · Dance';
   const CHAR_DELAY = 45;
   const START_DELAY = 900;
