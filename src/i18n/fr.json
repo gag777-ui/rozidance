@@ -335,7 +335,11 @@
         "slug": "musiciens",
         "title": "Nos musiciens",
         "description": "Des musiciens qui subliment chaque performance avec leur talent et leur sensibilité.",
-        "count": 2
+        "count": 2,
+        "reels": [
+          "https://www.instagram.com/reel/DE-qHzdIWW6/?igsh=cnM1aWR6azlkZW5v",
+          null
+        ]
       }
     ]
   },
