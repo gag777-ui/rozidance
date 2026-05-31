@@ -151,15 +151,15 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
 
   .reel-thumb {
     position: relative;
-    aspect-ratio: 9 / 16;
+    aspect-ratio: 1 / 1;
     border-radius: var(--radius-card);
     overflow: hidden;
     background-color: var(--color-bg-card);
     border: 0.5px solid var(--color-border);
   }
 
-  .reel-thumb img { width: 55%; height: auto; object-fit: contain; display: block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: transform 500ms var(--ease-out-soft); }
-  .reel-card:hover .reel-thumb img { transform: translate(-50%, -50%) scale(1.04); }
+  .reel-thumb img { width: 92%; height: auto; object-fit: contain; display: block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: transform 500ms var(--ease-out-soft); }
+  .reel-card:hover .reel-thumb img { transform: translate(-50%, -50%) scale(1.03); }
 
   .reel-overlay {
     position: absolute;
