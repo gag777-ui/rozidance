@@ -48,38 +48,39 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       <p class="footer-tagline">{t.footer.tagline}</p>
     </div>
 
-    <!-- Navigation -->
-    <nav class="footer-nav" aria-label="Navigation footer">
-      <p class="footer-nav-title">{t.footer.nav}</p>
-      <ul>
-        <li><a href={`${base || '/'}#prestations`} class="nav-link">{t.nav.prestations}</a></li>
-        <li><a href={`${base || '/'}#galerie`} class="nav-link">{t.nav.galerie}</a></li>
-        <li><a href={`${base}/cours`} class="nav-link">{t.nav.cours}</a></li>
-        <li><a href={`${base || '/'}#apropos`} class="nav-link">{t.nav.apropos}</a></li>
-        <li><a href={`${base || '/'}#contact`} class="nav-link">{t.nav.contact}</a></li>
-      </ul>
-    </nav>
+    <!-- Navigation + Liens sociaux -->
+    <div class="footer-links-group">
+      <nav class="footer-nav" aria-label="Navigation footer">
+        <p class="footer-nav-title">{t.footer.nav}</p>
+        <ul>
+          <li><a href={`${base || '/'}#prestations`} class="nav-link">{t.nav.prestations}</a></li>
+          <li><a href={`${base || '/'}#galerie`} class="nav-link">{t.nav.galerie}</a></li>
+          <li><a href={`${base}/cours`} class="nav-link">{t.nav.cours}</a></li>
+          <li><a href={`${base || '/'}#apropos`} class="nav-link">{t.nav.apropos}</a></li>
+          <li><a href={`${base || '/'}#contact`} class="nav-link">{t.nav.contact}</a></li>
+        </ul>
+      </nav>
 
-    <!-- Liens sociaux -->
-    <div class="footer-social">
-      <p class="footer-nav-title">{t.footer.links}</p>
-      <ul>
-        <li>
-          <a href="https://instagram.com/rozi.dance" target="_blank" rel="noopener noreferrer" class="nav-link">
-            Instagram
-          </a>
-        </li>
-        <li>
-          <a href="https://youtube.com/@rozidance" target="_blank" rel="noopener noreferrer" class="nav-link">
-            YouTube
-          </a>
-        </li>
-        <li>
-          <a href="mailto:abrahamyan.rose@mail.ru" class="nav-link">
-            abrahamyan.rose@mail.ru
-          </a>
-        </li>
-      </ul>
+      <div class="footer-social">
+        <p class="footer-nav-title">{t.footer.links}</p>
+        <ul>
+          <li>
+            <a href="https://instagram.com/rozi.dance" target="_blank" rel="noopener noreferrer" class="nav-link">
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a href="https://youtube.com/@rozidance" target="_blank" rel="noopener noreferrer" class="nav-link">
+              YouTube
+            </a>
+          </li>
+          <li>
+            <a href="mailto:abrahamyan.rose@mail.ru" class="nav-link">
+              abrahamyan.rose@mail.ru
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -120,11 +121,17 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .footer-inner {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     gap: 3rem;
     padding-bottom: 3rem;
     position: relative;
     z-index: 1;
+  }
+
+  .footer-links-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .footer-logo {
@@ -230,5 +237,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       grid-template-columns: 1fr;
       gap: 2rem;
     }
+
   }
 </style>
