@@ -20,8 +20,8 @@ const t = getTranslations(lang);
             <span class="temoignage-mark" aria-hidden="true">"</span>
             <p class="temoignage-text">{item.quote}</p>
             <footer class="temoignage-author">
+              <span class="temoignage-stars" aria-label="5 étoiles sur 5">★★★★★</span>
               <span class="temoignage-name">{item.author}</span>
-              <span class="temoignage-event">{item.event}</span>
             </footer>
           </article>
         </div>
@@ -153,12 +153,10 @@ const t = getTranslations(lang);
     color: var(--color-text-primary);
   }
 
-  .temoignage-event {
-    font-family: var(--font-sans);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
+  .temoignage-stars {
+    color: #FBBC04;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
   }
 
   @media (prefers-reduced-motion: reduce) {
