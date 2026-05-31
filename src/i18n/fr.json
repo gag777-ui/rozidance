@@ -305,7 +305,13 @@
         "slug": "chant-de-la-mariee",
         "title": "Chant de la mariée",
         "description": "Des chants traditionnels et contemporains pour accompagner les plus beaux moments.",
-        "count": 4
+        "count": 4,
+        "reels": [
+          "https://www.instagram.com/reel/DYSGbsVtK7S/?igsh=MTNiaTVrZ3c0eHd1Mg%3D%3D",
+          null,
+          null,
+          null
+        ]
       },
       {
         "slug": "danse-de-mariage",
