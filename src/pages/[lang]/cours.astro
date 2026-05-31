@@ -14,7 +14,9 @@ export function getStaticPaths() {
 const lang = (Astro.currentLocale ?? Astro.params.lang ?? 'fr') as Lang;
 const t = getTranslations(lang);
 const faq = t.cours.faqItems;
-const reels = ((t.cours as any).reels as (string | null)[] | undefined) ?? [];
+// Reels are language-agnostic — always read from fr.json
+const fr = (await import('../../i18n/fr.json')).default;
+const reels = (fr.cours as any).reels as (string | null)[] ?? [];
 ---
 
 <Layout title={t.cours.pageTitle} description={t.cours.pageDescription}>

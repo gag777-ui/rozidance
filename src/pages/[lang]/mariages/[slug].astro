@@ -20,7 +20,10 @@ const t = getTranslations(lang);
 const s = t.mariagesSlug;
 
 const cat = t.mariages.categories.find(c => c.slug === slug)!;
-const reelsSrc = (cat as any).reels as (string | null)[] | undefined;
+// Reels are language-agnostic — always read from fr.json
+const fr = (await import('../../../i18n/fr.json')).default;
+const frCat = fr.mariages.categories.find((c: any) => c.slug === slug)!;
+const reelsSrc = (frCat as any).reels as (string | null)[] | undefined;
 const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
   reelsSrc?.[i] ?? '#'
 );
