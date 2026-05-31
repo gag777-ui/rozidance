@@ -19,6 +19,8 @@ npm run preview    # Preview production build locally
 
 No test suite or linter configured yet.
 
+**Key npm deps added:** `gsap@3.15`, `lenis@1.3` (animation). `uipro-cli` installed globally (`uipro init --ai claude` — skill files in `.claude/skills/ui-ux-pro-max/`). Magic MCP (`@21st-dev/magic`) added to user Claude config (`~/.claude.json`).
+
 ## Architecture
 
 **Framework:** Astro 6 (static output), TypeScript strict, Tailwind CSS v4 via `@tailwindcss/vite`.
@@ -29,13 +31,20 @@ No test suite or linter configured yet.
 
 **Page structure** — `index.astro` is a single-scroll page. Section order: Hero → Prestations → Galerie → Vidéos → À propos → Stats → Témoignages → FAQ → Contact. Each section is its own `src/components/sections/Section*.astro`. `Layout.astro` handles `<head>`, Google Fonts (non-render-blocking via `rel="preload"`), View Transitions, scroll-reveal observer, and page-loader dismiss.
 
-**Scroll reveal** — `.reveal` elements animate in via `IntersectionObserver` (adds `.is-visible`). CSS transitions in `global.css`.
+**Scroll reveal** — `.reveal` elements animate in via `IntersectionObserver` (adds `.is-visible`). CSS transitions in `global.css`. GSAP ScrollTrigger is also active (see Animation system below) for hero parallax and title word-reveal.
 
-**Custom cursor** — `Cursor.astro`, desktop only (`hover: hover` + `pointer: fine`).
+**Animation system** — `Layout.astro` contains a second `<script>` block that imports `gsap` + `lenis` (both installed as npm deps). It runs `init()` / `destroy()` around View Transitions via `astro:before-swap` / `astro:page-load`. Features active:
+- **Lenis** smooth scroll (duration 1.4, `smoothWheel: true`). `prevent: #mobile-menu` so drawer scroll still works. Forces `scrollBehavior: auto` on `<html>` to avoid conflict with CSS smooth scroll.
+- **Hero parallax** — `.hero-bg-video` moves `yPercent 28` scrub 2, `.hero-text` fades + moves up scrub 1.5 as user scrolls.
+- **Magnetic buttons** — `.btn-primary`, `.btn-ghost`, `.hero-btn-ghost` attract toward cursor on `mousemove`, spring back on `mouseleave` via `elastic.out`. Uses `AbortController` for cleanup.
+- **Section title word-reveal** — `.section-title` inside `.section-header` are split into word-mask spans (`.tw-wrap` / `.tw-inner`), animated via GSAP `yPercent 105→0` stagger on ScrollTrigger enter. Only applied once per element (`data-gsap-split` flag).
+- Lenis CSS utilities added to `global.css` (`.lenis-smooth`, `.lenis-stopped`).
+
+**Custom cursor** — `Cursor.astro` is imported in `Layout.astro` with `transition:persist`. Desktop only (`hover: hover` + `pointer: fine`). Three states: `default` (dot + ring), `cursor-grow` (ring expands gold, on links/buttons), `cursor-text` (liquid glass bubble with "Voir" label, on `.gallery-item` and `.video-thumb-btn`). RAF loop starts only once (guarded by `rafStarted` flag). Event listeners re-attached on every `astro:page-load`.
 
 **Page loader** — `PageLoader.astro` shows "Rozi · Dance" with a breathing/pulse animation (`loaderPulse` keyframe on `.loader-logo-text`). Dismissed via `setTimeout(600ms)` after `window.load` in `Layout.astro`. **TODO:** replace text with logo image (`/images/logo.webp` is now available).
 
-**astro:page-load pattern** — All `<script>` blocks must wrap their init logic in a named function called via `document.addEventListener('astro:page-load', initXxx)`. Never call init functions directly at module level — View Transitions re-fires `astro:page-load` on each navigation, and direct calls skip re-init or accumulate listeners. For handlers attached to `document`/`window`, store the reference in a module-level variable and remove it before re-adding.
+**astro:page-load pattern** — All `<script>` blocks must wrap their init logic in a named function called via `document.addEventListener('astro:page-load', initXxx)`. The GSAP animation block is an exception: it calls `init()` directly at module level AND via `astro:page-load` (safe because `init()` calls `destroy()` first). For other handlers attached to `document`/`window`, store the reference in a module-level variable and remove it before re-adding.
 
 ## Hero section (SectionHero.astro)
 
@@ -129,7 +138,7 @@ All images must be WebP. Placeholders use `onerror` fallback to `/images/placeho
 - **No emojis** in the site UI
 - **Mobile-first** CSS — base styles for mobile, then `@media (min-width: ...)` for larger screens
 - **Tailwind utility classes** are used sparingly; component-scoped `<style>` blocks preferred
-- **Border radius:** `var(--radius-btn)` = 2px (editorial), `var(--radius-card)` = 8px
+- **Border radius:** `var(--radius-btn)` = 2px (editorial), `var(--radius-card)` = 8px. Exception: `SectionPrestations` cards use `border-radius: 1.75rem` (overrides token) for a more rounded premium look.
 - **Animations:** 400–700ms duration, `var(--ease-out-soft)` easing, never `ease-in`
 - Borders are `0.5px solid` (not 1px) for the editorial thin look
 - **Eyebrow labels** use `#7A5C20` (not `var(--color-gold)`) for WCAG contrast compliance on ivory bg

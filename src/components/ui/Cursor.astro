@@ -1,9 +1,11 @@
 ---
-// Custom cursor — desktop only, hidden on touch devices
+// Custom cursor — desktop only (hover: hover + pointer: fine)
 ---
 
 <div id="cursor-dot" aria-hidden="true"></div>
-<div id="cursor-ring" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true">
+  <span id="cursor-label"></span>
+</div>
 
 <style>
   #cursor-dot,
@@ -22,77 +24,149 @@
       pointer-events: none;
       z-index: 10000;
       transform: translate(-50%, -50%);
-      transition: width 200ms, height 200ms, opacity 200ms;
+      transition: width 200ms, height 200ms, opacity 200ms, background-color 300ms;
     }
 
     #cursor-ring {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: fixed;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border: 1px solid var(--color-accent);
       border-radius: 50%;
       pointer-events: none;
       z-index: 10000;
       transform: translate(-50%, -50%);
-      transition: width 300ms var(--ease-out-soft),
-                  height 300ms var(--ease-out-soft),
-                  opacity 300ms,
-                  border-color 300ms;
-      opacity: 0.6;
+      transition:
+        width 350ms var(--ease-out-soft),
+        height 350ms var(--ease-out-soft),
+        opacity 300ms,
+        border-color 300ms,
+        background 350ms var(--ease-out-soft),
+        backdrop-filter 350ms;
+      opacity: 0.55;
     }
 
+    #cursor-label {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      opacity: 0;
+      transition: opacity 200ms;
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* ── État grow (liens, boutons) ── */
     body.cursor-grow #cursor-ring {
-      width: 56px;
-      height: 56px;
-      opacity: 0.4;
+      width: 52px;
+      height: 52px;
+      opacity: 0.35;
       border-color: var(--color-gold);
+    }
+
+    /* ── État text (galerie, vidéos) ── */
+    body.cursor-text #cursor-dot {
+      opacity: 0;
+      width: 2px;
+      height: 2px;
+    }
+
+    body.cursor-text #cursor-ring {
+      width: 72px;
+      height: 72px;
+      opacity: 1;
+      background: rgba(251, 246, 236, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-color: transparent;
+      box-shadow: 0 0 0 0.5px rgba(193, 104, 71, 0.25), 0 8px 24px rgba(193, 104, 71, 0.08);
+    }
+
+    body.cursor-text #cursor-label {
+      opacity: 1;
     }
   }
 </style>
 
 <script>
-  const dot = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
+  let rafStarted = false;
+  let mouseX = 0;
+  let mouseY = 0;
 
-  if (dot && ring) {
-    let ringX = 0, ringY = 0;
-    let mouseX = 0, mouseY = 0;
+  function initCursor() {
+    const dot   = document.getElementById('cursor-dot');
+    const ring  = document.getElementById('cursor-ring');
+    const label = document.getElementById('cursor-label');
+    if (!dot || !ring) return;
 
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.left = `${mouseX}px`;
-      dot.style.top = `${mouseY}px`;
-    });
+    // RAF loop — ne tourne qu'une seule fois même après View Transitions
+    if (!rafStarted) {
+      rafStarted = true;
+      let ringX = 0, ringY = 0;
 
-    // Slightly lagged ring
-    function animateRing() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      if (ring) {
-        ring.style.left = `${ringX}px`;
-        ring.style.top = `${ringY}px`;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        (document.getElementById('cursor-dot') as HTMLElement).style.left = `${mouseX}px`;
+        (document.getElementById('cursor-dot') as HTMLElement).style.top  = `${mouseY}px`;
+      });
+
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.11;
+        ringY += (mouseY - ringY) * 0.11;
+        const r = document.getElementById('cursor-ring');
+        if (r) { r.style.left = `${ringX}px`; r.style.top = `${ringY}px`; }
+        requestAnimationFrame(animateRing);
       }
-      requestAnimationFrame(animateRing);
+      animateRing();
+
+      document.addEventListener('mouseleave', () => {
+        const d = document.getElementById('cursor-dot');
+        const rr = document.getElementById('cursor-ring');
+        if (d) d.style.opacity = '0';
+        if (rr) rr.style.opacity = '0';
+      });
+      document.addEventListener('mouseenter', () => {
+        const d = document.getElementById('cursor-dot');
+        const rr = document.getElementById('cursor-ring');
+        if (d) d.style.opacity = '1';
+        if (rr) rr.style.opacity = document.body.classList.contains('cursor-text') ? '1' : '0.55';
+      });
     }
-    animateRing();
 
-    // Grow effect on interactive elements
-    const interactives = document.querySelectorAll('a, button, [data-cursor-grow]');
-    interactives.forEach((el) => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-grow'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-grow'));
+    // ── État manager ──
+    function setCursor(state: 'default' | 'grow' | 'text', text = '') {
+      document.body.classList.remove('cursor-grow', 'cursor-text');
+      if (state === 'grow') document.body.classList.add('cursor-grow');
+      if (state === 'text') {
+        document.body.classList.add('cursor-text');
+        const l = document.getElementById('cursor-label');
+        if (l) l.textContent = text;
+      }
+    }
+
+    // Galerie + Vidéos → "Voir"
+    document.querySelectorAll('.gallery-item, .video-thumb-btn').forEach(el => {
+      el.addEventListener('mouseenter', () => setCursor('text', 'Voir'));
+      el.addEventListener('mouseleave', () => setCursor('default'));
     });
 
-    // Hide on leave
-    document.addEventListener('mouseleave', () => {
-      dot.style.opacity = '0';
-      ring.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', () => {
-      dot.style.opacity = '1';
-      ring.style.opacity = '0.6';
+    // Liens + boutons classiques → grow
+    document.querySelectorAll<HTMLElement>('a:not(.gallery-item), button:not(.video-thumb-btn), [data-cursor-grow]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (!document.body.classList.contains('cursor-text')) setCursor('grow');
+      });
+      el.addEventListener('mouseleave', () => {
+        if (!document.body.classList.contains('cursor-text')) setCursor('default');
+      });
     });
   }
+
+  document.addEventListener('astro:page-load', initCursor);
 </script>

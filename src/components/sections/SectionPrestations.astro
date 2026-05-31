@@ -6,20 +6,16 @@ const t = getTranslations(lang);
 const base = lang === 'fr' ? '' : `/${lang}`;
 
 const svgIcons = [
-  /* Alliances / mariage */
-  `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <circle cx="8" cy="12" r="5"/>
-    <circle cx="16" cy="12" r="5"/>
+  `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/>
   </svg>`,
-  /* Microphone / chant */
-  `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <rect x="9" y="2" width="6" height="11" rx="3"/>
     <path d="M5 10a7 7 0 0014 0"/>
     <line x1="12" y1="19" x2="12" y2="22"/>
     <line x1="8" y1="22" x2="16" y2="22"/>
   </svg>`,
-  /* Livre / cours */
-  `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
     <line x1="9" y1="7" x2="15" y2="7"/>
@@ -28,10 +24,19 @@ const svgIcons = [
 ] as const;
 
 const ordinals = ['01', '02', '03'] as const;
+const categories = ['Mariage · Cérémonie', 'Gala · Réception', 'Cours · Atelier'] as const;
+
+function getHref(id: string) {
+  if (id === 'cours') return `${base}/cours`;
+  if (id === 'mariages') return `${base}/mariages`;
+  if (id === 'danse-evenementielle') return `${base}/chant`;
+  return `${base || '/'}#contact`;
+}
 ---
 
 <section id="prestations" class="section-prestations" aria-labelledby="prestations-title">
   <div class="section-container">
+
     <div class="section-header reveal-fade">
       <span class="eyebrow">{t.prestations.eyebrow}</span>
       <h2 class="section-title" id="prestations-title">{t.prestations.title}</h2>
@@ -40,27 +45,38 @@ const ordinals = ['01', '02', '03'] as const;
 
     <div class="cards-grid">
       {t.prestations.items.map((item, i) => (
-        <article class="prestation-card reveal" style={`transition-delay: ${i * 120}ms`}>
-          <div class="card-accent-bar"></div>
-          <div class="card-body">
-            <span class="card-ordinal" aria-hidden="true">{ordinals[i]}</span>
-            <div class={`card-icon card-icon-${i}`} set:html={svgIcons[i]} />
+        <div
+          class={`card-shell cs-${i} reveal`}
+          style={`transition-delay: ${i * 120}ms`}
+          data-card
+        >
+          <article class={`card-core cc-${i}`}>
+            <div class="card-light"></div>
+            <div class="card-top">
+              <span class="card-num" aria-hidden="true">{ordinals[i]}</span>
+              <div class={`card-icon ci-${i}`} set:html={svgIcons[i]} />
+            </div>
+            <span class="card-cat">{categories[i]}</span>
             <h3 class="card-title">{item.title}</h3>
+            <div class="card-line"></div>
             <p class="card-description">{item.description}</p>
             <a
-              href={item.id === 'cours' ? `${base}/cours` : item.id === 'mariages' ? `${base}/mariages` : item.id === 'danse-evenementielle' ? `${base}/chant` : `${base || '/'}#contact`}
-              class="card-link"
+              href={getHref(item.id)}
+              class="card-cta"
               aria-label={`${item.link} — ${item.title}`}
             >
               {item.link}
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="card-arrow-svg">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span class="cta-circle" aria-hidden="true">
+                <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
             </a>
-          </div>
-        </article>
+          </article>
+        </div>
       ))}
     </div>
+
   </div>
 </section>
 
@@ -69,9 +85,10 @@ const ordinals = ['01', '02', '03'] as const;
     padding-block: var(--spacing-section);
   }
 
+  /* ── Header ── */
   .section-header {
     text-align: center;
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,136 +102,356 @@ const ordinals = ['01', '02', '03'] as const;
   }
 
   .prestations-subtitle {
-    margin: 0.5rem 0 0;
+    margin: 0.25rem 0 0;
     font-size: 1rem;
     color: var(--color-text-secondary);
     font-style: italic;
   }
 
+  /* ── Grid ── */
   .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    max-width: 420px;
+    margin-inline: auto;
   }
 
-  .prestation-card {
+  @media (min-width: 600px) {
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 640px;
+      gap: 1rem;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .cards-grid {
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 100%;
+      gap: 1.25rem;
+    }
+  }
+
+  /* ── Outer shell (double-bezel) ── */
+  .card-shell {
+    border-radius: 20px;
+    padding: 5px;
+    border: 0.5px solid rgba(229, 215, 190, 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 2px 8px rgba(43, 31, 21, 0.04);
+    transform-style: preserve-3d;
+    transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+    transition: transform 500ms var(--ease-out-soft), box-shadow 500ms var(--ease-out-soft);
+    will-change: transform;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Shell color par carte */
+  .cs-0 { background: rgba(168, 135, 83, 0.07); }
+  .cs-1 { background: rgba(193, 104, 71, 0.07); }
+  .cs-2 { background: rgba(122, 92, 32, 0.06); }
+
+  /* Hover desktop */
+  @media (hover: hover) {
+    .card-shell:hover {
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 16px 40px rgba(43, 31, 21, 0.1);
+    }
+  }
+
+  /* ── Inner core ── */
+  .card-core {
+    border-radius: 15px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
     position: relative;
-    background-color: var(--color-bg-card);
-    border: 0.5px solid var(--color-border);
-    border-radius: var(--radius-card);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform 400ms var(--ease-out-soft), border-color 400ms var(--ease-out-soft), box-shadow 400ms var(--ease-out-soft);
   }
 
-  .prestation-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-accent);
-    box-shadow: 0 12px 32px rgba(193, 104, 71, 0.12);
-  }
+  /* Gradient par carte */
+  .cc-0 { background: linear-gradient(145deg, #FEFCF8 0%, #EDDEB8 100%); }
+  .cc-1 { background: linear-gradient(145deg, #FEFCF8 0%, #F0CBBA 100%); }
+  .cc-2 { background: linear-gradient(145deg, #FEFCF8 0%, #E6D8A8 100%); }
 
-  .card-accent-bar {
-    height: 3px;
-    background: linear-gradient(to right, var(--color-accent), var(--color-gold));
-    flex-shrink: 0;
-  }
-
-  .card-body {
-    padding: 1.75rem 1.75rem 1.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    flex: 1;
-    position: relative;
-  }
-
-  .card-ordinal {
+  /* ── Spot de lumière mobile ── */
+  .card-light {
     position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    font-family: var(--font-serif);
-    font-size: 3.5rem;
-    line-height: 1;
-    color: var(--color-border);
+    inset: 0;
     pointer-events: none;
-    user-select: none;
-    transition: color 400ms var(--ease-out-soft);
+    background: radial-gradient(
+      circle at var(--lx, 28%) var(--ly, 22%),
+      rgba(255, 255, 255, 0.38) 0%,
+      rgba(255, 255, 255, 0.1) 35%,
+      transparent 65%
+    );
+    border-radius: inherit;
+    transition: background 80ms linear;
   }
 
-  .prestation-card:hover .card-ordinal {
-    color: rgba(193, 104, 71, 0.12);
+  /* ── Contenu ── */
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .card-num {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 200;
+    font-style: italic;
+    line-height: 1;
+    color: rgba(43, 31, 21, 0.09);
+    user-select: none;
+    pointer-events: none;
   }
 
   .card-icon {
-    color: var(--color-accent);
-    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transform: translateZ(12px);
+    flex-shrink: 0;
   }
 
-  .card-icon-0 {
-    color: var(--color-gold);
-  }
+  .ci-0 { background: rgba(168, 135, 83, 0.14); border: 0.5px solid rgba(168, 135, 83, 0.25); color: var(--color-gold); }
+  .ci-1 { background: rgba(193, 104, 71, 0.14); border: 0.5px solid rgba(193, 104, 71, 0.25); color: var(--color-accent); }
+  .ci-2 { background: rgba(122, 92, 32, 0.11); border: 0.5px solid rgba(122, 92, 32, 0.22); color: #7A5C20; }
 
-  .card-icon-1 {
-    color: #E53E3E;
+  .card-cat {
+    font-size: 0.62rem;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    position: relative;
   }
 
   .card-title {
     font-family: var(--font-serif);
     font-size: 1.25rem;
-    font-weight: 400;
+    font-weight: 300;
+    font-style: italic;
     color: var(--color-text-primary);
+    line-height: 1.2;
     margin: 0;
-    line-height: 1.3;
+    position: relative;
+  }
+
+  .card-line {
+    height: 0.5px;
+    background: linear-gradient(90deg, var(--color-border), transparent);
+    position: relative;
   }
 
   .card-description {
-    font-size: 0.9375rem;
+    font-size: 0.95rem;
     color: var(--color-text-secondary);
-    line-height: 1.65;
+    line-height: 1.72;
     margin: 0;
     flex: 1;
+    position: relative;
   }
 
-  .card-link {
+  /* CTA — 44px touch target minimum */
+  .card-cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 12px;
-    letter-spacing: 0.08em;
+    gap: 0.55rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-accent);
+    font-style: normal;
+    font-weight: 500;
     text-decoration: none;
-    margin-top: 0.5rem;
-    transition: gap 250ms var(--ease-out-soft);
+    color: var(--color-accent);
+    padding: 0.5rem 0.6rem 0.5rem 0.9rem;
+    min-height: 44px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 0.5px solid rgba(255, 255, 255, 0.85);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 4px rgba(43, 31, 21, 0.06);
+    align-self: flex-start;
+    margin-top: 0.2rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 300ms var(--ease-out-soft), gap 300ms var(--ease-out-soft), box-shadow 300ms;
   }
 
-  .card-link:hover {
-    gap: 0.75rem;
+  /* Shimmer périodique */
+  .card-cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -80%; width: 55%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: cta-shimmer 4s ease-in-out infinite;
+    pointer-events: none;
   }
 
-  .card-arrow-svg {
+  @keyframes cta-shimmer {
+    0%   { left: -80%; }
+    30%  { left: 130%; }
+    100% { left: 130%; }
+  }
+
+  .cs-0 .card-cta { color: var(--color-gold); }
+  .cs-2 .card-cta { color: #7A5C20; }
+
+  /* Décalage shimmer entre cartes */
+  .card-shell:nth-child(2) .card-cta::before { animation-delay: 1.4s; }
+  .card-shell:nth-child(3) .card-cta::before { animation-delay: 2.7s; }
+
+  .card-cta:hover {
+    background: rgba(255, 255, 255, 0.78);
+    gap: 0.8rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 2px 10px rgba(43, 31, 21, 0.09);
+  }
+
+  .cta-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    opacity: 0.75;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    transition: transform 250ms var(--ease-out-soft);
+    transition: transform 350ms var(--ease-out-soft), opacity 300ms;
+    animation: arrow-nudge 4s ease-in-out infinite;
   }
 
-  .card-link:hover .card-arrow-svg {
-    transform: translateX(3px);
+  @keyframes arrow-nudge {
+    0%, 50%, 100% { transform: translateX(0); }
+    62%  { transform: translateX(4px); }
+    70%  { transform: translateX(1px); }
+    78%  { transform: translateX(3px); }
+    86%  { transform: translateX(0); }
   }
 
-  @media (max-width: 900px) {
-    .cards-grid {
-      grid-template-columns: 1fr;
-      max-width: 480px;
-      margin-inline: auto;
-    }
+  .card-shell:nth-child(2) .cta-circle { animation-delay: 1.4s; }
+  .card-shell:nth-child(3) .cta-circle { animation-delay: 2.7s; }
+
+  .card-cta:hover .cta-circle,
+  .card-cta:focus .cta-circle {
+    opacity: 1;
+    transform: translateX(4px);
+    animation-play-state: paused;
   }
 
-  @media (min-width: 600px) and (max-width: 900px) {
-    .cards-grid {
-      grid-template-columns: repeat(2, 1fr);
-      max-width: 100%;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    .card-cta::before { animation: none; }
+    .cta-circle { animation: none; }
+  }
+
+  /* Supprime le délai 300ms tap sur iOS */
+  .card-shell { touch-action: manipulation; }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .card-shell { transition: none; }
+    .card-light { transition: none; }
   }
 </style>
+
+<script>
+  function initPrestations() {
+    const shells = document.querySelectorAll<HTMLElement>('[data-card]');
+    const ac = new AbortController();
+    const { signal } = ac;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    shells.forEach(shell => {
+      const light = shell.querySelector<HTMLElement>('.card-light');
+      let startX = 0, startY = 0, hasMoved = false;
+
+      shell.addEventListener('touchstart', (e: TouchEvent) => {
+        if (reducedMotion) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        hasMoved = false;
+      }, { passive: true, signal });
+
+      shell.addEventListener('touchmove', (e: TouchEvent) => {
+        if (reducedMotion) return;
+        const t = e.touches[0];
+        const moveX = Math.abs(t.clientX - startX);
+        const moveY = Math.abs(t.clientY - startY);
+        if (moveX < 8 && moveY < 8) return; // seuil : pas de tilt sur un tap simple
+        hasMoved = true;
+        shell.style.transition = 'transform 80ms linear';
+        const rect = shell.getBoundingClientRect();
+        const dx = (t.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
+        const dy = (t.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
+        const rx = -dy * 10;
+        const ry =  dx * 14;
+        shell.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+        if (light) {
+          light.style.setProperty('--lx', `${50 + ry * 2.2}%`);
+          light.style.setProperty('--ly', `${50 - rx * 2.2}%`);
+        }
+      }, { passive: true, signal });
+
+      const reset = () => {
+        if (!hasMoved) {
+          // Tap simple → reset instantané, navigation non bloquée
+          shell.style.transition = 'none';
+          shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+        } else {
+          // Geste tilt → spring back
+          shell.style.transition = 'transform 500ms var(--ease-out-soft)';
+          shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+          if (light) {
+            light.style.setProperty('--lx', '28%');
+            light.style.setProperty('--ly', '22%');
+          }
+        }
+        hasMoved = false;
+      };
+
+      shell.addEventListener('touchend',    reset, { passive: true, signal });
+      shell.addEventListener('touchcancel', reset, { passive: true, signal });
+
+      /* Desktop hover tilt */
+      shell.addEventListener('mousemove', (e: MouseEvent) => {
+        if (reducedMotion) return;
+        const rect = shell.getBoundingClientRect();
+        const dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
+        const dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
+        const rx = -dy * 7;
+        const ry =  dx * 10;
+        shell.style.transition = 'transform 100ms linear';
+        shell.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(4px)`;
+        if (light) {
+          light.style.setProperty('--lx', `${50 + ry * 2}%`);
+          light.style.setProperty('--ly', `${50 - rx * 2}%`);
+        }
+      }, { signal });
+
+      shell.addEventListener('mouseleave', () => {
+        shell.style.transition = 'transform 600ms var(--ease-out-soft)';
+        shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+        if (light) {
+          light.style.setProperty('--lx', '28%');
+          light.style.setProperty('--ly', '22%');
+        }
+      }, { signal });
+    });
+
+    document.addEventListener('astro:before-swap', () => ac.abort(), { once: true });
+  }
+
+  document.addEventListener('astro:page-load', initPrestations);
+</script>

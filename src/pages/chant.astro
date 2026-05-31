@@ -29,23 +29,25 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     <div class="section-container">
       <div class="categories-grid">
         {c.categories.map((cat, i) => (
-          <div
-            class="category-card reveal"
-            style={`transition-delay: ${i * 100}ms`}
-          >
-            <div class="card-accent-bar"></div>
-            <div class="card-body">
-              <span class="card-ordinal" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <div class="card-thumb">
-                <img src="/images/reel-cover.webp" alt={cat.title} loading="lazy" width="400" height="400" />
+          <div class={`card-shell cs-${i} reveal`} style={`transition-delay: ${i * 100}ms`} data-card>
+            <div class={`card-core cc-${i}`}>
+              <div class="card-light"></div>
+              <div class="card-top">
+                <span class="card-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <div class="card-thumb">
+                  <img src="/images/reel-cover.webp" alt={cat.title} loading="lazy" width="400" height="400" />
+                </div>
               </div>
               <h2 class="card-title">{cat.title}</h2>
+              <div class="card-line"></div>
               <p class="card-desc">{cat.description}</p>
-              <span class="card-link">
+              <span class="card-cta">
                 {c.cardLink}
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="card-arrow">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <span class="cta-circle" aria-hidden="true">
+                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                    <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </span>
             </div>
           </div>
@@ -53,6 +55,47 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       </div>
     </div>
   </section>
+
+  <script>
+    function initChantTilt() {
+      const shells = document.querySelectorAll<HTMLElement>('[data-card]');
+      const ac = new AbortController(); const { signal } = ac;
+      const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      shells.forEach(shell => {
+        const light = shell.querySelector<HTMLElement>('.card-light');
+        let startX = 0, startY = 0, hasMoved = false;
+        shell.addEventListener('touchstart', (e: TouchEvent) => { if (rm) return; startX = e.touches[0].clientX; startY = e.touches[0].clientY; hasMoved = false; }, { passive: true, signal });
+        shell.addEventListener('touchmove', (e: TouchEvent) => {
+          if (rm) return;
+          const t = e.touches[0];
+          if (Math.abs(t.clientX - startX) < 8 && Math.abs(t.clientY - startY) < 8) return;
+          hasMoved = true;
+          shell.style.transition = 'transform 80ms linear';
+          const r = shell.getBoundingClientRect();
+          const dx = (t.clientX-r.left-r.width/2)/(r.width/2), dy = (t.clientY-r.top-r.height/2)/(r.height/2);
+          shell.style.transform = `perspective(900px) rotateX(${-dy*10}deg) rotateY(${dx*14}deg) translateZ(6px)`;
+          if (light) { light.style.setProperty('--lx',`${50+dx*30}%`); light.style.setProperty('--ly',`${50-dy*22}%`); }
+        }, { passive: true, signal });
+        const reset = () => {
+          if (!hasMoved) { shell.style.transition = 'none'; shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)'; }
+          else { shell.style.transition = 'transform 500ms var(--ease-out-soft)'; shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)'; if (light) { light.style.setProperty('--lx','28%'); light.style.setProperty('--ly','22%'); } }
+          hasMoved = false;
+        };
+        shell.addEventListener('touchend', reset, { passive: true, signal });
+        shell.addEventListener('touchcancel', reset, { passive: true, signal });
+        shell.addEventListener('mousemove', (e: MouseEvent) => {
+          if (rm) return; const r = shell.getBoundingClientRect();
+          const dx = (e.clientX-r.left-r.width/2)/(r.width/2), dy = (e.clientY-r.top-r.height/2)/(r.height/2);
+          shell.style.transition = 'transform 100ms linear';
+          shell.style.transform = `perspective(900px) rotateX(${-dy*7}deg) rotateY(${dx*10}deg) translateZ(4px)`;
+          if (light) { light.style.setProperty('--lx',`${50+dx*20}%`); light.style.setProperty('--ly',`${50-dy*14}%`); }
+        }, { signal });
+        shell.addEventListener('mouseleave', () => { shell.style.transition = 'transform 600ms var(--ease-out-soft)'; shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)'; if (light) { light.style.setProperty('--lx','28%'); light.style.setProperty('--ly','22%'); } }, { signal });
+      });
+      document.addEventListener('astro:before-swap', () => ac.abort(), { once: true });
+    }
+    document.addEventListener('astro:page-load', initChantTilt);
+  </script>
 
   <!-- CTA -->
   <section class="chant-cta">
@@ -82,17 +125,20 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 11px;
-    letter-spacing: 0.1em;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--color-text-secondary);
     text-decoration: none;
     margin-bottom: 0.5rem;
+    min-height: 44px;
+    padding: 0.5rem 0;
     transition: color 220ms var(--ease-out-soft), gap 220ms var(--ease-out-soft);
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .back-link:hover { color: var(--color-accent); gap: 0.6rem; }
+  .back-link:hover { color: var(--color-accent); gap: 0.75rem; }
 
   .chant-hero h1 {
     font-family: var(--font-serif);
@@ -114,98 +160,61 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   .categories-section { padding-block: var(--spacing-section); }
 
   .categories-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+    display: flex; flex-direction: column;
+    gap: 0.85rem; max-width: 420px; margin-inline: auto;
   }
+  @media (min-width: 600px) { .categories-grid { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 100%; gap: 1.25rem; } }
 
-  @media (min-width: 600px) { .categories-grid { grid-template-columns: repeat(3, 1fr); } }
-
-  .category-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--color-bg-card);
-    border: 0.5px solid var(--color-border);
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    transition: transform 400ms var(--ease-out-soft), border-color 400ms var(--ease-out-soft), box-shadow 400ms var(--ease-out-soft);
+  .card-shell {
+    border-radius: 20px; padding: 5px;
+    border: 0.5px solid rgba(229,215,190,0.6);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(43,31,21,0.04);
+    transform-style: preserve-3d;
+    transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+    transition: transform 500ms var(--ease-out-soft), box-shadow 500ms var(--ease-out-soft);
+    will-change: transform;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
+  .cs-0 { background: rgba(168,135,83,0.07); }
+  .cs-1 { background: rgba(193,104,71,0.07); }
+  .cs-2 { background: rgba(122,92,32,0.06); }
 
-  .category-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-accent);
-    box-shadow: 0 12px 32px rgba(193, 104, 71, 0.12);
+  .card-core {
+    border-radius: 15px; padding: 1.1rem 1.25rem;
+    display: flex; flex-direction: column; gap: 0.65rem;
+    position: relative; overflow: hidden;
   }
+  .cc-0 { background: linear-gradient(145deg, #FEFCF8 0%, #EDDEB8 100%); }
+  .cc-1 { background: linear-gradient(145deg, #FEFCF8 0%, #F0CBBA 100%); }
+  .cc-2 { background: linear-gradient(145deg, #FEFCF8 0%, #E6D8A8 100%); }
 
-  .card-accent-bar {
-    height: 3px;
-    background: linear-gradient(to right, var(--color-accent), var(--color-gold));
-    flex-shrink: 0;
+  .card-light {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle at var(--lx,28%) var(--ly,22%), rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.1) 35%, transparent 65%);
+    border-radius: inherit; transition: background 80ms linear;
   }
-
-  .card-body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-    flex: 1;
-    position: relative;
-  }
-
-  .card-ordinal {
-    position: absolute;
-    top: 1rem;
-    right: 1.25rem;
-    font-family: var(--font-serif);
-    font-size: 3rem;
-    line-height: 1;
-    color: var(--color-border);
-    pointer-events: none;
-    user-select: none;
-    transition: color 400ms var(--ease-out-soft);
-  }
-
-  .category-card:hover .card-ordinal { color: rgba(193, 104, 71, 0.1); }
-
-  .card-thumb {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 0.5px solid var(--color-border);
-    flex-shrink: 0;
-  }
-
+  .card-top { display: flex; align-items: center; justify-content: space-between; position: relative; }
+  .card-num { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 200; font-style: italic; line-height: 1; color: rgba(43,31,21,0.09); user-select: none; pointer-events: none; }
+  .card-thumb { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; border: 0.5px solid rgba(229,215,190,0.7); flex-shrink: 0; }
   .card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-  .card-title {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--color-text-primary);
-    margin: 0;
-    line-height: 1.3;
-  }
-
-  .card-desc { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0; flex: 1; }
-
-  .card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-top: 0.25rem;
-    transition: gap 250ms var(--ease-out-soft);
-  }
-
-  .category-card:hover .card-link { gap: 0.75rem; }
-
-  .card-arrow { flex-shrink: 0; transition: transform 250ms var(--ease-out-soft); }
-  .category-card:hover .card-arrow { transform: translateX(3px); }
+  .card-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 300; font-style: italic; color: var(--color-text-primary); margin: 0; line-height: 1.2; position: relative; }
+  .card-line { height: 0.5px; background: linear-gradient(90deg, var(--color-border), transparent); position: relative; }
+  .card-desc { font-size: 0.95rem; color: var(--color-text-secondary); line-height: 1.72; margin: 0; flex: 1; position: relative; }
+  .card-cta { display: inline-flex; align-items: center; gap: 0.55rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-style: normal; font-weight: 500; text-decoration: none; color: var(--color-accent); padding: 0.5rem 0.6rem 0.5rem 0.9rem; min-height: 44px; border-radius: 999px; background: rgba(255,255,255,0.5); border: 0.5px solid rgba(255,255,255,0.85); box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 4px rgba(43,31,21,0.06); align-self: flex-start; margin-top: 0.2rem; position: relative; overflow: hidden; cursor: pointer; transition: background 300ms var(--ease-out-soft), gap 300ms var(--ease-out-soft); }
+  .card-cta::before { content: ''; position: absolute; top: 0; left: -80%; width: 55%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: cta-shimmer 4s ease-in-out infinite; pointer-events: none; }
+  @keyframes cta-shimmer { 0% { left: -80%; } 30% { left: 130%; } 100% { left: 130%; } }
+  .card-shell:nth-child(2) .card-cta::before { animation-delay: 1.3s; }
+  .card-shell:nth-child(3) .card-cta::before { animation-delay: 2.6s; }
+  .cs-0 .card-cta { color: var(--color-gold); }
+  .cs-2 .card-cta { color: #7A5C20; }
+  .card-cta:hover { background: rgba(255,255,255,0.78); gap: 0.8rem; }
+  .cta-circle { width: 28px; height: 28px; border-radius: 50%; border: 1px solid currentColor; opacity: 0.75; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 350ms var(--ease-out-soft), opacity 300ms; animation: arrow-nudge 4s ease-in-out infinite; }
+  @keyframes arrow-nudge { 0%, 50%, 100% { transform: translateX(0); } 62% { transform: translateX(4px); } 70% { transform: translateX(1px); } 78% { transform: translateX(3px); } 86% { transform: translateX(0); } }
+  .card-shell:nth-child(2) .cta-circle { animation-delay: 1.3s; }
+  .card-shell:nth-child(3) .cta-circle { animation-delay: 2.6s; }
+  .card-cta:hover .cta-circle, .card-cta:focus .cta-circle { opacity: 1; transform: translateX(4px); animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) { .card-cta::before { animation: none; } .cta-circle { animation: none; } }
 
   .chant-cta {
     padding-block: var(--spacing-section);

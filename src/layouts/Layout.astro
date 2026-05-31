@@ -4,6 +4,7 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import PageLoader from '../components/ui/PageLoader.astro';
+import Cursor from '../components/ui/Cursor.astro';
 
 interface Props {
   title: string;
@@ -86,6 +87,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   <body>
     <PageLoader transition:persist />
+    <Cursor transition:persist />
     <Header />
     <main>
       <slot />
@@ -152,6 +154,132 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           document.documentElement.style.scrollBehavior = '';
         });
       });
+    </script>
+    <!-- GSAP + Lenis animations -->
+    <script>
+      import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      let lenis: InstanceType<typeof Lenis> | null = null;
+      let rafFn: ((time: number) => void) | null = null;
+      let magneticController: AbortController | null = null;
+
+      function destroy() {
+        if (rafFn) { gsap.ticker.remove(rafFn); rafFn = null; }
+        if (lenis) { lenis.destroy(); lenis = null; }
+        ScrollTrigger.getAll().forEach(t => t.kill());
+        magneticController?.abort();
+        magneticController = null;
+      }
+
+      function init() {
+        destroy();
+
+        // ── Lenis smooth scroll ──
+        lenis = new Lenis({
+          duration: 1.4,
+          smoothWheel: true,
+          prevent: (node: Element) => node.id === 'mobile-menu',
+        });
+        lenis.on('scroll', ScrollTrigger.update);
+        rafFn = (time: number) => lenis!.raf(time * 1000);
+        gsap.ticker.add(rafFn);
+        gsap.ticker.lagSmoothing(0);
+        document.documentElement.style.scrollBehavior = 'auto';
+
+        // ── Hero parallax ──
+        const heroVideo = document.querySelector<HTMLElement>('.hero-bg-video');
+        const heroText  = document.querySelector<HTMLElement>('.hero-text');
+
+        if (heroVideo) {
+          gsap.to(heroVideo, {
+            yPercent: 28,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.hero-section',
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 2,
+            },
+          });
+        }
+
+        if (heroText) {
+          gsap.to(heroText, {
+            y: -80,
+            opacity: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.hero-section',
+              start: '38% top',
+              end: 'bottom top',
+              scrub: 1.5,
+            },
+          });
+        }
+
+        // ── Magnetic buttons ──
+        magneticController = new AbortController();
+        const { signal } = magneticController;
+
+        document.querySelectorAll<HTMLElement>('.btn-primary, .btn-ghost, .hero-btn-ghost').forEach(btn => {
+          btn.addEventListener('mousemove', (e) => {
+            const ev = e as MouseEvent;
+            const r = btn.getBoundingClientRect();
+            const x = (ev.clientX - r.left - r.width / 2) * 0.3;
+            const y = (ev.clientY - r.top  - r.height / 2) * 0.3;
+            gsap.to(btn, { x, y, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+          }, { signal });
+
+          btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
+          }, { signal });
+        });
+
+        // ── Section title word-by-word reveal ──
+        document.querySelectorAll<HTMLElement>('.section-title:not([data-gsap-split])').forEach(title => {
+          const parentHeader = title.closest('.section-header');
+          if (!parentHeader) return;
+
+          title.dataset.gsapSplit = 'true';
+          const raw = title.innerHTML;
+
+          // Wrap each word in a mask span
+          title.innerHTML = raw.replace(
+            /(<[^>]+>)|([^<\s][^<]*[^<\s]|[^<\s])/g,
+            (match, tag, word) => {
+              if (tag) return tag;
+              return `<span class="tw-wrap" aria-hidden="true" style="display:inline-block;overflow:hidden;vertical-align:bottom"><span class="tw-inner" style="display:inline-block">${word}</span></span>`;
+            }
+          );
+
+          const inners = title.querySelectorAll<HTMLElement>('.tw-inner');
+          gsap.set(inners, { yPercent: 105 });
+
+          ScrollTrigger.create({
+            trigger: parentHeader,
+            start: 'top 82%',
+            once: true,
+            onEnter: () => {
+              gsap.to(inners, {
+                yPercent: 0,
+                duration: 0.75,
+                stagger: 0.055,
+                ease: 'power3.out',
+                delay: 0.15,
+              });
+            },
+          });
+        });
+      }
+
+      // First load + View Transitions
+      init();
+      document.addEventListener('astro:before-swap', destroy);
+      document.addEventListener('astro:page-load', init);
     </script>
   </body>
 </html>

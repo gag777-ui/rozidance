@@ -288,6 +288,13 @@
 .pswp__bg { background: rgba(43, 31, 21, 0.96); }
 .pswp__button--close { color: var(--color-gold); }
 
+/* ─── Lenis smooth scroll ────────────────────────────────────────────────── */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
 /* ─── Mobile global adjustments ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   :root {

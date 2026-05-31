@@ -178,11 +178,11 @@
       },
       {
         "q": "Zijn online lessen mogelijk?",
-        "a": "Ja, we bieden lessen via videoconferentie (Zoom, Google Meet) aan."
+        "a": "Ja, we bieden lessen via videoconferentie (Zoom, Google Meet) aan. Deze optie is beschikbaar voor individuele zang- en danslessen."
       },
       {
         "q": "Hoe lang duurt het om een lied te leren?",
-        "a": "Een eenvoudig lied kan in 2 tot 4 lessen geleerd worden. Complexere stukken kosten meer tijd."
+        "a": "Een eenvoudig lied kan in 2 tot 4 lessen geleerd worden. Complexere stukken kosten meer tijd. Alles hangt af van uw niveau en uw oefening tussen de lessen."
       },
       {
         "q": "Bieden jullie lessen aan om een trouwlied voor te bereiden?",
@@ -198,11 +198,11 @@
       },
       {
         "q": "Is er een minimum aantal deelnemers voor groepslessen?",
-        "a": "Groepslessen starten vanaf 4 personen."
+        "a": "Groepslessen starten vanaf 4 personen. Ze zijn ideaal voor culturele verenigingen, vriendengroepen of evenementenvoorbereiding."
       },
       {
         "q": "Kunnen lessen als cadeau gegeven worden?",
-        "a": "Ja, we bieden cadeaubonnen aan. Contacteer ons per e-mail."
+        "a": "Ja, we bieden cadeaubonnen aan voor individuele sessies of pakketten. Contacteer ons per e-mail om er een te bestellen."
       },
       {
         "q": "Hoe betalen we?",
@@ -272,7 +272,7 @@
   "404": {
     "title": "Pagina niet gevonden",
     "description": "De pagina die u zoekt bestaat niet of is verplaatst.",
-    "cta": "Terug naar huis"
+    "cta": "Terug naar de startpagina"
   },
   "mariages": {
     "pageTitle": "Huwelijken & Evenementen — Rozi Dance",
@@ -320,7 +320,7 @@
     "heroTitle": "Onze zang",
     "heroSubtitle": "Een stem voor elke gelegenheid — Soul, Pop of Jazz, in meerdere talen, om uw meest kostbare momenten te begeleiden.",
     "backLink": "Optredens",
-    "cardLink": "Betreden",
+    "cardLink": "Ontdekken",
     "ctaEyebrow": "Uw evenement",
     "ctaTitle": "Laten we praten over uw gelegenheid",
     "ctaText": "Elk optreden is aangepast aan uw wensen. Contacteer ons voor een persoonlijk programma.",
