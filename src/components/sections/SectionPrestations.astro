@@ -45,10 +45,12 @@ function getHref(id: string) {
 
     <div class="cards-grid">
       {t.prestations.items.map((item, i) => (
-        <div
+        <a
           class={`card-shell cs-${i} reveal`}
           style={`transition-delay: ${i * 120}ms`}
           data-card
+          href={getHref(item.id)}
+          aria-label={item.title}
         >
           <article class={`card-core cc-${i}`}>
             <div class="card-light"></div>
@@ -60,20 +62,16 @@ function getHref(id: string) {
             <h3 class="card-title">{item.title}</h3>
             <div class="card-line"></div>
             <p class="card-description">{item.description}</p>
-            <a
-              href={getHref(item.id)}
-              class="card-cta"
-              aria-label={`${item.link} — ${item.title}`}
-            >
+            <span class="card-cta" aria-hidden="true">
               {item.link}
-              <span class="cta-circle" aria-hidden="true">
+              <span class="cta-circle">
                 <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
                   <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
-            </a>
+            </span>
           </article>
-        </div>
+        </a>
       ))}
     </div>
 
@@ -406,11 +404,9 @@ function getHref(id: string) {
 
       const reset = () => {
         if (!hasMoved) {
-          // Tap simple → reset instantané, navigation non bloquée
           shell.style.transition = 'none';
           shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
         } else {
-          // Geste tilt → spring back
           shell.style.transition = 'transform 500ms var(--ease-out-soft)';
           shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)';
           if (light) {

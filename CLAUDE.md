@@ -94,6 +94,12 @@ Frosted-glass drawer sliding from the right on mobile (≤768px).
 - **SectionTemoignages** — 3 testimonial cards, waiting for real quotes
 - **SectionVideos** — 3 cards, waiting for real YouTube IDs from Gago
 
+## Page /chant — cards Instagram reels
+
+`src/pages/chant.astro` — 3 cards liées à des reels Instagram via `reelHrefs[]` (index 0/1/2). Chaque card cliquable = `<a target="_blank">`. Pour ajouter/changer un reel, modifier le tableau `reelHrefs` dans le frontmatter de la page. `null` = card sans lien.
+
+**Cards Prestations (`SectionPrestations.astro`)** — les card-shells sont des `<a>` (toute la surface cliquable). Flow: Homepage card "L'art du chant" → `/chant` → cards reels Instagram.
+
 ## Favicon
 
 All favicon files generated from `public/images/logo.webp` (500×500):
@@ -121,6 +127,7 @@ All images must be WebP. Placeholders use `onerror` fallback to `/images/placeho
 
 - `/` — single-scroll homepage
 - `/cours` — tarifs + FAQ accordion
+- `/chant` — page "L'art du chant" avec 3 cards (Soul, Pop, Jazz) liées à des reels Instagram
 - `/404` — custom 404
 - `/mentions-legales` — **TODO: page not yet created**, linked in Footer
 

@@ -28,30 +28,73 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   <section class="categories-section">
     <div class="section-container">
       <div class="categories-grid">
-        {c.categories.map((cat, i) => (
-          <div class={`card-shell cs-${i} reveal`} style={`transition-delay: ${i * 100}ms`} data-card>
-            <div class={`card-core cc-${i}`}>
-              <div class="card-light"></div>
-              <div class="card-top">
-                <span class="card-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                <div class="card-thumb">
-                  <img src="/images/reel-cover.webp" alt={cat.title} loading="lazy" width="400" height="400" />
+        {c.categories.map((cat, i) => {
+          const reelHrefs: (string | null)[] = [
+            'https://www.instagram.com/reel/DDXmkVPoV5g/?igsh=MWN6bzR2MnlndnQ4MQ%3D%3D',
+            'https://www.instagram.com/reel/DDch0BjoQfT/?igsh=dHJ5Zzhqbmt5cmly',
+            'https://www.instagram.com/reel/DDVA4oQI4c1/?igsh=MWw3d3UwbWoxbWl5bA%3D%3D',
+          ];
+          const href = reelHrefs[i];
+          return (
+            href
+              ? (
+                <a
+                  class={`card-shell cs-${i} reveal`}
+                  style={`transition-delay: ${i * 100}ms`}
+                  data-card
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={cat.title}
+                >
+                  <div class={`card-core cc-${i}`}>
+                    <div class="card-light"></div>
+                    <div class="card-top">
+                      <span class="card-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                      <div class="card-thumb">
+                        <img src="/images/reel-cover.webp" alt={cat.title} loading="lazy" width="400" height="400" />
+                      </div>
+                    </div>
+                    <h2 class="card-title">{cat.title}</h2>
+                    <div class="card-line"></div>
+                    <p class="card-desc">{cat.description}</p>
+                    <span class="card-cta">
+                      {c.cardLink}
+                      <span class="cta-circle" aria-hidden="true">
+                        <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                </a>
+              )
+              : (
+                <div class={`card-shell cs-${i} reveal`} style={`transition-delay: ${i * 100}ms`} data-card>
+                  <div class={`card-core cc-${i}`}>
+                    <div class="card-light"></div>
+                    <div class="card-top">
+                      <span class="card-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                      <div class="card-thumb">
+                        <img src="/images/reel-cover.webp" alt={cat.title} loading="lazy" width="400" height="400" />
+                      </div>
+                    </div>
+                    <h2 class="card-title">{cat.title}</h2>
+                    <div class="card-line"></div>
+                    <p class="card-desc">{cat.description}</p>
+                    <span class="card-cta">
+                      {c.cardLink}
+                      <span class="cta-circle" aria-hidden="true">
+                        <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <h2 class="card-title">{cat.title}</h2>
-              <div class="card-line"></div>
-              <p class="card-desc">{cat.description}</p>
-              <span class="card-cta">
-                {c.cardLink}
-                <span class="cta-circle" aria-hidden="true">
-                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </span>
-            </div>
-          </div>
-        ))}
+              )
+          );
+        })}
       </div>
     </div>
   </section>
