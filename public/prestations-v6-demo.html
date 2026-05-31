@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rozi Dance — Cards Mobile-First</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,200;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ivory:   #F7F1E6;
+  --card:    #FBF6EC;
+  --white:   #FEFCF8;
+  --text:    #2B1F15;
+  --muted:   #6B5645;
+  --faint:   #B8A689;
+  --accent:  #C16847;
+  --accent2: #A85638;
+  --gold:    #A88753;
+  --gold-l:  #D4AD70;
+  --border:  #E5D7BE;
+  --serif:   'Fraunces', Georgia, serif;
+  --body:    'Cormorant Garamond', serif;
+  --ease:    cubic-bezier(0.32, 0.72, 0, 1);
+  --spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { background: var(--ivory); font-family: var(--body); overflow-x: hidden; }
+
+/* ── Floating pill nav ──────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  background: rgba(251,246,236,0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 0.5px solid rgba(168,135,83,0.22);
+  border-radius: 999px;
+  padding: 4px;
+  box-shadow: 0 4px 24px rgba(43,31,21,0.08), inset 0 1px 0 rgba(255,255,255,0.85);
+  gap: 2px;
+  overflow: hidden;
+  max-width: calc(100vw - 2rem);
+}
+.nav-btn {
+  padding: 0.45rem 0.85rem;
+  font-family: var(--body);
+  font-style: italic;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 350ms var(--ease), color 350ms var(--ease);
+}
+.nav-btn.active { background: var(--text); color: #F5ECD9; }
+
+/* ── Section wrapper ────────────────────────────────── */
+.section {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 0 4rem;
+}
+.section-head {
+  text-align: center;
+  padding: 0 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.eyebrow {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-style: italic;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7A5C20;
+  background: rgba(168,135,83,0.1);
+  border: 0.5px solid rgba(168,135,83,0.22);
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 200;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.1;
+}
+.section-sub {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--faint);
+  font-style: italic;
+}
+
+/* ── Scroll reveal ──────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 650ms var(--ease), transform 650ms var(--ease);
+}
+.reveal.vis { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(2) { transition-delay: 90ms; }
+.reveal:nth-child(3) { transition-delay: 180ms; }
+
+
+/* ════════════════════════════════════════════════════
+   V1 — SNAP CAROUSEL  (swipe natif, double-bezel)
+════════════════════════════════════════════════════ */
+#v1 { background: var(--ivory); }
+
+.snap-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.5rem;
+  padding: 1rem 1.5rem 1.5rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  width: 100%;
+}
+.snap-track::-webkit-scrollbar { display: none; }
+
+/* Outer shell — double bezel */
+.snap-shell {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  width: min(82vw, 320px);
+  background: rgba(168,135,83,0.07);
+  border: 0.5px solid rgba(168,135,83,0.18);
+  border-radius: 28px;
+  padding: 6px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 2px 12px rgba(43,31,21,0.04);
+  transition: box-shadow 500ms var(--ease), transform 500ms var(--ease);
+}
+.snap-shell:active { transform: scale(0.985); }
+
+/* Inner core */
+.snap-core {
+  background: var(--white);
+  border-radius: 22px;
+  padding: 2rem 1.75rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  min-height: 340px;
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,1),
+    inset 0 -1px 0 rgba(168,135,83,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Watermark ordinal */
+.snap-num-bg {
+  position: absolute;
+  right: -0.75rem;
+  top: -0.75rem;
+  font-family: var(--serif);
+  font-size: 7rem;
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1;
+  color: rgba(43,31,21,0.04);
+  pointer-events: none;
+  user-select: none;
+}
+
+.snap-tag {
+  font-size: 0.58rem;
+  font-style: italic;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.snap-icon {
+  width: 50px; height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+}
+.snap-icon-0 { background: rgba(168,135,83,0.1); border: 0.5px solid rgba(168,135,83,0.2); color: var(--gold); }
+.snap-icon-1 { background: rgba(193,104,71,0.1); border: 0.5px solid rgba(193,104,71,0.2); color: var(--accent); }
+.snap-icon-2 { background: rgba(122,92,32,0.08); border: 0.5px solid rgba(122,92,32,0.18); color: #7A5C20; }
+
+.snap-title {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.15;
+  flex: 1;
+}
+
+.snap-desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* Button-in-button CTA pill */
+.snap-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--text);
+  color: #F5ECD9;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.6rem 0.6rem 0.6rem 1.1rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-style: normal;
+  font-family: var(--body);
+  align-self: flex-start;
+  transition: transform 400ms var(--spring);
+  -webkit-tap-highlight-color: transparent;
+}
+.snap-cta:active { transform: scale(0.96); }
+.snap-cta-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.snap-cta-icon-0 { background: rgba(168,135,83,0.3); }
+.snap-cta-icon-1 { background: rgba(193,104,71,0.3); }
+.snap-cta-icon-2 { background: rgba(122,92,32,0.3); }
+
+/* Dots */
+.snap-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+.snap-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 300ms, transform 300ms var(--spring), width 300ms var(--spring);
+}
+.snap-dot.active {
+  background: var(--gold);
+  width: 18px;
+  border-radius: 3px;
+}
+
+/* Desktop: 3 up */
+@media (min-width: 800px) {
+  .snap-track { justify-content: center; flex-wrap: wrap; overflow-x: visible; scroll-snap-type: none; }
+  .snap-shell { width: 280px; }
+}
+
+
+/* ════════════════════════════════════════════════════
+   V2 — ACCORDÉON LUXE  (tap to expand)
+════════════════════════════════════════════════════ */
+#v2 { background: #F5EDD8; }
+
+.accord-list {
+  width: 100%;
+  max-width: 600px;
+  padding: 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.accord-item {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 2px 0 rgba(255,255,255,0.9) inset, 0 1px 8px rgba(43,31,21,0.04);
+  transition: border-color 400ms var(--ease), box-shadow 400ms var(--ease);
+}
+.accord-item.open {
+  border-color: rgba(193,104,71,0.28);
+  box-shadow: 0 2px 0 rgba(255,255,255,0.9) inset, 0 8px 32px rgba(193,104,71,0.08);
+}
+
+/* Header row — always visible, 60px touch target */
+.accord-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  min-height: 60px;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.accord-num {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 200;
+  font-style: italic;
+  color: var(--faint);
+  flex-shrink: 0;
+  width: 2rem;
+  transition: color 350ms var(--ease);
+}
+.accord-item.open .accord-num { color: var(--accent); }
+
+.accord-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  flex: 1;
+  line-height: 1.2;
+}
+
+/* Arrow */
+.accord-arrow {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--ivory);
+  border: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 350ms var(--ease), border-color 350ms var(--ease), transform 400ms var(--ease);
+}
+.accord-item.open .accord-arrow {
+  background: rgba(193,104,71,0.1);
+  border-color: rgba(193,104,71,0.25);
+  transform: rotate(45deg);
+}
+
+/* Body — animated */
+.accord-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 550ms var(--ease);
+}
+.accord-item.open .accord-body { max-height: 380px; }
+
+.accord-inner {
+  padding: 0 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-top: 0.5px solid var(--border);
+  padding-top: 1.25rem;
+}
+
+.accord-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+}
+.accord-icon-0 { background: rgba(168,135,83,0.1); border: 0.5px solid rgba(168,135,83,0.2); color: var(--gold); }
+.accord-icon-1 { background: rgba(193,104,71,0.1); border: 0.5px solid rgba(193,104,71,0.2); color: var(--accent); }
+.accord-icon-2 { background: rgba(122,92,32,0.08); border: 0.5px solid rgba(122,92,32,0.18); color: #7A5C20; }
+
+.accord-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.accord-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-style: normal;
+  text-decoration: none;
+  align-self: flex-start;
+  padding: 0.6rem 1rem 0.6rem 0.85rem;
+  border-radius: 999px;
+  transition: gap 350ms var(--ease), transform 350ms var(--spring);
+  -webkit-tap-highlight-color: transparent;
+}
+.accord-link-0 { color: var(--gold); border: 0.5px solid rgba(168,135,83,0.3); }
+.accord-link-1 { color: var(--accent); border: 0.5px solid rgba(193,104,71,0.3); }
+.accord-link-2 { color: #7A5C20; border: 0.5px solid rgba(122,92,32,0.25); }
+.accord-link:active { transform: scale(0.97); }
+
+
+/* ════════════════════════════════════════════════════
+   V3 — BANDELETTE COULEUR  (flag stripe left)
+════════════════════════════════════════════════════ */
+#v3 { background: var(--ivory); }
+
+.band-list {
+  width: 100%;
+  max-width: 600px;
+  padding: 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.band-card {
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.95) inset,
+    0 4px 20px rgba(43,31,21,0.05);
+  -webkit-tap-highlight-color: transparent;
+  transition: box-shadow 450ms var(--ease), transform 400ms var(--spring);
+}
+.band-card:active { transform: scale(0.985); }
+
+/* Left flag — full height gradient strip */
+.band-flag {
+  width: 72px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem 0;
+}
+.band-flag-0 { background: linear-gradient(180deg, rgba(168,135,83,0.15) 0%, rgba(212,173,112,0.08) 100%); }
+.band-flag-1 { background: linear-gradient(180deg, rgba(193,104,71,0.15) 0%, rgba(224,128,96,0.08) 100%); }
+.band-flag-2 { background: linear-gradient(180deg, rgba(122,92,32,0.12) 0%, rgba(168,135,83,0.06) 100%); }
+
+.band-num {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1;
+}
+.band-flag-0 .band-num { color: var(--gold); }
+.band-flag-1 .band-num { color: var(--accent); }
+.band-flag-2 .band-num { color: #8B6520; }
+
+.band-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid currentColor;
+}
+.band-flag-0 .band-icon { color: rgba(168,135,83,0.5); }
+.band-flag-1 .band-icon { color: rgba(193,104,71,0.5); }
+.band-flag-2 .band-icon { color: rgba(122,92,32,0.45); }
+
+/* Vertical separator — decorative dots */
+.band-sep {
+  width: 1px;
+  background: repeating-linear-gradient(to bottom, var(--border) 0, var(--border) 4px, transparent 4px, transparent 9px);
+  flex-shrink: 0;
+}
+
+/* Right content */
+.band-body {
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+
+.band-cat {
+  font-size: 0.58rem;
+  font-style: italic;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.band-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.band-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.75;
+  flex: 1;
+}
+
+.band-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-style: normal;
+  text-decoration: none;
+  margin-top: 0.25rem;
+  transition: gap 300ms var(--ease);
+}
+.band-flag-0 ~ .band-body .band-link,
+.band-card:nth-child(1) .band-link { color: var(--gold); }
+.band-card:nth-child(2) .band-link { color: var(--accent); }
+.band-card:nth-child(3) .band-link { color: #7A5C20; }
+
+
+/* ════════════════════════════════════════════════════
+   V4 — DÔME PORTRAIT  (arche colorée en haut)
+════════════════════════════════════════════════════ */
+#v4 { background: #EDE5D2; }
+
+.dome-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.5rem;
+  padding: 0.5rem 1.5rem 1.5rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  width: 100%;
+}
+.dome-track::-webkit-scrollbar { display: none; }
+
+.dome-card {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  width: min(78vw, 300px);
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--white);
+  border: 0.5px solid rgba(168,135,83,0.15);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.95) inset,
+    0 8px 32px rgba(43,31,21,0.08);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 400ms var(--spring);
+}
+.dome-card:active { transform: scale(0.975); }
+
+/* Dome top — colored half-ellipse */
+.dome-top {
+  position: relative;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  overflow: hidden;
+}
+.dome-card-0 .dome-top { background: linear-gradient(160deg, rgba(168,135,83,0.18) 0%, rgba(212,173,112,0.1) 100%); }
+.dome-card-1 .dome-top { background: linear-gradient(160deg, rgba(193,104,71,0.16) 0%, rgba(224,128,96,0.08) 100%); }
+.dome-card-2 .dome-top { background: linear-gradient(160deg, rgba(122,92,32,0.14) 0%, rgba(168,135,83,0.07) 100%); }
+
+/* Arch bottom edge of dome top */
+.dome-top::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: -5%;
+  width: 110%;
+  height: 40px;
+  background: var(--white);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+/* Large ordinal floating in dome */
+.dome-watermark {
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+  font-family: var(--serif);
+  font-size: 4.5rem;
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1;
+  opacity: 0.1;
+  pointer-events: none;
+}
+.dome-card-0 .dome-watermark { color: var(--gold); }
+.dome-card-1 .dome-watermark { color: var(--accent); }
+.dome-card-2 .dome-watermark { color: #7A5C20; }
+
+.dome-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(43,31,21,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.dome-card-0 .dome-icon { background: #FBF6EC; border: 0.5px solid rgba(168,135,83,0.25); color: var(--gold); }
+.dome-card-1 .dome-icon { background: #FBF6EC; border: 0.5px solid rgba(193,104,71,0.25); color: var(--accent); }
+.dome-card-2 .dome-icon { background: #FBF6EC; border: 0.5px solid rgba(122,92,32,0.22); color: #7A5C20; }
+
+/* Dome bottom content */
+.dome-body {
+  padding: 1.25rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  text-align: center;
+}
+
+.dome-label {
+  font-size: 0.58rem;
+  font-style: italic;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.dome-title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.dome-desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.dome-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-style: normal;
+  text-decoration: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  align-self: center;
+  transition: transform 350ms var(--spring);
+  margin-top: 0.25rem;
+  -webkit-tap-highlight-color: transparent;
+}
+.dome-card-0 .dome-cta { color: var(--gold); border: 0.5px solid rgba(168,135,83,0.35); }
+.dome-card-1 .dome-cta { color: var(--accent); border: 0.5px solid rgba(193,104,71,0.35); }
+.dome-card-2 .dome-cta { color: #7A5C20; border: 0.5px solid rgba(122,92,32,0.3); }
+.dome-cta:active { transform: scale(0.95); }
+
+.dome-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+.dome-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 300ms, width 300ms var(--spring);
+}
+.dome-dot.active { background: var(--gold); width: 18px; border-radius: 3px; }
+
+@media (min-width: 800px) {
+  .dome-track { justify-content: center; flex-wrap: wrap; overflow-x: visible; scroll-snap-type: none; }
+  .dome-card { width: 280px; }
+}
+
+
+/* ════════════════════════════════════════════════════
+   V5 — TYPOGRAPHIE PURE  (édito, tap to reveal)
+════════════════════════════════════════════════════ */
+#v5 { background: var(--ivory); }
+
+.typo-list {
+  width: 100%;
+  max-width: 600px;
+  padding: 0;
+}
+
+.typo-row {
+  position: relative;
+  border-top: 0.5px solid var(--border);
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 400ms var(--ease);
+}
+.typo-row:last-child { border-bottom: 0.5px solid var(--border); }
+.typo-row.open { background: rgba(255,252,248,0.8); }
+
+/* Animated left rule */
+.typo-rule {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.5px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 500ms var(--ease);
+}
+.typo-row.open .typo-rule { transform: scaleY(1); }
+.typo-row-0 .typo-rule { background: linear-gradient(to bottom, var(--gold), var(--gold-l)); }
+.typo-row-1 .typo-rule { background: linear-gradient(to bottom, var(--accent), #E0906A); }
+.typo-row-2 .typo-rule { background: linear-gradient(to bottom, #7A5C20, var(--gold)); }
+
+.typo-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.typo-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 200;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: rgba(43,31,21,0.07);
+  transition: color 400ms var(--ease);
+  flex-shrink: 0;
+  user-select: none;
+}
+.typo-row.open .typo-num { color: rgba(43,31,21,0.12); }
+
+.typo-title-wrap { flex: 1; }
+.typo-cat {
+  font-size: 0.58rem;
+  font-style: italic;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.typo-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.15;
+}
+
+/* Plus/minus toggle */
+.typo-toggle {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 0.5px solid var(--border);
+  background: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 350ms var(--ease), border-color 350ms var(--ease), transform 400ms var(--ease);
+  align-self: center;
+}
+.typo-row.open .typo-toggle {
+  border-color: rgba(193,104,71,0.3);
+  transform: rotate(45deg);
+}
+.typo-row-0.open .typo-toggle { background: rgba(168,135,83,0.1); }
+.typo-row-1.open .typo-toggle { background: rgba(193,104,71,0.1); }
+.typo-row-2.open .typo-toggle { background: rgba(122,92,32,0.08); }
+
+/* Collapsible body */
+.typo-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 500ms var(--ease);
+}
+.typo-row.open .typo-body { max-height: 300px; }
+
+.typo-inner {
+  padding-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.typo-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.typo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-style: normal;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: gap 300ms var(--ease);
+}
+.typo-row-0 .typo-link { color: var(--gold); }
+.typo-row-1 .typo-link { color: var(--accent); }
+.typo-row-2 .typo-link { color: #7A5C20; }
+.typo-link:active { opacity: 0.7; }
+
+/* ── SVG icons ───────────────────────────────────── */
+svg { display: block; }
+
+/* ── Global desktop upgrade ────────────────────── */
+@media (min-width: 768px) {
+  .accord-list, .band-list, .typo-list { max-width: 680px; }
+  .band-flag { width: 88px; }
+  .typo-num { font-size: 5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="goTo('v1',this)">Carousel</button>
+  <button class="nav-btn" onclick="goTo('v2',this)">Accordéon</button>
+  <button class="nav-btn" onclick="goTo('v3',this)">Bandelette</button>
+  <button class="nav-btn" onclick="goTo('v4',this)">Dôme</button>
+  <button class="nav-btn" onclick="goTo('v5',this)">Typo</button>
+</nav>
+
+
+<!-- ════ V1 — SNAP CAROUSEL ════ -->
+<section id="v1" class="section">
+  <div class="section-head">
+    <span class="eyebrow">Concept 01</span>
+    <h2 class="section-title">Snap Carousel</h2>
+    <p class="section-sub">Swipe natif · double-bezel · bouton pill</p>
+  </div>
+
+  <div class="snap-track" id="snap1">
+
+    <div class="snap-shell reveal">
+      <div class="snap-core">
+        <span class="snap-num-bg" aria-hidden="true">01</span>
+        <span class="snap-tag">Mariage · Cérémonie</span>
+        <div class="snap-icon snap-icon-0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+        </div>
+        <h3 class="snap-title">Chant pour mariages</h3>
+        <p class="snap-desc">Voix arménienne live pour votre cérémonie. Répertoire sacré et romantique, adapté à vos traditions.</p>
+        <a href="#" class="snap-cta">
+          Découvrir
+          <span class="snap-cta-icon snap-cta-icon-0">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#D4AD70" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="snap-shell reveal">
+      <div class="snap-core">
+        <span class="snap-num-bg" aria-hidden="true">02</span>
+        <span class="snap-tag">Gala · Réception · Fête</span>
+        <div class="snap-icon snap-icon-1">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </div>
+        <h3 class="snap-title">Danse événementielle</h3>
+        <p class="snap-desc">Spectacles de danse orientale et arménienne. Énergie, grâce et élégance pour marquer les esprits.</p>
+        <a href="#" class="snap-cta">
+          Découvrir
+          <span class="snap-cta-icon snap-cta-icon-1">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#E0906A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="snap-shell reveal">
+      <div class="snap-core">
+        <span class="snap-num-bg" aria-hidden="true">03</span>
+        <span class="snap-tag">Cours · Atelier</span>
+        <div class="snap-icon snap-icon-2">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+        </div>
+        <h3 class="snap-title">Cours de chant & danse</h3>
+        <p class="snap-desc">Cours particuliers ou groupes. Technique vocale, danse orientale, rythme arménien — tous niveaux.</p>
+        <a href="#" class="snap-cta">
+          Découvrir
+          <span class="snap-cta-icon snap-cta-icon-2">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#C4A855" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="snap-dots" id="dots1">
+    <div class="snap-dot active"></div>
+    <div class="snap-dot"></div>
+    <div class="snap-dot"></div>
+  </div>
+</section>
+
+
+<!-- ════ V2 — ACCORDÉON ════ -->
+<section id="v2" class="section">
+  <div class="section-head">
+    <span class="eyebrow">Concept 02</span>
+    <h2 class="section-title">Accordéon Luxe</h2>
+    <p class="section-sub">Tap pour déplier · animation spring · 60px touch target</p>
+  </div>
+
+  <div class="accord-list">
+
+    <div class="accord-item reveal" onclick="toggleAccord(this)">
+      <div class="accord-header">
+        <span class="accord-num">01</span>
+        <h3 class="accord-title">Chant pour mariages</h3>
+        <div class="accord-arrow">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="accord-body">
+        <div class="accord-inner">
+          <div class="accord-icon accord-icon-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+          </div>
+          <p class="accord-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Répertoire sacré et romantique, profondément ancré dans la tradition arménienne.</p>
+          <a href="#" class="accord-link accord-link-0">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="accord-item reveal" onclick="toggleAccord(this)">
+      <div class="accord-header">
+        <span class="accord-num">02</span>
+        <h3 class="accord-title">Danse événementielle</h3>
+        <div class="accord-arrow">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="accord-body">
+        <div class="accord-inner">
+          <div class="accord-icon accord-icon-1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+          </div>
+          <p class="accord-desc">Spectacles de danse orientale et arménienne pour vos événements. Énergie, grâce et élégance pour marquer les esprits de vos invités.</p>
+          <a href="#" class="accord-link accord-link-1">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="accord-item reveal" onclick="toggleAccord(this)">
+      <div class="accord-header">
+        <span class="accord-num">03</span>
+        <h3 class="accord-title">Cours de chant & danse</h3>
+        <div class="accord-arrow">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="accord-body">
+        <div class="accord-inner">
+          <div class="accord-icon accord-icon-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+          </div>
+          <p class="accord-desc">Cours particuliers ou en groupe, enfants et adultes. Technique vocale, danse orientale, rythme arménien — du débutant au confirmé.</p>
+          <a href="#" class="accord-link accord-link-2">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════ V3 — BANDELETTE ════ -->
+<section id="v3" class="section">
+  <div class="section-head">
+    <span class="eyebrow">Concept 03</span>
+    <h2 class="section-title">Bandelette Couleur</h2>
+    <p class="section-sub">Zone colorée gauche · séparateur pointillé · layout horizontal</p>
+  </div>
+
+  <div class="band-list">
+
+    <div class="band-card reveal">
+      <div class="band-flag band-flag-0">
+        <span class="band-num">01</span>
+        <div class="band-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+        </div>
+      </div>
+      <div class="band-sep"></div>
+      <div class="band-body">
+        <span class="band-cat">Mariage · Cérémonie</span>
+        <h3 class="band-title">Chant pour mariages</h3>
+        <p class="band-desc">Voix arménienne live pour votre cérémonie. Répertoire sacré et romantique.</p>
+        <a href="#" class="band-link" style="color:var(--gold)">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <div class="band-card reveal">
+      <div class="band-flag band-flag-1">
+        <span class="band-num">02</span>
+        <div class="band-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </div>
+      </div>
+      <div class="band-sep"></div>
+      <div class="band-body">
+        <span class="band-cat">Gala · Réception · Fête</span>
+        <h3 class="band-title">Danse événementielle</h3>
+        <p class="band-desc">Spectacles orientaux et arméniens. Énergie et élégance pour vos invités.</p>
+        <a href="#" class="band-link" style="color:var(--accent)">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <div class="band-card reveal">
+      <div class="band-flag band-flag-2">
+        <span class="band-num">03</span>
+        <div class="band-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="band-sep"></div>
+      <div class="band-body">
+        <span class="band-cat">Cours · Atelier · Formation</span>
+        <h3 class="band-title">Cours chant & danse</h3>
+        <p class="band-desc">Cours particuliers ou groupe, tous niveaux. Voix et danse arménienne.</p>
+        <a href="#" class="band-link" style="color:#7A5C20">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════ V4 — DÔME ════ -->
+<section id="v4" class="section">
+  <div class="section-head">
+    <span class="eyebrow">Concept 04</span>
+    <h2 class="section-title">Dôme Portrait</h2>
+    <p class="section-sub">Arche supérieure · swipe carousel · icône suspendue</p>
+  </div>
+
+  <div class="dome-track" id="snap2">
+
+    <div class="dome-card dome-card-0 reveal">
+      <div class="dome-top">
+        <span class="dome-watermark" aria-hidden="true">01</span>
+        <div class="dome-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+        </div>
+      </div>
+      <div class="dome-body">
+        <span class="dome-label">Mariage · Cérémonie</span>
+        <h3 class="dome-title">Chant pour mariages</h3>
+        <p class="dome-desc">Voix arménienne live pour votre cérémonie. Répertoire sacré et romantique, adapté à vos traditions.</p>
+        <a href="#" class="dome-cta">Découvrir →</a>
+      </div>
+    </div>
+
+    <div class="dome-card dome-card-1 reveal">
+      <div class="dome-top">
+        <span class="dome-watermark" aria-hidden="true">02</span>
+        <div class="dome-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </div>
+      </div>
+      <div class="dome-body">
+        <span class="dome-label">Gala · Réception</span>
+        <h3 class="dome-title">Danse événementielle</h3>
+        <p class="dome-desc">Spectacles de danse orientale et arménienne. Énergie et élégance pour vos invités.</p>
+        <a href="#" class="dome-cta">Découvrir →</a>
+      </div>
+    </div>
+
+    <div class="dome-card dome-card-2 reveal">
+      <div class="dome-top">
+        <span class="dome-watermark" aria-hidden="true">03</span>
+        <div class="dome-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="dome-body">
+        <span class="dome-label">Cours · Atelier</span>
+        <h3 class="dome-title">Cours chant & danse</h3>
+        <p class="dome-desc">Cours particuliers ou groupe, tous niveaux. Voix et danse arménienne.</p>
+        <a href="#" class="dome-cta">Découvrir →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dome-dots" id="dots2">
+    <div class="dome-dot active"></div>
+    <div class="dome-dot"></div>
+    <div class="dome-dot"></div>
+  </div>
+</section>
+
+
+<!-- ════ V5 — TYPOGRAPHIE PURE ════ -->
+<section id="v5" class="section">
+  <div class="section-head">
+    <span class="eyebrow">Concept 05</span>
+    <h2 class="section-title">Typographie Pure</h2>
+    <p class="section-sub">Pas de carte · trait animé · chiffre monumental · tap to reveal</p>
+  </div>
+
+  <div class="typo-list">
+
+    <div class="typo-row typo-row-0 reveal" onclick="toggleTypo(this)">
+      <div class="typo-rule"></div>
+      <div class="typo-head">
+        <span class="typo-num" aria-hidden="true">01</span>
+        <div class="typo-title-wrap">
+          <span class="typo-cat">Mariage · Cérémonie</span>
+          <h3 class="typo-title">Chant pour mariages</h3>
+        </div>
+        <div class="typo-toggle">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="typo-body">
+        <div class="typo-inner">
+          <p class="typo-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Répertoire sacré et romantique, profondément ancré dans la tradition arménienne.</p>
+          <a href="#" class="typo-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="typo-row typo-row-1 reveal" onclick="toggleTypo(this)">
+      <div class="typo-rule"></div>
+      <div class="typo-head">
+        <span class="typo-num" aria-hidden="true">02</span>
+        <div class="typo-title-wrap">
+          <span class="typo-cat">Gala · Réception · Fête</span>
+          <h3 class="typo-title">Danse événementielle</h3>
+        </div>
+        <div class="typo-toggle">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="typo-body">
+        <div class="typo-inner">
+          <p class="typo-desc">Spectacles de danse orientale et arménienne pour vos événements. Énergie, grâce et élégance pour marquer les esprits de vos invités.</p>
+          <a href="#" class="typo-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="typo-row typo-row-2 reveal" onclick="toggleTypo(this)">
+      <div class="typo-rule"></div>
+      <div class="typo-head">
+        <span class="typo-num" aria-hidden="true">03</span>
+        <div class="typo-title-wrap">
+          <span class="typo-cat">Cours · Atelier · Formation</span>
+          <h3 class="typo-title">Cours chant & danse</h3>
+        </div>
+        <div class="typo-toggle">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="typo-body">
+        <div class="typo-inner">
+          <p class="typo-desc">Cours particuliers ou en groupe, enfants et adultes. Technique vocale, danse orientale, rythme arménien — du débutant au confirmé.</p>
+          <a href="#" class="typo-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+/* ── Nav ─────────────────────────────── */
+function goTo(id, btn) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+/* Scroll spy */
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const id = e.target.id;
+    document.querySelectorAll('.nav-btn').forEach((b, i) => {
+      b.classList.toggle('active', ['v1','v2','v3','v4','v5'][i] === id);
+    });
+  });
+}, { threshold: 0.45 });
+document.querySelectorAll('.section').forEach(s => spy.observe(s));
+
+/* ── Scroll reveal ───────────────────── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); revealObs.unobserve(e.target); }});
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ── Snap dots V1 ────────────────────── */
+function bindDots(trackId, dotsId) {
+  const track = document.getElementById(trackId);
+  const dots = document.querySelectorAll('#' + dotsId + ' .snap-dot, #' + dotsId + ' .dome-dot');
+  if (!track) return;
+  track.addEventListener('scroll', () => {
+    const idx = Math.round(track.scrollLeft / track.offsetWidth * (dots.length / (track.offsetWidth / (track.scrollWidth / dots.length))));
+    const cards = track.children;
+    let closest = 0;
+    let minDist = Infinity;
+    Array.from(cards).forEach((c, i) => {
+      const dist = Math.abs(c.getBoundingClientRect().left - track.getBoundingClientRect().left - track.offsetWidth / 2 + c.offsetWidth / 2);
+      if (dist < minDist) { minDist = dist; closest = i; }
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === closest));
+  }, { passive: true });
+}
+bindDots('snap1', 'dots1');
+bindDots('snap2', 'dots2');
+
+/* ── Accordéon ───────────────────────── */
+function toggleAccord(item) {
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.accord-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── Typo rows ───────────────────────── */
+function toggleTypo(row) {
+  const wasOpen = row.classList.contains('open');
+  document.querySelectorAll('.typo-row').forEach(r => r.classList.remove('open'));
+  if (!wasOpen) row.classList.add('open');
+}
+</script>
+
+</body>
+</html>

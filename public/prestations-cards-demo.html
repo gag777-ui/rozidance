@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prestations — 2 variantes de cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-bg-primary:    #F7F1E6;
+    --color-bg-card:       #FBF6EC;
+    --color-bg-dark:       #2B1F15;
+    --color-text-primary:  #2B1F15;
+    --color-text-secondary:#6B5645;
+    --color-text-muted:    #B8A689;
+    --color-accent:        #C16847;
+    --color-gold:          #A88753;
+    --color-border:        #E5D7BE;
+    --font-serif:          'Fraunces', Georgia, serif;
+    --font-sans:           'Inter', system-ui, sans-serif;
+    --ease-out-soft:       cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  body {
+    background: var(--color-bg-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    padding: 3rem 1.5rem 6rem;
+    color: var(--color-text-primary);
+  }
+
+  .page-label {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 5rem;
+  }
+
+  .variant-block {
+    max-width: 1100px;
+    margin: 0 auto 7rem;
+  }
+
+  .variant-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .variant-label h2 {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+  }
+
+  .variant-label .tag {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--color-border);
+    color: var(--color-text-secondary);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  .divider {
+    flex: 1;
+    height: 0.5px;
+    background: var(--color-border);
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* ══════════════════════════════════════════════
+     VARIANTE A — Ivory stripe gradient
+  ══════════════════════════════════════════════ */
+
+  .card-a {
+    position: relative;
+    background: var(--color-bg-card);
+    border: 0.5px solid var(--color-border);
+    border-radius: 1.75rem;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+    transition: transform 400ms var(--ease-out-soft), box-shadow 400ms var(--ease-out-soft), border-color 400ms var(--ease-out-soft);
+  }
+
+  .card-a:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(193,104,71,0.12);
+    border-color: rgba(193,104,71,0.3);
+  }
+
+  /* Bande supérieure */
+  .card-a-stripe {
+    height: 5px;
+    width: 100%;
+  }
+  .card-a-0 .card-a-stripe { background: linear-gradient(90deg, #A88753, #D4AD70); }
+  .card-a-1 .card-a-stripe { background: linear-gradient(90deg, #C16847, #D98468); }
+  .card-a-2 .card-a-stripe { background: linear-gradient(90deg, #7A5C20, #A88753); }
+
+  .card-a-body {
+    padding: 2rem 1.875rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    flex: 1;
+  }
+
+  /* Ordinal + icon sur la même ligne */
+  .card-a-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-a-ordinal {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text-muted);
+    line-height: 1;
+  }
+
+  .card-a-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 300ms, border-color 300ms;
+  }
+  .card-a-0 .card-a-icon { background: rgba(168,135,83,0.1); border: 0.5px solid rgba(168,135,83,0.25); color: var(--color-gold); }
+  .card-a-1 .card-a-icon { background: rgba(193,104,71,0.1); border: 0.5px solid rgba(193,104,71,0.25); color: var(--color-accent); }
+  .card-a-2 .card-a-icon { background: rgba(122,92,32,0.08); border: 0.5px solid rgba(122,92,32,0.2); color: #7A5C20; }
+
+  .card-a-0:hover .card-a-icon { background: rgba(168,135,83,0.18); border-color: rgba(168,135,83,0.4); }
+  .card-a-1:hover .card-a-icon { background: rgba(193,104,71,0.18); border-color: rgba(193,104,71,0.4); }
+  .card-a-2:hover .card-a-icon { background: rgba(122,92,32,0.14); border-color: rgba(122,92,32,0.32); }
+
+  .card-a-title {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+  }
+
+  .card-a-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    flex: 1;
+  }
+
+  .card-a-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    text-decoration: none;
+    margin-top: 0.5rem;
+    transition: gap 250ms var(--ease-out-soft);
+  }
+  .card-a-link:hover { gap: 0.9rem; }
+  .card-a-link svg { transition: transform 250ms var(--ease-out-soft); }
+  .card-a-link:hover svg { transform: translateX(3px); }
+
+  /* ══════════════════════════════════════════════
+     VARIANTE B — Dark luxury glass
+  ══════════════════════════════════════════════ */
+
+  .cards-grid-b {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .card-b {
+    position: relative;
+    background: #1E140D;
+    border: 0.5px solid rgba(229,215,190,0.12);
+    border-radius: 1.75rem;
+    padding: 2.25rem 1.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    overflow: hidden;
+    cursor: default;
+    transition: transform 400ms var(--ease-out-soft), border-color 400ms var(--ease-out-soft), box-shadow 400ms var(--ease-out-soft);
+  }
+
+  .card-b::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(168,135,83,0.35) 40%,
+      rgba(193,104,71,0.25) 65%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 400ms var(--ease-out-soft);
+  }
+
+  .card-b:hover::before { opacity: 1; }
+
+  /* lueur de fond */
+  .card-b::after {
+    content: '';
+    position: absolute;
+    top: -4rem;
+    right: -4rem;
+    width: 14rem;
+    height: 14rem;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 500ms var(--ease-out-soft);
+  }
+  .card-b-0::after { background: radial-gradient(circle, rgba(168,135,83,0.12) 0%, transparent 70%); }
+  .card-b-1::after { background: radial-gradient(circle, rgba(193,104,71,0.12) 0%, transparent 70%); }
+  .card-b-2::after { background: radial-gradient(circle, rgba(122,92,32,0.1) 0%, transparent 70%); }
+  .card-b:hover::after { opacity: 1; }
+
+  .card-b:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+  .card-b-0:hover { border-color: rgba(168,135,83,0.25); }
+  .card-b-1:hover { border-color: rgba(193,104,71,0.25); }
+  .card-b-2:hover { border-color: rgba(122,92,32,0.2); }
+
+  /* Ordinal watermark */
+  .card-b-ordinal {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    font-weight: 300;
+    line-height: 1;
+    color: rgba(229,215,190,0.06);
+    pointer-events: none;
+    user-select: none;
+    transition: color 400ms var(--ease-out-soft);
+  }
+  .card-b:hover .card-b-ordinal { color: rgba(229,215,190,0.1); }
+
+  .card-b-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 300ms, border-color 300ms;
+  }
+  .card-b-0 .card-b-icon { background: rgba(168,135,83,0.12); border: 0.5px solid rgba(168,135,83,0.22); color: #D4AD70; }
+  .card-b-1 .card-b-icon { background: rgba(193,104,71,0.12); border: 0.5px solid rgba(193,104,71,0.22); color: #D4825C; }
+  .card-b-2 .card-b-icon { background: rgba(122,92,32,0.1); border: 0.5px solid rgba(122,92,32,0.2); color: #C4A855; }
+
+  .card-b-0:hover .card-b-icon { background: rgba(168,135,83,0.2); border-color: rgba(168,135,83,0.38); }
+  .card-b-1:hover .card-b-icon { background: rgba(193,104,71,0.2); border-color: rgba(193,104,71,0.38); }
+  .card-b-2:hover .card-b-icon { background: rgba(122,92,32,0.16); border-color: rgba(122,92,32,0.32); }
+
+  .card-b-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #F0E8D8;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .card-b-desc {
+    font-size: 0.85rem;
+    color: rgba(184,166,137,0.85);
+    line-height: 1.8;
+    flex: 1;
+  }
+
+  .card-b-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-top: 0.5rem;
+    transition: gap 250ms var(--ease-out-soft);
+  }
+  .card-b-0 .card-b-link { color: #D4AD70; }
+  .card-b-1 .card-b-link { color: #D4825C; }
+  .card-b-2 .card-b-link { color: #C4A855; }
+
+  .card-b-link:hover { gap: 0.9rem; }
+  .card-b-link svg { transition: transform 250ms var(--ease-out-soft); }
+  .card-b-link:hover svg { transform: translateX(3px); }
+
+  /* ── SVG icons helpers ─────────────────────── */
+  .icon-svg { display: block; }
+</style>
+</head>
+<body>
+
+<p class="page-label">Prestations — 2 variantes de cards</p>
+
+<!-- ═══════════════════ VARIANTE A ═══════════════════ -->
+<div class="variant-block">
+  <div class="variant-label">
+    <h2>Variante A — Bande couleur + icône carrée</h2>
+    <span class="tag">Ivoire</span>
+    <div class="divider"></div>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card A-0 : Mariages -->
+    <article class="card-a card-a-0">
+      <div class="card-a-stripe"></div>
+      <div class="card-a-body">
+        <div class="card-a-top">
+          <span class="card-a-ordinal">01</span>
+          <div class="card-a-icon">
+            <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/>
+            </svg>
+          </div>
+        </div>
+        <h3 class="card-a-title">Chant pour mariages</h3>
+        <p class="card-a-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Un répertoire sacré et romantique, adapté à vos traditions.</p>
+        <a href="#" class="card-a-link">
+          Découvrir
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- Card A-1 : Danse événementielle -->
+    <article class="card-a card-a-1">
+      <div class="card-a-stripe"></div>
+      <div class="card-a-body">
+        <div class="card-a-top">
+          <span class="card-a-ordinal">02</span>
+          <div class="card-a-icon">
+            <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="2" width="6" height="11" rx="3"/>
+              <path d="M5 10a7 7 0 0014 0"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+              <line x1="8" y1="22" x2="16" y2="22"/>
+            </svg>
+          </div>
+        </div>
+        <h3 class="card-a-title">Danse événementielle</h3>
+        <p class="card-a-desc">Spectacles de danse orientale et arménienne pour vos événements. Énergie, grâce et élégance pour marquer les esprits.</p>
+        <a href="#" class="card-a-link">
+          Découvrir
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- Card A-2 : Cours -->
+    <article class="card-a card-a-2">
+      <div class="card-a-stripe"></div>
+      <div class="card-a-body">
+        <div class="card-a-top">
+          <span class="card-a-ordinal">03</span>
+          <div class="card-a-icon">
+            <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+              <line x1="9" y1="7" x2="15" y2="7"/>
+              <line x1="9" y1="11" x2="13" y2="11"/>
+            </svg>
+          </div>
+        </div>
+        <h3 class="card-a-title">Cours de chant & danse</h3>
+        <p class="card-a-desc">Cours particuliers ou en groupe, enfants et adultes. Technique vocale, danse orientale, rythme arménien — du débutant au confirmé.</p>
+        <a href="#" class="card-a-link">
+          Découvrir
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════ VARIANTE B ═══════════════════ -->
+<div class="variant-block">
+  <div class="variant-label">
+    <h2>Variante B — Dark luxury</h2>
+    <span class="tag">Sombre</span>
+    <div class="divider"></div>
+  </div>
+
+  <div class="cards-grid-b">
+
+    <!-- Card B-0 : Mariages -->
+    <article class="card-b card-b-0">
+      <span class="card-b-ordinal" aria-hidden="true">01</span>
+      <div class="card-b-icon">
+        <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/>
+        </svg>
+      </div>
+      <h3 class="card-b-title">Chant pour mariages</h3>
+      <p class="card-b-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Un répertoire sacré et romantique, adapté à vos traditions.</p>
+      <a href="#" class="card-b-link">
+        Découvrir
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </article>
+
+    <!-- Card B-1 : Danse événementielle -->
+    <article class="card-b card-b-1">
+      <span class="card-b-ordinal" aria-hidden="true">02</span>
+      <div class="card-b-icon">
+        <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="2" width="6" height="11" rx="3"/>
+          <path d="M5 10a7 7 0 0014 0"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+          <line x1="8" y1="22" x2="16" y2="22"/>
+        </svg>
+      </div>
+      <h3 class="card-b-title">Danse événementielle</h3>
+      <p class="card-b-desc">Spectacles de danse orientale et arménienne pour vos événements. Énergie, grâce et élégance pour marquer les esprits.</p>
+      <a href="#" class="card-b-link">
+        Découvrir
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </article>
+
+    <!-- Card B-2 : Cours -->
+    <article class="card-b card-b-2">
+      <span class="card-b-ordinal" aria-hidden="true">03</span>
+      <div class="card-b-icon">
+        <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          <line x1="9" y1="7" x2="15" y2="7"/>
+          <line x1="9" y1="11" x2="13" y2="11"/>
+        </svg>
+      </div>
+      <h3 class="card-b-title">Cours de chant & danse</h3>
+      <p class="card-b-desc">Cours particuliers ou en groupe, enfants et adultes. Technique vocale, danse orientale, rythme arménien — du débutant au confirmé.</p>
+      <a href="#" class="card-b-link">
+        Découvrir
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </article>
+
+  </div>
+</div>
+
+</body>
+</html>

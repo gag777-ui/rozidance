@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rozi Dance — Créatif max</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:     #F7F1E6;
+  --card:   #FBF6EC;
+  --dark:   #1E1410;
+  --dark2:  #2B1F15;
+  --acc:    #C16847;
+  --acc2:   #A85638;
+  --gold:   #A88753;
+  --gold2:  #C9A96E;
+  --text:   #2B1F15;
+  --muted:  #6B5645;
+  --dim:    #B8A689;
+  --border: #E5D7BE;
+  --serif:  'Fraunces',Georgia,serif;
+  --sans:   'Inter',system-ui,sans-serif;
+  --ease:   cubic-bezier(.22,1,.36,1);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── LAYOUT ── */
+.page{max-width:1120px;margin:0 auto;padding:5rem 1.5rem 8rem}
+
+.eyebrow{
+  display:block;font-size:10px;letter-spacing:.32em;
+  text-transform:uppercase;color:#7A5C20;margin-bottom:1rem;
+}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(1.75rem,3vw,2.5rem);
+  font-weight:400;line-height:1.1;margin-bottom:.5rem;
+}
+.section-sub{
+  font-size:.9375rem;color:var(--muted);
+  font-style:italic;margin-bottom:3.5rem;
+}
+.mega-divider{
+  position:relative;
+  height:1px;
+  background:linear-gradient(to right,transparent,var(--border),transparent);
+  margin:7rem 0;
+  overflow:visible;
+}
+.mega-divider::after{
+  content:'✦';
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  font-size:12px;color:var(--gold);
+  background:var(--bg);
+  padding:0 1rem;
+  letter-spacing:.2em;
+}
+
+
+/* ══════════════════════════════════════════════════════
+   PROPOSITION A  —  SCÈNE DRAMATIQUE
+   Cartes sombres, verticales, spotlights au hover
+══════════════════════════════════════════════════════ */
+
+.scene-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+
+.scene-card{
+  position:relative;
+  background:var(--dark);
+  border-radius:1.75rem;
+  padding:0;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  border:.5px solid rgba(255,255,255,.05);
+  cursor:default;
+  transition:
+    border-color 500ms var(--ease),
+    transform 500ms var(--ease),
+    box-shadow 500ms var(--ease);
+}
+.scene-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(193,104,71,.35);
+  box-shadow:0 24px 60px rgba(10,5,2,.5), 0 0 0 .5px rgba(193,104,71,.2);
+}
+
+/* ── Spotlight au hover ── */
+.scene-card::before{
+  content:'';
+  position:absolute;
+  top:-40%;left:50%;
+  transform:translateX(-50%);
+  width:180%;height:80%;
+  border-radius:50%;
+  background:radial-gradient(ellipse at top, rgba(193,104,71,.25) 0%, transparent 65%);
+  opacity:0;
+  transition:opacity 700ms var(--ease);
+  pointer-events:none;z-index:0;
+}
+.scene-card:hover::before{opacity:1}
+
+/* ── Zone haute avec motif SVG ── */
+.scene-stage{
+  position:relative;
+  height:160px;
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:1.25rem;
+  z-index:1;
+}
+
+/* Rideau SVG dans chaque carte */
+.scene-curtain{
+  position:absolute;inset:0;
+  display:flex;
+  pointer-events:none;
+}
+.scene-curtain-l,
+.scene-curtain-r{
+  flex:1;height:100%;
+  transition:transform 600ms var(--ease);
+}
+.scene-curtain-l{transform-origin:left}
+.scene-curtain-r{transform-origin:right}
+.scene-card:hover .scene-curtain-l{transform:translateX(-8%) scaleX(0.88)}
+.scene-card:hover .scene-curtain-r{transform:translateX(8%) scaleX(0.88)}
+
+/* Cercle icône sur le rideau */
+.scene-icon-wrap{
+  position:relative;z-index:2;
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(251,246,236,.07);
+  border:.5px solid rgba(251,246,236,.15);
+  display:flex;align-items:center;justify-content:center;
+  transition:background 400ms, border-color 400ms, transform 500ms var(--ease);
+}
+.scene-card:hover .scene-icon-wrap{
+  background:rgba(193,104,71,.2);
+  border-color:rgba(193,104,71,.5);
+  transform:scale(1.08);
+}
+
+/* ── Contenu bas ── */
+.scene-body{
+  position:relative;z-index:1;
+  padding:1.5rem 1.875rem 2rem;
+  display:flex;flex-direction:column;gap:1rem;
+  flex:1;
+}
+
+/* Trait séparateur entre stage et body */
+.scene-body::before{
+  content:'';
+  position:absolute;top:0;left:1.875rem;right:1.875rem;
+  height:.5px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,.08),transparent);
+}
+
+.scene-num{
+  font-family:var(--serif);font-size:10px;font-weight:300;
+  letter-spacing:.4em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);
+}
+.scene-title{
+  font-family:var(--serif);font-size:1.2rem;font-weight:300;
+  color:rgba(251,246,236,.92);line-height:1.2;
+  transition:color 300ms;
+}
+.scene-card:hover .scene-title{color:#fff}
+.scene-desc{
+  font-size:.85rem;color:rgba(251,246,236,.42);
+  line-height:1.75;flex:1;
+  transition:color 400ms;
+}
+.scene-card:hover .scene-desc{color:rgba(251,246,236,.62)}
+.scene-link{
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(193,104,71,.7);
+  display:inline-flex;align-items:center;gap:.5rem;
+  margin-top:.25rem;
+  transition:gap 280ms var(--ease), color 300ms;
+}
+.scene-card:hover .scene-link{gap:.9rem;color:var(--acc)}
+
+/* Numéro géant en watermark fond de carte */
+.scene-bg-num{
+  position:absolute;
+  right:-0.5rem;bottom:-1.5rem;
+  font-family:var(--serif);font-size:8rem;font-weight:200;
+  line-height:1;color:rgba(255,255,255,.03);
+  pointer-events:none;user-select:none;
+  transition:color 500ms var(--ease);
+}
+.scene-card:hover .scene-bg-num{color:rgba(193,104,71,.06)}
+
+/* Couleurs de rideau par carte */
+.card-mariage .scene-curtain-l{
+  background:linear-gradient(to right, rgba(168,135,83,.18), rgba(168,135,83,.04) 70%, transparent);
+}
+.card-mariage .scene-curtain-r{
+  background:linear-gradient(to left, rgba(168,135,83,.18), rgba(168,135,83,.04) 70%, transparent);
+}
+.card-chant .scene-curtain-l{
+  background:linear-gradient(to right, rgba(193,104,71,.2), rgba(193,104,71,.05) 70%, transparent);
+}
+.card-chant .scene-curtain-r{
+  background:linear-gradient(to left, rgba(193,104,71,.2), rgba(193,104,71,.05) 70%, transparent);
+}
+.card-cours .scene-curtain-l{
+  background:linear-gradient(to right, rgba(122,92,32,.15), rgba(122,92,32,.04) 70%, transparent);
+}
+.card-cours .scene-curtain-r{
+  background:linear-gradient(to left, rgba(122,92,32,.15), rgba(122,92,32,.04) 70%, transparent);
+}
+
+
+/* ══════════════════════════════════════════════════════
+   PROPOSITION B  —  ARABESQUE & MANUSCRIT
+   Cartes ivoire avec ornements de coin + courbes SVG
+══════════════════════════════════════════════════════ */
+
+.manus-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+
+.manus-card{
+  position:relative;
+  background:var(--card);
+  border-radius:1.5rem;
+  padding:2.25rem 2rem 2rem;
+  display:flex;flex-direction:column;gap:1.125rem;
+  overflow:hidden;
+  border:.5px solid var(--border);
+  cursor:default;
+  transition:
+    border-color 450ms var(--ease),
+    transform 450ms var(--ease),
+    box-shadow 450ms var(--ease);
+}
+.manus-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(193,104,71,.3);
+  box-shadow:0 20px 50px rgba(193,104,71,.09);
+}
+
+/* ── Ornements de coin ── */
+.corner{
+  position:absolute;width:32px;height:32px;
+  color:var(--border);
+  transition:color 400ms var(--ease), opacity 400ms;
+  opacity:.8;
+}
+.corner svg{width:100%;height:100%}
+.corner-tl{top:12px;left:12px}
+.corner-tr{top:12px;right:12px;transform:scaleX(-1)}
+.corner-bl{bottom:12px;left:12px;transform:scaleY(-1)}
+.corner-br{bottom:12px;right:12px;transform:scale(-1,-1)}
+
+.manus-card:hover .corner{color:var(--gold);opacity:1}
+
+/* ── Courbe arabesque SVG ── */
+.arabesque{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:70px;
+  pointer-events:none;
+  opacity:.35;
+  transition:opacity 500ms var(--ease);
+}
+.manus-card:hover .arabesque{opacity:.6}
+
+/* ── Icône ornée ── */
+.manus-icon-wrap{
+  position:relative;
+  width:54px;height:54px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+/* Cercle principal */
+.manus-icon-wrap::before{
+  content:'';
+  position:absolute;inset:0;
+  border-radius:50%;
+  border:.5px solid currentColor;
+  opacity:.25;
+  transition:opacity 350ms;
+}
+/* Cercle pointillé extérieur */
+.manus-icon-wrap::after{
+  content:'';
+  position:absolute;
+  inset:-5px;
+  border-radius:50%;
+  border:.5px dashed currentColor;
+  opacity:.15;
+  transition:opacity 350ms, transform 600ms var(--ease);
+}
+.manus-card:hover .manus-icon-wrap::before{opacity:.45}
+.manus-card:hover .manus-icon-wrap::after{opacity:.3; transform:rotate(30deg)}
+
+/* Couleurs par carte */
+.manus-card:nth-child(1) .manus-icon-wrap{color:var(--gold)}
+.manus-card:nth-child(2) .manus-icon-wrap{color:var(--acc)}
+.manus-card:nth-child(3) .manus-icon-wrap{color:#7A5C20}
+
+/* ── Ordinal avec ligne ── */
+.manus-ordinal{
+  display:flex;align-items:center;gap:.75rem;
+  font-family:var(--serif);font-size:11px;font-weight:300;
+  letter-spacing:.35em;text-transform:uppercase;
+  color:var(--dim);
+  margin-bottom:.25rem;
+}
+.manus-ordinal::after{
+  content:'';flex:1;height:.5px;
+  background:linear-gradient(to right, var(--border), transparent);
+}
+
+.manus-title{
+  font-family:var(--serif);font-size:1.225rem;font-weight:400;
+  color:var(--text);line-height:1.2;
+  transition:color 300ms;
+}
+.manus-card:hover .manus-title{color:var(--acc)}
+.manus-desc{
+  font-size:.875rem;color:var(--muted);
+  line-height:1.75;flex:1;
+}
+.manus-link{
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--acc);
+  display:inline-flex;align-items:center;gap:.5rem;
+  margin-top:auto;
+  padding-top:1rem;
+  border-top:.5px solid transparent;
+  transition:gap 280ms var(--ease), border-color 350ms, padding-top 350ms;
+}
+.manus-card:hover .manus-link{
+  gap:.9rem;
+  border-color:var(--border);
+  padding-top:.85rem;
+}
+
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  .scene-grid,.manus-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}
+}
+@media(min-width:600px) and (max-width:860px){
+  .scene-grid,.manus-grid{grid-template-columns:repeat(2,1fr);max-width:100%}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+
+  <!-- ══════════════════════════════════════════
+       PROPOSITION A — Scène dramatique
+  ══════════════════════════════════════════ -->
+
+  <span class="eyebrow">Proposition A</span>
+  <h2 class="section-title">Scène dramatique</h2>
+  <p class="section-sub">Fond sombre théâtral, rideaux qui s'écartent au hover, spotlight chaud qui s'allume. Passe la souris sur chaque carte.</p>
+
+  <div class="scene-grid">
+
+    <!-- 01 Mariages -->
+    <article class="scene-card card-mariage">
+      <div class="scene-stage">
+        <div class="scene-curtain">
+          <div class="scene-curtain-l"></div>
+          <div class="scene-curtain-r"></div>
+        </div>
+        <div class="scene-icon-wrap" style="color:var(--gold2)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="scene-body">
+        <span class="scene-num">01 — Mariage</span>
+        <h3 class="scene-title">Mariages &amp; Événements</h3>
+        <p class="scene-desc">Chant de la mariée, animation de la cérémonie au banquet. Chaque prestation est conçue sur mesure.</p>
+        <span class="scene-link">Voir les prestations →</span>
+      </div>
+      <span class="scene-bg-num" aria-hidden="true">01</span>
+    </article>
+
+    <!-- 02 Chant -->
+    <article class="scene-card card-chant">
+      <div class="scene-stage">
+        <div class="scene-curtain">
+          <div class="scene-curtain-l"></div>
+          <div class="scene-curtain-r"></div>
+        </div>
+        <div class="scene-icon-wrap" style="color:var(--acc)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="2" width="6" height="11" rx="3"/>
+            <path d="M5 10a7 7 0 0014 0"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+            <line x1="8" y1="22" x2="16" y2="22"/>
+          </svg>
+        </div>
+      </div>
+      <div class="scene-body">
+        <span class="scene-num">02 — Chant</span>
+        <h3 class="scene-title">L'art du chant</h3>
+        <p class="scene-desc">Soul, Jazz, Pop et répertoire arménien — une voix qui s'adapte à chaque atmosphère.</p>
+        <span class="scene-link">Voir les vidéos →</span>
+      </div>
+      <span class="scene-bg-num" aria-hidden="true">02</span>
+    </article>
+
+    <!-- 03 Cours -->
+    <article class="scene-card card-cours">
+      <div class="scene-stage">
+        <div class="scene-curtain">
+          <div class="scene-curtain-l"></div>
+          <div class="scene-curtain-r"></div>
+        </div>
+        <div class="scene-icon-wrap" style="color:#B8935A">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+            <line x1="9" y1="7" x2="15" y2="7"/>
+            <line x1="9" y1="11" x2="13" y2="11"/>
+          </svg>
+        </div>
+      </div>
+      <div class="scene-body">
+        <span class="scene-num">03 — Cours</span>
+        <h3 class="scene-title">Cours de chant &amp; danse</h3>
+        <p class="scene-desc">Cours individuels et collectifs à tous niveaux. En présentiel ou en ligne.</p>
+        <span class="scene-link">Voir les cours →</span>
+      </div>
+      <span class="scene-bg-num" aria-hidden="true">03</span>
+    </article>
+
+  </div>
+
+
+  <div class="mega-divider"></div>
+
+
+  <!-- ══════════════════════════════════════════
+       PROPOSITION B — Arabesque & Manuscrit
+  ══════════════════════════════════════════ -->
+
+  <span class="eyebrow">Proposition B</span>
+  <h2 class="section-title">Arabesque &amp; Manuscrit</h2>
+  <p class="section-sub">Ornements de coin inspirés des manuscrits arméniens, courbes arabesques et cercles pointillés. Chaque carte est unique.</p>
+
+  <div class="manus-grid">
+
+    <!-- 01 Mariages -->
+    <article class="manus-card">
+
+      <!-- 4 ornements de coin -->
+      <div class="corner corner-tl">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg>
+      </div>
+      <div class="corner corner-tr">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg>
+      </div>
+      <div class="corner corner-bl">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg>
+      </div>
+      <div class="corner corner-br">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg>
+      </div>
+
+      <!-- Courbe arabesque fond -->
+      <svg class="arabesque" viewBox="0 0 300 70" fill="none" preserveAspectRatio="none">
+        <path d="M0 55 C60 55 80 10 150 20 C220 30 240 65 300 45" stroke="#A88753" stroke-width="1"/>
+        <path d="M0 65 C80 65 100 25 160 30 C220 35 250 60 300 55" stroke="#A88753" stroke-width=".5" opacity=".5"/>
+      </svg>
+
+      <div class="manus-ordinal">01</div>
+      <div class="manus-icon-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/>
+        </svg>
+      </div>
+      <h3 class="manus-title">Mariages &amp; Événements</h3>
+      <p class="manus-desc">Chant de la mariée, animation de la cérémonie au banquet. Chaque prestation est conçue sur mesure pour votre journée.</p>
+      <span class="manus-link">Voir les prestations →</span>
+    </article>
+
+    <!-- 02 Chant -->
+    <article class="manus-card">
+      <div class="corner corner-tl"><svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg></div>
+      <div class="corner corner-tr"><svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg></div>
+      <div class="corner corner-bl"><svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg></div>
+      <div class="corner corner-br"><svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg></div>
+
+      <svg class="arabesque" viewBox="0 0 300 70" fill="none" preserveAspectRatio="none">
+        <path d="M0 65 C50 65 70 15 130 10 C190 5 210 55 300 40" stroke="#C16847" stroke-width="1"/>
+        <path d="M0 68 C70 68 90 30 150 22 C210 14 230 58 300 50" stroke="#C16847" stroke-width=".5" opacity=".4"/>
+      </svg>
+
+      <div class="manus-ordinal">02</div>
+      <div class="manus-icon-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="2" width="6" height="11" rx="3"/>
+          <path d="M5 10a7 7 0 0014 0"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+          <line x1="8" y1="22" x2="16" y2="22"/>
+        </svg>
+      </div>
+      <h3 class="manus-title">L'art du chant</h3>
+      <p class="manus-desc">Soul, Jazz, Pop et répertoire arménien — une voix qui s'adapte à chaque atmosphère, de l'intime au grandiose.</p>
+      <span class="manus-link">Voir les vidéos →</span>
+    </article>
+
+    <!-- 03 Cours -->
+    <article class="manus-card">
+      <div class="corner corner-tl"><svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg></div>
+      <div class="corner corner-tr"><svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg></div>
+      <div class="corner corner-bl"><svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg></div>
+      <div class="corner corner-br"><svg viewBox="0 0 32 32" fill="none"><path d="M1 31V5Q1 1 5 1H31" stroke="currentColor" stroke-width=".7"/><circle cx="1" cy="1" r="1.8" fill="currentColor" opacity=".5"/><circle cx="16" cy="1" r="1" fill="currentColor" opacity=".25"/><circle cx="1" cy="16" r="1" fill="currentColor" opacity=".25"/></svg></div>
+
+      <svg class="arabesque" viewBox="0 0 300 70" fill="none" preserveAspectRatio="none">
+        <path d="M0 45 C40 45 60 15 100 25 C140 35 160 65 220 55 C260 48 280 20 300 30" stroke="#7A5C20" stroke-width="1"/>
+        <path d="M0 55 C50 55 70 30 110 35 C150 40 170 68 230 60 C268 54 285 30 300 38" stroke="#7A5C20" stroke-width=".5" opacity=".4"/>
+      </svg>
+
+      <div class="manus-ordinal">03</div>
+      <div class="manus-icon-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          <line x1="9" y1="7" x2="15" y2="7"/>
+          <line x1="9" y1="11" x2="13" y2="11"/>
+        </svg>
+      </div>
+      <h3 class="manus-title">Cours de chant &amp; danse</h3>
+      <p class="manus-desc">Cours individuels et collectifs à tous niveaux. En présentiel ou en ligne — apprenez à votre propre rythme.</p>
+      <span class="manus-link">Voir les cours →</span>
+    </article>
+
+  </div>
+
+</div>
+</body>
+</html>

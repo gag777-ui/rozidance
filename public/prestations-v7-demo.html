@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rozi Dance — 5 Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,200;1,9..144,300;1,9..144,400&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:     #F7F1E6;
+  --card:   #FBF6EC;
+  --white:  #FEFCF8;
+  --text:   #2B1F15;
+  --sub:    #6B5645;
+  --muted:  #B8A689;
+  --accent: #C16847;
+  --gold:   #A88753;
+  --gold-l: #D4AD70;
+  --border: #E5D7BE;
+  --div:    #D9C9B0;
+  --serif:  'Fraunces', Georgia, serif;
+  --body:   'Cormorant Garamond', serif;
+  --ease:   cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { background: var(--bg); font-family: var(--body); overflow-x: hidden; color: var(--text); }
+
+/* ── Nav ─────────────────────────────────────── */
+.nav {
+  position: fixed; top: 1rem; left: 50%; transform: translateX(-50%);
+  z-index: 40; display: flex;
+  background: rgba(251,246,236,0.92);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 0.5px solid var(--border); border-radius: 999px;
+  padding: 4px; gap: 2px;
+  box-shadow: 0 2px 16px rgba(43,31,21,0.07);
+  max-width: calc(100vw - 2rem); overflow: hidden;
+}
+.nav button {
+  padding: 0.45rem 0.9rem;
+  font-family: var(--body); font-style: italic; font-size: 0.72rem;
+  letter-spacing: 0.03em; color: var(--sub); background: none;
+  border: none; border-radius: 999px; cursor: pointer;
+  transition: background 300ms var(--ease), color 300ms var(--ease);
+  white-space: nowrap; -webkit-tap-highlight-color: transparent;
+}
+.nav button.on { background: var(--accent); color: #FBF6EC; }
+
+/* ── Section ─────────────────────────────────── */
+.page {
+  min-height: 100dvh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 6rem 1.25rem 3.5rem;
+}
+.head { text-align: center; margin-bottom: 2.75rem; }
+.eyebrow {
+  display: inline-block; font-size: 0.58rem; font-style: italic;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+  border-bottom: 0.5px solid var(--gold-l); padding-bottom: 0.2rem;
+  margin-bottom: 0.6rem;
+}
+.title {
+  font-family: var(--serif); font-size: clamp(1.5rem, 5vw, 2.2rem);
+  font-weight: 200; font-style: italic; color: var(--text); line-height: 1.1;
+}
+.hint { margin-top: 0.35rem; font-size: 0.75rem; color: var(--muted); font-style: italic; }
+
+/* Scroll reveal */
+.r { opacity: 0; transform: translateY(18px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+.r.v { opacity: 1; transform: none; }
+.r:nth-child(2) { transition-delay: 80ms; }
+.r:nth-child(3) { transition-delay: 160ms; }
+
+svg { display: block; }
+
+
+/* ════════════════════════════════════════
+   V1 — ENCADRÉ  (coin coupé + double bord)
+════════════════════════════════════════ */
+#p1 { background: var(--bg); }
+
+.frame-grid { display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 480px; }
+
+.frame-card {
+  position: relative;
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: 4px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  display: flex; flex-direction: column; gap: 0.9rem;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+  transition: border-color 400ms var(--ease), box-shadow 400ms var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.frame-card::before {
+  content: '';
+  position: absolute; inset: 5px;
+  border: 0.5px solid var(--border); border-radius: 2px;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+  pointer-events: none;
+}
+.frame-card:active { transform: scale(0.99); }
+.fc0:active { border-color: rgba(168,135,83,0.4); box-shadow: 0 8px 28px rgba(168,135,83,0.1); }
+.fc1:active { border-color: rgba(193,104,71,0.4); box-shadow: 0 8px 28px rgba(193,104,71,0.1); }
+.fc2:active { border-color: rgba(122,92,32,0.35); }
+
+.frame-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.frame-num { font-family: var(--serif); font-size: 2.5rem; font-weight: 200; font-style: italic; line-height: 1; color: rgba(43,31,21,0.08); }
+.frame-icon { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.fi0 { background: rgba(168,135,83,0.1); color: var(--gold); }
+.fi1 { background: rgba(193,104,71,0.1); color: var(--accent); }
+.fi2 { background: rgba(122,92,32,0.08); color: #7A5C20; }
+.frame-cat { font-size: 0.57rem; font-style: italic; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.frame-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text); line-height: 1.2; }
+.frame-desc { font-size: 0.88rem; color: var(--sub); line-height: 1.78; }
+.frame-link {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+  font-style: normal; text-decoration: none; transition: gap 300ms var(--ease);
+}
+.fl0 { color: var(--gold); } .fl1 { color: var(--accent); } .fl2 { color: #7A5C20; }
+
+
+/* ════════════════════════════════════════
+   V2 — AQUARELLE  (blob flou en fond)
+════════════════════════════════════════ */
+#p2 { background: #F5EDD8; }
+
+.aqua-grid { display: flex; flex-direction: column; gap: 1.25rem; width: 100%; max-width: 480px; }
+
+.aqua-card {
+  position: relative;
+  background: var(--white); border-radius: 20px;
+  padding: 1.75rem 1.5rem;
+  display: flex; flex-direction: column; gap: 0.85rem;
+  overflow: hidden;
+  border: 0.5px solid rgba(229,215,190,0.6);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.95) inset;
+  -webkit-tap-highlight-color: transparent;
+}
+.aqua-blob {
+  position: absolute; border-radius: 50%;
+  pointer-events: none; filter: blur(32px); opacity: 0.35;
+}
+.ab0 { width: 140px; height: 140px; background: radial-gradient(circle, #D4AD70, transparent); top: -40px; right: -30px; }
+.ab1 { width: 130px; height: 130px; background: radial-gradient(circle, #E8A882, transparent); top: -35px; right: -25px; }
+.ab2 { width: 120px; height: 120px; background: radial-gradient(circle, #C4B870, transparent); top: -30px; right: -20px; }
+.aqua-row { display: flex; align-items: center; justify-content: space-between; }
+.aqua-num { font-family: var(--serif); font-size: 0.6rem; font-weight: 300; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+.aqua-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.ai0 { background: rgba(168,135,83,0.12); color: var(--gold); }
+.ai1 { background: rgba(193,104,71,0.12); color: var(--accent); }
+.ai2 { background: rgba(122,92,32,0.09); color: #7A5C20; }
+.aqua-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 300; font-style: italic; color: var(--text); line-height: 1.2; }
+.aqua-line { height: 0.5px; background: var(--border); }
+.aqua-desc { font-size: 0.87rem; color: var(--sub); line-height: 1.78; }
+.aqua-link {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.57rem; letter-spacing: 0.18em; text-transform: uppercase;
+  font-style: normal; text-decoration: none;
+  transition: gap 300ms var(--ease); align-self: flex-start;
+}
+.al0 { color: var(--gold); } .al1 { color: var(--accent); } .al2 { color: #7A5C20; }
+
+
+/* ════════════════════════════════════════
+   V3 — PLIAGE  (onglet coin supérieur)
+════════════════════════════════════════ */
+#p3 { background: var(--bg); }
+
+.fold-grid { display: flex; flex-direction: column; gap: 1.25rem; width: 100%; max-width: 480px; }
+
+.fold-card {
+  background: var(--white); border: 0.5px solid var(--border);
+  border-radius: 0 16px 16px 16px;
+  padding: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem;
+  position: relative;
+  box-shadow: 0 2px 12px rgba(43,31,21,0.04);
+  -webkit-tap-highlight-color: transparent;
+}
+.fold-card::before {
+  content: attr(data-num);
+  position: absolute; top: -1px; left: -1px;
+  font-family: var(--serif); font-size: 0.65rem; font-style: italic;
+  font-weight: 300; letter-spacing: 0.12em;
+  padding: 0.3rem 0.85rem 0.3rem 0.7rem;
+  border-radius: 8px 0 12px 0;
+  border-right: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);
+}
+.fk0::before { background: rgba(168,135,83,0.1); color: var(--gold); }
+.fk1::before { background: rgba(193,104,71,0.1); color: var(--accent); }
+.fk2::before { background: rgba(122,92,32,0.08); color: #7A5C20; }
+.fold-head { display: flex; align-items: center; gap: 0.85rem; padding-top: 0.5rem; }
+.fold-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.fdi0 { background: rgba(168,135,83,0.1); color: var(--gold); }
+.fdi1 { background: rgba(193,104,71,0.1); color: var(--accent); }
+.fdi2 { background: rgba(122,92,32,0.08); color: #7A5C20; }
+.fold-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; font-style: italic; color: var(--text); line-height: 1.2; }
+.fold-div { height: 0.5px; background: linear-gradient(90deg, var(--border), transparent); }
+.fold-desc { font-size: 0.87rem; color: var(--sub); line-height: 1.78; }
+.fold-link {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.57rem; letter-spacing: 0.18em; text-transform: uppercase;
+  font-style: normal; text-decoration: none; align-self: flex-start;
+  transition: gap 300ms var(--ease);
+}
+.fdl0 { color: var(--gold); } .fdl1 { color: var(--accent); } .fdl2 { color: #7A5C20; }
+
+
+/* ════════════════════════════════════════
+   V4 — RUBAN  (lignes horizontales pures)
+════════════════════════════════════════ */
+#p4 { background: #FAF4E8; }
+
+.ruban-list { width: 100%; max-width: 480px; }
+
+.ruban-row {
+  display: grid; grid-template-columns: 48px 1fr auto;
+  align-items: center; gap: 1rem;
+  padding: 1.4rem 0.5rem;
+  border-top: 0.5px solid var(--border);
+  transition: background 300ms var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.ruban-list .ruban-row:last-child { border-bottom: 0.5px solid var(--border); }
+.ruban-row:active { background: rgba(229,215,190,0.2); }
+
+.ruban-num {
+  font-family: var(--serif); font-style: italic; font-weight: 200;
+  font-size: 1.5rem; line-height: 1; color: var(--border); text-align: center;
+  transition: color 350ms var(--ease);
+}
+.ruban-row:active .ruban-num { color: var(--gold-l); }
+.ruban-body { display: flex; flex-direction: column; gap: 0.2rem; }
+.ruban-cat { font-size: 0.55rem; font-style: italic; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.ruban-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 300; font-style: italic; color: var(--text); line-height: 1.2; }
+.ruban-cta {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 0.5px solid var(--border); text-decoration: none;
+  transition: background 300ms var(--ease), border-color 300ms var(--ease);
+}
+.ruban-row:active .ruban-cta { background: var(--card); border-color: var(--div); }
+.rc0 { color: var(--gold); } .rc1 { color: var(--accent); } .rc2 { color: #7A5C20; }
+
+
+/* ════════════════════════════════════════
+   V5 — MÉDAILLON  (cercle concentrique)
+════════════════════════════════════════ */
+#p5 { background: var(--bg); }
+
+.med-grid { width: 100%; max-width: 480px; }
+
+.med-item {
+  display: flex; align-items: flex-start; gap: 1.25rem;
+  padding: 1.5rem 0; border-top: 0.5px solid var(--border);
+  -webkit-tap-highlight-color: transparent;
+}
+.med-grid .med-item:last-child { border-bottom: 0.5px solid var(--border); }
+
+.med-circle {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative; gap: 0.1rem;
+}
+.med-circle::before {
+  content: ''; position: absolute; inset: 5px;
+  border-radius: 50%; border: 0.5px solid currentColor; opacity: 0.3;
+}
+.mc0 { background: rgba(168,135,83,0.08); border: 0.5px solid rgba(168,135,83,0.2); color: var(--gold); }
+.mc1 { background: rgba(193,104,71,0.08); border: 0.5px solid rgba(193,104,71,0.2); color: var(--accent); }
+.mc2 { background: rgba(122,92,32,0.07); border: 0.5px solid rgba(122,92,32,0.18); color: #7A5C20; }
+.med-num-label { font-family: var(--serif); font-size: 0.55rem; font-style: italic; letter-spacing: 0.1em; opacity: 0.5; line-height: 1; }
+.med-body { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; padding-top: 0.25rem; }
+.med-cat { font-size: 0.55rem; font-style: italic; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.med-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; font-style: italic; color: var(--text); line-height: 1.2; }
+.med-desc { font-size: 0.86rem; color: var(--sub); line-height: 1.78; }
+.med-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
+  font-style: normal; text-decoration: none; align-self: flex-start;
+  transition: gap 300ms var(--ease);
+}
+.ml0 { color: var(--gold); } .ml1 { color: var(--accent); } .ml2 { color: #7A5C20; }
+
+/* Desktop */
+@media (min-width: 600px) {
+  .frame-grid, .aqua-grid, .fold-grid { flex-direction: row; flex-wrap: wrap; max-width: 700px; }
+  .frame-card, .aqua-card, .fold-card { flex: 1; min-width: 200px; }
+  .ruban-list, .med-grid { max-width: 560px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <button type="button" class="on" onclick="go('p1',this)">Encadré</button>
+  <button type="button" onclick="go('p2',this)">Aquarelle</button>
+  <button type="button" onclick="go('p3',this)">Pliage</button>
+  <button type="button" onclick="go('p4',this)">Ruban</button>
+  <button type="button" onclick="go('p5',this)">Médaillon</button>
+</nav>
+
+
+<!-- V1 ENCADRÉ -->
+<section id="p1" class="page">
+  <div class="head">
+    <span class="eyebrow">01 — Encadré</span>
+    <h2 class="title">Coin coupé &amp; double bordure</h2>
+    <p class="hint">Comme un carton d'invitation ou une carte de visite luxe</p>
+  </div>
+  <div class="frame-grid">
+
+    <article class="frame-card fc0 r">
+      <div class="frame-top">
+        <span class="frame-num">01</span>
+        <div class="frame-icon fi0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+        </div>
+      </div>
+      <span class="frame-cat">Mariage · Cérémonie</span>
+      <h3 class="frame-title">Chant pour mariages</h3>
+      <p class="frame-desc">Voix arménienne live pour votre cérémonie. Répertoire sacré et romantique, adapté à vos traditions.</p>
+      <a href="#" class="frame-link fl0">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+    <article class="frame-card fc1 r">
+      <div class="frame-top">
+        <span class="frame-num">02</span>
+        <div class="frame-icon fi1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </div>
+      </div>
+      <span class="frame-cat">Gala · Réception</span>
+      <h3 class="frame-title">Danse événementielle</h3>
+      <p class="frame-desc">Spectacles de danse orientale et arménienne. Énergie et élégance pour vos événements.</p>
+      <a href="#" class="frame-link fl1">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+    <article class="frame-card fc2 r">
+      <div class="frame-top">
+        <span class="frame-num">03</span>
+        <div class="frame-icon fi2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+        </div>
+      </div>
+      <span class="frame-cat">Cours · Atelier</span>
+      <h3 class="frame-title">Cours chant &amp; danse</h3>
+      <p class="frame-desc">Particuliers ou groupes, tous niveaux. Technique vocale et danse arménienne.</p>
+      <a href="#" class="frame-link fl2">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- V2 AQUARELLE -->
+<section id="p2" class="page">
+  <div class="head">
+    <span class="eyebrow">02 — Aquarelle</span>
+    <h2 class="title">Tache de couleur en fond</h2>
+    <p class="hint">Blob flou or/terracotta — doux et artistique</p>
+  </div>
+  <div class="aqua-grid">
+
+    <article class="aqua-card r">
+      <div class="aqua-blob ab0"></div>
+      <div class="aqua-row">
+        <span class="aqua-num">01 — Mariage</span>
+        <div class="aqua-icon ai0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+        </div>
+      </div>
+      <h3 class="aqua-title">Chant pour mariages</h3>
+      <div class="aqua-line"></div>
+      <p class="aqua-desc">Voix arménienne live pour votre cérémonie. Répertoire sacré et romantique, adapté à vos traditions.</p>
+      <a href="#" class="aqua-link al0">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+    <article class="aqua-card r">
+      <div class="aqua-blob ab1"></div>
+      <div class="aqua-row">
+        <span class="aqua-num">02 — Événements</span>
+        <div class="aqua-icon ai1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </div>
+      </div>
+      <h3 class="aqua-title">Danse événementielle</h3>
+      <div class="aqua-line"></div>
+      <p class="aqua-desc">Spectacles de danse orientale et arménienne. Énergie et élégance pour vos événements.</p>
+      <a href="#" class="aqua-link al1">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+    <article class="aqua-card r">
+      <div class="aqua-blob ab2"></div>
+      <div class="aqua-row">
+        <span class="aqua-num">03 — Formation</span>
+        <div class="aqua-icon ai2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+        </div>
+      </div>
+      <h3 class="aqua-title">Cours chant &amp; danse</h3>
+      <div class="aqua-line"></div>
+      <p class="aqua-desc">Particuliers ou groupes, tous niveaux. Technique vocale et danse arménienne.</p>
+      <a href="#" class="aqua-link al2">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- V3 PLIAGE -->
+<section id="p3" class="page">
+  <div class="head">
+    <span class="eyebrow">03 — Pliage</span>
+    <h2 class="title">Onglet coin supérieur</h2>
+    <p class="hint">Comme une fiche classeur ou un carton d'invitation plié</p>
+  </div>
+  <div class="fold-grid">
+
+    <article class="fold-card fk0 r" data-num="01">
+      <div class="fold-head">
+        <div class="fold-icon fdi0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+        </div>
+        <h3 class="fold-title">Chant pour mariages</h3>
+      </div>
+      <div class="fold-div"></div>
+      <p class="fold-desc">Voix arménienne live pour votre cérémonie. Répertoire sacré et romantique, adapté à vos traditions.</p>
+      <a href="#" class="fold-link fdl0">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+    <article class="fold-card fk1 r" data-num="02">
+      <div class="fold-head">
+        <div class="fold-icon fdi1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </div>
+        <h3 class="fold-title">Danse événementielle</h3>
+      </div>
+      <div class="fold-div"></div>
+      <p class="fold-desc">Spectacles de danse orientale et arménienne. Énergie et élégance pour vos événements.</p>
+      <a href="#" class="fold-link fdl1">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+    <article class="fold-card fk2 r" data-num="03">
+      <div class="fold-head">
+        <div class="fold-icon fdi2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+        </div>
+        <h3 class="fold-title">Cours chant &amp; danse</h3>
+      </div>
+      <div class="fold-div"></div>
+      <p class="fold-desc">Particuliers ou groupes, tous niveaux. Technique vocale et danse arménienne.</p>
+      <a href="#" class="fold-link fdl2">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- V4 RUBAN -->
+<section id="p4" class="page">
+  <div class="head">
+    <span class="eyebrow">04 — Ruban</span>
+    <h2 class="title">Lignes horizontales pures</h2>
+    <p class="hint">Pas de boîte — juste des lignes et de la typographie</p>
+  </div>
+  <div class="ruban-list">
+
+    <div class="ruban-row r">
+      <span class="ruban-num">01</span>
+      <div class="ruban-body">
+        <span class="ruban-cat">Mariage · Cérémonie</span>
+        <span class="ruban-title">Chant pour mariages</span>
+      </div>
+      <a href="#" class="ruban-cta rc0" aria-label="Découvrir chant pour mariages">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="ruban-row r">
+      <span class="ruban-num">02</span>
+      <div class="ruban-body">
+        <span class="ruban-cat">Gala · Réception · Fête</span>
+        <span class="ruban-title">Danse événementielle</span>
+      </div>
+      <a href="#" class="ruban-cta rc1" aria-label="Découvrir danse événementielle">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="ruban-row r">
+      <span class="ruban-num">03</span>
+      <div class="ruban-body">
+        <span class="ruban-cat">Cours · Atelier · Formation</span>
+        <span class="ruban-title">Cours chant &amp; danse</span>
+      </div>
+      <a href="#" class="ruban-cta rc2" aria-label="Découvrir cours chant et danse">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- V5 MÉDAILLON -->
+<section id="p5" class="page">
+  <div class="head">
+    <span class="eyebrow">05 — Médaillon</span>
+    <h2 class="title">Cercle concentrique &amp; texte</h2>
+    <p class="hint">Double anneau décoratif — comme un sceau ou un camée</p>
+  </div>
+  <div class="med-grid">
+
+    <div class="med-item r">
+      <div class="med-circle mc0">
+        <span class="med-num-label">01</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+      </div>
+      <div class="med-body">
+        <span class="med-cat">Mariage · Cérémonie</span>
+        <h3 class="med-title">Chant pour mariages</h3>
+        <p class="med-desc">Voix arménienne live pour votre cérémonie. Répertoire sacré et romantique, adapté à vos traditions.</p>
+        <a href="#" class="med-link ml0">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <div class="med-item r">
+      <div class="med-circle mc1">
+        <span class="med-num-label">02</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+      </div>
+      <div class="med-body">
+        <span class="med-cat">Gala · Réception · Fête</span>
+        <h3 class="med-title">Danse événementielle</h3>
+        <p class="med-desc">Spectacles de danse orientale et arménienne. Énergie et élégance pour vos invités.</p>
+        <a href="#" class="med-link ml1">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <div class="med-item r">
+      <div class="med-circle mc2">
+        <span class="med-num-label">03</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+      </div>
+      <div class="med-body">
+        <span class="med-cat">Cours · Atelier · Formation</span>
+        <h3 class="med-title">Cours chant &amp; danse</h3>
+        <p class="med-desc">Particuliers ou groupes, tous niveaux. Technique vocale et danse arménienne.</p>
+        <a href="#" class="med-link ml2">Découvrir <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+const ids  = ['p1','p2','p3','p4','p5'];
+const btns = document.querySelectorAll('.nav button');
+
+function go(id, btn) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  btns.forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+/* Scroll spy */
+document.querySelectorAll('.page').forEach(function(s) {
+  new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) {
+      var i = ids.indexOf(entries[0].target.id);
+      btns.forEach(function(b, j) { b.classList.toggle('on', i === j); });
+    }
+  }, { threshold: 0.45 }).observe(s);
+});
+
+/* Scroll reveal */
+var ro = new IntersectionObserver(function(entries, obs) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.r').forEach(function(el) { ro.observe(el); });
+</script>
+</body>
+</html>

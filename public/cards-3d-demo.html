@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rozi Dance — Cards 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,200;1,9..144,300;1,9..144,400&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:     #F7F1E6;
+  --card:   #FBF6EC;
+  --white:  #FEFCF8;
+  --text:   #2B1F15;
+  --sub:    #6B5645;
+  --muted:  #B8A689;
+  --accent: #C16847;
+  --gold:   #A88753;
+  --gold-l: #D4AD70;
+  --border: #E5D7BE;
+  --serif:  'Fraunces', Georgia, serif;
+  --body:   'Cormorant Garamond', serif;
+  --ease:   cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { -webkit-font-smoothing: antialiased; }
+body {
+  background: var(--bg);
+  font-family: var(--body);
+  color: var(--text);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.25rem 3rem;
+  overflow-x: hidden;
+}
+svg { display: block; }
+
+/* ── Header ─────────────────────────────────── */
+.page-head {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+}
+.eyebrow {
+  display: inline-block;
+  font-size: 0.57rem; font-style: italic;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 0.5px solid var(--gold-l);
+  padding-bottom: 0.18rem; margin-bottom: 0.6rem;
+}
+.page-title {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 4vw, 1.9rem);
+  font-weight: 200; font-style: italic;
+  color: var(--text); line-height: 1.1;
+}
+.page-sub {
+  margin-top: 0.4rem;
+  font-size: 0.78rem; color: var(--muted); font-style: italic;
+}
+
+/* ── Gyro button ────────────────────────────── */
+.gyro-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--body); font-style: italic; font-size: 0.72rem;
+  letter-spacing: 0.06em; color: var(--sub);
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset;
+  transition: background 250ms var(--ease), color 250ms var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.gyro-btn.active { background: rgba(168,135,83,0.1); color: var(--gold); border-color: rgba(168,135,83,0.3); }
+.gyro-btn.hidden { display: none; }
+
+/* ── Cards list ─────────────────────────────── */
+.cards-list {
+  display: flex; flex-direction: column;
+  gap: 0.75rem;
+  width: 100%; max-width: 400px;
+}
+
+/* ── Outer shell (double-bezel) ─────────────── */
+.card-shell {
+  border-radius: 20px;
+  padding: 5px;
+  border: 0.5px solid rgba(229,215,190,0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 2px 8px rgba(43,31,21,0.04);
+  transform-style: preserve-3d;
+  transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+  transition: transform 500ms var(--ease), box-shadow 500ms var(--ease);
+  will-change: transform;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ombres profondes selon la teinte */
+.cs0 { background: rgba(168,135,83,0.07); }
+.cs1 { background: rgba(193,104,71,0.07); }
+.cs2 { background: rgba(122,92,32,0.06); }
+
+/* ── Inner core ─────────────────────────────── */
+.card-core {
+  border-radius: 15px; /* 20 - 5 */
+  padding: 1.1rem 1.25rem 1.1rem;
+  display: flex; flex-direction: column; gap: 0.65rem;
+  position: relative; overflow: hidden;
+}
+
+/* Gradients par carte — plus forts et plus visibles */
+.cc0 { background: linear-gradient(145deg, #FEFCF8 0%, #EDDEB8 100%); }
+.cc1 { background: linear-gradient(145deg, #FEFCF8 0%, #F0CBBA 100%); }
+.cc2 { background: linear-gradient(145deg, #FEFCF8 0%, #E6D8A8 100%); }
+
+/* ── Spot de lumière mobile (CSS var) ───────── */
+.card-light {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--lx, 30%) var(--ly, 25%),
+    rgba(255,255,255,0.38) 0%,
+    rgba(255,255,255,0.12) 35%,
+    transparent 65%
+  );
+  transition: background 80ms linear;
+  border-radius: inherit;
+}
+
+/* ── Ombre portée 3D sous la carte ─────────── */
+.card-shadow {
+  position: absolute;
+  inset: 8px; top: auto;
+  height: 20px;
+  background: radial-gradient(ellipse, rgba(43,31,21,0.18) 0%, transparent 70%);
+  transform: translateY(12px) scaleX(0.85);
+  pointer-events: none;
+  filter: blur(6px);
+  transition: transform 500ms var(--ease), opacity 500ms var(--ease);
+  opacity: 0.7;
+}
+
+/* ── Contenu ─────────────────────────────────── */
+.card-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+}
+
+.card-num {
+  font-family: var(--serif);
+  font-size: 2.5rem; font-weight: 200; font-style: italic;
+  line-height: 1; color: rgba(43,31,21,0.09);
+  user-select: none; pointer-events: none;
+  transition: color 400ms var(--ease);
+}
+.card-shell:hover .card-num,
+.card-shell.tilted .card-num { color: rgba(43,31,21,0.15); }
+
+.card-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(43,31,21,0.06);
+  transform: translateZ(12px); /* élévation 3D */
+}
+.ci0 { background: rgba(168,135,83,0.14); border: 0.5px solid rgba(168,135,83,0.25); color: var(--gold); }
+.ci1 { background: rgba(193,104,71,0.14); border: 0.5px solid rgba(193,104,71,0.25); color: var(--accent); }
+.ci2 { background: rgba(122,92,32,0.11); border: 0.5px solid rgba(122,92,32,0.22); color: #7A5C20; }
+
+.card-cat {
+  font-size: 0.62rem; font-style: italic;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); position: relative;
+}
+
+.card-title {
+  font-family: var(--serif);
+  font-size: 1.25rem; font-weight: 300; font-style: italic;
+  color: var(--text); line-height: 1.2;
+  flex: 1; position: relative;
+}
+
+.card-line {
+  height: 0.5px;
+  background: linear-gradient(90deg, rgba(229,215,190,0.9), transparent);
+  position: relative;
+}
+
+.card-desc {
+  font-size: 0.95rem;
+  color: var(--sub); line-height: 1.72;
+  flex: 1; position: relative;
+}
+
+/* CTA — 44px touch target */
+.card-cta {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+  font-style: normal; text-decoration: none;
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  min-height: 44px;
+  transition: gap 300ms var(--ease);
+  position: relative; cursor: pointer;
+}
+.ct0 { color: var(--gold); } .ct1 { color: var(--accent); } .ct2 { color: #7A5C20; }
+.card-cta:hover, .card-cta:focus { gap: 0.85rem; }
+
+.cta-circle {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 0.5px solid currentColor; opacity: 0.5;
+  transition: opacity 300ms, transform 300ms var(--ease);
+}
+.card-cta:hover .cta-circle,
+.card-cta:focus .cta-circle { opacity: 1; transform: translateX(2px); }
+
+/* ── Stagger reveal au chargement ───────────── */
+.card-shell {
+  opacity: 0;
+  animation: slideUp 600ms var(--ease) forwards;
+}
+.card-shell:nth-child(1) { animation-delay: 100ms; }
+.card-shell:nth-child(2) { animation-delay: 220ms; }
+.card-shell:nth-child(3) { animation-delay: 340ms; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: perspective(900px) translateY(24px); }
+  to   { opacity: 1; transform: perspective(900px) rotateX(0deg) rotateY(0deg); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card-shell { animation: none; opacity: 1; }
+  .card-shell, .card-light, .card-icon { transition: none; }
+}
+
+/* Desktop */
+@media (min-width: 600px) {
+  .cards-list { flex-direction: row; flex-wrap: wrap; max-width: 720px; }
+  .card-shell { flex: 1; min-width: 200px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <span class="eyebrow">Rozi Dance — Nos prestations</span>
+  <h1 class="page-title">Ce que nous offrons</h1>
+  <p class="page-sub">Inclinez votre téléphone pour l'effet 3D</p>
+</div>
+
+<button type="button" class="gyro-btn" id="gyroBtn">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+  </svg>
+  Activer gyroscope
+</button>
+
+<div class="cards-list">
+
+  <!-- Card 01 -->
+  <div class="card-shell cs0" data-index="0">
+    <div class="card-core cc0">
+      <div class="card-light" style="--lx:28%;--ly:22%"></div>
+      <div class="card-top">
+        <span class="card-num" aria-hidden="true">01</span>
+        <div class="card-icon ci0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/>
+          </svg>
+        </div>
+      </div>
+      <span class="card-cat">Mariage · Cérémonie</span>
+      <h2 class="card-title">Chant pour mariages</h2>
+      <div class="card-line"></div>
+      <p class="card-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Répertoire sacré et romantique, adapté à vos traditions.</p>
+      <a href="#" class="card-cta ct0">
+        Découvrir
+        <span class="cta-circle" aria-hidden="true">
+          <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+    <div class="card-shadow"></div>
+  </div>
+
+  <!-- Card 02 -->
+  <div class="card-shell cs1" data-index="1">
+    <div class="card-core cc1">
+      <div class="card-light" style="--lx:28%;--ly:22%"></div>
+      <div class="card-top">
+        <span class="card-num" aria-hidden="true">02</span>
+        <div class="card-icon ci1">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="2" width="6" height="11" rx="3"/>
+            <path d="M5 10a7 7 0 0014 0"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+            <line x1="8" y1="22" x2="16" y2="22"/>
+          </svg>
+        </div>
+      </div>
+      <span class="card-cat">Gala · Réception · Fête</span>
+      <h2 class="card-title">Danse événementielle</h2>
+      <div class="card-line"></div>
+      <p class="card-desc">Spectacles de danse orientale et arménienne pour vos événements. Énergie, grâce et élégance pour marquer les esprits.</p>
+      <a href="#" class="card-cta ct1">
+        Découvrir
+        <span class="cta-circle" aria-hidden="true">
+          <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+    <div class="card-shadow"></div>
+  </div>
+
+  <!-- Card 03 -->
+  <div class="card-shell cs2" data-index="2">
+    <div class="card-core cc2">
+      <div class="card-light" style="--lx:28%;--ly:22%"></div>
+      <div class="card-top">
+        <span class="card-num" aria-hidden="true">03</span>
+        <div class="card-icon ci2">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+            <line x1="9" y1="7" x2="15" y2="7"/>
+            <line x1="9" y1="11" x2="13" y2="11"/>
+          </svg>
+        </div>
+      </div>
+      <span class="card-cat">Cours · Atelier · Formation</span>
+      <h2 class="card-title">Cours chant &amp; danse</h2>
+      <div class="card-line"></div>
+      <p class="card-desc">Cours particuliers ou en groupe, tous niveaux. Technique vocale, danse orientale, rythme arménien — du débutant au confirmé.</p>
+      <a href="#" class="card-cta ct2">
+        Découvrir
+        <span class="cta-circle" aria-hidden="true">
+          <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+    <div class="card-shadow"></div>
+  </div>
+
+</div>
+
+<script>
+var shells = document.querySelectorAll('.card-shell');
+var lights = document.querySelectorAll('.card-light');
+var shadows = document.querySelectorAll('.card-shadow');
+var gyroBtn = document.getElementById('gyroBtn');
+var gyroActive = false;
+var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── Tilt 3D touch par carte ───────────────── */
+shells.forEach(function(shell) {
+  var core = shell.querySelector('.card-core');
+  var light = shell.querySelector('.card-light');
+  var shadow = shell.querySelector('.card-shadow');
+  var startX, startY, tiltActive = false;
+
+  shell.addEventListener('touchstart', function(e) {
+    if (reducedMotion || gyroActive) return;
+    tiltActive = true;
+    var t = e.touches[0];
+    startX = t.clientX; startY = t.clientY;
+    shell.style.transition = 'transform 120ms var(--ease), box-shadow 120ms';
+  }, { passive: true });
+
+  shell.addEventListener('touchmove', function(e) {
+    if (!tiltActive || reducedMotion) return;
+    var t = e.touches[0];
+    var rect = shell.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.top + rect.height / 2;
+    var dx = (t.clientX - cx) / (rect.width  / 2);
+    var dy = (t.clientY - cy) / (rect.height / 2);
+    var rx = -dy * 10;
+    var ry =  dx * 14;
+    shell.style.transform = 'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(8px)';
+    shell.style.boxShadow = '0 ' + (12 - dy * 6) + 'px ' + (32 + Math.abs(dy) * 16) + 'px rgba(43,31,21,' + (0.08 + Math.abs(dy) * 0.04) + ')';
+    /* déplace la lumière */
+    var lx = 50 + ry * 2.5;
+    var ly = 50 - rx * 2.5;
+    light.style.cssText = light.style.cssText.replace(/--lx:[^;]+;?/, '') + '; --lx:' + lx + '%;';
+    light.style.cssText = light.style.cssText.replace(/--ly:[^;]+;?/, '') + '; --ly:' + ly + '%;';
+  }, { passive: true });
+
+  function resetTilt() {
+    tiltActive = false;
+    shell.style.transition = 'transform 600ms var(--ease), box-shadow 600ms var(--ease)';
+    shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+    shell.style.boxShadow = '';
+    light.style.setProperty('--lx', '28%');
+    light.style.setProperty('--ly', '22%');
+  }
+
+  shell.addEventListener('touchend',    resetTilt, { passive: true });
+  shell.addEventListener('touchcancel', resetTilt, { passive: true });
+});
+
+/* ── Gyroscope ─────────────────────────────── */
+function applyOrientation(gamma, beta) {
+  if (reducedMotion) return;
+  var ry = Math.max(-14, Math.min(14, gamma * 0.45));
+  var rx = Math.max(-10, Math.min(10, (beta - 45) * 0.3));
+  var lx = 50 + ry * 2.2;
+  var ly = 50 - rx * 2.2;
+
+  shells.forEach(function(s) {
+    s.style.transition = 'transform 150ms linear';
+    s.style.transform = 'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+  });
+  lights.forEach(function(l) {
+    l.style.setProperty('--lx', lx.toFixed(1) + '%');
+    l.style.setProperty('--ly', ly.toFixed(1) + '%');
+  });
+  shadows.forEach(function(s) {
+    s.style.transform = 'translateY(' + (12 + rx * 0.8) + 'px) translateX(' + (ry * 0.5) + 'px) scaleX(0.85)';
+  });
+}
+
+function startGyro() {
+  window.addEventListener('deviceorientation', function(e) {
+    if (!gyroActive) return;
+    applyOrientation(e.gamma || 0, e.beta || 0);
+  });
+}
+
+gyroBtn.addEventListener('click', function() {
+  if (typeof DeviceOrientationEvent !== 'undefined' &&
+      typeof DeviceOrientationEvent.requestPermission === 'function') {
+    /* iOS 13+ — nécessite une interaction */
+    DeviceOrientationEvent.requestPermission().then(function(state) {
+      if (state === 'granted') {
+        gyroActive = true;
+        gyroBtn.classList.add('active');
+        gyroBtn.textContent = 'Gyroscope actif';
+        startGyro();
+      }
+    }).catch(console.warn);
+  } else {
+    /* Android / iOS < 13 */
+    gyroActive = true;
+    gyroBtn.classList.add('active');
+    gyroBtn.textContent = 'Gyroscope actif';
+    startGyro();
+  }
+});
+
+/* Masquer le bouton gyro sur desktop */
+if (!('ontouchstart' in window)) gyroBtn.classList.add('hidden');
+</script>
+</body>
+</html>

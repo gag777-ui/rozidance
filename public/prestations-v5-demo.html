@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rozi Dance — 5 Concepts Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,200;1,9..144,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ivory:   #FDFBF7;
+  --cream:   #F5ECD9;
+  --dark:    #1A110A;
+  --darker:  #0E0906;
+  --espresso:#2B1F15;
+  --text:    #1E1410;
+  --muted:   #6B5040;
+  --faint:   #B09070;
+  --accent:  #C16847;
+  --gold:    #A88753;
+  --gold-l:  #D4AD70;
+  --border:  #E8D9C0;
+  --serif:   'Fraunces', Georgia, serif;
+  --display: 'Cormorant Garamond', serif;
+  --ease:    cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--darker); font-family: 'Cormorant Garamond', serif; overflow-x: hidden; }
+
+/* ── Floating Nav ──────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(253,251,247,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(168,135,83,0.25);
+  border-radius: 999px;
+  padding: 0.35rem;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  white-space: nowrap;
+}
+
+.nav-pill {
+  padding: 0.5rem 1.1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.75rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 400ms var(--ease), color 400ms var(--ease);
+  cursor: pointer;
+}
+.nav-pill:hover { color: var(--text); }
+.nav-pill.active {
+  background: var(--espresso);
+  color: #F5ECD9;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* ── Section wrapper ───────────────────────────────────────── */
+.section {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem 6rem;
+}
+
+.section-label {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.eyebrow {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.7rem;
+  font-style: italic;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1.1;
+}
+.section-sub {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  opacity: 0.5;
+}
+
+/* ══════════════════════════════════════════════════════════
+   V1 — DOPPELRAND CASCADE  (double-bezel + Z-rotate)
+══════════════════════════════════════════════════════════ */
+#v1 { background: var(--ivory); }
+#v1 .eyebrow { background: rgba(168,135,83,0.1); border: 0.5px solid rgba(168,135,83,0.25); color: #7A5C20; }
+#v1 .section-title { color: var(--text); }
+#v1 .section-sub { color: var(--muted); }
+
+/* Film grain overlay */
+#v1::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+.cascade-grid {
+  position: relative;
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  z-index: 1;
+}
+
+/* Outer shell — double bezel */
+.dob-shell {
+  background: rgba(168,135,83,0.06);
+  border: 0.5px solid rgba(168,135,83,0.15);
+  border-radius: 2rem;
+  padding: 6px;
+  box-shadow: 0 2px 0 rgba(255,255,255,0.9) inset;
+  flex: 1;
+  transition: transform 700ms var(--ease), box-shadow 700ms var(--ease);
+}
+.dob-shell:nth-child(1) { transform: rotate(-1.5deg) translateY(8px); }
+.dob-shell:nth-child(2) { transform: rotate(0.5deg); }
+.dob-shell:nth-child(3) { transform: rotate(1.8deg) translateY(12px); }
+.dob-shell:hover {
+  transform: rotate(0deg) translateY(-8px) !important;
+  box-shadow: 0 24px 60px rgba(43,31,21,0.1), 0 2px 0 rgba(255,255,255,0.9) inset;
+}
+
+/* Inner core */
+.dob-core {
+  background: #FEFCF8;
+  border-radius: calc(2rem - 6px);
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1px 0 rgba(168,135,83,0.08);
+  min-height: 300px;
+}
+
+.dob-num {
+  font-family: 'Fraunces', serif;
+  font-size: 0.65rem;
+  font-weight: 200;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.dob-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(168,135,83,0.08);
+  border: 0.5px solid rgba(168,135,83,0.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+  transition: background 400ms var(--ease), transform 400ms var(--ease-spring);
+}
+.dob-shell:hover .dob-icon { background: rgba(168,135,83,0.15); transform: scale(1.08); }
+.dob-icon-0 { color: var(--gold); }
+.dob-icon-1 { color: var(--accent); border-color: rgba(193,104,71,0.2); background: rgba(193,104,71,0.07); }
+.dob-icon-1:hover { background: rgba(193,104,71,0.15) !important; }
+.dob-icon-2 { color: #7A5C20; border-color: rgba(122,92,32,0.2); background: rgba(122,92,32,0.06); }
+
+.dob-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.2;
+  flex: 1;
+}
+
+.dob-divider {
+  height: 0.5px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+.dob-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.dob-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  font-style: normal;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--accent);
+  transition: gap 350ms var(--ease);
+  margin-top: 0.25rem;
+}
+.dob-link:hover { gap: 1rem; }
+.dob-link svg { transition: transform 350ms var(--ease); }
+.dob-link:hover svg { transform: translateX(3px); }
+
+/* ══════════════════════════════════════════════════════════
+   V2 — BENTO OBSIDIAN  (dark bento asymmetric)
+══════════════════════════════════════════════════════════ */
+#v2 {
+  background: var(--darker);
+  position: relative;
+  overflow: hidden;
+}
+/* Radial orb glow */
+#v2::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 20%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(ellipse, rgba(168,135,83,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+#v2::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  right: 10%;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(ellipse, rgba(193,104,71,0.05) 0%, transparent 65%);
+  pointer-events: none;
+}
+#v2 .eyebrow { background: rgba(168,135,83,0.1); border: 0.5px solid rgba(168,135,83,0.2); color: rgba(212,173,112,0.8); }
+#v2 .section-title { color: rgba(253,251,247,0.92); }
+#v2 .section-sub { color: rgba(176,144,112,0.5); }
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1px;
+  background: rgba(168,135,83,0.1);
+  border: 0.5px solid rgba(168,135,83,0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  max-width: 900px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.bento-card {
+  background: rgba(30,18,10,0.9);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: background 450ms var(--ease);
+}
+.bento-card:hover { background: rgba(38,24,14,0.95); }
+
+/* Feature card spans 2 rows */
+.bento-card-feature { grid-row: span 2; justify-content: flex-end; padding: 3rem; }
+
+/* Shimmer top line */
+.bento-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(168,135,83,0.4), transparent);
+  opacity: 0;
+  transition: opacity 400ms var(--ease);
+}
+.bento-card:hover::before { opacity: 1; }
+
+/* Large watermark number */
+.bento-watermark {
+  position: absolute;
+  right: -0.5rem;
+  top: -1rem;
+  font-family: 'Fraunces', serif;
+  font-size: 8rem;
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1;
+  color: rgba(168,135,83,0.05);
+  pointer-events: none;
+  user-select: none;
+  transition: color 450ms var(--ease), transform 450ms var(--ease);
+}
+.bento-card:hover .bento-watermark { color: rgba(168,135,83,0.09); transform: translateY(-4px); }
+
+.bento-icon {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid rgba(168,135,83,0.2);
+  background: rgba(168,135,83,0.08);
+  transition: background 350ms, border-color 350ms, transform 350ms var(--ease-spring);
+}
+.bento-card:hover .bento-icon { background: rgba(168,135,83,0.18); transform: scale(1.1); }
+.bento-icon-0 { color: var(--gold-l); }
+.bento-icon-1 { color: #D4825C; border-color: rgba(193,104,71,0.22); background: rgba(193,104,71,0.08); }
+.bento-icon-2 { color: #C4A855; border-color: rgba(122,92,32,0.22); background: rgba(122,92,32,0.08); }
+
+.bento-tag {
+  font-size: 0.6rem;
+  font-style: italic;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(168,135,83,0.6);
+}
+
+.bento-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 200;
+  font-style: italic;
+  color: rgba(253,248,238,0.9);
+  line-height: 1.15;
+}
+.bento-card-feature .bento-title { font-size: clamp(1.5rem, 2.5vw, 2.1rem); }
+.bento-title-sm { font-size: 1.1rem; }
+
+.bento-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  color: rgba(176,144,112,0.7);
+  line-height: 1.85;
+  flex: 1;
+}
+
+.bento-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-style: normal;
+  text-decoration: none;
+  color: var(--gold-l);
+  transition: gap 350ms var(--ease), opacity 350ms;
+  opacity: 0.7;
+}
+.bento-card:hover .bento-link { opacity: 1; gap: 0.9rem; }
+
+/* ══════════════════════════════════════════════════════════
+   V3 — MASK CINÉMA  (clip-path reveal on hover)
+══════════════════════════════════════════════════════════ */
+#v3 { background: var(--cream); }
+#v3 .eyebrow { background: rgba(193,104,71,0.08); border: 0.5px solid rgba(193,104,71,0.2); color: #8B4020; }
+#v3 .section-title { color: var(--text); }
+#v3 .section-sub { color: var(--muted); }
+
+.cinema-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 960px;
+  width: 100%;
+}
+
+.cinema-card {
+  position: relative;
+  background: var(--ivory);
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: default;
+  border: 0.5px solid rgba(193,104,71,0.1);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.9) inset,
+    0 4px 24px rgba(43,31,21,0.05);
+  transition: box-shadow 600ms var(--ease), border-color 500ms var(--ease);
+}
+.cinema-card:hover {
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.9) inset,
+    0 20px 60px rgba(43,31,21,0.12);
+  border-color: rgba(193,104,71,0.25);
+}
+
+/* Accent bar top — slides from 0 to full */
+.cinema-bar {
+  height: 2px;
+  width: 0;
+  transition: width 600ms var(--ease);
+}
+.cinema-card-0 .cinema-bar { background: linear-gradient(90deg, var(--gold), var(--gold-l)); }
+.cinema-card-1 .cinema-bar { background: linear-gradient(90deg, var(--accent), #E08060); }
+.cinema-card-2 .cinema-bar { background: linear-gradient(90deg, #7A5C20, var(--gold)); }
+.cinema-card:hover .cinema-bar { width: 100%; }
+
+.cinema-body { padding: 2.25rem 2rem 2rem; display: flex; flex-direction: column; gap: 1rem; }
+
+.cinema-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.65rem;
+  font-style: italic;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* Mask reveal container */
+.cinema-title-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.cinema-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  font-weight: 200;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.2;
+  transform: translateY(100%);
+  transition: transform 600ms var(--ease);
+  display: block;
+}
+.cinema-card:hover .cinema-title { transform: translateY(0); }
+
+/* Placeholder title visible before hover */
+.cinema-title-placeholder {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  font-weight: 200;
+  font-style: italic;
+  color: rgba(43,31,21,0.15);
+  line-height: 1.2;
+  position: absolute;
+  top: 0; left: 0;
+  transition: opacity 300ms;
+}
+.cinema-card:hover .cinema-title-placeholder { opacity: 0; }
+
+.cinema-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.85;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 500ms 150ms var(--ease), transform 500ms 150ms var(--ease);
+}
+.cinema-card:hover .cinema-desc { opacity: 1; transform: translateY(0); }
+
+.cinema-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 0.5px solid var(--border);
+  margin-top: 0.25rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 450ms 250ms var(--ease), transform 450ms 250ms var(--ease);
+}
+.cinema-card:hover .cinema-footer { opacity: 1; transform: translateY(0); }
+
+.cinema-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.6rem;
+  font-style: italic;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: gap 300ms var(--ease);
+}
+.cinema-card-0 .cinema-link { color: var(--gold); }
+.cinema-card-1 .cinema-link { color: var(--accent); }
+.cinema-card-2 .cinema-link { color: #7A5C20; }
+.cinema-link:hover { gap: 0.8rem; }
+
+.cinema-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  animation: pulse-dot 2s cubic-bezier(0.32,0.72,0,1) infinite;
+}
+.cinema-card-0 .cinema-dot { background: var(--gold); }
+.cinema-card-1 .cinema-dot { background: var(--accent); }
+.cinema-card-2 .cinema-dot { background: #7A5C20; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   V4 — TICKET PERFORÉ  (stub layout, dark espresso)
+══════════════════════════════════════════════════════════ */
+#v4 {
+  background: #120D08;
+  position: relative;
+  overflow: hidden;
+}
+#v4::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 40% at 30% 60%, rgba(168,135,83,0.06) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 30% at 75% 30%, rgba(193,104,71,0.04) 0%, transparent 100%);
+  pointer-events: none;
+}
+#v4 .eyebrow { background: rgba(168,135,83,0.08); border: 0.5px solid rgba(168,135,83,0.18); color: rgba(212,173,112,0.75); }
+#v4 .section-title { color: rgba(253,251,247,0.9); }
+#v4 .section-sub { color: rgba(168,135,83,0.4); }
+
+.ticket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 780px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.ticket {
+  display: flex;
+  border: 0.5px solid rgba(168,135,83,0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(26,17,10,0.9);
+  cursor: default;
+  transition: border-color 450ms var(--ease), box-shadow 450ms var(--ease), transform 500ms var(--ease);
+}
+.ticket:hover {
+  border-color: rgba(168,135,83,0.28);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 0 0 0.5px rgba(168,135,83,0.1);
+  transform: translateY(-3px);
+}
+
+/* Talon gauche */
+.ticket-stub {
+  width: 90px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.75rem 0.75rem;
+  position: relative;
+  transition: background 450ms var(--ease);
+}
+.ticket-stub-0 { background: rgba(168,135,83,0.07); }
+.ticket-stub-1 { background: rgba(193,104,71,0.07); }
+.ticket-stub-2 { background: rgba(122,92,32,0.06); }
+.ticket-0:hover .ticket-stub { background: rgba(168,135,83,0.14); }
+.ticket-1:hover .ticket-stub { background: rgba(193,104,71,0.13); }
+.ticket-2:hover .ticket-stub { background: rgba(122,92,32,0.1); }
+
+/* Perforation line */
+.ticket-stub::after {
+  content: '';
+  position: absolute;
+  top: 12px; bottom: 12px; right: 0;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(168,135,83,0.2) 0px,
+    rgba(168,135,83,0.2) 4px,
+    transparent 4px,
+    transparent 9px
+  );
+}
+
+/* Semicircle notches */
+.ticket::before,
+.ticket::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: #120D08;
+  left: 82px;
+  z-index: 2;
+}
+.ticket::before { top: -8px; }
+.ticket::after { bottom: -8px; }
+
+.ticket-num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  letter-spacing: 0.04em;
+}
+.ticket-0 .ticket-num { color: rgba(212,173,112,0.6); }
+.ticket-1 .ticket-num { color: rgba(212,130,92,0.6); }
+.ticket-2 .ticket-num { color: rgba(196,168,85,0.6); }
+
+.ticket-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid currentColor;
+  opacity: 0.5;
+  transition: opacity 400ms, transform 400ms var(--ease-spring);
+}
+.ticket:hover .ticket-icon { opacity: 0.9; transform: scale(1.12); }
+.ticket-0 .ticket-icon { color: var(--gold-l); }
+.ticket-1 .ticket-icon { color: #D4825C; }
+.ticket-2 .ticket-icon { color: #C4A855; }
+
+/* Corps billet */
+.ticket-body {
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.ticket-category {
+  font-size: 0.58rem;
+  font-style: italic;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  color: var(--gold-l);
+}
+
+.ticket-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1.15;
+  color: rgba(253,248,238,0.9);
+}
+
+.ticket-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.88rem;
+  color: rgba(176,144,112,0.65);
+  line-height: 1.8;
+  max-width: 42ch;
+}
+
+.ticket-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-style: normal;
+  text-decoration: none;
+  transition: gap 350ms var(--ease), opacity 350ms;
+  opacity: 0.5;
+  margin-top: 0.25rem;
+}
+.ticket:hover .ticket-cta { opacity: 1; gap: 0.85rem; }
+.ticket-0 .ticket-cta { color: var(--gold-l); }
+.ticket-1 .ticket-cta { color: #D4825C; }
+.ticket-2 .ticket-cta { color: #C4A855; }
+
+/* ══════════════════════════════════════════════════════════
+   V5 — STRUCTURALISME BLANC  (ultra-minimal, Bottega-tier)
+══════════════════════════════════════════════════════════ */
+#v5 { background: #FAFAF8; }
+#v5 .eyebrow { background: transparent; border: 0.5px solid #D8CDB8; color: #9A8060; }
+#v5 .section-title { color: #1A1410; }
+#v5 .section-sub { color: #9A8060; }
+
+.struct-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 0.5px solid #D8CDB8;
+  max-width: 960px;
+  width: 100%;
+}
+
+.struct-card {
+  position: relative;
+  border-right: 0.5px solid #D8CDB8;
+  padding: 2.75rem 2.25rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+  overflow: hidden;
+  cursor: default;
+  background: #FAFAF8;
+  transition: background 500ms var(--ease);
+}
+.struct-card:last-child { border-right: none; }
+.struct-card:hover { background: #FFFFFF; }
+
+/* Animated bottom bar */
+.struct-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 1.5px;
+  width: 0;
+  transition: width 700ms var(--ease);
+}
+.struct-card-0::after { background: var(--gold); }
+.struct-card-1::after { background: var(--accent); }
+.struct-card-2::after { background: #7A5C20; }
+.struct-card:hover::after { width: 100%; }
+
+/* Giant watermark number */
+.struct-watermark {
+  font-family: 'Fraunces', serif;
+  font-size: 9rem;
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1;
+  color: rgba(26,20,16,0.04);
+  pointer-events: none;
+  user-select: none;
+  position: absolute;
+  top: -1.5rem;
+  right: -1rem;
+  transition: color 600ms var(--ease), transform 600ms var(--ease);
+}
+.struct-card:hover .struct-watermark {
+  color: rgba(193,104,71,0.06);
+  transform: translateY(-6px) scale(1.04);
+}
+
+/* Category tag */
+.struct-tag {
+  font-size: 0.58rem;
+  font-style: italic;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  margin-bottom: auto;
+  padding-bottom: 1.5rem;
+}
+.struct-card-0 .struct-tag { color: rgba(168,135,83,0.6); }
+.struct-card-1 .struct-tag { color: rgba(193,104,71,0.6); }
+.struct-card-2 .struct-tag { color: rgba(122,92,32,0.55); }
+
+.struct-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 200;
+  font-style: italic;
+  color: #1A1410;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+/* Thin animated line */
+.struct-line {
+  height: 0.5px;
+  background: #D8CDB8;
+  margin-bottom: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.struct-line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  transition: left 600ms var(--ease);
+}
+.struct-card-0 .struct-line::after { background: var(--gold); }
+.struct-card-1 .struct-line::after { background: var(--accent); }
+.struct-card-2 .struct-line::after { background: #7A5C20; }
+.struct-card:hover .struct-line::after { left: 0; }
+
+.struct-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: #6B5040;
+  line-height: 1.85;
+  margin-bottom: 1.5rem;
+}
+
+.struct-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-style: normal;
+  font-family: 'Cormorant Garamond', serif;
+  text-decoration: none;
+  transition: gap 350ms var(--ease), opacity 350ms;
+  opacity: 0;
+}
+.struct-card:hover .struct-link { opacity: 1; gap: 0.85rem; }
+.struct-card-0 .struct-link { color: var(--gold); }
+.struct-card-1 .struct-link { color: var(--accent); }
+.struct-card-2 .struct-link { color: #7A5C20; }
+
+/* ── SVG icons helper ─────────────────────────────────── */
+svg { display: block; }
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav { gap: 0; padding: 0.25rem; }
+  .nav-pill { padding: 0.45rem 0.7rem; font-size: 0.65rem; }
+  .cascade-grid { flex-direction: column; }
+  .dob-shell { transform: none !important; }
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-card-feature { grid-row: span 1; }
+  .cinema-grid, .struct-grid { grid-template-columns: 1fr; }
+  .struct-card { border-right: none; border-bottom: 0.5px solid #D8CDB8; }
+  .struct-card:last-child { border-bottom: none; }
+  .ticket { flex-direction: column; }
+  .ticket-stub { width: 100%; flex-direction: row; writing-mode: horizontal-tb; padding: 1rem 1.5rem; }
+  .ticket-stub::after { display: none; }
+  .ticket-num { writing-mode: horizontal-tb; transform: none; }
+  .ticket::before, .ticket::after { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Floating pill nav -->
+<nav class="nav">
+  <a class="nav-pill active" href="#v1">Doppelrand</a>
+  <a class="nav-pill" href="#v2">Bento</a>
+  <a class="nav-pill" href="#v3">Cinéma</a>
+  <a class="nav-pill" href="#v4">Ticket</a>
+  <a class="nav-pill" href="#v5">Blanc</a>
+</nav>
+
+
+<!-- ═════════ V1 — DOPPELRAND CASCADE ═════════ -->
+<section id="v1" class="section">
+  <div class="section-label">
+    <span class="eyebrow">Concept 01</span>
+    <h2 class="section-title">Doppelrand Cascade</h2>
+    <p class="section-sub">Double-bezel + cartes inclinées qui se redressent au hover</p>
+  </div>
+
+  <div class="cascade-grid">
+
+    <div class="dob-shell">
+      <div class="dob-core">
+        <span class="dob-num">01 — Mariage</span>
+        <div class="dob-icon dob-icon-0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+        </div>
+        <h3 class="dob-title">Chant pour mariages</h3>
+        <div class="dob-divider"></div>
+        <p class="dob-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Répertoire sacré et romantique, adapté à vos traditions.</p>
+        <a href="#" class="dob-link">
+          Découvrir
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="dob-shell">
+      <div class="dob-core">
+        <span class="dob-num">02 — Événements</span>
+        <div class="dob-icon dob-icon-1">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </div>
+        <h3 class="dob-title">Danse événementielle</h3>
+        <div class="dob-divider"></div>
+        <p class="dob-desc">Spectacles de danse orientale et arménienne pour vos événements. Énergie, grâce et élégance pour marquer les esprits.</p>
+        <a href="#" class="dob-link">
+          Découvrir
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="dob-shell">
+      <div class="dob-core">
+        <span class="dob-num">03 — Formation</span>
+        <div class="dob-icon dob-icon-2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+        </div>
+        <h3 class="dob-title">Cours de chant & danse</h3>
+        <div class="dob-divider"></div>
+        <p class="dob-desc">Cours particuliers ou en groupe. Technique vocale, danse orientale, rythme arménien — du débutant au confirmé.</p>
+        <a href="#" class="dob-link">
+          Découvrir
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═════════ V2 — BENTO OBSIDIAN ═════════ -->
+<section id="v2" class="section">
+  <div class="section-label">
+    <span class="eyebrow">Concept 02</span>
+    <h2 class="section-title">Bento Obsidian</h2>
+    <p class="section-sub">Dark asymétrique — grande carte feature + deux secondaires</p>
+  </div>
+
+  <div class="bento-grid">
+
+    <!-- Feature card -->
+    <article class="bento-card bento-card-feature">
+      <span class="bento-watermark" aria-hidden="true">01</span>
+      <div class="bento-icon bento-icon-0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+      </div>
+      <h3 class="bento-title">Chant pour mariages</h3>
+      <p class="bento-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Répertoire sacré et romantique, profondément ancré dans la tradition arménienne. Une présence rare pour un jour unique.</p>
+      <a href="#" class="bento-link">
+        Découvrir
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </article>
+
+    <!-- Secondary 1 -->
+    <article class="bento-card">
+      <span class="bento-watermark" aria-hidden="true">02</span>
+      <div class="bento-icon bento-icon-1">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+      </div>
+      <span class="bento-tag">Événements</span>
+      <h3 class="bento-title bento-title-sm">Danse événementielle</h3>
+      <p class="bento-desc">Spectacles orientaux et arméniens pour vos réceptions.</p>
+      <a href="#" class="bento-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+    <!-- Secondary 2 -->
+    <article class="bento-card">
+      <span class="bento-watermark" aria-hidden="true">03</span>
+      <div class="bento-icon bento-icon-2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+      </div>
+      <span class="bento-tag">Formation</span>
+      <h3 class="bento-title bento-title-sm">Cours de chant & danse</h3>
+      <p class="bento-desc">Cours particuliers ou groupes, tous niveaux.</p>
+      <a href="#" class="bento-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ═════════ V3 — MASK CINÉMA ═════════ -->
+<section id="v3" class="section">
+  <div class="section-label">
+    <span class="eyebrow">Concept 03</span>
+    <h2 class="section-title">Mask Cinéma</h2>
+    <p class="section-sub">Révélation au hover — titre, texte et CTA surgissent en cascade</p>
+  </div>
+
+  <div class="cinema-grid">
+
+    <article class="cinema-card cinema-card-0">
+      <div class="cinema-bar"></div>
+      <div class="cinema-body">
+        <span class="cinema-num">01</span>
+        <div class="cinema-title-wrap" style="height:1.6rem">
+          <span class="cinema-title-placeholder">Mariage</span>
+          <span class="cinema-title">Chant pour mariages</span>
+        </div>
+        <p class="cinema-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Répertoire sacré et romantique, adapté à vos traditions familiales.</p>
+        <div class="cinema-footer">
+          <a href="#" class="cinema-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <span class="cinema-dot"></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="cinema-card cinema-card-1">
+      <div class="cinema-bar"></div>
+      <div class="cinema-body">
+        <span class="cinema-num">02</span>
+        <div class="cinema-title-wrap" style="height:1.6rem">
+          <span class="cinema-title-placeholder">Événement</span>
+          <span class="cinema-title">Danse événementielle</span>
+        </div>
+        <p class="cinema-desc">Spectacles de danse orientale et arménienne pour vos événements. Énergie, grâce et élégance pour marquer les esprits.</p>
+        <div class="cinema-footer">
+          <a href="#" class="cinema-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <span class="cinema-dot"></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="cinema-card cinema-card-2">
+      <div class="cinema-bar"></div>
+      <div class="cinema-body">
+        <span class="cinema-num">03</span>
+        <div class="cinema-title-wrap" style="height:1.6rem">
+          <span class="cinema-title-placeholder">Formation</span>
+          <span class="cinema-title">Cours chant & danse</span>
+        </div>
+        <p class="cinema-desc">Cours particuliers ou en groupe. Technique vocale, danse orientale, rythme arménien — du débutant au confirmé.</p>
+        <div class="cinema-footer">
+          <a href="#" class="cinema-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <span class="cinema-dot"></span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ═════════ V4 — TICKET PERFORÉ ═════════ -->
+<section id="v4" class="section">
+  <div class="section-label">
+    <span class="eyebrow">Concept 04</span>
+    <h2 class="section-title">Ticket Perforé</h2>
+    <p class="section-sub">Talon perforé à gauche — comme un billet de spectacle</p>
+  </div>
+
+  <div class="ticket-list">
+
+    <div class="ticket ticket-0">
+      <div class="ticket-stub ticket-stub-0">
+        <span class="ticket-num">01</span>
+        <div class="ticket-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <span class="ticket-category">Mariage · Cérémonie</span>
+        <h3 class="ticket-title">Chant pour mariages</h3>
+        <p class="ticket-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Répertoire sacré et romantique, adapté à vos traditions.</p>
+        <a href="#" class="ticket-cta">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <div class="ticket ticket-1">
+      <div class="ticket-stub ticket-stub-1">
+        <span class="ticket-num">02</span>
+        <div class="ticket-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <span class="ticket-category">Gala · Réception · Fête</span>
+        <h3 class="ticket-title">Danse événementielle</h3>
+        <p class="ticket-desc">Spectacles de danse orientale et arménienne pour vos événements. Énergie, grâce et élégance pour marquer les esprits.</p>
+        <a href="#" class="ticket-cta">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+    <div class="ticket ticket-2">
+      <div class="ticket-stub ticket-stub-2">
+        <span class="ticket-num">03</span>
+        <div class="ticket-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+        </div>
+      </div>
+      <div class="ticket-body">
+        <span class="ticket-category">Cours · Atelier · Formation</span>
+        <h3 class="ticket-title">Cours de chant & danse</h3>
+        <p class="ticket-desc">Cours particuliers ou en groupe. Technique vocale, danse orientale, rythme arménien — du débutant au confirmé.</p>
+        <a href="#" class="ticket-cta">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═════════ V5 — STRUCTURALISME BLANC ═════════ -->
+<section id="v5" class="section">
+  <div class="section-label">
+    <span class="eyebrow">Concept 05</span>
+    <h2 class="section-title">Structuralisme Blanc</h2>
+    <p class="section-sub">Minimalisme Bottega — chiffre monumental, ligne animée, tout en air</p>
+  </div>
+
+  <div class="struct-grid">
+
+    <article class="struct-card struct-card-0">
+      <span class="struct-watermark" aria-hidden="true">01</span>
+      <span class="struct-tag">Mariage</span>
+      <h3 class="struct-title">Chant pour mariages</h3>
+      <div class="struct-line"></div>
+      <p class="struct-desc">Voix arménienne live pour votre cérémonie et vin d'honneur. Répertoire sacré et romantique, adapté à vos traditions familiales.</p>
+      <a href="#" class="struct-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+    <article class="struct-card struct-card-1">
+      <span class="struct-watermark" aria-hidden="true">02</span>
+      <span class="struct-tag">Événements</span>
+      <h3 class="struct-title">Danse événementielle</h3>
+      <div class="struct-line"></div>
+      <p class="struct-desc">Spectacles de danse orientale et arménienne pour vos événements. Énergie, grâce et élégance pour marquer les esprits.</p>
+      <a href="#" class="struct-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+    <article class="struct-card struct-card-2">
+      <span class="struct-watermark" aria-hidden="true">03</span>
+      <span class="struct-tag">Formation</span>
+      <h3 class="struct-title">Cours de chant & danse</h3>
+      <div class="struct-line"></div>
+      <p class="struct-desc">Cours particuliers ou en groupe. Technique vocale, danse orientale, rythme arménien — du débutant au confirmé.</p>
+      <a href="#" class="struct-link">Découvrir <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </article>
+
+  </div>
+</section>
+
+
+<script>
+/* Floating nav scroll spy */
+const pills = document.querySelectorAll('.nav-pill');
+const sections = document.querySelectorAll('.section');
+
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      pills.forEach(p => p.classList.toggle('active', p.getAttribute('href') === '#' + id));
+    }
+  });
+}, { threshold: 0.45 });
+
+sections.forEach(s => spy.observe(s));
+</script>
+
+</body>
+</html>
