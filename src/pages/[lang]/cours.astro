@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/utils';
+import CtaFloat from '../../components/ui/CtaFloat.astro';
 
 export function getStaticPaths() {
   return [
@@ -130,10 +131,11 @@ const reels = (fr.cours as any).reels as (string | null)[] ?? [];
       <div class="cta-inner reveal">
         <h2 id="cta-title">{t.cours.ctaTitle}</h2>
         <p>{t.cours.ctaSubtitle}</p>
-        <a href={`/${lang}#contact`} class="btn-primary">{t.cours.ctaBtn}</a>
+        <a href="tel:+32486219896" class="btn-primary">{t.cours.ctaBtn}</a>
       </div>
     </div>
   </section>
+  <CtaFloat href="tel:+32486219896" />
 </Layout>
 
 <style>

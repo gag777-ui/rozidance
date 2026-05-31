@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { getTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/utils';
+import CtaFloat from '../components/ui/CtaFloat.astro';
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
 const c = t.chant;
@@ -154,6 +155,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       </a>
     </div>
   </section>
+  <CtaFloat href="tel:+32486219896" />
 </Layout>
 
 <style>

@@ -1,0 +1,151 @@
+---
+interface Props {
+  href: string;
+  label?: string;
+}
+const { href, label = 'Nous contacter' } = Astro.props;
+---
+
+<div class="cta-fab" id="cta-fab">
+  <button
+    class="cta-fab-btn"
+    id="cta-fab-btn"
+    data-href={href}
+    aria-label={label}
+    aria-expanded="false"
+  >
+    <svg class="cta-fab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      aria-hidden="true">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.97 2.36a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+    </svg>
+    <span class="cta-fab-label">{label}</span>
+  </button>
+</div>
+
+<style>
+  .cta-fab {
+    position: fixed;
+    bottom: 1.75rem;
+    right: 1.75rem;
+    z-index: 120;
+    opacity: 0;
+    transform: scale(0.75);
+    animation: fabIn 0.5s var(--ease-out-soft) 0.9s forwards;
+  }
+
+  @keyframes fabIn {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .cta-fab-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(168, 135, 83, 0.4);
+    overflow: hidden;
+    transition:
+      width 420ms var(--ease-out-soft),
+      border-radius 420ms var(--ease-out-soft),
+      gap 320ms var(--ease-out-soft),
+      background-color 300ms var(--ease-out-soft),
+      box-shadow 300ms var(--ease-out-soft);
+    flex-shrink: 0;
+  }
+
+  @keyframes fabBreath {
+    0%, 100% { transform: scale(1);    box-shadow: 0 4px 20px rgba(168, 135, 83, 0.4); }
+    50%       { transform: scale(1.08); box-shadow: 0 6px 28px rgba(168, 135, 83, 0.55); }
+  }
+
+  .cta-fab-btn:not(.is-open) {
+    animation: fabBreath 2.8s ease-in-out infinite;
+  }
+
+  .cta-fab-btn:hover {
+    background-color: var(--color-accent-hover);
+    animation-play-state: paused;
+  }
+
+  .cta-fab-btn.is-open {
+    width: 185px;
+    border-radius: 21px;
+    gap: 0.55rem;
+  }
+
+  .cta-fab-icon {
+    flex-shrink: 0;
+  }
+
+  .cta-fab-label {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    opacity: 0;
+    transition:
+      max-width 380ms var(--ease-out-soft) 60ms,
+      opacity 280ms var(--ease-out-soft) 100ms;
+  }
+
+  .cta-fab-btn.is-open .cta-fab-label {
+    max-width: 160px;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-fab { animation: none; opacity: 1; transform: none; }
+    .cta-fab-btn { animation: none; }
+    .cta-fab-btn, .cta-fab-label { transition: none; }
+  }
+</style>
+
+<script>
+  function initCtaFab() {
+    const btn = document.getElementById('cta-fab-btn') as HTMLButtonElement | null;
+    if (!btn) return;
+
+    const href = btn.dataset.href ?? '/#contact';
+    let isOpen = false;
+    let autoClose: ReturnType<typeof setTimeout> | null = null;
+
+    function collapse() {
+      isOpen = false;
+      btn!.classList.remove('is-open');
+      btn!.setAttribute('aria-expanded', 'false');
+      if (autoClose) { clearTimeout(autoClose); autoClose = null; }
+    }
+
+    btn.addEventListener('click', () => {
+      if (!isOpen) {
+        // Premier clic : on ouvre
+        isOpen = true;
+        btn.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        // Auto-fermeture après 4s
+        autoClose = setTimeout(collapse, 4000);
+      } else {
+        // Deuxième clic : on navigue
+        collapse();
+        window.location.href = href;
+      }
+    });
+
+    // Clic extérieur = fermeture
+    document.addEventListener('click', (e) => {
+      if (isOpen && !btn.contains(e.target as Node)) collapse();
+    });
+  }
+
+  document.addEventListener('astro:page-load', initCtaFab);
+</script>
