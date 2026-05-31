@@ -14,6 +14,7 @@ export function getStaticPaths() {
 const lang = (Astro.currentLocale ?? Astro.params.lang ?? 'fr') as Lang;
 const t = getTranslations(lang);
 const faq = t.cours.faqItems;
+const reels = ((t.cours as any).reels as (string | null)[] | undefined) ?? [];
 ---
 
 <Layout title={t.cours.pageTitle} description={t.cours.pageDescription}>
@@ -26,36 +27,41 @@ const faq = t.cours.faqItems;
     </div>
   </section>
 
-  <!-- 6 cours cards -->
-  <section class="cours-cards-section">
-    <div class="section-container">
-      <div class="cours-cards-grid">
-        {t.cours.cards.map((card, i) => (
-          <a
-            href={`/${lang}/cours/${card.slug}`}
-            class="cours-card reveal"
-            style={`transition-delay: ${i * 80}ms`}
-          >
-            <div class="card-accent-bar"></div>
-            <div class="card-body">
-              <span class="card-ordinal" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <div class="card-thumb">
-                <img src="/images/reel-logo.webp" alt={card.title} loading="lazy" width="400" height="400" />
+  <!-- Reels grid -->
+  {reels.length > 0 && (
+    <section class="reels-section">
+      <div class="section-container">
+        <div class="reels-grid">
+          {reels.map((href, i) => (
+            <a
+              href={href ?? '#'}
+              class="reel-card reveal"
+              style={`transition-delay: ${i * 50}ms`}
+              aria-label={`Cours — voir le reel Instagram ${i + 1}`}
+              target={href ? '_blank' : undefined}
+              rel={href ? 'noopener noreferrer' : undefined}
+            >
+              <div class="reel-thumb">
+                <img src="/images/reel-logo.webp" alt={`Cours ${i + 1}`} loading="lazy" width="300" height="300" />
+                <div class="reel-overlay">
+                  <svg class="reel-ig-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.4"/>
+                    <circle cx="12" cy="12" r="3.5" stroke="white" stroke-width="1.4"/>
+                    <circle cx="17" cy="7" r="1.2" fill="white"/>
+                  </svg>
+                </div>
               </div>
-              <h2 class="card-title">{card.title}</h2>
-              <p class="card-desc">{card.description}</p>
-              <span class="card-link">
-                {t.cours.cardLink}
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="card-arrow">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <p class="reel-label">Voir le reel
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-              </span>
-            </div>
-          </a>
-        ))}
+              </p>
+            </a>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <!-- Section chant -->
   <section class="cours-section" aria-labelledby="chant-title">
@@ -128,103 +134,48 @@ const faq = t.cours.faqItems;
   .cours-hero-inner h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--color-text-primary); margin: 0; }
   .cours-hero-subtitle { font-size: 1.0625rem; color: var(--color-text-secondary); line-height: 1.65; margin: 0; }
 
-  .cours-cards-section { padding-block: var(--spacing-section); }
+  .reels-section { padding-block: var(--spacing-section); }
 
-  .cours-cards-grid {
+  .reels-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
   }
+  @media (min-width: 640px) { .reels-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1.25rem; } }
+  @media (min-width: 1024px) { .reels-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } }
 
-  @media (min-width: 600px) { .cours-cards-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1024px) { .cours-cards-grid { grid-template-columns: repeat(3, 1fr); } }
+  .reel-card { display: block; text-decoration: none; }
 
-  .cours-card {
+  .reel-thumb {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--color-bg-card);
-    border: 0.5px solid var(--color-border);
+    aspect-ratio: 1 / 1;
     border-radius: var(--radius-card);
     overflow: hidden;
-    text-decoration: none;
-    transition: transform 400ms var(--ease-out-soft), border-color 400ms var(--ease-out-soft), box-shadow 400ms var(--ease-out-soft);
-  }
-
-  .cours-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-accent);
-    box-shadow: 0 12px 32px rgba(193, 104, 71, 0.12);
-  }
-
-  .cours-card .card-accent-bar {
-    height: 3px;
-    background: linear-gradient(to right, var(--color-accent), var(--color-gold));
-    flex-shrink: 0;
-  }
-
-  .cours-card .card-body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-    flex: 1;
-    position: relative;
-  }
-
-  .cours-card .card-ordinal {
-    position: absolute;
-    top: 1rem;
-    right: 1.25rem;
-    font-family: var(--font-serif);
-    font-size: 3rem;
-    line-height: 1;
-    color: var(--color-border);
-    pointer-events: none;
-    user-select: none;
-    transition: color 400ms var(--ease-out-soft);
-  }
-
-  .cours-card:hover .card-ordinal { color: rgba(193, 104, 71, 0.1); }
-
-  .cours-card .card-thumb {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    overflow: hidden;
+    background-color: var(--color-bg-card);
     border: 0.5px solid var(--color-border);
-    flex-shrink: 0;
   }
 
-  .cours-card .card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .reel-thumb img { width: 92%; height: auto; object-fit: contain; display: block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: transform 500ms var(--ease-out-soft); }
 
-  .cours-card .card-title {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--color-text-primary);
-    margin: 0;
-    line-height: 1.3;
+  .reel-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.22);
+    opacity: 0;
+    transition: opacity 300ms var(--ease-out-soft);
   }
 
-  .cours-card .card-desc { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0; flex: 1; }
+  .reel-ig-icon { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+  .reel-card:hover .reel-thumb img { transform: translate(-50%, -50%) scale(1.03); }
+  .reel-card:hover .reel-overlay { opacity: 1; }
 
-  .cours-card .card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-top: 0.25rem;
-    transition: gap 250ms var(--ease-out-soft);
+  .reel-label {
+    display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+    margin: 0.5rem 0 0; font-size: 0.7rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-text-secondary);
+    transition: color 250ms var(--ease-out-soft);
   }
-
-  .cours-card:hover .card-link { gap: 0.75rem; }
-
-  .cours-card .card-arrow { flex-shrink: 0; transition: transform 250ms var(--ease-out-soft); }
-  .cours-card:hover .card-arrow { transform: translateX(3px); }
+  .reel-card:hover .reel-label { color: var(--color-accent); }
 
   .cours-section { padding-block: 5rem; }
   .cours-section-alt { background-color: var(--color-bg-card); }
