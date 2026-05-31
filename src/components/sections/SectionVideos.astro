@@ -28,7 +28,8 @@ const videos = [
 
     <div class="videos-grid">
       {videos.map((video, i) => (
-        <div class={`card-shell cs-${i} reveal`} style={`transition-delay: ${i * 120}ms`} data-card>
+        <div class={i % 2 === 0 ? 'reveal-left' : 'reveal-right'} style={`transition-delay: ${i * 150}ms`}>
+        <div class={`card-shell cs-${i}`} data-card>
           <div class={`card-core cc-${i} video-card`}>
             <div class="card-light"></div>
 
@@ -81,6 +82,7 @@ const videos = [
               <p class="video-title">{video.title}</p>
             </div>
           </div>
+        </div>
         </div>
       ))}
     </div>
