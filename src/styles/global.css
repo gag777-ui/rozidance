@@ -189,7 +189,7 @@
 .reveal {
   opacity: 0;
   transform: translateY(64px);
-  transition: opacity 750ms var(--ease-out-soft), transform 750ms var(--ease-out-soft);
+  transition: opacity 950ms var(--ease-out-soft), transform 950ms var(--ease-out-soft);
 }
 .reveal.is-visible {
   opacity: 1;
@@ -200,7 +200,7 @@
 .reveal-fade {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 800ms var(--ease-out-soft), transform 800ms var(--ease-out-soft);
+  transition: opacity 1050ms var(--ease-out-soft), transform 1050ms var(--ease-out-soft);
 }
 .reveal-fade.is-visible {
   opacity: 1;
@@ -211,7 +211,7 @@
 .reveal-left {
   opacity: 0;
   transform: translateX(-48px);
-  transition: opacity 750ms var(--ease-out-soft), transform 750ms var(--ease-out-soft);
+  transition: opacity 950ms var(--ease-out-soft), transform 950ms var(--ease-out-soft);
 }
 .reveal-left.is-visible {
   opacity: 1;
@@ -222,7 +222,7 @@
 .reveal-right {
   opacity: 0;
   transform: translateX(48px);
-  transition: opacity 750ms var(--ease-out-soft), transform 750ms var(--ease-out-soft);
+  transition: opacity 950ms var(--ease-out-soft), transform 950ms var(--ease-out-soft);
 }
 .reveal-right.is-visible {
   opacity: 1;
@@ -233,7 +233,7 @@
 .reveal-scale {
   opacity: 0;
   transform: scale(0.86) translateY(30px);
-  transition: opacity 700ms var(--ease-out-soft), transform 700ms var(--ease-out-soft);
+  transition: opacity 900ms var(--ease-out-soft), transform 900ms var(--ease-out-soft);
 }
 .reveal-scale.is-visible {
   opacity: 1;
@@ -246,22 +246,22 @@
 .section-header .eyebrow {
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 550ms var(--ease-out-soft),
-              transform 550ms var(--ease-out-soft);
+  transition: opacity 750ms var(--ease-out-soft),
+              transform 750ms var(--ease-out-soft);
 }
 .section-header.is-visible .eyebrow {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Titre : masqué, monte avec 160ms de décalage + léger letter-spacing */
+/* Titre : masqué, monte avec 200ms de décalage + léger letter-spacing */
 .section-header .section-title {
   opacity: 0;
   transform: translateY(32px);
   letter-spacing: 0.04em;
-  transition: opacity 900ms var(--ease-out-soft) 160ms,
-              transform 900ms var(--ease-out-soft) 160ms,
-              letter-spacing 900ms var(--ease-out-soft) 160ms;
+  transition: opacity 1100ms var(--ease-out-soft) 200ms,
+              transform 1100ms var(--ease-out-soft) 200ms,
+              letter-spacing 1100ms var(--ease-out-soft) 200ms;
 }
 .section-header.is-visible .section-title {
   opacity: 1;

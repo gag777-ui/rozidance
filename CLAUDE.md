@@ -35,11 +35,12 @@ No test suite or linter configured yet.
 
 **Page structure** — `index.astro` is a single-scroll page. Section order: Hero → Prestations → Galerie → Vidéos → À propos → Stats → Témoignages → FAQ → Contact. Each section is its own `src/components/sections/Section*.astro`. `Layout.astro` handles `<head>`, Google Fonts (non-render-blocking via `rel="preload"`), View Transitions, scroll-reveal observer, and page-loader dismiss.
 
-**Scroll reveal** — `.reveal` elements animate in via `IntersectionObserver` (adds `.is-visible`). CSS transitions in `global.css`. GSAP ScrollTrigger is also active (see Animation system below) for hero parallax and title word-reveal.
+**Scroll reveal** — `.reveal` elements animate in via `IntersectionObserver` (adds `.is-visible`). CSS transitions in `global.css`. GSAP ScrollTrigger is also active (see Animation system below) for hero parallax and title word-reveal. Durations: `.reveal` / `.reveal-left` / `.reveal-right` = 950ms, `.reveal-fade` = 1050ms, `.reveal-scale` = 900ms, eyebrow = 750ms, section-title = 1100ms + 200ms delay. Threshold: 0.12.
 
 **Animation system** — `Layout.astro` contains a second `<script>` block that imports `gsap` + `lenis` (both installed as npm deps). It runs `init()` / `destroy()` around View Transitions via `astro:before-swap` / `astro:page-load`. Features active:
 - **Lenis** smooth scroll (duration 1.4, `smoothWheel: true`). `prevent: #mobile-menu` so drawer scroll still works. Forces `scrollBehavior: auto` on `<html>` to avoid conflict with CSS smooth scroll.
 - **Hero parallax** — `.hero-bg-video` moves `yPercent 28` scrub 2, `.hero-text` fades + moves up scrub 1.5 as user scrolls.
+- **Hero title entrance** — three-step sequence in `SectionHero.astro`: (1) `line1` "Bienvenu" CSS fade-up at 500ms; (2) `line2` typewriter via `initHeroTypewriter()` — reads `#hero-line2` text, clears it, re-types char by char (65ms/char ±12ms jitter, no cursor), starts at 900ms; (3) `#hero-italic` GSAP slide-in via `initHeroTitleAnimation()` — "Rozi" from left (`x: -vw*1.15`), "Dance" from right, `.hw-dot` pops in at 0.68s, total delay 2.0s. Works for all languages (text read dynamically).
 - **Magnetic buttons** — `.btn-primary`, `.btn-ghost`, `.hero-btn-ghost` attract toward cursor on `mousemove`, spring back on `mouseleave` via `elastic.out`. Uses `AbortController` for cleanup.
 - **Section title word-reveal** — `.section-title` inside `.section-header` are split into word-mask spans (`.tw-wrap` / `.tw-inner`), animated via GSAP `yPercent 105→0` stagger on ScrollTrigger enter. Only applied once per element (`data-gsap-split` flag).
 - Lenis CSS utilities added to `global.css` (`.lenis-smooth`, `.lenis-stopped`).
