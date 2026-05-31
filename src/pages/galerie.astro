@@ -5,6 +5,7 @@ import type { Lang } from '../i18n/utils';
 import CtaFloat from '../components/ui/CtaFloat.astro';
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
+const base = lang === 'fr' ? '' : `/${lang}`;
 
 const photos = [
   { src: '/images/galerie/photo-01.webp', thumb: '/images/galerie/photo-01-thumb.webp', alt: 'Rozi Dance — performance de danse arménienne', w: 1108, h: 1420 },
@@ -30,10 +31,10 @@ const photos = [
 >
   <main class="galerie-page">
     <div class="galerie-hero section-container">
-      <a href="/#galerie" class="galerie-back">← Retour</a>
+      <a href={`${base || '/'}#galerie`} class="galerie-back">← {t.nav.galerie}</a>
       <div class="galerie-header">
         <span class="eyebrow">{t.galerie.eyebrow}</span>
-        <h1 class="galerie-title">Galerie</h1>
+        <h1 class="galerie-title">{t.galerie.title}</h1>
       </div>
     </div>
 

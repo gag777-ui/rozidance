@@ -73,12 +73,7 @@ const reels = (t.cours as any).reels as (string | null)[];
         <h2 id="chant-title">{t.cours.chantTitle}</h2>
         <p>{t.cours.chantDescription}</p>
         <ul class="cours-list">
-          <li>Répertoire arménien traditionnel</li>
-          <li>Chants internationaux populaires</li>
-          <li>Technique vocale adaptée à votre voix</li>
-          <li>Tous niveaux — débutant à avancé</li>
-          <li>Cours individuels ou en groupe</li>
-          <li>En présentiel ou à distance</li>
+          {t.cours.chantList.map((item: string) => <li>{item}</li>)}
         </ul>
       </div>
       <div class="cours-deco reveal" aria-hidden="true">
@@ -97,11 +92,7 @@ const reels = (t.cours as any).reels as (string | null)[];
         <h2 id="danse-title">{t.cours.danseTitle}</h2>
         <p>{t.cours.danseDescription}</p>
         <ul class="cours-list">
-          <li>Danses folkloriques arméniennes</li>
-          <li>Chorégraphies pour événements</li>
-          <li>Danse en groupe et individuelle</li>
-          <li>Tous niveaux, tous âges</li>
-          <li>Ambiance chaleureuse et bienveillante</li>
+          {t.cours.danseList.map((item: string) => <li>{item}</li>)}
         </ul>
       </div>
     </div>

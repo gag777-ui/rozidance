@@ -130,11 +130,37 @@ All images must be WebP. Placeholders use `onerror` fallback to `/images/placeho
 - `/cours` — tarifs + FAQ accordion
 - `/chant` — page "L'art du chant" avec 3 cards (Soul, Pop, Jazz) liées à des reels Instagram
 - `/404` — custom 404
-- `/mentions-legales` — **TODO: page not yet created**, linked in Footer
+- `/mentions-legales` — page créée, contenu complet (éditeur, hébergement Vercel, RGPD, droit belge), hardcodée en français seulement
+- `/galerie` — page galerie complète avec 15 photos (photo-01 à photo-15), PhotoSwipe lightbox, bouton Instagram
 
 ## Schema.org
 
 `SchemaOrg.astro` injects JSON-LD via `<slot name="schema">` in Layout. Contains LocalBusiness + PerformingGroup + Person×2 + Service×3.
+
+## Audit V1 — état au 2026-06-01
+
+Audit complet réalisé sur 35 fichiers .astro + 4 fichiers i18n. Résultats :
+
+**Corrigé lors de l'audit :**
+- `SectionStats.astro` — ajout `id="stats"` (ancre de nav manquante)
+- `cours.astro` — listes chant/danse remplacées par `t.cours.chantList` / `t.cours.danseList` (étaient hardcodées en français, cassant EN/NL/RU)
+- `galerie.astro` — lien retour et titre de page passés en i18n + `base` variable ajoutée
+- `Footer.astro` — Navigation et Liens côte à côte (space-between)
+
+**Vérifié et OK :**
+- Navigation header/footer : `${base || '/'}#ancre` — correct (évalue à `/#ancre` pour FR)
+- IDs sections : `#prestations`, `#galerie`, `#videos`, `#apropos`, `#stats`, `#temoignages`, `#faq`, `#contact` — tous présents
+- YouTube IDs : `zTQRoFT6tX4`, `xa3-8ONanC4`, `mO7R2CxR5mQ` — vrais IDs, non placeholder
+- Images : logo.webp, portrait-duo.webp, reel-logo.webp, galerie/photo-01..15.webp, icons — tous présents
+- 31 Instagram reels répartis sur cours (6), mariages (22), chant (3) — tous vrais liens
+- i18n : chantList + danseList présents dans les 4 langues (fr/en/nl/ru)
+- mentions-legales : page créée et fonctionnelle
+- 62 pages générées au build sans erreur
+
+**Connu / non bloquant :**
+- `galerie.astro` : photo-05.webp existe mais n'est pas dans le tableau (intentionnel ou oubli — à confirmer avec Gago)
+- `mentions-legales` : hardcodée en français uniquement (pas de version EN/NL/RU — acceptable V1)
+- Texte hardcodé `"Voir le reel"` ligne 57 de cours.astro (libellé de carte reel) — à i18niser si multilingue prioritaire
 
 ## V1 constraints (do not add in V1)
 
