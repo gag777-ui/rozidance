@@ -291,7 +291,15 @@
         "slug": "danse-de-la-mariee",
         "title": "Danse de la mariée",
         "description": "La danse traditionnelle arménienne de la mariée, grâce et émotion réunies.",
-        "count": 6
+        "count": 6,
+        "reels": [
+          "https://www.instagram.com/reel/DTvKVC2irei/?igsh=YmZvYnZjcW05YzJw",
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
       },
       {
         "slug": "chant-de-la-mariee",

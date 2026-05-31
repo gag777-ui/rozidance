@@ -18,7 +18,10 @@ const s = t.mariagesSlug;
 const base = lang === 'fr' ? '' : `/${lang}`;
 
 const cat = t.mariages.categories.find(c => c.slug === slug)!;
-const reels: string[] = Array.from({ length: cat.count }, () => '#');
+const reelsSrc = (cat as any).reels as (string | null)[] | undefined;
+const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
+  reelsSrc?.[i] ?? '#'
+);
 ---
 
 <Layout title={`${cat.title} — Rozi Dance`} description={cat.description}>
