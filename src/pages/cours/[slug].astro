@@ -18,7 +18,11 @@ const s = t.coursSlug;
 const base = lang === 'fr' ? '' : `/${lang}`;
 
 const card = t.cours.cards.find(c => c.slug === slug)!;
-const reels: string[] = Array.from({ length: 6 }, () => '#');
+const reelsSrc = (card as any).reels as (string | null)[] | undefined;
+const count = (card as any).count as number ?? 6;
+const reels: string[] = Array.from({ length: count }, (_, i) =>
+  reelsSrc?.[i] ?? '#'
+);
 ---
 
 <Layout title={`${card.title} — Rozi Dance`} description={card.description}>
