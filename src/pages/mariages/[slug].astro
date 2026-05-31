@@ -49,7 +49,7 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
             href={href}
             class="reel-card reveal"
             style={`transition-delay: ${i * 50}ms`}
-            aria-label={`${cat.title} — ${s.videoLabel} ${i + 1}`}
+            aria-label={`${cat.title} — voir le reel Instagram ${i + 1}`}
             target={href !== '#' ? '_blank' : undefined}
             rel={href !== '#' ? 'noopener noreferrer' : undefined}
           >
@@ -63,6 +63,11 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
                 </svg>
               </div>
             </div>
+            <p class="reel-label">Voir le reel
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </p>
           </a>
         ))}
       </div>
@@ -170,6 +175,20 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
 
   .reel-card:hover .reel-thumb img { transform: scale(1.04); }
   .reel-card:hover .reel-overlay { opacity: 1; }
+
+  .reel-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    margin: 0.5rem 0 0;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    transition: color 250ms var(--ease-out-soft);
+  }
+  .reel-card:hover .reel-label { color: var(--color-accent); }
 
   .cat-cta {
     padding-block: var(--spacing-section);
