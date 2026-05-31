@@ -306,33 +306,28 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 </style>
 
 <script>
-  // Force video playback on mobile and after View Transitions
+  // Force video playback on mobile and after View Transitions.
+  // iOS Safari ignores the autoplay attribute on dynamically inserted elements
+  // (View Transitions swap) — must call play() explicitly.
   function initHeroVideo() {
     const video = document.querySelector<HTMLVideoElement>('.hero-bg-video');
     if (!video) return;
 
+    // Set programmatically as well as via attributes — required on some iOS versions
+    video.muted = true;
+    (video as HTMLVideoElement & { playsInline: boolean }).playsInline = true;
+
     const tryPlay = () => {
-      const p = video.play();
-      if (p !== undefined) {
-        p.catch(() => {
-          // Autoplay blocked — replay on first user gesture
-          const resume = () => video.play();
-          document.addEventListener('touchstart', resume, { once: true });
-          document.addEventListener('pointerdown', resume, { once: true });
-        });
-      }
+      if (!video.paused) return; // already playing
+      video.play().catch(() => {
+        // play() still not ready — retry on data events and first gesture
+        video.addEventListener('canplay', tryPlay, { once: true });
+        video.addEventListener('loadeddata', tryPlay, { once: true });
+        document.addEventListener('touchstart', tryPlay, { once: true });
+      });
     };
 
-    // After a View Transition swap the <video> element is brand-new and the
-    // browser hasn't fetched any data yet — readyState is 0. Calling play()
-    // immediately fails silently. load() kicks off the fetch; canplay fires
-    // as soon as enough data is buffered to start playback.
-    if (video.readyState >= 3) {
-      tryPlay();
-    } else {
-      video.addEventListener('canplay', tryPlay, { once: true });
-      video.load();
-    }
+    tryPlay();
   }
 
   document.addEventListener('astro:page-load', initHeroVideo);
