@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Workflow
+
+**Longueur de contexte** — Faire un `/clear` (ou ouvrir une nouvelle session) dès que le contexte devient long (~500k tokens). Un contexte saturé ralentit les réponses et peut causer des oublis. Toujours commit + push avant de `/clear` pour ne rien perdre.
+
 ## Project
 
 **Rozi Dance** — Premium showcase site for an Armenian artistic duo (bridal singing, event dance, singing & dance lessons). Static site, no database.
@@ -44,7 +48,7 @@ No test suite or linter configured yet.
 
 **Page loader** — `PageLoader.astro` shows "Rozi · Dance" with a breathing/pulse animation (`loaderPulse` keyframe on `.loader-logo-text`). Dismissed via `setTimeout(600ms)` after `window.load` in `Layout.astro`. **TODO:** replace text with logo image (`/images/logo.webp` is now available).
 
-**astro:page-load pattern** — All `<script>` blocks must wrap their init logic in a named function called via `document.addEventListener('astro:page-load', initXxx)`. The GSAP animation block is an exception: it calls `init()` directly at module level AND via `astro:page-load` (safe because `init()` calls `destroy()` first). For other handlers attached to `document`/`window`, store the reference in a module-level variable and remove it before re-adding.
+**astro:page-load pattern** — All `<script>` blocks must wrap their init logic in a named function called via `document.addEventListener('astro:page-load', initXxx)`. The GSAP animation block calls `init()` directly at module level AND via `astro:page-load`. **IMPORTANT:** `destroy()` kills all ScrollTriggers but does NOT reset GSAP inline styles on animated elements. The word-reveal (`data-gsap-split`) must therefore re-create its ScrollTrigger on every `init()` call — the split is skipped if already done, but `gsap.set(yPercent:105)` and `ScrollTrigger.create()` always run. Failing to do this leaves `.tw-inner` stuck at `yPercent:105` (invisible behind `overflow:hidden`). For other handlers attached to `document`/`window`, store the reference in a module-level variable and remove it before re-adding.
 
 ## Hero section (SectionHero.astro)
 
