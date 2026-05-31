@@ -9,8 +9,8 @@
   --color-text-primary:  #2B1F15;
   --color-text-secondary:#6B5645;
   --color-text-muted:    #B8A689;
-  --color-accent:        #C16847;
-  --color-accent-hover:  #A85638;
+  --color-accent:        #A88753;
+  --color-accent-hover:  #8A6D3E;
   --color-gold:          #A88753;
   --color-border:        #E5D7BE;
   --color-divider:       #D9C9B0;
@@ -27,7 +27,7 @@
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Border radius */
-  --radius-btn:  2px;
+  --radius-btn:  10px;
   --radius-card: 8px;
 }
 
@@ -103,16 +103,39 @@
     color: #fff;
     font-family: var(--font-sans);
     font-size: 13px;
-    letter-spacing: 0.05em;
-    padding: 0.75rem 1.75rem;
+    letter-spacing: 0.06em;
+    padding: 0.8rem 2rem;
     border-radius: var(--radius-btn);
     border: 1px solid transparent;
-    transition: background-color 400ms var(--ease-out-soft);
+    position: relative;
+    overflow: hidden;
     cursor: pointer;
     text-decoration: none;
+    transition: background-color 400ms var(--ease-out-soft),
+                transform 300ms var(--ease-out-soft),
+                box-shadow 300ms var(--ease-out-soft);
+  }
+  /* Shimmer au hover */
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.28) 50%,
+      transparent 75%
+    );
+    transform: translateX(-100%);
+    transition: transform 550ms var(--ease-out-soft);
   }
   .btn-primary:hover {
     background-color: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(168, 135, 83, 0.32);
+  }
+  .btn-primary:hover::before {
+    transform: translateX(150%);
   }
 
   /* Btn ghost */
@@ -124,17 +147,41 @@
     color: var(--color-text-primary);
     font-family: var(--font-sans);
     font-size: 13px;
-    letter-spacing: 0.05em;
-    padding: 0.75rem 1.75rem;
+    letter-spacing: 0.06em;
+    padding: 0.8rem 2rem;
     border-radius: var(--radius-btn);
     border: 0.5px solid var(--color-text-primary);
-    transition: border-color 400ms var(--ease-out-soft), color 400ms var(--ease-out-soft);
+    position: relative;
+    overflow: hidden;
     cursor: pointer;
     text-decoration: none;
+    transition: border-color 400ms var(--ease-out-soft),
+                color 400ms var(--ease-out-soft),
+                transform 300ms var(--ease-out-soft),
+                box-shadow 300ms var(--ease-out-soft);
+  }
+  /* Shimmer doré au hover */
+  .btn-ghost::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 25%,
+      rgba(168, 135, 83, 0.14) 50%,
+      transparent 75%
+    );
+    transform: translateX(-100%);
+    transition: transform 550ms var(--ease-out-soft);
   }
   .btn-ghost:hover {
     border-color: var(--color-accent);
     color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(168, 135, 83, 0.18);
+  }
+  .btn-ghost:hover::before {
+    transform: translateX(150%);
   }
 
   /* Nav link with animated underline */

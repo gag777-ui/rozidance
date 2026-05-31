@@ -58,6 +58,10 @@ const base = lang === 'fr' ? '' : `/${lang}`;
         </em>
       </h1>
 
+      <div class="hero-actions" id="hero-actions">
+        <a href="#contact" class="btn-primary">{t.hero.ctaPrimary}</a>
+        <a href="#prestations" class="hero-btn-ghost">{t.hero.ctaSecondary}</a>
+      </div>
 
     </div>
 
@@ -238,7 +242,8 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
+    opacity: 0;
   }
 
   .hero-btn-ghost {
@@ -249,17 +254,38 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     color: #fff;
     font-family: var(--font-sans);
     font-size: 13px;
-    letter-spacing: 0.05em;
-    padding: 0.75rem 1.75rem;
+    letter-spacing: 0.06em;
+    padding: 0.8rem 2rem;
     border-radius: var(--radius-btn);
     border: 0.5px solid rgba(255,255,255,0.6);
-    transition: border-color 400ms var(--ease-out-soft), background-color 400ms var(--ease-out-soft);
+    position: relative;
+    overflow: hidden;
     cursor: pointer;
     text-decoration: none;
+    transition: border-color 400ms var(--ease-out-soft),
+                background-color 400ms var(--ease-out-soft),
+                transform 300ms var(--ease-out-soft);
+  }
+  .hero-btn-ghost::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.18) 50%,
+      transparent 75%
+    );
+    transform: translateX(-100%);
+    transition: transform 550ms var(--ease-out-soft);
   }
   .hero-btn-ghost:hover {
     border-color: #fff;
     background-color: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+  .hero-btn-ghost:hover::before {
+    transform: translateX(150%);
   }
 
   /* ── DESKTOP ── */
@@ -372,17 +398,21 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
     const vw = window.innerWidth;
 
-    // Position initiale : mots hors-écran, point invisible
+    const actions = document.getElementById('hero-actions');
+
+    // Position initiale : mots hors-écran, point et boutons invisibles
     gsap.set(el,    { opacity: 1 });
     gsap.set(rozi,  { x: -vw * 1.15 });
     gsap.set(dance, { x:  vw * 1.15 });
     gsap.set(dot,   { opacity: 0, scale: 0 });
+    if (actions) gsap.set(actions, { opacity: 0, y: 18 });
 
-    // Animation : les mots glissent vers le centre, le point pop au moment de la rencontre
+    // Animation : mots → point → boutons
     const tl = gsap.timeline({ delay: 2.0 });
-    tl.to(rozi,  { x: 0, duration: 0.9, ease: 'power3.out' }, 0)
-      .to(dance, { x: 0, duration: 0.9, ease: 'power3.out' }, 0)
-      .to(dot,   { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2.5)' }, 0.68);
+    tl.to(rozi,    { x: 0, duration: 0.9, ease: 'power3.out' }, 0)
+      .to(dance,   { x: 0, duration: 0.9, ease: 'power3.out' }, 0)
+      .to(dot,     { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2.5)' }, 0.68)
+      .to(actions, { opacity: 1, y: 0, duration: 0.65, ease: 'power2.out' }, 1.05);
   }
 
   document.addEventListener('astro:page-load', initHeroTitleAnimation);
