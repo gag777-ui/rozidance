@@ -116,15 +116,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .hero-pattern { display: none; }
 
-  /* Mobile : pas de vidéo → fond image statique (évite 39MB de download) */
-  @media (max-width: 900px) {
-    .hero-video-bg {
-      background-image: url('/images/og-default.webp');
-      background-size: cover;
-      background-position: center top;
-    }
-    .hero-bg-video { display: none; }
-  }
 
   /* Contenu au-dessus de la vidéo */
   .hero-inner {
@@ -351,10 +342,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     const video = document.querySelector<HTMLVideoElement>('.hero-bg-video');
     if (!video) return;
 
-    // Mobile : pas de vidéo → économise 39MB de download
-    if (window.innerWidth <= 900) return;
-
-    // Desktop : injecter la source et démarrer la lecture
     video.muted = true;
     (video as HTMLVideoElement & { playsInline: boolean }).playsInline = true;
 
@@ -371,6 +358,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       video.play().catch(() => {
         video.addEventListener('canplay', tryPlay, { once: true });
         video.addEventListener('loadeddata', tryPlay, { once: true });
+        document.addEventListener('touchstart', tryPlay, { once: true });
       });
     };
 
