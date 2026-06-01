@@ -21,6 +21,7 @@ pnpm-debug.log*
 .DS_Store
 public/images/Capture*
 public/images/*.png
+!public/images/logo-transparent.png
 
 # jetbrains setting folder
 .idea/
