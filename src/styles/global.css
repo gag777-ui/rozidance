@@ -27,8 +27,8 @@
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Border radius */
-  --radius-btn:  10px;
-  --radius-card: 8px;
+  --radius-btn:  18px;
+  --radius-card: 18px;
 }
 
 /* ─── Base ───────────────────────────────────────────────────────────────── */
