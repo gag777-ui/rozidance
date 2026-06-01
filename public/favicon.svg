@@ -1,11 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <circle cx="16" cy="16" r="16" fill="#C16847"/>
-  <text
-    x="16" y="22"
-    text-anchor="middle"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-size="19"
-    font-weight="400"
-    fill="#F7F1E6"
-  >R</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAEwUlEQVR4nO1Wa2wUVRS+985rZ3d2u920W9pisbaEqsTS0gotXZZqVUxbKA81AaxG4YcC//rHGKPQSEhICL6CMRgCIf5SlAYL/PCFBKQ8bG1pWUoK7W6J9AXddmdm53GPmd1oWna3lQT+GM+PyeTOvec737nnfGewMn4LPUwjD9U7+i8AsIlLYBlC+D49ARBC/hWAIAgYY4TgvvxjhKOaFgttRgBMSHdPQFFUwhCUsDuVxQjjogWFLMvegzENAGNMTTMYGixZ9FRiLKmMAog2ob29887d8ewsr6brsQSkYAAAkiR5MzMopfesIwCcLMsAwHHc/MLHRJvtnlPJ74BSqus6pTEGGJmGyTBEFEVEsCorAIAxtr7FXizSlBqGkZXlBQCT0qnhpyzT2EGEMQJKJY+H4/muK93nf7sQP2w5MgyEkGmasqwQQjDGpmkmzWoSBn8TtwDsLteRQ0e+OdrCcVzF0vLrfTc3Nm5Qw2HJk4EQ6rx8eXw8vMy3TJmcSFqjMwAAAGUFe3Pz7kDgemXF076qis6ubgQwfHuY6tqevZ8+s8KnKEp+/qMX2y6WlhZr0aiVOtO06E8BSw5gmtQuSefOnv/p5zNb3mg8cPBwKHSr5ln/iVM/tBw/udxXGQ5PtHd0Xr3WW764pKGhXtd1QAQAsWluYhiGIlv0Z7gDhmGiilK0oPCTfbt/+fWMr2pZfzAUDA329d1c7qtsOX7C4RAlp9OdlrZuXYNo4wHAzht2u3mn5evQpTYiCP/0UMo7MAwjPcvbd6Pfm5n5wc5dZ0+f2rV7b+OmVzY0blxVtzLN5XI6JcxzWkQ2NIPwZE/Tj/pI2HP62OTC9K2ti606i3HAU+dBvBguXGqvWFJGKQUAWVbcaS7GbkNIREhFuiFHIoIgxOrYMkKszDic/BcHBt57/8pEVNn5TmZTky8yoTMEz8SAUiqKouhydv7eca23z2EX/f4q0zBZllHVKM9zhBCGYWI3yowOj9TX2iuLzD+HoHp1dVRW495TAlBq2iUpEOjd+9FnIyOjeXNzCwsLlGh0zfq1kTtjDskxNDTMsuxkRNn/+ZelpYu+bz2ZlzfvOX/xiroaXdOAWj2YEiBWoGJ3T+DNLdvqa1fmzJmzfdtbHIsPHvqqeceHuTnZ4fBE24XLa1bXBgK95WUl+z7en5ubM++RnIKiMgo2oDNqUbzFWJ7rv9FfWlI8OjZW7fd5vLmvvbrp7t3xgeDgwicf7x8Ipqe72zs6+wdCVVUVzTveDQYHGxrqRIG3umF6xyUBIISo4fCLtS/k5c19ffNWpyQd/faY2+12SpLfXzW/IH/pkrKuK1cXPlFkswmiaGN5HhFGV2Rd0xLVMEWjWaqIv2tpfb6muidwbf2aVS+9vFaenLS7nMikmqpWV/s0RaUAmqarahRhbBgGx3IsS2aaB7EEWQ+HwwG6tv3tza4ML0KMBSmPi4KgywrGmGEYQ9NZjo2XOgVgRdsfl9o9nvRZ5gEAMBwbkeVzMeEkDNG7euLxMHHuySYpIMSyzNDt4ezsLJogqNMaLd5rmq6rimopl6WoSVM43QWydnIcK4ri7DMZAHiOswnC7I4T5TdhnKX8bTFNEz0gIw/KUSr7HwDNZn8BjnVOdRhEmpcAAAAASUVORK5CYII=" width="32" height="32"/>
 </svg>
