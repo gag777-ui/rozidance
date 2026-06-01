@@ -170,7 +170,27 @@ Audit complet FR + EN + NL + RU — 62 pages buildées, zéro erreur.
 - Toutes les occurrences de `reel-logo.webp` remplacées par `reel-mariages.webp`
 - `cours/[slug]` + `[lang]/cours/[slug]` — image + hover + aspect-ratio 3/4 + border-radius 1.25rem
 
-**État i18n :** 124 clés identiques FR/EN/NL/RU — 0 manquant.
+**État i18n :** 125 clés identiques FR/EN/NL/RU — 0 manquant. `nav.reelLabel` ajouté (session 3).
+
+**Corrections audit session 3 (audit final avant livraison) :**
+- `nav.reelLabel` ajouté dans les 4 langues — "Voir le reel" n'est plus hardcodé en FR dans les pages EN/NL/RU
+- Footer watermark SVG — polygones en étoile (3×) supprimés, conservé double ligne + losanges
+- Footer logo — `logo-footer.webp` sur fond ivoire `#F7F1E6` via `background-color` CSS, `border-radius: 32px`, 150px desktop / 110px mobile
+- Favicons régénérés depuis logo Rozi Dance (favicon.svg/ico + icons/apple-touch-icon/192/512)
+- Hero mobile — "Bienvenu" 200ms/80ms, typewriter 0ms, "Rozi·Dance" GSAP 0.3s
+- Prestations icônes — 30px/52px container, or/rouge/violet, scale hover
+- Galerie masonry — photo-05 ajoutée, layout CSS columns
+
+**Audit final — résultat :**
+- Build : 62 pages, 0 erreur
+- Images référencées : 7/7 présentes
+- i18n : 125 clés × 4 langues = 0 manquant
+- IDs sections : #prestations #galerie #videos #apropos #stats #temoignages #faq #contact — tous OK
+- YouTube IDs : zTQRoFT6tX4, xa3-8ONanC4, mO7R2CxR5mQ — vrais IDs
+- reel-logo.webp : 0 occurrence restante
+- translate(-50%,-50%) bug : 0 occurrence (les restantes sont légitimes : FAQ accordéon, Cursor, vidéo héro)
+- Webmanifest : OK
+- Favicons : tous à jour (logo Rozi Dance)
 
 **Non bloquant V1 :**
 - `mentions-legales` hardcodée en français uniquement (acceptable V1)
