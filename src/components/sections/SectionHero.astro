@@ -18,10 +18,9 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       loop
       playsinline
       disablepictureinpicture
-      preload="metadata"
-    >
-      <source src="/videos/hero.mp4" type="video/mp4" />
-    </video>
+      preload="none"
+      poster="/images/og-default.webp"
+    ></video>
     <div class="hero-filter"></div>
   </div>
 
@@ -116,6 +115,16 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   }
 
   .hero-pattern { display: none; }
+
+  /* Mobile : pas de vidéo → fond image statique (évite 39MB de download) */
+  @media (max-width: 900px) {
+    .hero-video-bg {
+      background-image: url('/images/og-default.webp');
+      background-size: cover;
+      background-position: center top;
+    }
+    .hero-bg-video { display: none; }
+  }
 
   /* Contenu au-dessus de la vidéo */
   .hero-inner {
@@ -338,24 +347,30 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 <script>
   import gsap from 'gsap';
 
-  // Force video playback on mobile and after View Transitions.
-  // iOS Safari ignores the autoplay attribute on dynamically inserted elements
-  // (View Transitions swap) — must call play() explicitly.
   function initHeroVideo() {
     const video = document.querySelector<HTMLVideoElement>('.hero-bg-video');
     if (!video) return;
 
-    // Set programmatically as well as via attributes — required on some iOS versions
+    // Mobile : pas de vidéo → économise 39MB de download
+    if (window.innerWidth <= 900) return;
+
+    // Desktop : injecter la source et démarrer la lecture
     video.muted = true;
     (video as HTMLVideoElement & { playsInline: boolean }).playsInline = true;
 
+    if (!video.querySelector('source')) {
+      const src = document.createElement('source');
+      src.src = '/videos/hero.mp4';
+      src.type = 'video/mp4';
+      video.appendChild(src);
+      video.load();
+    }
+
     const tryPlay = () => {
-      if (!video.paused) return; // already playing
+      if (!video.paused) return;
       video.play().catch(() => {
-        // play() still not ready — retry on data events and first gesture
         video.addEventListener('canplay', tryPlay, { once: true });
         video.addEventListener('loadeddata', tryPlay, { once: true });
-        document.addEventListener('touchstart', tryPlay, { once: true });
       });
     };
 
