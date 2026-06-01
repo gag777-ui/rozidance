@@ -137,30 +137,38 @@ All images must be WebP. Placeholders use `onerror` fallback to `/images/placeho
 
 `SchemaOrg.astro` injects JSON-LD via `<slot name="schema">` in Layout. Contains LocalBusiness + PerformingGroup + Person×2 + Service×3.
 
-## Audit V1 — état au 2026-06-01
+## Audit V1 — état au 2026-06-01 (mis à jour session 2)
 
-Audit complet réalisé sur 35 fichiers .astro + 4 fichiers i18n. Résultats :
+Audit complet FR + EN + NL + RU — 62 pages buildées, zéro erreur.
 
-**Corrigé lors de l'audit :**
-- `SectionStats.astro` — ajout `id="stats"` (ancre de nav manquante)
-- `cours.astro` — listes chant/danse remplacées par `t.cours.chantList` / `t.cours.danseList` (étaient hardcodées en français, cassant EN/NL/RU)
-- `galerie.astro` — lien retour et titre de page passés en i18n + `base` variable ajoutée
+**Images hero par page (toutes langues) :**
+- `mariages-hero.webp` — mariée avec pivoine rose (2048×1365), bords fondus mask-image
+- `cours-hero.webp` — danseuse + clé de sol (1536×1024), bords fondus mask-image
+- `chant-hero.webp` — micro + clé de sol dorés (1536×1024), bords fondus mask-image
+- Toutes les pages ont hero 2-colonnes (texte gauche, image droite) + mobile 1-colonne
+
+**Image reel universelle :** `reel-mariages.webp` (1013×1372, format 3/4, bords arrondis 1.25rem)
+- Utilisée dans : cours/[slug], [lang]/cours/[slug], mariages/[slug], [lang]/mariages/[slug], chant, [lang]/chant, mariages, [lang]/mariages
+
+**Galerie :** 15 photos (photo-01 à photo-15 dont photo-05 ajoutée), layout masonry CSS columns (3 col desktop, 2 col mobile), PhotoSwipe lightbox. Synchronisé FR + EN/NL/RU.
+
+**Corrections audit session 1 :**
+- `SectionStats.astro` — `id="stats"` ajouté
+- `cours.astro` — listes i18n via `t.cours.chantList` / `t.cours.danseList`
+- `galerie.astro` — lien retour et titre i18n + variable `base`
 - `Footer.astro` — Navigation et Liens côte à côte (space-between)
 
-**Vérifié et OK :**
-- Navigation header/footer : `${base || '/'}#ancre` — correct (évalue à `/#ancre` pour FR)
-- IDs sections : `#prestations`, `#galerie`, `#videos`, `#apropos`, `#stats`, `#temoignages`, `#faq`, `#contact` — tous présents
-- YouTube IDs : `zTQRoFT6tX4`, `xa3-8ONanC4`, `mO7R2CxR5mQ` — vrais IDs, non placeholder
-- Images : logo.webp, portrait-duo.webp, reel-logo.webp, galerie/photo-01..15.webp, icons — tous présents
-- 31 Instagram reels répartis sur cours (6), mariages (22), chant (3) — tous vrais liens
-- i18n : chantList + danseList présents dans les 4 langues (fr/en/nl/ru)
-- mentions-legales : page créée et fonctionnelle
-- 62 pages générées au build sans erreur
+**Corrections audit session 2 (FR/EN/NL/RU) :**
+- `cours.reels` ajouté dans `en.json`, `nl.json`, `ru.json` (grille reels était invisible sur EN/NL/RU)
+- Hover bug `translate(-50%,-50%)` supprimé dans tous les fichiers [lang]
+- Toutes les occurrences de `reel-logo.webp` remplacées par `reel-mariages.webp`
+- `cours/[slug]` + `[lang]/cours/[slug]` — image + hover + aspect-ratio 3/4 + border-radius 1.25rem
 
-**Connu / non bloquant :**
-- `galerie.astro` : photo-05.webp existe mais n'est pas dans le tableau (intentionnel ou oubli — à confirmer avec Gago)
-- `mentions-legales` : hardcodée en français uniquement (pas de version EN/NL/RU — acceptable V1)
-- Texte hardcodé `"Voir le reel"` ligne 57 de cours.astro (libellé de carte reel) — à i18niser si multilingue prioritaire
+**État i18n :** 124 clés identiques FR/EN/NL/RU — 0 manquant.
+
+**Non bloquant V1 :**
+- `mentions-legales` hardcodée en français uniquement (acceptable V1)
+- `"Voir le reel"` hardcodé dans cours.astro (à i18niser en V2)
 
 ## V1 constraints (do not add in V1)
 
