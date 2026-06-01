@@ -21,15 +21,27 @@ const c = t.chant;
   <!-- Hero -->
   <section class="chant-hero">
     <div class="section-container chant-hero-inner">
-      <a href={`/${lang}#prestations`} class="back-link">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        {t.nav.prestations}
-      </a>
-      <span class="eyebrow">{c.heroEyebrow}</span>
-      <h1>{c.heroTitle}</h1>
-      <p class="hero-subtitle">{c.heroSubtitle}</p>
+      <div class="chant-hero-text">
+        <a href={`/${lang}#prestations`} class="back-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {t.nav.prestations}
+        </a>
+        <span class="eyebrow">{c.heroEyebrow}</span>
+        <h1>{c.heroTitle}</h1>
+        <p class="hero-subtitle">{c.heroSubtitle}</p>
+      </div>
+      <div class="chant-hero-img" aria-hidden="true">
+        <img
+          src="/images/chant-hero.webp"
+          alt=""
+          width="1536"
+          height="1024"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
     </div>
   </section>
 
@@ -171,9 +183,57 @@ const c = t.chant;
     padding-block: var(--spacing-section);
     background-color: var(--color-bg-section);
     border-bottom: 0.5px solid var(--color-border);
+    overflow: hidden;
   }
 
-  .chant-hero-inner { display: flex; flex-direction: column; gap: 1rem; }
+  .chant-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .chant-hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .chant-hero-img {
+    position: relative;
+  }
+
+  .chant-hero-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    mask-image:
+      linear-gradient(to right, transparent 0%, black 15%, black 90%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, black 15%, black 90%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+    -webkit-mask-composite: source-in;
+  }
+
+  @media (max-width: 768px) {
+    .chant-hero-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .chant-hero-img {
+      max-height: 220px;
+      overflow: hidden;
+    }
+
+    .chant-hero-img img {
+      object-fit: cover;
+      object-position: center top;
+      height: 220px;
+      width: 100%;
+    }
+  }
 
   .back-link {
     display: inline-flex;
