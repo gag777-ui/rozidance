@@ -174,16 +174,9 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .hero-line { display: block; }
 
-  /* "Bienvenu" — apparaît puis disparaît avant "Rozi Dance" */
+  /* "Bienvenu" — apparaît rapidement et reste affiché */
   .hero-line:nth-child(1) {
-    animation: heroWordInOut 1800ms var(--ease-out-soft) 400ms forwards;
-  }
-
-  @keyframes heroWordInOut {
-    0%   { opacity: 0; transform: translateY(28px); }
-    20%  { opacity: 1; transform: translateY(0); }
-    65%  { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-8px); }
+    animation: heroWordIn 350ms var(--ease-out-soft) 250ms both;
   }
 
   /* "dans le monde de" — géré par le typewriter JS */
