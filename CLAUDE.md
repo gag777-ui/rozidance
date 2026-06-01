@@ -152,6 +152,12 @@ Audit complet FR + EN + NL + RU — 62 pages buildées, zéro erreur.
 
 **Galerie :** 15 photos (photo-01 à photo-15 dont photo-05 ajoutée), layout masonry CSS columns (3 col desktop, 2 col mobile), PhotoSwipe lightbox. Synchronisé FR + EN/NL/RU.
 
+**Footer logo :** `logo-footer.webp` (500×500) — logo Rozi Dance fond transparent collé sur ivoire `#F7F1E6` via Python Pillow. CSS : `border-radius: 32px`, `background-color: #F7F1E6` (forcé CSS pour éviter fond sombre), `box-shadow` doux. Remplace le texte "Rozi · Dance" dans `.footer-brand`.
+
+**Section Prestations icônes :** Taille 30px dans container 52px. Alliance → or `#B8860B`, Micro → rouge `#D32828`, Notes de musique → violet `#7B5EA7`. Scale 1.15 au hover.
+
+**Hero mobile :** "Bienvenu" animation 200ms/80ms delay. Typewriter démarre à 0ms (immédiat), "Rozi · Dance" GSAP delay 0.3s. Détection mobile via `window.matchMedia('(max-width: 768px)')`.
+
 **Corrections audit session 1 :**
 - `SectionStats.astro` — `id="stats"` ajouté
 - `cours.astro` — listes i18n via `t.cours.chantList` / `t.cours.danseList`
