@@ -179,6 +179,13 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     animation: heroWordIn 350ms var(--ease-out-soft) 250ms both;
   }
 
+  @media (max-width: 768px) {
+    .hero-line:nth-child(1) {
+      animation-duration: 200ms;
+      animation-delay: 80ms;
+    }
+  }
+
   /* "dans le monde de" — géré par le typewriter JS */
   .hero-line:nth-child(2) {
     opacity: 0;
