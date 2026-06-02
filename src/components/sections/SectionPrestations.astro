@@ -43,36 +43,44 @@ function getHref(id: string) {
       <p class="prestations-subtitle">{t.hero.subtitle}</p>
     </div>
 
-    <div class="cards-grid">
-      {t.prestations.items.map((item, i) => (
-        <a
-          class={`card-shell cs-${i} reveal`}
-          style={`transition-delay: ${i * 120}ms`}
-          data-card
-          href={getHref(item.id)}
-          aria-label={item.title}
-        >
-          <article class={`card-core cc-${i}`}>
-            <div class="card-light"></div>
-            <div class="card-top">
-              <span class="card-num" aria-hidden="true">{ordinals[i]}</span>
-              <div class={`card-icon ci-${i}`} set:html={svgIcons[i]} />
-            </div>
-            <span class="card-cat">{categories[i]}</span>
-            <h3 class="card-title">{item.title}</h3>
-            <div class="card-line"></div>
-            <p class="card-description">{item.description}</p>
-            <span class="card-cta" aria-hidden="true">
-              {item.link}
-              <span class="cta-circle">
-                <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+    <div class="carousel-outer">
+      <div class="cards-grid" id="prestations-carousel">
+        {t.prestations.items.map((item, i) => (
+          <a
+            class={`card-shell cs-${i} reveal`}
+            data-card
+            data-index={i}
+            href={getHref(item.id)}
+            aria-label={item.title}
+          >
+            <article class={`card-core cc-${i}`}>
+              <div class="card-light"></div>
+              <div class="card-top">
+                <span class="card-num" aria-hidden="true">{ordinals[i]}</span>
+                <div class={`card-icon ci-${i}`} set:html={svgIcons[i]} />
+              </div>
+              <span class="card-cat">{categories[i]}</span>
+              <h3 class="card-title">{item.title}</h3>
+              <div class="card-line"></div>
+              <p class="card-description">{item.description}</p>
+              <span class="card-cta" aria-hidden="true">
+                {item.link}
+                <span class="cta-circle">
+                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                    <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </span>
-            </span>
-          </article>
-        </a>
-      ))}
+            </article>
+          </a>
+        ))}
+      </div>
+
+      <div class="carousel-dots" aria-hidden="true">
+        <span class="dot dot-0"></span>
+        <span class="dot dot-1"></span>
+        <span class="dot dot-2"></span>
+      </div>
     </div>
 
   </div>
@@ -106,34 +114,114 @@ function getHref(id: string) {
     font-style: italic;
   }
 
-  /* ── Grid ── */
+  /* ── Carousel outer ── */
+  .carousel-outer {
+    position: relative;
+  }
+
+  /* ── Entrée spectaculaire (mobile) ── */
+  @media (max-width: 899px) {
+    .card-shell {
+      opacity: 0;
+      transform: perspective(1100px) translateY(52px) scale(0.93);
+    }
+    .section-prestations.sect-visible .cs-0 {
+      animation: card-entrance 700ms var(--ease-out-soft) 0ms   both;
+    }
+    .section-prestations.sect-visible .cs-1 {
+      animation: card-entrance 700ms var(--ease-out-soft) 150ms both;
+    }
+    .section-prestations.sect-visible .cs-2 {
+      animation: card-entrance 700ms var(--ease-out-soft) 300ms both;
+    }
+  }
+
+  @keyframes card-entrance {
+    from {
+      opacity: 0;
+      transform: perspective(1100px) translateY(52px) scale(0.93);
+    }
+    to {
+      opacity: 1;
+      transform: perspective(1100px) translateY(0) scale(1);
+    }
+  }
+
+  /* ── Mobile: horizontal snap carousel ── */
   .cards-grid {
     display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    max-width: 420px;
-    margin-inline: auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 1rem;
+    padding: 1rem 4% 1.5rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cards-grid::-webkit-scrollbar { display: none; }
+
+  /* ── Dots ── */
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    margin-top: 1.5rem;
   }
 
-  @media (min-width: 600px) {
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      max-width: 640px;
-      gap: 1rem;
-    }
+  .dot {
+    display: block;
+    height: 6px;
+    width: 6px;
+    border-radius: 3px;
+    background: rgba(43, 31, 21, 0.18);
+    transition: background 300ms ease, width 350ms var(--ease-out-soft);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
   }
 
+  .dot.dot-active {
+    background: var(--color-accent);
+    width: 22px;
+  }
+
+  /* Barre de progression qui se remplit sur AUTO_MS */
+  .dot.dot-active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.48);
+    border-radius: inherit;
+    transform: translateX(-100%);
+    animation: dot-progress 4s linear forwards;
+  }
+
+  @keyframes dot-progress {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
+  }
+
+  /* ── Desktop: 3-col grid ── */
   @media (min-width: 900px) {
     .cards-grid {
+      display: grid;
       grid-template-columns: repeat(3, 1fr);
-      max-width: 100%;
+      overflow-x: visible;
+      scroll-snap-type: none;
       gap: 1.25rem;
+      padding: 0.75rem;
+    }
+
+    .carousel-dots {
+      display: none;
     }
   }
 
-  /* ── Outer shell (double-bezel) ── */
+  /* ── Outer shell ── */
   .card-shell {
+    flex: 0 0 min(92%, 420px);
+    scroll-snap-align: center;
     border-radius: 28px;
     padding: 5px;
     border: 0.5px solid rgba(229, 215, 190, 0.6);
@@ -142,10 +230,45 @@ function getHref(id: string) {
       0 2px 8px rgba(43, 31, 21, 0.04);
     transform-style: preserve-3d;
     transform: perspective(900px) rotateX(0deg) rotateY(0deg);
-    transition: transform 500ms var(--ease-out-soft), box-shadow 500ms var(--ease-out-soft);
-    will-change: transform;
+    will-change: transform, opacity;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    /* Mobile: only opacity transition; JS drives the transform */
+    transition: opacity 650ms ease, box-shadow 500ms var(--ease-out-soft);
+  }
+
+  /* Desktop: restore transform in transition + fan entrance */
+  @media (min-width: 900px) {
+    .card-shell {
+      flex: unset;
+      scroll-snap-align: unset;
+      transition: transform 500ms var(--ease-out-soft), opacity 700ms ease, box-shadow 500ms var(--ease-out-soft);
+    }
+
+    /* Pre-entrance state per card */
+    .cs-0 { --fan-ry: -22deg; --fan-ty: 26px; }
+    .cs-1 { --fan-ry:   0deg; --fan-ty: 34px; }
+    .cs-2 { --fan-ry:  22deg; --fan-ty: 26px; }
+
+    /* Entrance animation triggered by .prest-visible */
+    .card-shell.prest-visible {
+      animation: card-fan-in 0.9s var(--ease-out-soft) both;
+    }
+    .cs-0.prest-visible { animation-delay:   0ms; }
+    .cs-1.prest-visible { animation-delay: 160ms; }
+    .cs-2.prest-visible { animation-delay: 320ms; }
+  }
+
+  @keyframes card-fan-in {
+    from {
+      opacity: 0;
+      transform: perspective(900px) rotateY(var(--fan-ry, 0deg)) translateY(var(--fan-ty, 26px));
+    }
+    to {
+      opacity: 1;
+      transform: perspective(900px) rotateY(0deg) translateY(0px);
+    }
   }
 
   /* Shell color par carte */
@@ -153,7 +276,6 @@ function getHref(id: string) {
   .cs-1 { background: rgba(193, 104, 71, 0.07); }
   .cs-2 { background: rgba(122, 92, 32, 0.06); }
 
-  /* Hover desktop */
   @media (hover: hover) {
     .card-shell:hover {
       box-shadow:
@@ -173,12 +295,11 @@ function getHref(id: string) {
     overflow: hidden;
   }
 
-  /* Gradient par carte */
   .cc-0 { background: linear-gradient(145deg, #FEFCF8 0%, #EDDEB8 100%); }
   .cc-1 { background: linear-gradient(145deg, #FEFCF8 0%, #F0CBBA 100%); }
   .cc-2 { background: linear-gradient(145deg, #FEFCF8 0%, #E6D8A8 100%); }
 
-  /* ── Spot de lumière mobile ── */
+  /* ── Spot de lumière ── */
   .card-light {
     position: absolute;
     inset: 0;
@@ -226,11 +347,8 @@ function getHref(id: string) {
 
   .card-shell:hover .card-icon { transform: translateZ(12px) scale(1.15); }
 
-  /* Alliance — or */
   .ci-0 { background: rgba(184, 134, 11, 0.12); border: 0.5px solid rgba(184, 134, 11, 0.3); color: #B8860B; }
-  /* Micro — rouge */
   .ci-1 { background: rgba(210, 40, 40, 0.10); border: 0.5px solid rgba(210, 40, 40, 0.28); color: #D32828; }
-  /* Notes de musique — violet */
   .ci-2 { background: rgba(123, 94, 167, 0.11); border: 0.5px solid rgba(123, 94, 167, 0.25); color: #7B5EA7; }
 
   .card-cat {
@@ -268,7 +386,6 @@ function getHref(id: string) {
     position: relative;
   }
 
-  /* CTA — 44px touch target minimum */
   .card-cta {
     display: inline-flex;
     align-items: center;
@@ -294,7 +411,6 @@ function getHref(id: string) {
     transition: background 300ms var(--ease-out-soft), gap 300ms var(--ease-out-soft), box-shadow 300ms;
   }
 
-  /* Shimmer périodique */
   .card-cta::before {
     content: '';
     position: absolute;
@@ -313,7 +429,6 @@ function getHref(id: string) {
   .cs-0 .card-cta { color: var(--color-gold); }
   .cs-2 .card-cta { color: #7A5C20; }
 
-  /* Décalage shimmer entre cartes */
   .card-shell:nth-child(2) .card-cta::before { animation-delay: 1.4s; }
   .card-shell:nth-child(3) .card-cta::before { animation-delay: 2.7s; }
 
@@ -356,101 +471,215 @@ function getHref(id: string) {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .card-cta::before { animation: none; }
-    .cta-circle { animation: none; }
-  }
-
-  /* Supprime le délai 300ms tap sur iOS */
-  .card-shell { touch-action: manipulation; }
-
-  /* ── Reduced motion ── */
-  @media (prefers-reduced-motion: reduce) {
-    .card-shell { transition: none; }
-    .card-light { transition: none; }
+    .card-cta::before  { animation: none; }
+    .cta-circle        { animation: none; }
+    .card-shell        { transition: none; animation: none; }
+    .card-light        { transition: none; }
   }
 </style>
 
 <script>
   function initPrestations() {
-    const shells = document.querySelectorAll<HTMLElement>('[data-card]');
-    const ac = new AbortController();
+    const carousel = document.getElementById('prestations-carousel');
+    const shells   = Array.from(carousel?.querySelectorAll<HTMLElement>('[data-card]') ?? []);
+    const dots     = Array.from(document.querySelectorAll<HTMLElement>('.carousel-dots .dot'));
+    const ac       = new AbortController();
     const { signal } = ac;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktop     = window.matchMedia('(min-width: 900px)').matches;
 
-    shells.forEach(shell => {
-      const light = shell.querySelector<HTMLElement>('.card-light');
-      let startX = 0, startY = 0, hasMoved = false;
+    if (!shells.length) return;
 
-      shell.addEventListener('touchstart', (e: TouchEvent) => {
+    // ── Mobile: entrée spectaculaire + carousel rotateY + relief + auto-play ──
+    if (!isDesktop && carousel) {
+      const AUTO_MS   = 4000;
+      let rafId:       number | null = null;
+      let autoTimer:   ReturnType<typeof setTimeout> | null = null;
+      let currentIdx   = 0;
+      let isTouching   = false;
+
+      // Force-restart ::after animation on the active dot
+      const setActiveDot = (idx: number) => {
+        dots.forEach((dot, i) => {
+          if (i === idx) {
+            dot.classList.remove('dot-active');
+            void dot.getBoundingClientRect();
+            dot.classList.add('dot-active');
+          } else {
+            dot.classList.remove('dot-active');
+          }
+        });
+      };
+
+      const scheduleNext = () => {
+        if (autoTimer) clearTimeout(autoTimer);
         if (reducedMotion) return;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        hasMoved = false;
-      }, { passive: true, signal });
+        autoTimer = setTimeout(() => {
+          if (isTouching) return;
+          currentIdx = (currentIdx + 1) % shells.length;
+          goToCard(currentIdx);
+        }, AUTO_MS);
+      };
 
-      shell.addEventListener('touchmove', (e: TouchEvent) => {
-        if (reducedMotion) return;
-        const t = e.touches[0];
-        const moveX = Math.abs(t.clientX - startX);
-        const moveY = Math.abs(t.clientY - startY);
-        if (moveX < 8 && moveY < 8) return; // seuil : pas de tilt sur un tap simple
-        hasMoved = true;
-        shell.style.transition = 'transform 80ms linear';
-        const rect = shell.getBoundingClientRect();
-        const dx = (t.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
-        const dy = (t.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
-        const rx = -dy * 10;
-        const ry =  dx * 14;
-        shell.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
-        if (light) {
-          light.style.setProperty('--lx', `${50 + ry * 2.2}%`);
-          light.style.setProperty('--ly', `${50 - rx * 2.2}%`);
+      const goToCard = (idx: number) => {
+        currentIdx = idx;
+        const target = shells[idx];
+        if (!target) return;
+        carousel.scrollTo({
+          left: target.offsetLeft - (carousel.clientWidth - target.offsetWidth) / 2,
+          behavior: 'smooth',
+        });
+        setActiveDot(idx);
+        scheduleNext();
+      };
+
+      const updateCarousel = () => {
+        const sl = carousel.scrollLeft;
+        const cw = carousel.clientWidth;
+        let activeIdx = 0;
+        let minDist   = Infinity;
+
+        shells.forEach((shell, i) => {
+          const cardCenter = shell.offsetLeft + shell.offsetWidth / 2;
+          const dist       = Math.abs(cardCenter - (sl + cw / 2));
+          if (dist < minDist) { minDist = dist; activeIdx = i; }
+
+          if (!reducedMotion) {
+            const norm    = (cardCenter - (sl + cw / 2)) / shell.offsetWidth;
+            const absDist = Math.abs(norm);
+            // Carte active en relief : pleine taille + opaque, voisines en retrait
+            const scale   = absDist < 0.15 ? 1 : Math.max(0.87, 1 - absDist * 0.14);
+            const opacity = absDist < 0.15 ? 1 : Math.max(0.48, 1 - absDist * 0.5);
+            shell.style.transform = `perspective(1100px) rotateY(${norm * 22}deg) scale(${scale})`;
+            shell.style.opacity   = String(opacity);
+          }
+        });
+
+        if (activeIdx !== currentIdx) {
+          currentIdx = activeIdx;
+          setActiveDot(activeIdx);
+          scheduleNext();
         }
-      }, { passive: true, signal });
+      };
 
-      const reset = () => {
-        if (!hasMoved) {
-          shell.style.transition = 'none';
-          shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-        } else {
-          shell.style.transition = 'transform 500ms var(--ease-out-soft)';
-          shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+      const startCarousel = () => {
+        setActiveDot(0);
+        updateCarousel();
+        scheduleNext();
+
+        carousel.addEventListener('scroll', () => {
+          if (rafId !== null) cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(updateCarousel);
+        }, { signal });
+
+        carousel.addEventListener('touchstart', () => {
+          isTouching = true;
+          if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+        }, { passive: true, signal });
+
+        carousel.addEventListener('touchend', () => {
+          isTouching = false;
+          scheduleNext();
+        }, { passive: true, signal });
+
+        dots.forEach((dot, i) => {
+          dot.addEventListener('click', () => goToCard(i), { signal });
+        });
+      };
+
+      // Entrée spectaculaire : attend que la section soit visible, puis lance le carousel
+      const section = document.getElementById('prestations');
+      if (section && !reducedMotion) {
+        let entranceObs: IntersectionObserver | null = new IntersectionObserver(([entry]) => {
+          if (!entry.isIntersecting) return;
+          entranceObs!.disconnect();
+          entranceObs = null;
+          section.classList.add('sect-visible');
+          // Démarre le carousel après la fin de l'animation d'entrée (700ms + 300ms stagger)
+          setTimeout(startCarousel, 1050);
+        }, { threshold: 0.18 });
+        entranceObs.observe(section);
+
+        document.addEventListener('astro:before-swap', () => {
+          entranceObs?.disconnect();
+          entranceObs = null;
+        }, { once: true });
+      } else {
+        // reduced-motion ou pas de section : démarrage direct
+        section?.classList.add('sect-visible');
+        startCarousel();
+      }
+    }
+
+    // ── Desktop: fan-in entrance via CSS animation ──
+    if (isDesktop && !reducedMotion) {
+      const section = document.getElementById('prestations');
+      if (section) {
+        let obs: IntersectionObserver | null = new IntersectionObserver(([entry]) => {
+          if (!entry.isIntersecting) return;
+          obs!.disconnect();
+          obs = null;
+          shells.forEach(s => s.classList.add('prest-visible'));
+        }, { threshold: 0.22 });
+        obs.observe(section);
+
+        document.addEventListener('astro:before-swap', () => {
+          obs?.disconnect();
+          obs = null;
+        }, { once: true });
+      }
+    }
+
+    // ── Desktop: hover tilt ──
+    if (isDesktop) {
+      shells.forEach(shell => {
+        const light = shell.querySelector<HTMLElement>('.card-light');
+
+        shell.addEventListener('mousemove', (e: MouseEvent) => {
+          if (reducedMotion) return;
+          const rect = shell.getBoundingClientRect();
+          const dx = (e.clientX - rect.left  - rect.width  / 2) / (rect.width  / 2);
+          const dy = (e.clientY - rect.top   - rect.height / 2) / (rect.height / 2);
+          const rx = -dy * 7;
+          const ry =  dx * 10;
+          shell.style.transition = 'transform 100ms linear';
+          shell.style.transform  = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(4px)`;
+          if (light) {
+            light.style.setProperty('--lx', `${50 + ry * 2}%`);
+            light.style.setProperty('--ly', `${50 - rx * 2}%`);
+          }
+        }, { signal });
+
+        shell.addEventListener('mouseleave', () => {
+          shell.style.transition = 'transform 600ms var(--ease-out-soft)';
+          shell.style.transform  = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
           if (light) {
             light.style.setProperty('--lx', '28%');
             light.style.setProperty('--ly', '22%');
           }
-        }
-        hasMoved = false;
-      };
+        }, { signal });
+      });
+    }
 
-      shell.addEventListener('touchend',    reset, { passive: true, signal });
-      shell.addEventListener('touchcancel', reset, { passive: true, signal });
+    // ── Mobile: touch light update ──
+    if (!isDesktop) {
+      shells.forEach(shell => {
+        const light = shell.querySelector<HTMLElement>('.card-light');
+        shell.addEventListener('touchstart', (e: TouchEvent) => {
+          if (!light || reducedMotion) return;
+          const rect = shell.getBoundingClientRect();
+          const t    = e.touches[0];
+          light.style.setProperty('--lx', `${((t.clientX - rect.left) / rect.width)  * 100}%`);
+          light.style.setProperty('--ly', `${((t.clientY - rect.top)  / rect.height) * 100}%`);
+        }, { passive: true, signal });
 
-      /* Desktop hover tilt */
-      shell.addEventListener('mousemove', (e: MouseEvent) => {
-        if (reducedMotion) return;
-        const rect = shell.getBoundingClientRect();
-        const dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
-        const dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
-        const rx = -dy * 7;
-        const ry =  dx * 10;
-        shell.style.transition = 'transform 100ms linear';
-        shell.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(4px)`;
-        if (light) {
-          light.style.setProperty('--lx', `${50 + ry * 2}%`);
-          light.style.setProperty('--ly', `${50 - rx * 2}%`);
-        }
-      }, { signal });
-
-      shell.addEventListener('mouseleave', () => {
-        shell.style.transition = 'transform 600ms var(--ease-out-soft)';
-        shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-        if (light) {
+        shell.addEventListener('touchend', () => {
+          if (!light) return;
           light.style.setProperty('--lx', '28%');
           light.style.setProperty('--ly', '22%');
-        }
-      }, { signal });
-    });
+        }, { passive: true, signal });
+      });
+    }
 
     document.addEventListener('astro:before-swap', () => ac.abort(), { once: true });
   }

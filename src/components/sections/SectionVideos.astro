@@ -26,65 +26,71 @@ const videos = [
       </h2>
     </div>
 
-    <div class="videos-grid">
-      {videos.map((video, i) => (
-        <div class={i % 2 === 0 ? 'reveal-left' : 'reveal-right'} style={`transition-delay: ${i * 150}ms`}>
-        <div class={`card-shell cs-${i}`} data-card>
-          <div class={`card-core cc-${i} video-card`}>
-            <div class="card-light"></div>
+    <div class="carousel-outer">
+      <div class="videos-grid" id="videos-carousel">
+        {videos.map((video, i) => (
+          <div class={`card-shell cs-${i}`} data-card data-index={i}>
+            <div class={`card-core cc-${i} video-card`}>
+              <div class="card-light"></div>
 
-            <button
-              class="video-thumb-btn video-thumb-cursor"
-              data-video-id={video.id}
-              aria-label={`Lire la vidéo : ${video.title}`}
-            >
-              <div class="video-thumb-wrap">
-                <img
-                  src={video.thumbnail}
-                  alt={`Aperçu : ${video.title}`}
-                  loading="lazy"
-                  decoding="async"
-                  class="video-thumb"
-                  width="480"
-                  height="270"
-                  data-fallback="/images/video-placeholder.webp"
-                />
-                <div class="video-play-btn" aria-hidden="true">
-                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <circle cx="24" cy="24" r="24" fill="rgba(43,31,21,0.55)"/>
-                    <polygon points="19,14 37,24 19,34" fill="#fff"/>
-                  </svg>
+              <button
+                class="video-thumb-btn video-thumb-cursor"
+                data-video-id={video.id}
+                aria-label={`Lire la vidéo : ${video.title}`}
+              >
+                <div class="video-thumb-wrap">
+                  <img
+                    src={video.thumbnail}
+                    alt={`Aperçu : ${video.title}`}
+                    loading="lazy"
+                    decoding="async"
+                    class="video-thumb"
+                    width="480"
+                    height="270"
+                    data-fallback="/images/video-placeholder.webp"
+                  />
+                  <div class="video-play-btn" aria-hidden="true">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                      <circle cx="24" cy="24" r="24" fill="rgba(43,31,21,0.55)"/>
+                      <polygon points="19,14 37,24 19,34" fill="#fff"/>
+                    </svg>
+                  </div>
+                </div>
+              </button>
+
+              <div class="video-player" hidden>
+                <div class="video-player-inner">
+                  <iframe
+                    class="video-iframe"
+                    src=""
+                    data-src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`}
+                    title={video.title}
+                    style="border:none"
+                    allow="autoplay; encrypted-media; fullscreen"
+                    allowfullscreen
+                  ></iframe>
+                  <button class="video-close-btn" aria-label="Fermer la vidéo">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                      <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.5"/>
+                      <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                  </button>
                 </div>
               </div>
-            </button>
 
-            <div class="video-player" hidden>
-              <div class="video-player-inner">
-                <iframe
-                  class="video-iframe"
-                  src=""
-                  data-src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`}
-                  title={video.title}
-                  style="border:none"
-                  allow="autoplay; encrypted-media; fullscreen"
-                  allowfullscreen
-                ></iframe>
-                <button class="video-close-btn" aria-label="Fermer la vidéo">
-                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-                    <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.5"/>
-                    <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="1.5"/>
-                  </svg>
-                </button>
+              <div class="video-card-body">
+                <p class="video-title">{video.title}</p>
               </div>
             </div>
-
-            <div class="video-card-body">
-              <p class="video-title">{video.title}</p>
-            </div>
           </div>
-        </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      <div class="carousel-dots" aria-hidden="true">
+        <span class="dot dot-0"></span>
+        <span class="dot dot-1"></span>
+        <span class="dot dot-2"></span>
+      </div>
     </div>
 
     <div class="videos-footer reveal-fade">
@@ -105,38 +111,6 @@ const videos = [
   </div>
 </section>
 
-<script>
-  function initVideos() {
-    document.querySelectorAll<HTMLElement>('.video-thumb-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const card = btn.closest('.video-card');
-        if (!card) return;
-        const player = card.querySelector('.video-player') as HTMLElement | null;
-        const iframe = card.querySelector('.video-iframe') as HTMLIFrameElement | null;
-        if (!player || !iframe) return;
-        const dataSrc = iframe.getAttribute('data-src');
-        if (dataSrc) iframe.src = dataSrc;
-        player.hidden = false;
-        btn.hidden = true;
-      });
-    });
-
-    document.querySelectorAll<HTMLElement>('.video-close-btn').forEach((closeBtn) => {
-      closeBtn.addEventListener('click', () => {
-        const card = closeBtn.closest('.video-card');
-        if (!card) return;
-        const player = card.querySelector('.video-player') as HTMLElement | null;
-        const iframe = card.querySelector('.video-iframe') as HTMLIFrameElement | null;
-        const thumbBtn = card.querySelector('.video-thumb-btn') as HTMLElement | null;
-        if (player) { player.hidden = true; if (iframe) iframe.src = ''; }
-        if (thumbBtn) thumbBtn.hidden = false;
-      });
-    });
-  }
-
-  document.addEventListener('astro:page-load', initVideos);
-</script>
-
 <style>
   .section-videos { padding-block: var(--spacing-section); }
 
@@ -153,34 +127,125 @@ const videos = [
     width: 0.3em; height: 0.36em; color: #C96876; stroke: currentColor;
   }
 
+  /* ── Carousel outer ── */
+  .carousel-outer { position: relative; }
+
+  /* ── Entrée spectaculaire (mobile) ── */
+  @media (max-width: 899px) {
+    .card-shell {
+      opacity: 0;
+      transform: perspective(1100px) translateY(52px) scale(0.93);
+    }
+    .section-videos.sect-visible .cs-0 { animation: card-entrance 700ms var(--ease-out-soft) 0ms   both; }
+    .section-videos.sect-visible .cs-1 { animation: card-entrance 700ms var(--ease-out-soft) 150ms both; }
+    .section-videos.sect-visible .cs-2 { animation: card-entrance 700ms var(--ease-out-soft) 300ms both; }
+  }
+
+  @keyframes card-entrance {
+    from { opacity: 0; transform: perspective(1100px) translateY(52px) scale(0.93); }
+    to   { opacity: 1; transform: perspective(1100px) translateY(0) scale(1); }
+  }
+
+  /* ── Mobile: horizontal snap carousel ── */
   .videos-grid {
-    display: flex; flex-direction: column;
-    gap: 0.85rem; max-width: 420px; margin-inline: auto;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 1rem;
+    padding: 1rem 4% 1.5rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .videos-grid::-webkit-scrollbar { display: none; }
+
+  /* ── Dots ── */
+  .carousel-dots {
+    display: flex; justify-content: center; align-items: center;
+    gap: 7px; margin-top: 1.5rem;
   }
 
-  @media (min-width: 600px) {
-    .videos-grid { display: grid; grid-template-columns: repeat(2, 1fr); max-width: 640px; gap: 1rem; }
+  .dot {
+    display: block; height: 6px; width: 6px; border-radius: 3px;
+    background: rgba(43, 31, 21, 0.18);
+    transition: background 300ms ease, width 350ms var(--ease-out-soft);
+    cursor: pointer;
+    position: relative; overflow: hidden;
   }
 
+  .dot.dot-active { background: var(--color-accent); width: 22px; }
+
+  .dot.dot-active::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(255, 255, 255, 0.48);
+    border-radius: inherit;
+    transform: translateX(-100%);
+    animation: dot-progress 4s linear forwards;
+  }
+
+  @keyframes dot-progress {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
+  }
+
+  /* ── Desktop: 3-col grid ── */
   @media (min-width: 900px) {
-    .videos-grid { grid-template-columns: repeat(3, 1fr); max-width: 100%; gap: 1.25rem; }
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow-x: visible;
+      scroll-snap-type: none;
+      gap: 1.25rem;
+      padding: 0.75rem;
+    }
+    .carousel-dots { display: none; }
   }
 
   /* ── Shell ── */
   .card-shell {
+    flex: 0 0 min(92%, 440px);
+    scroll-snap-align: center;
     border-radius: 28px; padding: 5px;
     border: 0.5px solid rgba(229, 215, 190, 0.6);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(43,31,21,0.04);
     transform-style: preserve-3d;
-    transform: perspective(900px) rotateX(0deg) rotateY(0deg);
-    transition: transform 500ms var(--ease-out-soft), box-shadow 500ms var(--ease-out-soft);
-    will-change: transform;
+    will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: opacity 650ms ease, box-shadow 500ms var(--ease-out-soft);
+  }
+
+  @media (min-width: 900px) {
+    .card-shell {
+      flex: unset; scroll-snap-align: unset;
+      transition: transform 500ms var(--ease-out-soft), opacity 700ms ease, box-shadow 500ms var(--ease-out-soft);
+    }
+    /* Fan entrance desktop */
+    .cs-0 { --fan-ry: -22deg; --fan-ty: 26px; }
+    .cs-1 { --fan-ry:   0deg; --fan-ty: 34px; }
+    .cs-2 { --fan-ry:  22deg; --fan-ty: 26px; }
+
+    .card-shell.prest-visible { animation: card-fan-in 0.9s var(--ease-out-soft) both; }
+    .cs-0.prest-visible { animation-delay:   0ms; }
+    .cs-1.prest-visible { animation-delay: 160ms; }
+    .cs-2.prest-visible { animation-delay: 320ms; }
+  }
+
+  @keyframes card-fan-in {
+    from { opacity: 0; transform: perspective(900px) rotateY(var(--fan-ry, 0deg)) translateY(var(--fan-ty, 26px)); }
+    to   { opacity: 1; transform: perspective(900px) rotateY(0deg) translateY(0px); }
   }
 
   .cs-0 { background: rgba(168,135,83,0.07); }
   .cs-1 { background: rgba(193,104,71,0.07); }
   .cs-2 { background: rgba(122,92,32,0.06); }
+
+  @media (hover: hover) {
+    .card-shell:hover {
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 16px 40px rgba(43,31,21,0.1);
+    }
+  }
 
   /* ── Core ── */
   .card-core {
@@ -235,10 +300,7 @@ const videos = [
     display: flex; align-items: center; justify-content: center; z-index: 5; cursor: pointer;
   }
 
-  .video-card-body {
-    padding: 0.875rem 1.1rem 1rem;
-    position: relative; z-index: 2;
-  }
+  .video-card-body { padding: 0.875rem 1.1rem 1rem; position: relative; z-index: 2; }
 
   .video-title {
     font-family: var(--font-serif);
@@ -251,7 +313,209 @@ const videos = [
   .yt-label-red { color: #ff0000; }
 
   @media (prefers-reduced-motion: reduce) {
-    .card-shell { transition: none; }
-    .card-light { transition: none; }
+    .card-shell { transition: none; animation: none; }
+    .card-light  { transition: none; }
   }
 </style>
+
+<script>
+  function initVideos() {
+    const shells   = Array.from(document.querySelectorAll<HTMLElement>('#videos-carousel [data-card]'));
+    const carousel = document.getElementById('videos-carousel');
+    const dots     = Array.from(document.querySelectorAll<HTMLElement>('#videos .carousel-dots .dot'));
+    const ac       = new AbortController();
+    const { signal } = ac;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktop     = window.matchMedia('(min-width: 900px)').matches;
+
+    // ── Video player logic ──
+    shells.forEach(shell => {
+      const btn      = shell.querySelector<HTMLElement>('.video-thumb-btn');
+      const player   = shell.querySelector<HTMLElement>('.video-player');
+      const iframe   = shell.querySelector<HTMLIFrameElement>('.video-iframe');
+      const closeBtn = shell.querySelector<HTMLElement>('.video-close-btn');
+
+      btn?.addEventListener('click', () => {
+        if (!player || !iframe) return;
+        const src = iframe.getAttribute('data-src');
+        if (src) iframe.src = src;
+        player.hidden = false;
+        if (btn) btn.hidden = true;
+      }, { signal });
+
+      closeBtn?.addEventListener('click', () => {
+        if (player) { player.hidden = true; if (iframe) iframe.src = ''; }
+        if (btn) btn.hidden = false;
+      }, { signal });
+    });
+
+    if (!shells.length) return;
+
+    // ── Mobile: carousel + auto-play ──
+    if (!isDesktop && carousel) {
+      const AUTO_MS   = 4000;
+      let rafId:       number | null = null;
+      let autoTimer:   ReturnType<typeof setTimeout> | null = null;
+      let currentIdx   = 0;
+      let isTouching   = false;
+
+      const setActiveDot = (idx: number) => {
+        dots.forEach((dot, i) => {
+          if (i === idx) {
+            dot.classList.remove('dot-active');
+            void dot.getBoundingClientRect();
+            dot.classList.add('dot-active');
+          } else {
+            dot.classList.remove('dot-active');
+          }
+        });
+      };
+
+      const scheduleNext = () => {
+        if (autoTimer) clearTimeout(autoTimer);
+        if (reducedMotion) return;
+        autoTimer = setTimeout(() => {
+          if (isTouching) return;
+          currentIdx = (currentIdx + 1) % shells.length;
+          goToCard(currentIdx);
+        }, AUTO_MS);
+      };
+
+      const goToCard = (idx: number) => {
+        currentIdx = idx;
+        const target = shells[idx];
+        if (!target) return;
+        carousel.scrollTo({
+          left: target.offsetLeft - (carousel.clientWidth - target.offsetWidth) / 2,
+          behavior: 'smooth',
+        });
+        setActiveDot(idx);
+        scheduleNext();
+      };
+
+      const updateCarousel = () => {
+        const sl = carousel.scrollLeft;
+        const cw = carousel.clientWidth;
+        let activeIdx = 0;
+        let minDist   = Infinity;
+
+        shells.forEach((shell, i) => {
+          const cardCenter = shell.offsetLeft + shell.offsetWidth / 2;
+          const dist       = Math.abs(cardCenter - (sl + cw / 2));
+          if (dist < minDist) { minDist = dist; activeIdx = i; }
+
+          if (!reducedMotion) {
+            const norm    = (cardCenter - (sl + cw / 2)) / shell.offsetWidth;
+            const absDist = Math.abs(norm);
+            const scale   = absDist < 0.15 ? 1 : Math.max(0.87, 1 - absDist * 0.14);
+            const opacity = absDist < 0.15 ? 1 : Math.max(0.48, 1 - absDist * 0.5);
+            shell.style.transform = `perspective(1100px) rotateY(${norm * 22}deg) scale(${scale})`;
+            shell.style.opacity   = String(opacity);
+          }
+        });
+
+        if (activeIdx !== currentIdx) {
+          currentIdx = activeIdx;
+          setActiveDot(activeIdx);
+          scheduleNext();
+        }
+      };
+
+      const startCarousel = () => {
+        setActiveDot(0);
+        updateCarousel();
+        scheduleNext();
+
+        carousel.addEventListener('scroll', () => {
+          if (rafId !== null) cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(updateCarousel);
+        }, { signal });
+
+        carousel.addEventListener('touchstart', () => {
+          isTouching = true;
+          if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+        }, { passive: true, signal });
+
+        carousel.addEventListener('touchend', () => {
+          isTouching = false;
+          scheduleNext();
+        }, { passive: true, signal });
+
+        dots.forEach((dot, i) => {
+          dot.addEventListener('click', () => goToCard(i), { signal });
+        });
+      };
+
+      // Entrée spectaculaire
+      const section = document.getElementById('videos');
+      if (section && !reducedMotion) {
+        let entranceObs: IntersectionObserver | null = new IntersectionObserver(([entry]) => {
+          if (!entry.isIntersecting) return;
+          entranceObs!.disconnect();
+          entranceObs = null;
+          section.classList.add('sect-visible');
+          setTimeout(startCarousel, 1050);
+        }, { threshold: 0.18 });
+        entranceObs.observe(section);
+
+        document.addEventListener('astro:before-swap', () => {
+          entranceObs?.disconnect();
+          entranceObs = null;
+        }, { once: true });
+      } else {
+        section?.classList.add('sect-visible');
+        startCarousel();
+      }
+    }
+
+    // ── Desktop: fan-in entrance ──
+    if (isDesktop && !reducedMotion) {
+      const section = document.getElementById('videos');
+      if (section) {
+        let obs: IntersectionObserver | null = new IntersectionObserver(([entry]) => {
+          if (!entry.isIntersecting) return;
+          obs!.disconnect(); obs = null;
+          shells.forEach(s => s.classList.add('prest-visible'));
+        }, { threshold: 0.22 });
+        obs.observe(section);
+
+        document.addEventListener('astro:before-swap', () => {
+          obs?.disconnect(); obs = null;
+        }, { once: true });
+      }
+    }
+
+    // ── Desktop: hover tilt ──
+    if (isDesktop) {
+      shells.forEach(shell => {
+        const light = shell.querySelector<HTMLElement>('.card-light');
+
+        shell.addEventListener('mousemove', (e: MouseEvent) => {
+          if (reducedMotion) return;
+          const rect = shell.getBoundingClientRect();
+          const dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
+          const dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
+          shell.style.transition = 'transform 100ms linear';
+          shell.style.transform  = `perspective(900px) rotateX(${-dy * 6}deg) rotateY(${dx * 9}deg) translateZ(4px)`;
+          if (light) {
+            light.style.setProperty('--lx', `${50 + dx * 20}%`);
+            light.style.setProperty('--ly', `${50 - dy * 20}%`);
+          }
+        }, { signal });
+
+        shell.addEventListener('mouseleave', () => {
+          shell.style.transition = 'transform 600ms var(--ease-out-soft)';
+          shell.style.transform  = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+          if (light) {
+            light.style.setProperty('--lx', '28%');
+            light.style.setProperty('--ly', '22%');
+          }
+        }, { signal });
+      });
+    }
+
+    document.addEventListener('astro:before-swap', () => ac.abort(), { once: true });
+  }
+
+  document.addEventListener('astro:page-load', initVideos);
+</script>
