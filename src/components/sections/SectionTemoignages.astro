@@ -3,10 +3,17 @@ import { getTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/utils';
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
+
+const cardImages = [
+  '/images/galerie/photo-01.webp',
+  '/images/galerie/photo-04.webp',
+  '/images/galerie/photo-07.webp',
+];
 ---
 
 <section id="temoignages" class="section-temoignages" aria-labelledby="temoignages-title">
   <div class="section-container">
+
     <div class="section-header reveal-fade">
       <span class="eyebrow">{t.temoignages.eyebrow}</span>
       <h2 class="section-title" id="temoignages-title">{t.temoignages.title}</h2>
@@ -14,19 +21,33 @@ const t = getTranslations(lang);
 
     <div class="temoignages-grid">
       {t.temoignages.items.map((item, i) => (
-        <div class={`card-shell cs-${i % 3} reveal`} style={`transition-delay: ${i * 130}ms`} data-card>
-          <article class={`card-core cc-${i % 3}`}>
-            <div class="card-light"></div>
-            <span class="temoignage-mark" aria-hidden="true">"</span>
-            <p class="temoignage-text">{item.quote}</p>
-            <footer class="temoignage-author">
-              <span class="temoignage-stars" aria-label="5 étoiles sur 5">★★★★★</span>
-              <span class="temoignage-name">{item.author}</span>
-            </footer>
-          </article>
+        <div class="tc-card reveal" style={`transition-delay:${i * 150}ms`}>
+
+          <!-- Photo + gradient overlay -->
+          <div class="tc-photo-wrap">
+            <img
+              src={cardImages[i]}
+              alt=""
+              class="tc-photo"
+              loading="lazy"
+              decoding="async"
+              data-fallback="/images/placeholder.webp"
+            />
+            <div class="tc-overlay"></div>
+          </div>
+
+          <!-- Corps de la carte -->
+          <div class="tc-body">
+            <p class="tc-quote">"{item.quote}"</p>
+            <div class="tc-sep"></div>
+            <p class="tc-author">— {item.author}</p>
+            <p class="tc-event">{item.event}</p>
+          </div>
+
         </div>
       ))}
     </div>
+
   </div>
 </section>
 
@@ -50,117 +71,119 @@ const t = getTranslations(lang);
     margin: 0;
   }
 
+  /* ── Grille ── */
   .temoignages-grid {
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
-    max-width: 420px;
+    gap: 1.1rem;
+    max-width: 400px;
     margin-inline: auto;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 640px) {
     .temoignages-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      max-width: 640px;
-      gap: 1rem;
-    }
-  }
-
-  @media (min-width: 900px) {
-    .temoignages-grid {
-      grid-template-columns: repeat(3, 1fr);
-      max-width: 100%;
+      max-width: 660px;
       gap: 1.25rem;
     }
   }
 
-  /* ── Shell (double-bezel) ── */
-  .card-shell {
-    border-radius: 28px;
-    padding: 5px;
-    border: 0.5px solid rgba(229, 215, 190, 0.6);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 2px 8px rgba(43, 31, 21, 0.04);
-    transform-style: preserve-3d;
-    transform: perspective(900px) rotateX(0deg) rotateY(0deg);
-    transition: transform 500ms var(--ease-out-soft), box-shadow 500ms var(--ease-out-soft);
-    will-change: transform;
-    -webkit-tap-highlight-color: transparent;
+  @media (min-width: 960px) {
+    .temoignages-grid {
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 100%;
+      gap: 1.4rem;
+    }
   }
 
-  .cs-0 { background: rgba(168, 135, 83, 0.07); }
-  .cs-1 { background: rgba(193, 104, 71, 0.07); }
-  .cs-2 { background: rgba(122, 92, 32, 0.06); }
+  /* ── Carte ── */
+  .tc-card {
+    background: #1C1410;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform 400ms var(--ease-out-soft), box-shadow 400ms var(--ease-out-soft);
+  }
 
-  /* ── Core ── */
-  .card-core {
-    border-radius: 22px;
-    padding: 1.5rem 1.4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
+  @media (hover: hover) {
+    .tc-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  /* ── Photo ── */
+  .tc-photo-wrap {
     position: relative;
     overflow: hidden;
   }
 
-  .cc-0 { background: linear-gradient(145deg, #FEFCF8 0%, #EDDEB8 100%); }
-  .cc-1 { background: linear-gradient(145deg, #FEFCF8 0%, #F0CBBA 100%); }
-  .cc-2 { background: linear-gradient(145deg, #FEFCF8 0%, #E6D8A8 100%); }
-
-  .card-light {
-    position: absolute; inset: 0;
-    pointer-events: none;
-    background: radial-gradient(circle at var(--lx, 28%) var(--ly, 22%), rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.1) 35%, transparent 65%);
-    border-radius: inherit;
-    transition: background 80ms linear;
-  }
-
-  /* ── Contenu ── */
-  .temoignage-mark {
-    font-family: var(--font-serif);
-    font-size: 3rem;
-    line-height: 0.75;
-    color: var(--color-gold);
-    opacity: 0.4;
+  .tc-photo {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: top;
     display: block;
-    position: relative;
+    transition: transform 500ms var(--ease-out-soft);
   }
 
-  .temoignage-text {
+  .tc-card:hover .tc-photo {
+    transform: scale(1.05);
+  }
+
+  /* Gradient du bas vers le haut, fond de carte */
+  .tc-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65%;
+    background: linear-gradient(to top, #1C1410, transparent);
+    pointer-events: none;
+  }
+
+  /* ── Corps ── */
+  .tc-body {
+    padding: 1rem 1.25rem 1.4rem;
+  }
+
+  .tc-quote {
     font-family: var(--font-serif);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-style: italic;
-    color: var(--color-text-primary);
-    line-height: 1.65;
-    margin: 0;
-    flex: 1;
-    position: relative;
+    color: rgba(247, 241, 230, 0.88);
+    line-height: 1.7;
+    margin: 0 0 0.85rem;
   }
 
-  .temoignage-author {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    padding-top: 1rem;
-    border-top: 0.5px solid rgba(229, 215, 190, 0.7);
-    position: relative;
+  .tc-sep {
+    height: 0.5px;
+    background: rgba(229, 215, 190, 0.18);
+    margin-bottom: 0.85rem;
   }
 
-  .temoignage-name {
+  .tc-author {
     font-family: var(--font-sans);
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    color: var(--color-text-primary);
+    color: #F7F1E6;
+    margin: 0 0 0.2rem;
   }
 
-  .temoignage-stars {
-    color: #FBBC04;
-    font-size: 1rem;
-    letter-spacing: 0.08em;
+  /* Gradient text or et rose — comme le gradient violet du 21st.dev */
+  .tc-event {
+    font-size: 0.78rem;
+    font-style: italic;
+    margin: 0;
+    background: linear-gradient(90deg, #D4A843, #C96876, #A88753);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 500;
+    letter-spacing: 0.02em;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .card-shell { transition: none; }
-    .card-light { transition: none; }
+    .tc-card, .tc-photo { transition: none; }
   }
 </style>
