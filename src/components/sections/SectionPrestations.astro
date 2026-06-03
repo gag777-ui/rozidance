@@ -5,31 +5,38 @@ const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
 const base = lang === 'fr' ? '' : `/${lang}`;
 
+/* ── Icons (52px, stroke-only pour lisibilité sur fond coloré) ── */
 const svgIcons = [
-  `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <circle cx="8" cy="12" r="5"/>
+  /* Alliances */
+  `<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="8"  cy="12" r="5"/>
     <circle cx="16" cy="12" r="5"/>
   </svg>`,
-  `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  /* Micro */
+  `<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <rect x="9" y="2" width="6" height="11" rx="3"/>
     <path d="M5 10a7 7 0 0014 0"/>
     <line x1="12" y1="19" x2="12" y2="22"/>
-    <line x1="8" y1="22" x2="16" y2="22"/>
+    <line x1="8"  y1="22" x2="16" y2="22"/>
   </svg>`,
-  `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  /* Notes */
+  `<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M9 18V5l12-2v13"/>
-    <circle cx="6" cy="18" r="3"/>
+    <circle cx="6"  cy="18" r="3"/>
     <circle cx="18" cy="16" r="3"/>
   </svg>`,
 ] as const;
 
-const ordinals = ['01', '02', '03'] as const;
-const categories = ['Mariage · Cérémonie', 'Gala · Réception', 'Cours · Atelier'] as const;
+const ordinals   = ['01', '02', '03'] as const;
+const categories = ['Mariage · Cérémonie', 'Chant · Performance', 'Cours · Atelier'] as const;
 
 function getHref(id: string) {
-  if (id === 'cours') return `${base}/cours`;
-  if (id === 'mariages') return `${base}/mariages`;
-  if (id === 'danse-evenementielle') return `${base}/chant`;
+  if (id === 'mariages')              return `${base}/mariages`;
+  if (id === 'danse-evenementielle')  return `${base}/chant`;
+  if (id === 'cours')                 return `${base}/cours`;
   return `${base || '/'}#contact`;
 }
 ---
@@ -37,651 +44,468 @@ function getHref(id: string) {
 <section id="prestations" class="section-prestations" aria-labelledby="prestations-title">
   <div class="section-container">
 
+    <!-- En-tête -->
     <div class="section-header reveal-fade">
       <span class="eyebrow">{t.prestations.eyebrow}</span>
       <h2 class="section-title" id="prestations-title">{t.prestations.title}</h2>
       <p class="prestations-subtitle">{t.hero.subtitle}</p>
     </div>
 
-    <div class="carousel-outer">
-      <div class="cards-grid" id="prestations-carousel">
-        {t.prestations.items.map((item, i) => (
-          <a
-            class={`card-shell cs-${i} reveal`}
-            data-card
-            data-index={i}
-            href={getHref(item.id)}
-            aria-label={item.title}
-          >
-            <article class={`card-core cc-${i}`}>
-              <div class="card-light"></div>
-              <div class="card-top">
-                <span class="card-num" aria-hidden="true">{ordinals[i]}</span>
-                <div class={`card-icon ci-${i}`} set:html={svgIcons[i]} />
-              </div>
-              <span class="card-cat">{categories[i]}</span>
-              <h3 class="card-title">{item.title}</h3>
-              <div class="card-line"></div>
-              <p class="card-description">{item.description}</p>
-              <span class="card-cta" aria-hidden="true">
-                {item.link}
-                <span class="cta-circle">
-                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </span>
-            </article>
-          </a>
-        ))}
-      </div>
+    <!-- Grille des cards -->
+    <div class="prestations-grid">
+      {t.prestations.items.map((item, i) => (
+        <a
+          class={`prestation-card pc-${i}`}
+          href={getHref(item.id)}
+          aria-label={item.title}
+        >
 
-      <div class="carousel-dots" aria-hidden="true">
-        <span class="dot dot-0"></span>
-        <span class="dot dot-1"></span>
-        <span class="dot dot-2"></span>
-      </div>
+          <!-- Zone visuelle : gradient + motif arménien + icône -->
+          <div class={`card-visual cv-${i}`}>
+            <!-- Motif tapis arménien (losanges imbriqués) -->
+            <svg
+              class="card-pattern"
+              viewBox="0 0 64 64"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <defs>
+                <pattern
+                  id={`arm-${i}`}
+                  width="32"
+                  height="32"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <!-- Losange extérieur -->
+                  <path d="M16 1 L31 16 L16 31 L1 16 Z"
+                    fill="none" stroke="currentColor" stroke-width="0.45"/>
+                  <!-- Losange intérieur -->
+                  <path d="M16 7 L25 16 L16 25 L7 16 Z"
+                    fill="none" stroke="currentColor" stroke-width="0.4"/>
+                  <!-- Motif croix arménienne au centre -->
+                  <line x1="16" y1="12" x2="16" y2="20" stroke="currentColor" stroke-width="0.35"/>
+                  <line x1="12" y1="16" x2="20" y2="16" stroke="currentColor" stroke-width="0.35"/>
+                  <!-- Points aux coins -->
+                  <circle cx="16" cy="1"  r="0.8" fill="currentColor"/>
+                  <circle cx="31" cy="16" r="0.8" fill="currentColor"/>
+                  <circle cx="16" cy="31" r="0.8" fill="currentColor"/>
+                  <circle cx="1"  cy="16" r="0.8" fill="currentColor"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill={`url(#arm-${i})`}/>
+            </svg>
+
+            <!-- Icône centrée -->
+            <div class="card-icon" set:html={svgIcons[i]}/>
+
+            <!-- Overlay hover (terracotta wash) -->
+            <div class="card-overlay" aria-hidden="true"></div>
+          </div>
+
+          <!-- Zone contenu -->
+          <div class="card-content">
+            <!-- Numéro éditorial (décoratif) -->
+            <span class="card-num" aria-hidden="true">{ordinals[i]}</span>
+
+            <!-- Catégorie eyebrow -->
+            <span class="card-cat">{categories[i]}</span>
+
+            <!-- Titre -->
+            <h3 class="card-title">{item.title}</h3>
+
+            <!-- Séparateur fin -->
+            <div class="card-rule" aria-hidden="true"></div>
+
+            <!-- Description -->
+            <p class="card-desc">{item.description}</p>
+
+            <!-- CTA discret -->
+            <span class="card-cta">
+              <span class="cta-text">{item.link}</span>
+              <svg
+                class="cta-arrow"
+                width="13" height="13"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 7h10M8 3l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+
+        </a>
+      ))}
     </div>
 
   </div>
 </section>
 
+
 <style>
+  /* ════════════════════════════════════════════════════
+     SECTION
+     ════════════════════════════════════════════════════ */
   .section-prestations {
     padding-block: var(--spacing-section);
   }
 
-  /* ── Header ── */
-  .section-header {
+  /* Subtitle sous le section-title */
+  .prestations-subtitle {
+    margin: 0;
+    font-size: var(--text-sm);            /* 14px */
+    color: var(--color-taupe);
+    font-style: italic;
+    max-width: 54ch;
     text-align: center;
-    margin-bottom: 3rem;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ════════════════════════════════════════════════════
+     GRILLE
+     Mobile   : 1 colonne
+     Tablet   : 2 colonnes
+     Desktop  : 3 colonnes
+     ════════════════════════════════════════════════════ */
+  .prestations-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);                 /* 16px mobile */
+    margin-top: var(--space-lg);          /* 40px */
+  }
+
+  @media (min-width: 768px) {
+    .prestations-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);              /* 24px */
+    }
+    /* 3ème card seule : centrée mais pas étirée */
+    .prestation-card:last-child:nth-child(2n+1) {
+      grid-column: 1 / -1;
+      max-width: calc(50% - var(--space-md) / 2);
+      margin-inline: auto;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .prestations-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    /* Reset orphan rule */
+    .prestation-card:last-child:nth-child(2n+1) {
+      grid-column: auto;
+      max-width: unset;
+      margin-inline: 0;
+    }
+  }
+
+  /* ════════════════════════════════════════════════════
+     CARD — shell
+     ════════════════════════════════════════════════════ */
+  .prestation-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .section-title {
-    font-size: clamp(1.875rem, 3.5vw, 2.75rem);
-    color: var(--color-section-title);
-    margin: 0;
-  }
-
-  .prestations-subtitle {
-    margin: 0.25rem 0 0;
-    font-size: 1rem;
-    color: var(--color-text-secondary);
-    font-style: italic;
-  }
-
-  /* ── Carousel outer ── */
-  .carousel-outer {
-    position: relative;
-  }
-
-  /* ── Entrée spectaculaire (mobile) ── */
-  @media (max-width: 899px) {
-    .card-shell {
-      opacity: 0;
-      transform: perspective(1100px) translateY(52px) scale(0.93);
-    }
-    .section-prestations.sect-visible .cs-0 {
-      animation: card-entrance 700ms var(--ease-out-soft) 0ms   both;
-    }
-    .section-prestations.sect-visible .cs-1 {
-      animation: card-entrance 700ms var(--ease-out-soft) 150ms both;
-    }
-    .section-prestations.sect-visible .cs-2 {
-      animation: card-entrance 700ms var(--ease-out-soft) 300ms both;
-    }
-  }
-
-  @keyframes card-entrance {
-    from {
-      opacity: 0;
-      transform: perspective(1100px) translateY(52px) scale(0.93);
-    }
-    to {
-      opacity: 1;
-      transform: perspective(1100px) translateY(0) scale(1);
-    }
-  }
-
-  /* ── Mobile: horizontal snap carousel ── */
-  .cards-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    gap: 1rem;
-    padding: 1rem 4% 1.5rem;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .cards-grid::-webkit-scrollbar { display: none; }
-
-  /* ── Dots ── */
-  .carousel-dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 7px;
-    margin-top: 1.5rem;
-  }
-
-  .dot {
-    display: block;
-    height: 6px;
-    width: 6px;
-    border-radius: 3px;
-    background: rgba(43, 31, 21, 0.18);
-    transition: background 300ms ease, width 350ms var(--ease-out-soft);
-    cursor: pointer;
-    position: relative;
+    background-color: var(--color-ivory-card);
+    border: 0.5px solid var(--color-line);
+    border-radius: var(--radius-md);      /* 12px */
     overflow: hidden;
-  }
-
-  .dot.dot-active {
-    background: var(--color-accent);
-    width: 22px;
-  }
-
-  /* Barre de progression qui se remplit sur AUTO_MS */
-  .dot.dot-active::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.48);
-    border-radius: inherit;
-    transform: translateX(-100%);
-    animation: dot-progress 4s linear forwards;
-  }
-
-  @keyframes dot-progress {
-    from { transform: translateX(-100%); }
-    to   { transform: translateX(0); }
-  }
-
-  /* ── Desktop: 3-col grid ── */
-  @media (min-width: 900px) {
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      overflow-x: visible;
-      scroll-snap-type: none;
-      gap: 1.25rem;
-      padding: 0.75rem;
-    }
-
-    .carousel-dots {
-      display: none;
-    }
-  }
-
-  /* ── Outer shell ── */
-  .card-shell {
-    flex: 0 0 min(92%, 420px);
-    scroll-snap-align: center;
-    border-radius: 28px;
-    padding: 5px;
-    border: 0.5px solid rgba(229, 215, 190, 0.6);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      0 2px 8px rgba(43, 31, 21, 0.04);
-    transform-style: preserve-3d;
-    transform: perspective(900px) rotateX(0deg) rotateY(0deg);
-    will-change: transform, opacity;
+    text-decoration: none;
     cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    /* Mobile: only opacity transition; JS drives the transform */
-    transition: opacity 650ms ease, box-shadow 500ms var(--ease-out-soft);
+    /* GPU-composited transitions */
+    transition:
+      border-color var(--duration-normal) var(--ease-standard),
+      box-shadow    var(--duration-normal) var(--ease-standard),
+      transform     var(--duration-normal) var(--ease-standard);
+    will-change: transform;
   }
-
-  /* Desktop: restore transform in transition + fan entrance */
-  @media (min-width: 900px) {
-    .card-shell {
-      flex: unset;
-      scroll-snap-align: unset;
-      transition: transform 500ms var(--ease-out-soft), opacity 700ms ease, box-shadow 500ms var(--ease-out-soft);
-    }
-
-    /* Pre-entrance state per card */
-    .cs-0 { --fan-ry: -22deg; --fan-ty: 26px; }
-    .cs-1 { --fan-ry:   0deg; --fan-ty: 34px; }
-    .cs-2 { --fan-ry:  22deg; --fan-ty: 26px; }
-
-    /* Entrance animation triggered by .prest-visible */
-    .card-shell.prest-visible {
-      animation: card-fan-in 0.9s var(--ease-out-soft) both;
-    }
-    .cs-0.prest-visible { animation-delay:   0ms; }
-    .cs-1.prest-visible { animation-delay: 160ms; }
-    .cs-2.prest-visible { animation-delay: 320ms; }
-  }
-
-  @keyframes card-fan-in {
-    from {
-      opacity: 0;
-      transform: perspective(900px) rotateY(var(--fan-ry, 0deg)) translateY(var(--fan-ty, 26px));
-    }
-    to {
-      opacity: 1;
-      transform: perspective(900px) rotateY(0deg) translateY(0px);
-    }
-  }
-
-  /* Shell color par carte */
-  .cs-0 { background: rgba(168, 135, 83, 0.07); }
-  .cs-1 { background: rgba(193, 104, 71, 0.07); }
-  .cs-2 { background: rgba(122, 92, 32, 0.06); }
 
   @media (hover: hover) {
-    .card-shell:hover {
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        0 16px 40px rgba(43, 31, 21, 0.1);
+    .prestation-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--color-terracotta);
+      box-shadow: var(--shadow-lg);
     }
   }
 
-  /* ── Inner core ── */
-  .card-core {
-    border-radius: 22px;
-    padding: 1.1rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
+  /* ════════════════════════════════════════════════════
+     ZONE VISUELLE (gradient + pattern + icône)
+     ════════════════════════════════════════════════════ */
+  .card-visual {
     position: relative;
+    height: 200px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
-  .cc-0 { background: linear-gradient(145deg, #FEFCF8 0%, #EDDEB8 100%); }
-  .cc-1 { background: linear-gradient(145deg, #FEFCF8 0%, #F0CBBA 100%); }
-  .cc-2 { background: linear-gradient(145deg, #FEFCF8 0%, #E6D8A8 100%); }
+  /* Gradient par card */
+  .cv-0 {
+    background: linear-gradient(145deg, #C16847 0%, #8B3F25 100%);
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .cv-1 {
+    background: linear-gradient(145deg, #C09A5A 0%, #8A6A30 100%);
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .cv-2 {
+    background: linear-gradient(145deg, #7B5C45 0%, #452E22 100%);
+    color: rgba(255, 255, 255, 0.85);
+  }
 
-  /* ── Spot de lumière ── */
-  .card-light {
+  /* Motif tapis arménien — SVG en couverture totale */
+  .card-pattern {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.08;
     pointer-events: none;
-    background: radial-gradient(
-      circle at var(--lx, 28%) var(--ly, 22%),
-      rgba(255, 255, 255, 0.38) 0%,
-      rgba(255, 255, 255, 0.1) 35%,
-      transparent 65%
-    );
-    border-radius: inherit;
-    transition: background 80ms linear;
   }
 
-  /* ── Contenu ── */
-  .card-top {
+  /* Icône centrale */
+  .card-icon {
+    position: relative;
+    z-index: 1;
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--duration-normal) var(--ease-standard);
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.20));
   }
 
+  @media (hover: hover) {
+    .prestation-card:hover .card-icon {
+      transform: scale(1.12);
+    }
+  }
+
+  /* Overlay hover — wash sombre subtil */
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: transparent;
+    transition: background-color var(--duration-normal) var(--ease-standard);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  @media (hover: hover) {
+    .prestation-card:hover .card-overlay {
+      background-color: rgba(20, 10, 5, 0.16);
+    }
+  }
+
+  /* ════════════════════════════════════════════════════
+     ZONE CONTENU
+     ════════════════════════════════════════════════════ */
+  .card-content {
+    position: relative;
+    padding: var(--space-md);            /* 24px */
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);               /* 8px */
+    flex: 1;
+  }
+
+  /* ── Numéro éditorial ── */
   .card-num {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
     font-family: var(--font-serif);
-    font-size: 2.5rem;
+    font-size: var(--text-5xl);          /* 60px — gros watermark */
     font-weight: 200;
     font-style: italic;
     line-height: 1;
-    color: rgba(43, 31, 21, 0.09);
-    user-select: none;
+    color: var(--color-gold);
+    opacity: 0.20;
     pointer-events: none;
+    user-select: none;
+    transition: opacity var(--duration-normal) var(--ease-standard);
   }
 
-  .card-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    transform: translateZ(12px);
-    flex-shrink: 0;
-    transition: transform 400ms var(--ease-out-soft);
+  @media (hover: hover) {
+    .prestation-card:hover .card-num {
+      opacity: 0.10;                    /* Recule quand le titre prend le focus */
+    }
   }
 
-  .card-shell:hover .card-icon { transform: translateZ(12px) scale(1.15); }
-
-  .ci-0 { background: rgba(184, 134, 11, 0.12); border: 0.5px solid rgba(184, 134, 11, 0.3); color: #B8860B; }
-  .ci-1 { background: rgba(210, 40, 40, 0.10); border: 0.5px solid rgba(210, 40, 40, 0.28); color: #D32828; }
-  .ci-2 { background: rgba(123, 94, 167, 0.11); border: 0.5px solid rgba(123, 94, 167, 0.25); color: #7B5EA7; }
-
+  /* ── Catégorie (eyebrow) ── */
   .card-cat {
-    font-size: 0.62rem;
-    font-style: italic;
-    letter-spacing: 0.14em;
+    font-family: var(--font-sans);
+    font-size: var(--text-caption);      /* 11px */
+    letter-spacing: var(--tracking-widest);
     text-transform: uppercase;
-    color: var(--color-text-muted);
-    position: relative;
+    color: var(--color-gold);
+    display: block;
   }
 
+  /* ── Titre H3 ── */
   .card-title {
     font-family: var(--font-serif);
-    font-size: 1.25rem;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--color-text-primary);
-    line-height: 1.2;
+    font-size: var(--text-xl);           /* 24px */
+    font-weight: 400;
+    color: var(--color-charcoal);
+    line-height: var(--leading-snug);
     margin: 0;
-    position: relative;
+    transition: color var(--duration-normal) var(--ease-standard);
   }
 
-  .card-line {
+  @media (hover: hover) {
+    .prestation-card:hover .card-title {
+      color: var(--color-terracotta);
+    }
+  }
+
+  /* ── Séparateur ── */
+  .card-rule {
     height: 0.5px;
-    background: linear-gradient(90deg, var(--color-border), transparent);
-    position: relative;
+    background: linear-gradient(90deg, var(--color-line), transparent);
+    margin-block: var(--space-xxs);      /* 4px */
+    flex-shrink: 0;
   }
 
-  .card-description {
-    font-size: 0.95rem;
-    color: var(--color-text-secondary);
-    line-height: 1.72;
+  /* ── Description ── */
+  .card-desc {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);           /* 14px */
+    color: var(--color-taupe);
+    line-height: var(--leading-relaxed); /* 1.7 */
     margin: 0;
     flex: 1;
-    position: relative;
   }
 
+  /* ── CTA discret ── */
   .card-cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    gap: var(--space-xs);               /* 8px */
+    font-family: var(--font-sans);
+    font-size: var(--text-caption);      /* 11px */
+    letter-spacing: var(--tracking-wider);
     text-transform: uppercase;
-    font-style: normal;
-    font-weight: 500;
-    text-decoration: none;
-    color: var(--color-accent);
-    padding: 0.5rem 0.6rem 0.5rem 0.9rem;
-    min-height: 44px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.5);
-    border: 0.5px solid rgba(255, 255, 255, 0.85);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 4px rgba(43, 31, 21, 0.06);
-    align-self: flex-start;
-    margin-top: 0.2rem;
+    color: var(--color-terracotta);
+    margin-top: var(--space-xs);
     position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: background 300ms var(--ease-out-soft), gap 300ms var(--ease-out-soft), box-shadow 300ms;
+    /* Soulignement qui s'étend */
+    padding-bottom: 2px;
+    align-self: flex-start;
   }
 
-  .card-cta::before {
+  /* Underline animé */
+  .card-cta::after {
     content: '';
     position: absolute;
-    top: 0; left: -80%; width: 55%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-    animation: cta-shimmer 4s ease-in-out infinite;
-    pointer-events: none;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-terracotta);
+    transition: width var(--duration-normal) var(--ease-standard);
   }
 
-  @keyframes cta-shimmer {
-    0%   { left: -80%; }
-    30%  { left: 130%; }
-    100% { left: 130%; }
+  @media (hover: hover) {
+    .prestation-card:hover .card-cta::after {
+      width: 100%;
+    }
   }
 
-  .cs-0 .card-cta { color: var(--color-gold); }
-  .cs-2 .card-cta { color: #7A5C20; }
-
-  .card-shell:nth-child(2) .card-cta::before { animation-delay: 1.4s; }
-  .card-shell:nth-child(3) .card-cta::before { animation-delay: 2.7s; }
-
-  .card-cta:hover {
-    background: rgba(255, 255, 255, 0.78);
-    gap: 0.8rem;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 2px 10px rgba(43, 31, 21, 0.09);
-  }
-
-  .cta-circle {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: 1px solid currentColor;
-    opacity: 0.75;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* Flèche qui glisse */
+  .cta-arrow {
     flex-shrink: 0;
-    transition: transform 350ms var(--ease-out-soft), opacity 300ms;
-    animation: arrow-nudge 4s ease-in-out infinite;
+    transition: transform var(--duration-short) var(--ease-standard);
   }
 
-  @keyframes arrow-nudge {
-    0%, 50%, 100% { transform: translateX(0); }
-    62%  { transform: translateX(4px); }
-    70%  { transform: translateX(1px); }
-    78%  { transform: translateX(3px); }
-    86%  { transform: translateX(0); }
+  @media (hover: hover) {
+    .prestation-card:hover .cta-arrow {
+      transform: translateX(4px);
+    }
   }
 
-  .card-shell:nth-child(2) .cta-circle { animation-delay: 1.4s; }
-  .card-shell:nth-child(3) .cta-circle { animation-delay: 2.7s; }
-
-  .card-cta:hover .cta-circle,
-  .card-cta:focus .cta-circle {
-    opacity: 1;
-    transform: translateX(4px);
-    animation-play-state: paused;
+  /* ════════════════════════════════════════════════════
+     ACCESSIBILITÉ — focus clavier
+     ════════════════════════════════════════════════════ */
+  .prestation-card:focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 3px;
+    border-color: var(--color-terracotta);
+    box-shadow: var(--shadow-accent-md);
   }
 
+  /* ════════════════════════════════════════════════════
+     REDUCED MOTION
+     ════════════════════════════════════════════════════ */
   @media (prefers-reduced-motion: reduce) {
-    .card-cta::before  { animation: none; }
-    .cta-circle        { animation: none; }
-    .card-shell        { transition: none; animation: none; }
-    .card-light        { transition: none; }
+    .prestation-card,
+    .card-icon,
+    .card-overlay,
+    .card-num,
+    .card-title,
+    .card-cta::after,
+    .cta-arrow {
+      transition: none;
+    }
   }
 </style>
 
+
 <script>
+  import gsap from 'gsap';
+
   function initPrestations() {
-    const carousel = document.getElementById('prestations-carousel');
-    const shells   = Array.from(carousel?.querySelectorAll<HTMLElement>('[data-card]') ?? []);
-    const dots     = Array.from(document.querySelectorAll<HTMLElement>('.carousel-dots .dot'));
-    const ac       = new AbortController();
-    const { signal } = ac;
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>('#prestations .prestation-card')
+    );
+    if (!cards.length) return;
+
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isDesktop     = window.matchMedia('(min-width: 900px)').matches;
 
-    if (!shells.length) return;
+    if (!reducedMotion) {
+      /* ── État initial : invisible, décalées vers le bas + blur ── */
+      gsap.set(cards, { autoAlpha: 0, y: 32, filter: 'blur(8px)' });
 
-    // ── Mobile: entrée spectaculaire + carousel rotateY + relief + auto-play ──
-    if (!isDesktop && carousel) {
-      const AUTO_MS   = 4000;
-      let rafId:       number | null = null;
-      let autoTimer:   ReturnType<typeof setTimeout> | null = null;
-      let currentIdx   = 0;
-      let isTouching   = false;
-
-      // Force-restart ::after animation on the active dot
-      const setActiveDot = (idx: number) => {
-        dots.forEach((dot, i) => {
-          if (i === idx) {
-            dot.classList.remove('dot-active');
-            void dot.getBoundingClientRect();
-            dot.classList.add('dot-active');
-          } else {
-            dot.classList.remove('dot-active');
-          }
-        });
-      };
-
-      const scheduleNext = () => {
-        if (autoTimer) clearTimeout(autoTimer);
-        if (reducedMotion) return;
-        autoTimer = setTimeout(() => {
-          if (isTouching) return;
-          currentIdx = (currentIdx + 1) % shells.length;
-          goToCard(currentIdx);
-        }, AUTO_MS);
-      };
-
-      const goToCard = (idx: number) => {
-        currentIdx = idx;
-        const target = shells[idx];
-        if (!target) return;
-        carousel.scrollTo({
-          left: target.offsetLeft - (carousel.clientWidth - target.offsetWidth) / 2,
-          behavior: 'smooth',
-        });
-        setActiveDot(idx);
-        scheduleNext();
-      };
-
-      const updateCarousel = () => {
-        const sl = carousel.scrollLeft;
-        const cw = carousel.clientWidth;
-        let activeIdx = 0;
-        let minDist   = Infinity;
-
-        shells.forEach((shell, i) => {
-          const cardCenter = shell.offsetLeft + shell.offsetWidth / 2;
-          const dist       = Math.abs(cardCenter - (sl + cw / 2));
-          if (dist < minDist) { minDist = dist; activeIdx = i; }
-
-          if (!reducedMotion) {
-            const norm    = (cardCenter - (sl + cw / 2)) / shell.offsetWidth;
-            const absDist = Math.abs(norm);
-            // Carte active en relief : pleine taille + opaque, voisines en retrait
-            const scale   = absDist < 0.15 ? 1 : Math.max(0.87, 1 - absDist * 0.14);
-            const opacity = absDist < 0.15 ? 1 : Math.max(0.48, 1 - absDist * 0.5);
-            shell.style.transform = `perspective(1100px) rotateY(${norm * 22}deg) scale(${scale})`;
-            shell.style.opacity   = String(opacity);
-          }
-        });
-
-        if (activeIdx !== currentIdx) {
-          currentIdx = activeIdx;
-          setActiveDot(activeIdx);
-          scheduleNext();
-        }
-      };
-
-      const startCarousel = () => {
-        setActiveDot(0);
-        updateCarousel();
-        scheduleNext();
-
-        carousel.addEventListener('scroll', () => {
-          if (rafId !== null) cancelAnimationFrame(rafId);
-          rafId = requestAnimationFrame(updateCarousel);
-        }, { signal });
-
-        carousel.addEventListener('touchstart', () => {
-          isTouching = true;
-          if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
-        }, { passive: true, signal });
-
-        carousel.addEventListener('touchend', () => {
-          isTouching = false;
-          scheduleNext();
-        }, { passive: true, signal });
-
-        dots.forEach((dot, i) => {
-          dot.addEventListener('click', () => goToCard(i), { signal });
-        });
-      };
-
-      // Entrée spectaculaire : attend que la section soit visible, puis lance le carousel
-      const section = document.getElementById('prestations');
-      if (section && !reducedMotion) {
-        let entranceObs: IntersectionObserver | null = new IntersectionObserver(([entry]) => {
+      /* ── IntersectionObserver : déclenche l'entrée au scroll ── */
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
           if (!entry.isIntersecting) return;
-          entranceObs!.disconnect();
-          entranceObs = null;
-          section.classList.add('sect-visible');
-          // Démarre le carousel après la fin de l'animation d'entrée (700ms + 300ms stagger)
-          setTimeout(startCarousel, 1050);
-        }, { threshold: 0.18 });
-        entranceObs.observe(section);
+          obs.unobserve(entry.target);
 
-        document.addEventListener('astro:before-swap', () => {
-          entranceObs?.disconnect();
-          entranceObs = null;
-        }, { once: true });
-      } else {
-        // reduced-motion ou pas de section : démarrage direct
-        section?.classList.add('sect-visible');
-        startCarousel();
-      }
-    }
+          const idx = cards.indexOf(entry.target as HTMLElement);
 
-    // ── Desktop: fan-in entrance via CSS animation ──
-    if (isDesktop && !reducedMotion) {
-      const section = document.getElementById('prestations');
-      if (section) {
-        let obs: IntersectionObserver | null = new IntersectionObserver(([entry]) => {
-          if (!entry.isIntersecting) return;
-          obs!.disconnect();
-          obs = null;
-          shells.forEach(s => s.classList.add('prest-visible'));
-        }, { threshold: 0.22 });
-        obs.observe(section);
-
-        document.addEventListener('astro:before-swap', () => {
-          obs?.disconnect();
-          obs = null;
-        }, { once: true });
-      }
-    }
-
-    // ── Desktop: hover tilt ──
-    if (isDesktop) {
-      shells.forEach(shell => {
-        const light = shell.querySelector<HTMLElement>('.card-light');
-
-        shell.addEventListener('mousemove', (e: MouseEvent) => {
-          if (reducedMotion) return;
-          const rect = shell.getBoundingClientRect();
-          const dx = (e.clientX - rect.left  - rect.width  / 2) / (rect.width  / 2);
-          const dy = (e.clientY - rect.top   - rect.height / 2) / (rect.height / 2);
-          const rx = -dy * 7;
-          const ry =  dx * 10;
-          shell.style.transition = 'transform 100ms linear';
-          shell.style.transform  = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(4px)`;
-          if (light) {
-            light.style.setProperty('--lx', `${50 + ry * 2}%`);
-            light.style.setProperty('--ly', `${50 - rx * 2}%`);
-          }
-        }, { signal });
-
-        shell.addEventListener('mouseleave', () => {
-          shell.style.transition = 'transform 600ms var(--ease-out-soft)';
-          shell.style.transform  = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-          if (light) {
-            light.style.setProperty('--lx', '28%');
-            light.style.setProperty('--ly', '22%');
-          }
-        }, { signal });
+          gsap.to(entry.target, {
+            autoAlpha: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 0.7,
+            delay: idx * 0.12,
+            ease: 'power3.out',
+            /* Libère le contrôle à CSS après l'animation */
+            onComplete: () => gsap.set(entry.target, { clearProps: 'all' }),
+          });
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -48px 0px',
       });
+
+      cards.forEach(card => obs.observe(card));
+
+      document.addEventListener(
+        'astro:before-swap',
+        () => obs.disconnect(),
+        { once: true }
+      );
     }
-
-    // ── Mobile: touch light update ──
-    if (!isDesktop) {
-      shells.forEach(shell => {
-        const light = shell.querySelector<HTMLElement>('.card-light');
-        shell.addEventListener('touchstart', (e: TouchEvent) => {
-          if (!light || reducedMotion) return;
-          const rect = shell.getBoundingClientRect();
-          const t    = e.touches[0];
-          light.style.setProperty('--lx', `${((t.clientX - rect.left) / rect.width)  * 100}%`);
-          light.style.setProperty('--ly', `${((t.clientY - rect.top)  / rect.height) * 100}%`);
-        }, { passive: true, signal });
-
-        shell.addEventListener('touchend', () => {
-          if (!light) return;
-          light.style.setProperty('--lx', '28%');
-          light.style.setProperty('--ly', '22%');
-        }, { passive: true, signal });
-      });
-    }
-
-    document.addEventListener('astro:before-swap', () => ac.abort(), { once: true });
   }
 
   document.addEventListener('astro:page-load', initPrestations);
