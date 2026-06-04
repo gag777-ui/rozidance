@@ -254,7 +254,8 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     transition: transform 500ms var(--ease-out-soft), box-shadow 500ms var(--ease-out-soft);
     will-change: transform; text-decoration: none;
     touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent; display: block;
+    -webkit-tap-highlight-color: transparent;
+    display: flex; flex-direction: column;
   }
   .cs-0 { background: rgba(168,135,83,0.07); }
   .cs-1 { background: rgba(193,104,71,0.07); }
@@ -265,6 +266,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     border-radius: 22px; padding: 1.1rem 1.25rem;
     display: flex; flex-direction: column; gap: 0.65rem;
     position: relative; overflow: hidden;
+    flex: 1;
   }
   .cc-0 { background: linear-gradient(145deg, #FEFCF8 0%, #EDDEB8 100%); }
   .cc-1 { background: linear-gradient(145deg, #FEFCF8 0%, #F0CBBA 100%); }
