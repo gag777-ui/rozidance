@@ -72,6 +72,19 @@ const t = getTranslations(lang);
 </Layout>
 
 <style>
+  .logo-bridge {
+    display: flex;
+    justify-content: center;
+    padding-block: 1.25rem 0.75rem;
+    background-color: var(--color-bg-primary);
+  }
+
+  .logo-bridge img {
+    width: 140px;
+    height: auto;
+    opacity: 0.9;
+  }
+
   .hero-tagband {
     background-color: var(--color-bg-primary);
     border-bottom: 0.5px solid var(--color-border);
@@ -148,19 +161,6 @@ const t = getTranslations(lang);
     color: var(--color-border);
     font-size: 13px;
     user-select: none;
-  }
-
-  .logo-bridge {
-    display: flex;
-    justify-content: center;
-    padding-block: 1.25rem 0.75rem;
-    background-color: var(--color-bg-primary);
-  }
-
-  .logo-bridge img {
-    width: 140px;
-    height: auto;
-    opacity: 0.9;
   }
 
   .prestations-wrap :global(.section-prestations) {
