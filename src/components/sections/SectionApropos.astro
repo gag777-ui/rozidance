@@ -6,8 +6,13 @@ const t = getTranslations(lang);
 ---
 
 <section id="apropos" class="section-apropos" aria-labelledby="apropos-title">
-  <div class="section-container apropos-inner">
-    <!-- Portrait -->
+  <div class="section-container apropos-shell">
+    <div class="apropos-section-head reveal-fade">
+      <span class="eyebrow">{t.apropos.eyebrow}</span>
+      <h2 id="apropos-title">À propos</h2>
+    </div>
+
+    <div class="apropos-inner">
     <div class="apropos-image reveal-left">
       <div class="portrait-frame">
         <img
@@ -20,121 +25,266 @@ const t = getTranslations(lang);
           class="portrait-img"
           data-fallback="/images/placeholder-portrait.webp"
         />
-        <!-- Decorative corner accents -->
-        <div class="portrait-corner portrait-corner-tl" aria-hidden="true"></div>
-        <div class="portrait-corner portrait-corner-br" aria-hidden="true"></div>
+        <span class="portrait-caption" aria-hidden="true">Rozi Dance</span>
       </div>
     </div>
 
-    <!-- Text -->
     <div class="apropos-text reveal-right">
-      <span class="eyebrow reveal-fade" style="transition-delay:80ms">{t.apropos.eyebrow}</span>
-      <h2 id="apropos-title" class="reveal-fade" style="transition-delay:180ms">{t.apropos.title}</h2>
-      <p class="reveal-fade" style="transition-delay:280ms">{t.apropos.p1}</p>
-      <p class="reveal-fade" style="transition-delay:360ms">{t.apropos.p2}</p>
+      <h3 class="apropos-story-title reveal-fade" style="transition-delay:180ms">{t.apropos.title}</h3>
+      <div class="apropos-copy">
+        <p class="apropos-note note-primary reveal-fade" style="transition-delay:280ms">{t.apropos.p1}</p>
+        <p class="apropos-note note-secondary reveal-fade" style="transition-delay:360ms">{t.apropos.p2}</p>
+      </div>
 
       <div class="apropos-signature reveal-fade" style="transition-delay:440ms" aria-hidden="true">
         <span class="signature-text">Rozi <span class="signature-dot">·</span> Dance</span>
       </div>
+    </div>
     </div>
   </div>
 </section>
 
 <style>
   .section-apropos {
-    padding-block: var(--spacing-section);
-    background-color: var(--color-bg-card);
+    position: relative;
+    overflow: clip;
+    margin-top: -8px;
+    padding-block: 68px 76px;
+    background:
+      radial-gradient(ellipse at 14% 18%, rgba(135, 144, 115, 0.045), transparent 34%),
+      radial-gradient(ellipse at 90% 76%, rgba(168, 135, 83, 0.055), transparent 36%),
+      linear-gradient(180deg, #fff8ee 0%, #f8ead9 24%, #fffaf1 56%, #f5e8d6 82%, #fff8ee 100%);
   }
 
   .apropos-inner {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .apropos-shell {
+    position: relative;
+    z-index: 1;
+  }
+
+  .apropos-section-head {
+    display: grid;
+    gap: 0.65rem;
+    margin-bottom: 1.7rem;
+  }
+
+  .apropos-section-head h2 {
+    margin: 0;
+    color: var(--color-charcoal);
+    font-size: clamp(3.35rem, 15vw, 7.4rem);
+    font-weight: 300;
+    line-height: 0.88;
+    letter-spacing: 0;
+  }
+
+  .apropos-image,
+  .apropos-text {
+    position: relative;
+    z-index: 1;
   }
 
   .portrait-frame {
     position: relative;
-    aspect-ratio: 1 / 1;
-    max-width: 480px;
+    width: min(100%, 420px);
+    margin-inline: auto;
+    padding: 6px;
+    border-radius: 34px;
+    background:
+      linear-gradient(145deg, rgba(255, 248, 238, 0.74), rgba(168, 135, 83, 0.12));
+    box-shadow:
+      0 22px 54px rgba(68, 43, 25, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.48);
+    transform: translateZ(0);
   }
 
   .portrait-img {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 0.86 / 1;
+    height: auto;
     object-fit: cover;
-    border-radius: 16px;
+    object-position: center;
+    border-radius: 28px;
     display: block;
-    background-color: var(--color-border);
+    background-color: rgba(43, 31, 21, 0.08);
+    filter: saturate(0.96) contrast(1.03);
   }
 
-  /* Decorative gold corner accents */
-  .portrait-corner {
+  .portrait-frame::before {
+    content: '';
     position: absolute;
-    width: 32px;
-    height: 32px;
-    border-color: var(--color-gold);
-    border-style: solid;
+    inset: 18px;
+    z-index: 1;
+    pointer-events: none;
+    border: 0.5px solid rgba(255, 249, 239, 0.34);
+    border-radius: 22px;
   }
 
-  .portrait-corner-tl {
-    top: -10px;
-    left: -10px;
-    border-width: 1px 0 0 1px;
-  }
-
-  .portrait-corner-br {
-    bottom: -10px;
-    right: -10px;
-    border-width: 0 1px 1px 0;
+  .portrait-caption {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    bottom: 20px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    padding: 9px 14px;
+    color: #fff8ee;
+    border: 0.5px solid rgba(255, 249, 239, 0.3);
+    border-radius: var(--radius-full);
+    background: rgba(37, 23, 15, 0.34);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    text-transform: uppercase;
   }
 
   .apropos-text {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+    display: grid;
+    gap: 1rem;
+    padding: 22px 0 0;
   }
 
-  .apropos-text h2 {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    color: var(--color-text-primary);
+  .apropos-story-title {
+    max-width: 18ch;
+    color: var(--color-charcoal);
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 8.8vw, 4.8rem);
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: 0;
     margin: 0;
-    line-height: 1.2;
+    text-wrap: balance;
   }
 
-  .apropos-text p {
-    font-size: 1rem;
-    color: var(--color-text-secondary);
-    line-height: 1.75;
+  .apropos-copy {
+    display: grid;
+    gap: 0.8rem;
+    counter-reset: apropos-card;
+  }
+
+  .apropos-note {
+    position: relative;
     margin: 0;
+    padding: 18px 18px 19px;
+    color: var(--color-taupe);
+    border: 0.5px solid rgba(135, 144, 115, 0.2);
+    border-radius: 24px;
+    background:
+      linear-gradient(145deg, rgba(255, 248, 238, 0.56), rgba(231, 209, 187, 0.28));
+    box-shadow:
+      0 14px 32px rgba(68, 43, 25, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.44);
+    font-family: var(--font-sans);
+    font-size: 0.96rem;
+    line-height: 1.72;
+    transform: none;
+  }
+
+  .note-secondary {
+    background:
+      linear-gradient(145deg, rgba(255, 248, 238, 0.46), rgba(135, 144, 115, 0.08));
+  }
+
+  .apropos-note::before {
+    counter-increment: apropos-card;
+    content: '0' counter(apropos-card);
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: auto;
+    height: auto;
+    color: rgba(135, 144, 115, 0.7);
+    border-radius: var(--radius-full);
+    background: transparent;
+    box-shadow: none;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
   }
 
   .apropos-signature {
-    margin-top: 0.5rem;
-    padding-top: 1.5rem;
-    border-top: 0.5px solid var(--color-divider);
+    display: inline-flex;
+    width: max-content;
+    margin-top: 0.15rem;
+    padding: 9px 14px;
+    border: 0.5px solid rgba(168, 135, 83, 0.22);
+    border-radius: var(--radius-full);
+    background: rgba(255, 249, 239, 0.52);
   }
 
   .signature-text {
     font-family: var(--font-serif);
-    font-size: 1.375rem;
-    color: var(--color-text-muted);
+    font-size: 1.12rem;
+    color: var(--color-charcoal);
     letter-spacing: 0.04em;
   }
 
   .signature-dot {
-    color: var(--color-accent);
+    color: #879073;
   }
 
-  @media (max-width: 900px) {
+  @media (min-width: 768px) {
+    .section-apropos {
+      padding-block: 86px 96px;
+    }
+
+    .apropos-section-head {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      margin-bottom: 3rem;
+    }
+
+    .apropos-section-head .eyebrow {
+      grid-column: 1 / -1;
+    }
+
+    .apropos-section-head h2 {
+      font-size: clamp(5rem, 11vw, 9.8rem);
+    }
+
     .apropos-inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
+      grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+      gap: clamp(2.4rem, 5.5vw, 5rem);
+      align-items: center;
     }
 
     .portrait-frame {
-      max-width: 360px;
-      margin-inline: auto;
+      width: min(100%, 500px);
+      margin-inline: 0;
+      transform: rotate(-0.8deg);
     }
+
+    .apropos-text {
+      padding: 0;
+    }
+
+    .apropos-story-title {
+      max-width: 20ch;
+      font-size: clamp(2.5rem, 4.2vw, 4.8rem);
+    }
+
+    .apropos-copy {
+      max-width: 640px;
+      gap: 1rem;
+    }
+
+    .apropos-note {
+      padding: 21px 24px 22px;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .apropos-note {
+      padding: 17px 15px 18px;
+    }
+
   }
 </style>

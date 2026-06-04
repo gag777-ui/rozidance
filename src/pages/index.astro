@@ -87,7 +87,19 @@ const t = getTranslations(lang);
 
   .hero-tagband {
     background-color: var(--color-bg-primary);
-    border-bottom: 0.5px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-tagband::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 34px;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(247, 241, 230, 0) 0%, #fff8ee 100%);
   }
 
   .tagband-inner {

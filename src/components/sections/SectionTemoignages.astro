@@ -4,186 +4,328 @@ import type { Lang } from '../../i18n/utils';
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
 
-const cardImages = [
-  '/images/galerie/photo-01.webp',
-  '/images/galerie/photo-04.webp',
-  '/images/galerie/photo-07.webp',
-];
+const reviews = t.temoignages.items;
+const reviewLoop = [...reviews, ...reviews];
 ---
 
 <section id="temoignages" class="section-temoignages" aria-labelledby="temoignages-title">
-  <div class="section-container">
-
-    <div class="section-header reveal-fade">
-      <span class="eyebrow">{t.temoignages.eyebrow}</span>
-      <h2 class="section-title" id="temoignages-title">{t.temoignages.title}</h2>
+  <div class="section-container temoignages-shell">
+    <div class="temoignages-heading reveal-fade">
+      <h2 class="section-title" id="temoignages-title">{t.temoignages.eyebrow}</h2>
+      <div class="google-pill" aria-label="Note moyenne 5 étoiles">
+        <span class="google-word" aria-hidden="true"><b>G</b>oogle</span>
+        <span class="pill-separator" aria-hidden="true"></span>
+        <span class="pill-stars" aria-hidden="true">★★★★★</span>
+        <span class="pill-score">5.0</span>
+      </div>
     </div>
+  </div>
 
-    <div class="temoignages-grid">
-      {t.temoignages.items.map((item, i) => (
-        <div class="tc-card reveal" style={`transition-delay:${i * 150}ms`}>
-
-          <!-- Photo + gradient overlay -->
-          <div class="tc-photo-wrap">
-            <img
-              src={cardImages[i]}
-              alt=""
-              class="tc-photo"
-              loading="lazy"
-              decoding="async"
-              data-fallback="/images/placeholder.webp"
-            />
-            <div class="tc-overlay"></div>
+  <div class="reviews-marquee reveal-fade" style="transition-delay:140ms" aria-label={t.temoignages.title}>
+    <div class="reviews-track">
+      {reviewLoop.map((item, i) => (
+        <article class="review-card" aria-hidden={i >= reviews.length ? 'true' : 'false'}>
+          <div class="review-topline">
+            <span class="review-stars" aria-label="5 étoiles">★★★★★</span>
+            <span class="review-source">Avis client</span>
           </div>
-
-          <!-- Corps de la carte -->
-          <div class="tc-body">
-            <p class="tc-quote">"{item.quote}"</p>
-            <div class="tc-sep"></div>
-            <p class="tc-author">— {item.author}</p>
-            <p class="tc-event">{item.event}</p>
+          <p class="review-quote">“{item.quote}”</p>
+          <div class="review-footer">
+            <span class="review-avatar" aria-hidden="true">{item.author.slice(0, 1)}</span>
+            <span>
+              <strong>{item.author}</strong>
+              <small>{item.event}</small>
+            </span>
           </div>
-
-        </div>
+        </article>
       ))}
     </div>
-
   </div>
 </section>
 
 <style>
   .section-temoignages {
-    padding-block: var(--spacing-section);
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .section-title {
-    font-size: clamp(1.875rem, 3.5vw, 2.75rem);
-    color: var(--color-section-title);
-    margin: 0;
-  }
-
-  /* ── Grille ── */
-  .temoignages-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-    max-width: 400px;
-    margin-inline: auto;
-  }
-
-  @media (min-width: 640px) {
-    .temoignages-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      max-width: 660px;
-      gap: 1.25rem;
-    }
-  }
-
-  @media (min-width: 960px) {
-    .temoignages-grid {
-      grid-template-columns: repeat(3, 1fr);
-      max-width: 100%;
-      gap: 1.4rem;
-    }
-  }
-
-  /* ── Carte ── */
-  .tc-card {
-    background: #1C1410;
-    border-radius: 18px;
-    overflow: hidden;
-    transition: transform 400ms var(--ease-out-soft), box-shadow 400ms var(--ease-out-soft);
-  }
-
-  @media (hover: hover) {
-    .tc-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
-    }
-  }
-
-  /* ── Photo ── */
-  .tc-photo-wrap {
     position: relative;
-    overflow: hidden;
+    overflow: clip;
+    margin-top: -8px;
+    padding-block: 48px 56px;
+    background:
+      radial-gradient(ellipse at 16% 4%, rgba(168, 135, 83, 0.08), transparent 32%),
+      radial-gradient(ellipse at 88% 84%, rgba(135, 144, 115, 0.07), transparent 34%),
+      linear-gradient(180deg, #f4e7d6 0%, #fff8ee 38%, #f0dfca 100%);
   }
 
-  .tc-photo {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-    transition: transform 500ms var(--ease-out-soft);
-  }
-
-  .tc-card:hover .tc-photo {
-    transform: scale(1.05);
-  }
-
-  /* Gradient du bas vers le haut, fond de carte */
-  .tc-overlay {
+  .section-temoignages::before,
+  .section-temoignages::after {
+    content: '';
     position: absolute;
+    top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
-    height: 65%;
-    background: linear-gradient(to top, #1C1410, transparent);
+    z-index: 2;
+    width: clamp(34px, 9vw, 160px);
     pointer-events: none;
   }
 
-  /* ── Corps ── */
-  .tc-body {
-    padding: 1rem 1.25rem 1.4rem;
+  .section-temoignages::before {
+    left: 0;
+    background: linear-gradient(90deg, #f4e7d6 0%, rgba(244, 231, 214, 0) 100%);
   }
 
-  .tc-quote {
-    font-family: var(--font-serif);
-    font-size: 0.95rem;
-    font-style: italic;
-    color: rgba(247, 241, 230, 0.88);
-    line-height: 1.7;
-    margin: 0 0 0.85rem;
+  .section-temoignages::after {
+    right: 0;
+    background: linear-gradient(270deg, #f0dfca 0%, rgba(240, 223, 202, 0) 100%);
   }
 
-  .tc-sep {
-    height: 0.5px;
-    background: rgba(229, 215, 190, 0.18);
-    margin-bottom: 0.85rem;
+  .temoignages-shell {
+    position: relative;
+    z-index: 3;
   }
 
-  .tc-author {
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #F7F1E6;
-    margin: 0 0 0.2rem;
+  .temoignages-heading {
+    display: grid;
+    justify-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.7rem;
+    text-align: center;
   }
 
-  /* Gradient text or et rose — comme le gradient violet du 21st.dev */
-  .tc-event {
-    font-size: 0.78rem;
-    font-style: italic;
+  .section-title {
+    max-width: 100%;
     margin: 0;
-    background: linear-gradient(90deg, #D4A843, #C96876, #A88753);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    color: var(--color-title-warm);
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 7vw, 2.65rem);
+    font-weight: 350;
+    line-height: 1.05;
+    letter-spacing: 0;
+    text-transform: none;
+    text-wrap: balance;
+  }
+
+  .google-pill {
+    width: max-content;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.58rem 0.76rem;
+    color: var(--color-charcoal);
+    border: 0.5px solid rgba(168, 135, 83, 0.24);
+    border-radius: var(--radius-full);
+    background: rgba(255, 249, 239, 0.72);
+    box-shadow: 0 12px 30px rgba(68, 43, 25, 0.07);
+    font-family: var(--font-sans);
+    line-height: 1;
+  }
+
+  .google-word {
+    font-size: 0.82rem;
+    font-weight: 650;
+    letter-spacing: 0.01em;
+  }
+
+  .google-word b {
+    color: #4285f4;
+  }
+
+  .pill-separator {
+    width: 1px;
+    height: 18px;
+    background: rgba(168, 135, 83, 0.24);
+  }
+
+  .pill-stars,
+  .review-stars {
+    color: #d39b2a;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+  }
+
+  .pill-score {
+    color: rgba(43, 31, 21, 0.68);
+    font-size: 0.78rem;
+    font-weight: 750;
+  }
+
+  .reviews-marquee {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    overflow: hidden;
+    padding-block: 0.35rem 0.65rem;
+  }
+
+  .reviews-track {
+    display: flex;
+    width: max-content;
+    gap: 0.85rem;
+    padding-inline: max(1rem, calc((100vw - 1180px) / 2));
+    animation: reviewsScroll 46s linear infinite;
+  }
+
+  .review-card {
+    width: min(76vw, 330px);
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    padding: 18px;
+    color: var(--color-charcoal);
+    border: 0.5px solid rgba(168, 135, 83, 0.24);
+    border-radius: 22px;
+    background:
+      linear-gradient(145deg, rgba(255, 250, 241, 0.94), rgba(245, 232, 211, 0.82));
+    box-shadow:
+      0 16px 38px rgba(68, 43, 25, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  }
+
+  .review-card:nth-child(3n + 2) {
+    background:
+      linear-gradient(145deg, rgba(255, 250, 241, 0.88), rgba(232, 216, 190, 0.72));
+  }
+
+  .review-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .review-source {
+    color: rgba(107, 86, 69, 0.62);
+    font-family: var(--font-sans);
+    font-size: 0.66rem;
+    font-weight: 760;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .review-quote {
+    margin: 0 0 1.15rem;
+    color: var(--color-charcoal);
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 4.35vw, 1.28rem);
+    font-weight: 340;
+    line-height: 1.28;
+    letter-spacing: 0;
+  }
+
+  .review-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 0.82rem;
+    border-top: 0.5px solid rgba(168, 135, 83, 0.2);
+    font-family: var(--font-sans);
+  }
+
+  .review-avatar {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    color: #fff8ee;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255, 248, 238, 0.22), transparent 34%),
+      linear-gradient(145deg, #879073, #2b1f15);
+    font-size: 0.9rem;
+    font-weight: 760;
+  }
+
+  .review-footer strong,
+  .review-footer small {
+    display: block;
+  }
+
+  .review-footer strong {
+    color: var(--color-charcoal);
+    font-size: 0.88rem;
+    font-weight: 760;
+    line-height: 1.2;
+  }
+
+  .review-footer small {
+    margin-top: 0.18rem;
+    color: rgba(107, 86, 69, 0.72);
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  @keyframes reviewsScroll {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(calc(-50% - 0.425rem), 0, 0); }
+  }
+
+  @media (min-width: 760px) {
+    .section-temoignages {
+      padding-block: 58px 68px;
+    }
+
+    .temoignages-heading {
+      gap: 0.95rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .reviews-track {
+      gap: 1rem;
+      animation-duration: 58s;
+    }
+
+    .review-card {
+      width: 340px;
+      min-height: 220px;
+      padding: 20px;
+      border-radius: 22px;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .section-title {
+      font-size: clamp(1.55rem, 7.6vw, 2rem);
+    }
+
+    .google-pill {
+      gap: 0.48rem;
+      padding: 0.62rem 0.7rem;
+    }
+
+    .google-word,
+    .pill-score {
+      font-size: 0.72rem;
+    }
+
+    .pill-stars,
+    .review-stars {
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+    }
+
+    .review-card {
+      width: 80vw;
+      min-height: 214px;
+      padding: 17px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .tc-card, .tc-photo { transition: none; }
+    .reviews-track {
+      width: auto;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      animation: none;
+      scroll-snap-type: x mandatory;
+    }
+
+    .review-card {
+      scroll-snap-align: center;
+    }
   }
 </style>

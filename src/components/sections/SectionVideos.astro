@@ -26,7 +26,7 @@ const videos = [
       </h2>
     </div>
 
-    <div class="carousel-outer">
+    <div class="videos-showcase">
       <div class="videos-grid" id="videos-carousel">
         {videos.map((video, i) => (
           <div class={`card-shell cs-${i}`} data-card data-index={i}>
@@ -63,10 +63,10 @@ const videos = [
                   <iframe
                     class="video-iframe"
                     src=""
-                    data-src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`}
+                    data-src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&playsinline=1&rel=0&modestbranding=1`}
                     title={video.title}
                     style="border:none"
-                    allow="autoplay; encrypted-media; fullscreen"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                     allowfullscreen
                   ></iframe>
                   <button class="video-close-btn" aria-label="Fermer la vidéo">
@@ -78,18 +78,16 @@ const videos = [
                 </div>
               </div>
 
-              <div class="video-card-body">
-                <p class="video-title">{video.title}</p>
-              </div>
+              <div class="video-card-body" aria-hidden="true"></div>
             </div>
           </div>
         ))}
       </div>
 
       <div class="carousel-dots" aria-hidden="true">
-        <span class="dot dot-0"></span>
-        <span class="dot dot-1"></span>
-        <span class="dot dot-2"></span>
+        <button class="dot dot-0" type="button"></button>
+        <button class="dot dot-1" type="button"></button>
+        <button class="dot dot-2" type="button"></button>
       </div>
     </div>
 
@@ -98,223 +96,468 @@ const videos = [
         href="https://www.youtube.com/@luarozifreedomband/videos"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-ghost videos-yt-btn"
+        class="videos-yt-btn"
         aria-label="Voir toute la chaîne YouTube Rozi Dance"
       >
-        <svg width="20" height="14" viewBox="0 0 24 17" aria-hidden="true">
-          <rect width="24" height="17" rx="4" fill="#FF0000"/>
-          <polygon points="9.5,4.5 9.5,12.5 17,8.5" fill="#ffffff"/>
-        </svg>
-        Voir toute la chaîne <span class="yt-label-red">YouTube</span>
+        <span class="yt-logo-mark" aria-hidden="true">
+          <svg width="34" height="24" viewBox="0 0 34 24" fill="none">
+            <rect x="1" y="1" width="32" height="22" rx="7" fill="#D53232"/>
+            <path d="M14 7.4v9.2L22 12l-8-4.6Z" fill="#FFF8EE"/>
+          </svg>
+        </span>
+        <span class="yt-copy">
+          <span class="yt-kicker">Rozi Dance sur YouTube</span>
+          <span class="yt-title">Voir toute la chaîne</span>
+        </span>
+        <span class="yt-arrow" aria-hidden="true">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
+            <path d="M3.5 8.5h9M9 5l3.5 3.5L9 12" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
       </a>
     </div>
   </div>
 </section>
 
 <style>
-  .section-videos { padding-block: var(--spacing-section); }
-
-  .section-header {
-    text-align: center; margin-bottom: 3rem;
-    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+  .section-videos {
+    position: relative;
+    overflow: clip;
+    margin-top: -8px;
+    padding-block: 64px 74px;
+    color: var(--color-charcoal);
+    background:
+      radial-gradient(ellipse at 48% 0%, rgba(168, 135, 83, 0.08), transparent 40%),
+      radial-gradient(ellipse at 8% 82%, rgba(135, 144, 115, 0.07), transparent 34%),
+      linear-gradient(180deg, #f3e4d2 0%, #fffaf0 34%, #f1dfca 100%);
   }
 
-  .section-title { font-size: clamp(1.875rem, 3.5vw, 2.75rem); color: var(--color-section-title); margin: 0; }
+  .section-videos::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 84px;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 0%, rgba(241, 223, 202, 0.64) 58%, #f1dfca 100%);
+  }
+
+  .section-header {
+    position: relative;
+    z-index: 1;
+    text-align: left;
+    max-width: 650px;
+    margin-bottom: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .section-videos :global(.eyebrow) {
+    color: #7a653e;
+    border-color: rgba(168, 135, 83, 0.24);
+  }
+
+  .section-title {
+    max-width: 9ch;
+    color: var(--color-charcoal);
+    font-size: clamp(2.75rem, 12.5vw, 5.8rem);
+    font-weight: 300;
+    line-height: 0.88;
+    letter-spacing: 0;
+    margin: 0;
+  }
 
   .title-passion-wrap { position: relative; display: inline-block; }
   .passion-heart {
     position: absolute; right: -0.22em; top: 0.08em;
-    width: 0.3em; height: 0.36em; color: #C96876; stroke: currentColor;
+    width: 0.3em; height: 0.36em; color: #879073; stroke: currentColor;
   }
 
-  /* ── Carousel outer ── */
-  .carousel-outer { position: relative; }
-
-  /* ── Entrée spectaculaire (mobile) ── */
-  @media (max-width: 899px) {
-    .card-shell {
-      opacity: 0;
-      transform: perspective(1100px) translateY(52px) scale(0.93);
-    }
-    .section-videos.sect-visible .cs-0 { animation: card-entrance 700ms var(--ease-out-soft) 0ms   both; }
-    .section-videos.sect-visible .cs-1 { animation: card-entrance 700ms var(--ease-out-soft) 150ms both; }
-    .section-videos.sect-visible .cs-2 { animation: card-entrance 700ms var(--ease-out-soft) 300ms both; }
+  .videos-showcase {
+    position: relative;
+    z-index: 1;
   }
 
-  @keyframes card-entrance {
-    from { opacity: 0; transform: perspective(1100px) translateY(52px) scale(0.93); }
-    to   { opacity: 1; transform: perspective(1100px) translateY(0) scale(1); }
-  }
-
-  /* ── Mobile: horizontal snap carousel ── */
   .videos-grid {
     display: flex;
+    gap: 14px;
+    margin-inline: -16px;
+    padding: 4px 16px 18px;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 16px;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    gap: 1rem;
-    padding: 1rem 4% 1.5rem;
-    scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-  }
-  .videos-grid::-webkit-scrollbar { display: none; }
-
-  /* ── Dots ── */
-  .carousel-dots {
-    display: flex; justify-content: center; align-items: center;
-    gap: 7px; margin-top: 1.5rem;
+    scrollbar-width: none;
   }
 
-  .dot {
-    display: block; height: 6px; width: 6px; border-radius: 3px;
-    background: rgba(43, 31, 21, 0.18);
-    transition: background 300ms ease, width 350ms var(--ease-out-soft);
-    cursor: pointer;
-    position: relative; overflow: hidden;
+  .videos-grid::-webkit-scrollbar {
+    display: none;
   }
 
-  .dot.dot-active { background: var(--color-accent); width: 22px; }
-
-  .dot.dot-active::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: rgba(255, 255, 255, 0.48);
-    border-radius: inherit;
-    transform: translateX(-100%);
-    animation: dot-progress 4s linear forwards;
-  }
-
-  @keyframes dot-progress {
-    from { transform: translateX(-100%); }
-    to   { transform: translateX(0); }
-  }
-
-  /* ── Desktop: 3-col grid ── */
-  @media (min-width: 900px) {
-    .videos-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      overflow-x: visible;
-      scroll-snap-type: none;
-      gap: 1.25rem;
-      padding: 0.75rem;
-    }
-    .carousel-dots { display: none; }
-  }
-
-  /* ── Shell ── */
   .card-shell {
-    flex: 0 0 min(92%, 440px);
+    flex: 0 0 min(88vw, 420px);
     scroll-snap-align: center;
-    border-radius: 28px; padding: 5px;
-    border: 0.5px solid rgba(229, 215, 190, 0.6);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(43,31,21,0.04);
+    border-radius: 26px;
+    padding: 4px;
+    background:
+      linear-gradient(145deg, rgba(255, 250, 241, 0.92), rgba(168, 135, 83, 0.14)),
+      rgba(255, 249, 239, 0.72);
+    box-shadow:
+      0 22px 54px rgba(68, 43, 25, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.62);
     transform-style: preserve-3d;
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    transition: opacity 650ms ease, box-shadow 500ms var(--ease-out-soft);
+    transition:
+      opacity 820ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 820ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 620ms cubic-bezier(0.22, 1, 0.36, 1);
   }
-
-  @media (min-width: 900px) {
-    .card-shell {
-      flex: unset; scroll-snap-align: unset;
-      transition: transform 500ms var(--ease-out-soft), opacity 700ms ease, box-shadow 500ms var(--ease-out-soft);
-    }
-    /* Fan entrance desktop */
-    .cs-0 { --fan-ry: -22deg; --fan-ty: 26px; }
-    .cs-1 { --fan-ry:   0deg; --fan-ty: 34px; }
-    .cs-2 { --fan-ry:  22deg; --fan-ty: 26px; }
-
-    .card-shell.prest-visible { animation: card-fan-in 0.9s var(--ease-out-soft) both; }
-    .cs-0.prest-visible { animation-delay:   0ms; }
-    .cs-1.prest-visible { animation-delay: 160ms; }
-    .cs-2.prest-visible { animation-delay: 320ms; }
-  }
-
-  @keyframes card-fan-in {
-    from { opacity: 0; transform: perspective(900px) rotateY(var(--fan-ry, 0deg)) translateY(var(--fan-ty, 26px)); }
-    to   { opacity: 1; transform: perspective(900px) rotateY(0deg) translateY(0px); }
-  }
-
-  .cs-0 { background: rgba(168,135,83,0.07); }
-  .cs-1 { background: rgba(193,104,71,0.07); }
-  .cs-2 { background: rgba(122,92,32,0.06); }
 
   @media (hover: hover) {
     .card-shell:hover {
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 16px 40px rgba(43,31,21,0.1);
+      box-shadow:
+        0 28px 64px rgba(68, 43, 25, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.72);
+      transform: translate3d(0, -4px, 0);
     }
   }
 
-  /* ── Core ── */
   .card-core {
-    border-radius: 22px; overflow: hidden;
-    display: flex; flex-direction: column;
+    border-radius: 24px;
+    overflow: hidden;
     position: relative;
+    background: #20160f;
   }
-
-  .cc-0 { background: linear-gradient(145deg, #FEFCF8 0%, #EDDEB8 100%); }
-  .cc-1 { background: linear-gradient(145deg, #FEFCF8 0%, #F0CBBA 100%); }
-  .cc-2 { background: linear-gradient(145deg, #FEFCF8 0%, #E6D8A8 100%); }
 
   .card-light {
-    position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(circle at var(--lx,28%) var(--ly,22%), rgba(255,255,255,0.3) 0%, transparent 60%);
-    border-radius: inherit; transition: background 80ms linear; z-index: 1;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -48px 90px rgba(0, 0, 0, 0.16);
+    z-index: 1;
   }
 
-  /* ── Video internals ── */
   .video-thumb-btn {
-    display: block; width: 100%; background: none; border: none; padding: 0; cursor: pointer;
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
   }
 
   .video-thumb-wrap {
-    position: relative; aspect-ratio: 16 / 9; overflow: hidden;
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
     background-color: var(--color-bg-dark);
   }
 
-  .video-thumb {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-    transition: transform 500ms var(--ease-out-soft);
+  .cs-1 .video-thumb-wrap,
+  .cs-2 .video-thumb-wrap {
+    aspect-ratio: 16 / 9;
   }
 
-  .video-thumb-btn:hover .video-thumb { transform: scale(1.04); }
+  .video-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.92) contrast(1.08);
+    transition:
+      filter 720ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 980ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .video-thumb-btn:hover .video-thumb {
+    filter: saturate(1.04) contrast(1.08);
+    transform: scale(1.035);
+  }
 
   .video-play-btn {
-    position: absolute; inset: 0; display: flex;
-    align-items: center; justify-content: center;
-    transition: opacity 300ms;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff8ee;
+    transition:
+      opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .video-thumb-btn:hover .video-play-btn { opacity: 0.85; }
+  .video-play-btn svg {
+    width: 58px;
+    height: 58px;
+    filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.3));
+  }
 
-  .video-player { aspect-ratio: 16 / 9; position: relative; }
-  .video-player-inner { position: relative; width: 100%; height: 100%; }
-  .video-iframe { width: 100%; height: 100%; border: none; display: block; aspect-ratio: 16/9; }
+  .video-play-btn circle {
+    fill: rgba(37, 23, 15, 0.54);
+    stroke: rgba(255, 249, 239, 0.28);
+    stroke-width: 1;
+  }
+
+  .video-play-btn polygon {
+    fill: #fff8ee;
+  }
+
+  .video-thumb-btn:hover .video-play-btn {
+    transform: scale(1.04);
+  }
+
+  .video-card-body {
+    display: none;
+  }
+
+  .video-player {
+    aspect-ratio: 16 / 9;
+    position: relative;
+  }
+
+  .video-player-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    aspect-ratio: 16 / 9;
+  }
 
   .video-close-btn {
-    position: absolute; top: 0.5rem; right: 0.5rem;
-    background: rgba(43,31,21,0.7); color: #fff; border: none;
-    width: 32px; height: 32px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; z-index: 5; cursor: pointer;
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    z-index: 5;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff8ee;
+    border: 1px solid rgba(255, 249, 239, 0.22);
+    border-radius: 50%;
+    background: rgba(43, 31, 21, 0.76);
+    cursor: pointer;
   }
 
-  .video-card-body { padding: 0.875rem 1.1rem 1rem; position: relative; z-index: 2; }
+  .section-videos.is-motion-ready .card-shell {
+    opacity: 0;
+    transform: translate3d(0, 34px, 0) scale(0.985);
+  }
 
-  .video-title {
+  .section-videos.is-motion-ready .card-shell.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .section-videos.is-motion-ready .card-shell:nth-child(2) { transition-delay: 90ms; }
+  .section-videos.is-motion-ready .card-shell:nth-child(3) { transition-delay: 160ms; }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    margin-top: 0.8rem;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: rgba(43, 31, 21, 0.18);
+    cursor: pointer;
+    transition:
+      width 360ms cubic-bezier(0.22, 1, 0.36, 1),
+      background 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .dot.dot-active {
+    width: 24px;
+    background: #879073;
+  }
+
+  .videos-footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    margin-top: 1.85rem;
+  }
+
+  .videos-yt-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    width: min(100%, 430px);
+    padding: 9px 9px 9px 12px;
+    color: var(--color-charcoal);
+    border: 0.5px solid rgba(135, 144, 115, 0.26);
+    border-radius: 999px;
+    background:
+      linear-gradient(135deg, rgba(255, 250, 241, 0.96), rgba(231, 209, 187, 0.74));
+    box-shadow:
+      0 18px 44px rgba(68, 43, 25, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.76);
+    text-decoration: none;
+    transition:
+      border-color 520ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 520ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .yt-logo-mark {
+    width: 54px;
+    height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: var(--radius-full);
+    background: rgba(255, 248, 238, 0.92);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 10px 24px rgba(213, 50, 50, 0.16);
+  }
+
+  .yt-logo-mark svg {
+    display: block;
+    filter: drop-shadow(0 5px 10px rgba(213, 50, 50, 0.16));
+  }
+
+  .yt-copy {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .yt-kicker {
+    color: #7a653e;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.17em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .yt-title {
+    color: var(--color-charcoal);
     font-family: var(--font-serif);
-    font-size: 1rem; font-style: italic;
-    color: var(--color-text-primary); margin: 0; line-height: 1.4;
+    font-size: clamp(1.05rem, 4.5vw, 1.34rem);
+    font-style: italic;
+    line-height: 1.15;
   }
 
-  .videos-footer { display: flex; justify-content: center; margin-top: 2.5rem; }
-  .videos-yt-btn { display: inline-flex; align-items: center; gap: 0.625rem; }
-  .yt-label-red { color: #ff0000; }
+  .yt-arrow {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    color: #fff8ee;
+    border-radius: var(--radius-full);
+    background: #879073;
+    transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .videos-yt-btn:hover {
+    border-color: rgba(135, 144, 115, 0.42);
+    box-shadow:
+      0 24px 54px rgba(68, 43, 25, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transform: translateY(-3px);
+  }
+
+  .videos-yt-btn:hover .yt-arrow {
+    transform: translateX(3px);
+  }
+
+  @media (min-width: 768px) {
+    .section-videos {
+      padding-block: 78px 88px;
+      background:
+        radial-gradient(ellipse at 48% 0%, rgba(168, 135, 83, 0.08), transparent 40%),
+        radial-gradient(ellipse at 8% 82%, rgba(135, 144, 115, 0.07), transparent 34%),
+        linear-gradient(180deg, #f3e4d2 0%, #fffaf0 30%, #f1dfca 100%);
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.34fr);
+      align-items: end;
+      max-width: none;
+      margin-bottom: 2.15rem;
+    }
+
+    .section-header .eyebrow {
+      grid-column: 1 / -1;
+    }
+
+    .section-title {
+      font-size: clamp(4rem, 8vw, 7.2rem);
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      margin-inline: auto;
+      padding: 0;
+      overflow: visible;
+    }
+
+    .cs-0 { grid-column: 1 / 5; }
+    .cs-1 { grid-column: 5 / 9; }
+    .cs-2 { grid-column: 9 / 13; }
+
+    .card-shell {
+      flex: initial;
+      scroll-snap-align: unset;
+      border-radius: 34px;
+      padding: 5px;
+    }
+
+    .carousel-dots {
+      display: none;
+    }
+
+    .video-play-btn svg {
+      width: 68px;
+      height: 68px;
+    }
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .card-shell { transition: none; animation: none; }
-    .card-light  { transition: none; }
+    .card-shell,
+    .video-thumb,
+    .video-play-btn {
+      opacity: 1;
+      transform: none;
+      transition: none;
+      animation: none;
+    }
   }
 </style>
 
@@ -328,161 +571,104 @@ const videos = [
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isDesktop     = window.matchMedia('(min-width: 900px)').matches;
 
-    // ── Video player logic ──
+    if (!shells.length) return;
+
+    const stopVideo = (shell: HTMLElement) => {
+      const btn = shell.querySelector<HTMLElement>('.video-thumb-btn');
+      const player = shell.querySelector<HTMLElement>('.video-player');
+      const iframe = shell.querySelector<HTMLIFrameElement>('.video-iframe');
+      if (player) player.hidden = true;
+      if (iframe) iframe.src = '';
+      if (btn) btn.hidden = false;
+    };
+
     shells.forEach(shell => {
-      const btn      = shell.querySelector<HTMLElement>('.video-thumb-btn');
-      const player   = shell.querySelector<HTMLElement>('.video-player');
-      const iframe   = shell.querySelector<HTMLIFrameElement>('.video-iframe');
+      const btn = shell.querySelector<HTMLElement>('.video-thumb-btn');
+      const player = shell.querySelector<HTMLElement>('.video-player');
+      const iframe = shell.querySelector<HTMLIFrameElement>('.video-iframe');
       const closeBtn = shell.querySelector<HTMLElement>('.video-close-btn');
 
       btn?.addEventListener('click', () => {
         if (!player || !iframe) return;
+        shells.forEach(other => {
+          if (other !== shell) stopVideo(other);
+        });
         const src = iframe.getAttribute('data-src');
         if (src) iframe.src = src;
         player.hidden = false;
-        if (btn) btn.hidden = true;
+        btn.hidden = true;
       }, { signal });
 
-      closeBtn?.addEventListener('click', () => {
-        if (player) { player.hidden = true; if (iframe) iframe.src = ''; }
-        if (btn) btn.hidden = false;
-      }, { signal });
+      closeBtn?.addEventListener('click', () => stopVideo(shell), { signal });
     });
 
-    if (!shells.length) return;
-
-    // ── Mobile: carousel + auto-play ──
     if (!isDesktop && carousel) {
-      const AUTO_MS   = 4000;
-      let rafId:       number | null = null;
-      let autoTimer:   ReturnType<typeof setTimeout> | null = null;
-      let currentIdx   = 0;
-      let isTouching   = false;
+      let rafId: number | null = null;
 
       const setActiveDot = (idx: number) => {
-        dots.forEach((dot, i) => {
-          if (i === idx) {
-            dot.classList.remove('dot-active');
-            void dot.getBoundingClientRect();
-            dot.classList.add('dot-active');
-          } else {
-            dot.classList.remove('dot-active');
-          }
-        });
+        dots.forEach((dot, i) => dot.classList.toggle('dot-active', i === idx));
       };
 
-      const scheduleNext = () => {
-        if (autoTimer) clearTimeout(autoTimer);
-        if (reducedMotion) return;
-        autoTimer = setTimeout(() => {
-          if (isTouching) return;
-          currentIdx = (currentIdx + 1) % shells.length;
-          goToCard(currentIdx);
-        }, AUTO_MS);
-      };
-
-      const goToCard = (idx: number) => {
-        currentIdx = idx;
-        const target = shells[idx];
-        if (!target) return;
-        carousel.scrollTo({
-          left: target.offsetLeft - (carousel.clientWidth - target.offsetWidth) / 2,
-          behavior: 'smooth',
-        });
-        setActiveDot(idx);
-        scheduleNext();
-      };
-
-      const updateCarousel = () => {
-        const sl = carousel.scrollLeft;
-        const cw = carousel.clientWidth;
+      const updateDots = () => {
+        const scrollCenter = carousel.scrollLeft + carousel.clientWidth / 2;
         let activeIdx = 0;
-        let minDist   = Infinity;
+        let minDist = Infinity;
 
         shells.forEach((shell, i) => {
           const cardCenter = shell.offsetLeft + shell.offsetWidth / 2;
-          const dist       = Math.abs(cardCenter - (sl + cw / 2));
-          if (dist < minDist) { minDist = dist; activeIdx = i; }
-
-          if (!reducedMotion) {
-            const norm    = (cardCenter - (sl + cw / 2)) / shell.offsetWidth;
-            const absDist = Math.abs(norm);
-            const scale   = absDist < 0.15 ? 1 : Math.max(0.87, 1 - absDist * 0.14);
-            const opacity = absDist < 0.15 ? 1 : Math.max(0.48, 1 - absDist * 0.5);
-            shell.style.transform = `perspective(1100px) rotateY(${norm * 22}deg) scale(${scale})`;
-            shell.style.opacity   = String(opacity);
+          const dist = Math.abs(cardCenter - scrollCenter);
+          if (dist < minDist) {
+            minDist = dist;
+            activeIdx = i;
           }
         });
 
-        if (activeIdx !== currentIdx) {
-          currentIdx = activeIdx;
-          setActiveDot(activeIdx);
-          scheduleNext();
-        }
+        setActiveDot(activeIdx);
       };
 
-      const startCarousel = () => {
-        setActiveDot(0);
-        updateCarousel();
-        scheduleNext();
+      carousel.addEventListener('scroll', () => {
+        if (rafId !== null) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(updateDots);
+      }, { signal });
 
-        carousel.addEventListener('scroll', () => {
-          if (rafId !== null) cancelAnimationFrame(rafId);
-          rafId = requestAnimationFrame(updateCarousel);
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          const target = shells[i];
+          if (!target) return;
+          carousel.scrollTo({
+            left: target.offsetLeft - (carousel.clientWidth - target.offsetWidth) / 2,
+            behavior: reducedMotion ? 'auto' : 'smooth',
+          });
+          setActiveDot(i);
         }, { signal });
+      });
 
-        carousel.addEventListener('touchstart', () => {
-          isTouching = true;
-          if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
-        }, { passive: true, signal });
-
-        carousel.addEventListener('touchend', () => {
-          isTouching = false;
-          scheduleNext();
-        }, { passive: true, signal });
-
-        dots.forEach((dot, i) => {
-          dot.addEventListener('click', () => goToCard(i), { signal });
-        });
-      };
-
-      // Entrée spectaculaire
-      const section = document.getElementById('videos');
-      if (section && !reducedMotion) {
-        let entranceObs: IntersectionObserver | null = new IntersectionObserver(([entry]) => {
-          if (!entry.isIntersecting) return;
-          entranceObs!.disconnect();
-          entranceObs = null;
-          section.classList.add('sect-visible');
-          setTimeout(startCarousel, 1050);
-        }, { threshold: 0.18 });
-        entranceObs.observe(section);
-
-        document.addEventListener('astro:before-swap', () => {
-          entranceObs?.disconnect();
-          entranceObs = null;
-        }, { once: true });
-      } else {
-        section?.classList.add('sect-visible');
-        startCarousel();
-      }
+      setActiveDot(0);
+      requestAnimationFrame(updateDots);
     }
 
-    // ── Desktop: fan-in entrance ──
-    if (isDesktop && !reducedMotion) {
-      const section = document.getElementById('videos');
-      if (section) {
-        let obs: IntersectionObserver | null = new IntersectionObserver(([entry]) => {
+    const section = document.getElementById('videos');
+    if (section && !reducedMotion && 'IntersectionObserver' in window) {
+      section.classList.add('is-motion-ready');
+      let obs: IntersectionObserver | null = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
           if (!entry.isIntersecting) return;
-          obs!.disconnect(); obs = null;
-          shells.forEach(s => s.classList.add('prest-visible'));
-        }, { threshold: 0.22 });
-        obs.observe(section);
+          entry.target.classList.add('is-visible');
+          obs?.unobserve(entry.target);
+        });
+      }, {
+        threshold: 0.18,
+        rootMargin: '0px 0px -8% 0px',
+      });
 
-        document.addEventListener('astro:before-swap', () => {
-          obs?.disconnect(); obs = null;
-        }, { once: true });
-      }
+      shells.forEach(shell => obs?.observe(shell));
+
+      document.addEventListener('astro:before-swap', () => {
+        obs?.disconnect();
+        obs = null;
+      }, { once: true });
+    } else {
+      shells.forEach(shell => shell.classList.add('is-visible'));
     }
 
     // ── Desktop: hover tilt ──

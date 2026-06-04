@@ -83,10 +83,10 @@ function splitTitle(title: string) {
     overflow: hidden;
     padding-block: 64px 72px;
     background:
-      radial-gradient(circle at 88% 8%, rgba(135, 144, 115, 0.18), transparent 24%),
-      radial-gradient(circle at 10% 86%, rgba(168, 135, 83, 0.14), transparent 28%),
-      linear-gradient(90deg, rgba(37, 23, 15, 0.08) 0 1px, transparent 1px 100%),
-      linear-gradient(180deg, #fff8ee 0%, #f1e1cb 52%, #e7d1bb 100%);
+      radial-gradient(circle at 88% 8%, rgba(135, 144, 115, 0.11), transparent 26%),
+      radial-gradient(circle at 10% 86%, rgba(168, 135, 83, 0.1), transparent 30%),
+      linear-gradient(90deg, rgba(168, 135, 83, 0.05) 0 1px, transparent 1px 100%),
+      linear-gradient(180deg, #fff8ee 0%, #faecdc 42%, #f0dcc8 100%);
     background-size: auto, auto, 100% 88px, auto;
   }
 
@@ -100,6 +100,23 @@ function splitTitle(title: string) {
     background:
       linear-gradient(135deg, transparent 0 44%, rgba(135, 144, 115, 0.14) 44% 45%, transparent 45% 100%),
       linear-gradient(135deg, transparent 0 60%, rgba(168, 135, 83, 0.11) 60% 61%, transparent 61% 100%);
+  }
+
+  .section-prestations::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    z-index: 0;
+    height: 92px;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 0%, rgba(240, 220, 200, 0.68) 54%, #f0dcc8 100%);
+  }
+
+  .section-prestations > .section-container {
+    position: relative;
+    z-index: 1;
   }
 
   .prestations-head {
@@ -404,7 +421,7 @@ function splitTitle(title: string) {
 
   @media (min-width: 768px) {
     .section-prestations {
-      padding-block: 88px 98px;
+      padding-block: 76px 84px;
     }
 
     .prestations-head {
