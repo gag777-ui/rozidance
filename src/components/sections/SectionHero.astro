@@ -46,15 +46,20 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     <div class="hero-text">
 
       <h1 class="hero-title" id="hero-title">
-        <span class="hero-line hero-line-1">{t.hero.line1}</span>
-        <span class="hero-line hero-line-2" id="hero-line2">{t.hero.line2}</span>
+        <span class="hero-kicker" aria-label={`${t.hero.line1} ${t.hero.line2}`}>
+          <span class="hero-kicker-line" aria-hidden="true"></span>
+          <span class="hero-kicker-text">
+            <span>{t.hero.line1}</span>
+            <span>{t.hero.line2}</span>
+          </span>
+          <span class="hero-kicker-line" aria-hidden="true"></span>
+        </span>
         <em
           class="hero-line hero-italic"
           id="hero-italic"
-          aria-label={`${t.hero.line3a} · ${t.hero.line3italic}`}
+          aria-label={`${t.hero.line3a} ${t.hero.line3italic}`}
         >
           <span class="hw-rozi">{t.hero.line3a}</span>
-          <span class="hw-dot">·</span>
           <span class="hw-dance">{t.hero.line3italic}</span>
         </em>
       </h1>
@@ -63,8 +68,22 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       <div class="hero-deco-line" aria-hidden="true"></div>
 
       <div class="hero-actions" id="hero-actions">
-        <a href="#contact" class="btn-primary">{t.hero.ctaPrimary}</a>
-        <a href="#prestations" class="hero-btn-ghost">{t.hero.ctaSecondary}</a>
+        <a href="#contact" class="btn-primary hero-action hero-action-primary">
+          <span class="hero-action-label">{t.hero.ctaPrimary}</span>
+          <span class="hero-action-icon" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+              <path d="M2 7.5h10.5M8.5 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+        <a href="#prestations" class="hero-action hero-action-secondary">
+          <span class="hero-action-label">{t.hero.ctaSecondary}</span>
+          <span class="hero-action-icon" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+              <path d="M2 7.5h10.5M8.5 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
       </div>
 
     </div>
@@ -171,32 +190,56 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .hero-line { display: block; }
 
-  /* ── Line 1 : "Bienvenu" — uppercase, small, animation CSS blur ── */
-  .hero-line-1 {
-    font-size: clamp(var(--text-sm), 3.5vw, var(--text-md));  /* 14→18px */
-    letter-spacing: var(--tracking-widest);                    /* 0.2em */
-    text-transform: uppercase;
-    font-family: var(--font-sans);
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.60);
-    margin-bottom: 0.25em;
-    animation: heroBienvenuIn var(--duration-normal) var(--ease-standard) 0ms both;
-  }
-
-  /* ── Line 2 : "dans le monde de" — géré par typewriter JS ── */
-  .hero-line-2 {
+  /* ── Intro éditoriale : "Bienvenue dans l'Univers de" ── */
+  .hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: min(92vw, 620px);
+    margin-bottom: 1.05rem;
+    color: rgba(251, 246, 236, 0.78);
     opacity: 0;
-    color: rgba(247, 241, 230, 0.78);  /* ivory 78% */
-    font-family: var(--font-sans);
-    font-weight: 300;
-    font-size: clamp(1.25rem, 5vw, 2rem);
-    letter-spacing: var(--tracking-wide);
+    transform: translate3d(0, 12px, 0);
+    filter: blur(8px);
+    animation: heroKickerIn 950ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
   }
 
-  /* ── "Rozi · Dance" — géré par GSAP (slide + blur) ── */
+  .hero-kicker-text {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.42em;
+    max-width: 28ch;
+    font-family: var(--font-sans);
+    font-size: clamp(0.72rem, 2.8vw, 0.88rem);
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .hero-kicker-line {
+    width: clamp(28px, 9vw, 76px);
+    height: 1px;
+    flex: 0 1 auto;
+    opacity: 0.78;
+    background: linear-gradient(90deg, transparent, rgba(168, 135, 83, 0.9));
+    transform: scaleX(0);
+    transform-origin: right;
+    animation: heroKickerLineIn 900ms cubic-bezier(0.22, 1, 0.36, 1) 360ms both;
+  }
+
+  .hero-kicker-line:last-child {
+    background: linear-gradient(90deg, rgba(168, 135, 83, 0.9), transparent);
+    transform-origin: left;
+  }
+
+  /* ── "Rozi · Dance" — révélation cinématique par masque ── */
   .hero-italic {
     opacity: 0;
-    color: var(--color-gold);           /* or vieilli — signature premium */
+    color: #b89a67;
     font-style: italic;
     font-size: clamp(3rem, 14vw, 4rem); /* 48→64px mobile */
     line-height: 1.0;
@@ -206,25 +249,41 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     justify-content: center;
     gap: 0.22em;
     min-height: 1.1em;
-    text-shadow: 0 4px 32px rgba(168, 135, 83, 0.3);
+    overflow: hidden;
+    text-shadow: 0 8px 42px rgba(168, 135, 83, 0.22);
+  }
+
+  .hero-italic > span {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+
+  .hw-dot {
+    font-style: normal;
+    color: rgba(251, 246, 236, 0.78);
+    transform-origin: center;
   }
 
   /* ════════════════════════════════════════════════════
      KEYFRAMES
      ════════════════════════════════════════════════════ */
 
-  /* "Bienvenu" — blur + translateY + fade */
-  @keyframes heroBienvenuIn {
+  @keyframes heroKickerIn {
     from {
       opacity: 0;
-      transform: translateY(18px);
-      filter: blur(10px);
+      transform: translate3d(0, 12px, 0);
+      filter: blur(8px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
       filter: blur(0);
     }
+  }
+
+  @keyframes heroKickerLineIn {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
   }
 
   /* Scroll indicator — chute perpétuelle */
@@ -261,60 +320,148 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   .hero-actions {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);      /* 16px */
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: center;
     opacity: 0;
   }
 
-  /* Bouton fantôme — version dark hero (blanc sur fond vidéo) */
-  .hero-btn-ghost {
+  .hero-action {
+    min-height: 48px;
     display: inline-flex;
     align-items: center;
-    gap: var(--space-xs);
-    background-color: transparent;
-    color: #fff;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 6px 6px 6px 18px;
+    color: rgba(251, 246, 236, 0.95);
     font-family: var(--font-sans);
-    font-size: var(--text-xs);          /* 12px */
-    letter-spacing: var(--tracking-wider);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    line-height: 1;
     text-transform: uppercase;
-    padding: 0.875rem 1.75rem;
-    border-radius: var(--radius-sm);    /* 4px — éditorial */
-    border: 0.5px solid rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    border-radius: var(--radius-full);
     position: relative;
     overflow: hidden;
-    cursor: pointer;
-    text-decoration: none;
+    isolation: isolate;
+    backdrop-filter: saturate(118%);
     transition:
-      border-color var(--duration-normal) var(--ease-standard),
-      background-color var(--duration-normal) var(--ease-standard),
-      transform var(--duration-short) var(--ease-standard),
-      box-shadow var(--duration-short) var(--ease-standard);
+      border-color 620ms var(--ease-standard),
+      background-color 620ms var(--ease-standard),
+      color 620ms var(--ease-standard),
+      transform 520ms var(--ease-standard),
+      box-shadow 620ms var(--ease-standard);
   }
 
-  .hero-btn-ghost::before {
+  .hero-action::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 25%,
-      rgba(255, 255, 255, 0.14) 50%,
-      transparent 75%
-    );
-    transform: translateX(-100%);
-    transition: transform 550ms var(--ease-standard);
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 18%, rgba(255, 255, 255, 0.24), transparent 82%);
+    opacity: 0;
+    transform: translateX(-70%);
+    transition:
+      opacity 520ms var(--ease-standard),
+      transform 720ms var(--ease-standard);
   }
 
-  .hero-btn-ghost:hover {
-    border-color: rgba(255, 255, 255, 0.9);
-    background-color: rgba(255, 255, 255, 0.08);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08);
+  .hero-actions .btn-primary.hero-action-primary {
+    min-width: 184px;
+    border: 0.5px solid rgba(184, 154, 103, 0.48);
+    background:
+      linear-gradient(135deg, rgba(64, 42, 27, 0.58), rgba(168, 135, 83, 0.34));
+    color: rgba(251, 246, 236, 0.94);
+    box-shadow:
+      0 18px 48px rgba(12, 7, 4, 0.24),
+      inset 0 1px 0 rgba(251, 246, 236, 0.16);
   }
 
-  .hero-btn-ghost:hover::before {
-    transform: translateX(150%);
+  .hero-actions .btn-primary.hero-action-primary::before {
+    background: linear-gradient(110deg, transparent 18%, rgba(251, 246, 236, 0.22), transparent 82%);
+  }
+
+  .hero-action-secondary {
+    min-width: 156px;
+    border: 0.5px solid rgba(251, 246, 236, 0.34);
+    background: rgba(20, 10, 5, 0.24);
+    box-shadow:
+      0 16px 42px rgba(12, 7, 4, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .hero-action-label,
+  .hero-action-icon {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-action-icon {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: var(--radius-full);
+    transition:
+      background-color 620ms var(--ease-standard),
+      color 620ms var(--ease-standard),
+      transform 620ms var(--ease-standard);
+  }
+
+  .hero-action-primary .hero-action-icon {
+    color: rgba(251, 246, 236, 0.92);
+    background: rgba(20, 10, 5, 0.58);
+    box-shadow: inset 0 1px 0 rgba(251, 246, 236, 0.16);
+  }
+
+  .hero-action-secondary .hero-action-icon {
+    color: rgba(251, 246, 236, 0.9);
+    background: rgba(168, 135, 83, 0.28);
+    box-shadow: inset 0 1px 0 rgba(251, 246, 236, 0.12);
+  }
+
+  .hero-action:hover {
+    transform: translateY(-3px);
+  }
+
+  .hero-action:hover::before {
+    opacity: 1;
+    transform: translateX(70%);
+  }
+
+  .hero-action:hover .hero-action-icon {
+    color: rgba(251, 246, 236, 0.98);
+    background: rgba(168, 135, 83, 0.46);
+    transform: translateX(3px) scale(1.04);
+  }
+
+  .hero-action-primary:hover {
+    background:
+      linear-gradient(135deg, rgba(75, 49, 31, 0.68), rgba(184, 154, 103, 0.42));
+    box-shadow:
+      0 22px 54px rgba(12, 7, 4, 0.3),
+      inset 0 1px 0 rgba(251, 246, 236, 0.22);
+  }
+
+  .hero-action-secondary:hover {
+    color: #fff8ef;
+    border-color: rgba(251, 246, 236, 0.62);
+    background: rgba(251, 246, 236, 0.1);
+    box-shadow:
+      0 20px 50px rgba(12, 7, 4, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  .hero-action:active {
+    transform: translateY(-1px) scale(0.985);
+  }
+
+  .hero-action:focus-visible {
+    outline: 2px solid rgba(251, 246, 236, 0.72);
+    outline-offset: 4px;
   }
 
   /* ════════════════════════════════════════════════════
@@ -357,13 +504,16 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       font-size: clamp(2.75rem, 5.5vw, 4.5rem);
     }
 
-    .hero-line-1 {
-      font-size: clamp(var(--text-xs), 1vw, var(--text-sm)); /* 12→14px */
-      margin-bottom: 0.4em;
+    .hero-kicker {
+      gap: 18px;
+      width: min(64vw, 760px);
+      margin-bottom: 1.1rem;
     }
 
-    .hero-line-2 {
-      font-size: clamp(1.5rem, 3vw, 2.25rem);
+    .hero-kicker-text {
+      max-width: none;
+      font-size: clamp(0.74rem, 1vw, 0.92rem);
+      letter-spacing: 0.26em;
     }
 
     .hero-italic {
@@ -392,11 +542,34 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     }
   }
 
+  @media (max-width: 430px) {
+    .hero-actions {
+      width: min(100%, 330px);
+      gap: 8px;
+    }
+
+    .hero-action,
+    .hero-actions .btn-primary.hero-action-primary,
+    .hero-action-secondary {
+      min-width: 0;
+      width: 100%;
+    }
+  }
+
   /* ════════════════════════════════════════════════════
      REDUCED MOTION
      ════════════════════════════════════════════════════ */
   @media (prefers-reduced-motion: reduce) {
-    .hero-line-1 { animation: none; opacity: 1; }
+    .hero-kicker,
+    .hero-kicker-line,
+    .hero-italic,
+    .hero-italic > span {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      animation: none;
+    }
+
     .hero-scroll, .hero-scroll-inner { animation: none; }
   }
 </style>
@@ -435,66 +608,34 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   document.addEventListener('astro:page-load', initHeroVideo);
 
-  /* ── Typewriter "dans le monde de" ──────────────────────── */
-  function initHeroTypewriter() {
-    const el = document.getElementById('hero-line2') as HTMLElement | null;
-    if (!el) return;
-
-    const text = el.textContent?.trim() ?? '';
-    el.textContent = '';
-    el.style.opacity = '1';
-
-    let i = 0;
-    function typeNext() {
-      if (i >= text.length) return;
-      el.textContent += text[i];
-      i++;
-      const jitter = (Math.random() - 0.5) * 12;
-      setTimeout(typeNext, 38 + jitter);
-    }
-
-    setTimeout(typeNext, 120);
-  }
-
-  document.addEventListener('astro:page-load', initHeroTypewriter);
-
   /* ── Animation principale : "Rozi · Dance" + deco + CTA ─── */
   function initHeroTitleAnimation() {
     const el       = document.getElementById('hero-italic') as HTMLElement | null;
     if (!el) return;
 
     const rozi     = el.querySelector<HTMLElement>('.hw-rozi');
-    const dot      = el.querySelector<HTMLElement>('.hw-dot');
     const dance    = el.querySelector<HTMLElement>('.hw-dance');
-    if (!rozi || !dot || !dance) return;
+    if (!rozi || !dance) return;
 
     const actions  = document.getElementById('hero-actions');
     const decoLine = document.querySelector<HTMLElement>('.hero-deco-line');
     const vw       = window.innerWidth;
 
     /* ── État initial ── */
-    gsap.set(el,       { opacity: 1 });
-    /* Slide depuis les bords + blur (premium) */
-    gsap.set(rozi,     { x: -vw * 1.15, filter: 'blur(12px)' });
-    gsap.set(dance,    { x:  vw * 1.15, filter: 'blur(12px)' });
-    gsap.set(dot,      { opacity: 0, scale: 0 });
+    gsap.set(el,            { opacity: 1 });
+    gsap.set([rozi, dance], { yPercent: 112, opacity: 0, filter: 'blur(10px)' });
     if (decoLine) gsap.set(decoLine, { scaleX: 0, opacity: 0, transformOrigin: 'center' });
     if (actions)  gsap.set(actions,  { opacity: 0, y: 16, filter: 'blur(8px)' });
 
     /* ── Timeline ── */
     const isMobile = vw <= 768;
-    const tl = gsap.timeline({ delay: isMobile ? 0.25 : 0.75 });
+    const tl = gsap.timeline({ delay: isMobile ? 0.48 : 0.86 });
 
     tl
-      /* Rozi + Dance convergent, blur se dissipe */
-      .to(rozi,     { x: 0, filter: 'blur(0px)', duration: 0.75, ease: 'power3.out' }, 0)
-      .to(dance,    { x: 0, filter: 'blur(0px)', duration: 0.75, ease: 'power3.out' }, 0)
-      /* Dot central pop */
-      .to(dot,      { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2.5)' }, 0.55)
-      /* Séparateur or s'étend */
-      .to(decoLine, { scaleX: 1, opacity: 1, duration: 0.55, ease: 'power2.out' }, 0.68)
-      /* CTA remonte avec blur */
-      .to(actions,  { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, 0.78);
+      .to(rozi,     { yPercent: 0, opacity: 1, filter: 'blur(0px)', duration: 0.92, ease: 'power4.out' }, 0)
+      .to(dance,    { yPercent: 0, opacity: 1, filter: 'blur(0px)', duration: 0.92, ease: 'power4.out' }, 0.1)
+      .to(decoLine, { scaleX: 1, opacity: 1, duration: 0.68, ease: 'power3.out' }, 0.54)
+      .to(actions,  { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power3.out' }, 0.72);
   }
 
   document.addEventListener('astro:page-load', initHeroTitleAnimation);
