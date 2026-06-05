@@ -1,79 +1,172 @@
 ---
 // Schema.org JSON-LD — LocalBusiness + PerformingGroup + Person×2 + Service×3
+import { getTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/utils';
+
+const lang = (Astro.currentLocale ?? 'fr') as Lang;
+const t = getTranslations(lang);
+
+const schemaCopy = {
+  fr: {
+    region: 'Belgique',
+    genre: 'Musique et danse arméniennes traditionnelles',
+    artist: 'Artiste',
+    knowsAbout: ['Chant arménien', 'Danse traditionnelle arménienne'],
+    services: [
+      {
+        id: 'chant-mariee',
+        name: 'Chant de la mariée',
+        description: "Chants traditionnels arméniens interprétés lors de la cérémonie d'habillage de la mariée.",
+        type: 'Cérémonie musicale',
+      },
+      {
+        id: 'danse',
+        name: 'Danse événementielle',
+        description: 'Performances de groupe pour mariages, célébrations et événements festifs.',
+        type: 'Spectacle vivant',
+      },
+      {
+        id: 'cours',
+        name: 'Cours de chant et danse arméniens',
+        description: 'Cours de chant arménien traditionnel et international, et de danse folklorique arménienne. Tous niveaux, individuels et en groupe.',
+        type: 'Enseignement artistique',
+      },
+    ],
+  },
+  en: {
+    region: 'Belgium',
+    genre: 'Traditional Armenian music and dance',
+    artist: 'Artist',
+    knowsAbout: ['Armenian singing', 'Traditional Armenian dance'],
+    services: [
+      {
+        id: 'chant-mariee',
+        name: 'Bridal singing',
+        description: "Traditional Armenian songs performed during the bride's dressing ceremony.",
+        type: 'Musical ceremony',
+      },
+      {
+        id: 'danse',
+        name: 'Event dance',
+        description: 'Group performances for weddings, celebrations and festive events.',
+        type: 'Live performance',
+      },
+      {
+        id: 'cours',
+        name: 'Armenian singing and dance lessons',
+        description: 'Traditional and international Armenian singing lessons, plus Armenian folk dance lessons. All levels, individual and group formats.',
+        type: 'Artistic education',
+      },
+    ],
+  },
+  nl: {
+    region: 'België',
+    genre: 'Traditionele Armeense muziek en dans',
+    artist: 'Artiest',
+    knowsAbout: ['Armeense zang', 'Traditionele Armeense dans'],
+    services: [
+      {
+        id: 'chant-mariee',
+        name: 'Bruidszang',
+        description: 'Traditionele Armeense liederen tijdens de aankleedceremonie van de bruid.',
+        type: 'Muzikale ceremonie',
+      },
+      {
+        id: 'danse',
+        name: 'Evenementendans',
+        description: 'Groepsoptredens voor huwelijken, vieringen en feestelijke evenementen.',
+        type: 'Live optreden',
+      },
+      {
+        id: 'cours',
+        name: 'Armeense zang- en danslessen',
+        description: 'Traditionele en internationale Armeense zanglessen en Armeense volksdanslessen. Alle niveaus, individueel en in groep.',
+        type: 'Artistiek onderwijs',
+      },
+    ],
+  },
+  ru: {
+    region: 'Бельгия',
+    genre: 'Традиционная армянская музыка и танец',
+    artist: 'Артист',
+    knowsAbout: ['Армянское пение', 'Традиционный армянский танец'],
+    services: [
+      {
+        id: 'chant-mariee',
+        name: 'Пение невесты',
+        description: 'Традиционные армянские песни во время церемонии одевания невесты.',
+        type: 'Музыкальная церемония',
+      },
+      {
+        id: 'danse',
+        name: 'Танец для мероприятий',
+        description: 'Групповые выступления для свадеб, торжеств и праздничных событий.',
+        type: 'Живое выступление',
+      },
+      {
+        id: 'cours',
+        name: 'Уроки армянского пения и танца',
+        description: 'Уроки традиционного и международного армянского пения, а также армянского народного танца. Все уровни, индивидуально и в группах.',
+        type: 'Художественное обучение',
+      },
+    ],
+  },
+} satisfies Record<Lang, {
+  region: string;
+  genre: string;
+  artist: string;
+  knowsAbout: string[];
+  services: Array<{ id: string; name: string; description: string; type: string }>;
+}>;
+
+const copy = schemaCopy[lang];
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['LocalBusiness', 'PerformingGroup', 'MusicGroup'],
+      '@id': 'https://rozidance.be/#organization',
+      name: 'Rozi Dance',
+      description: t.meta.siteDescription,
+      url: 'https://rozidance.be',
+      logo: 'https://rozidance.be/images/logo.webp',
+      image: 'https://rozidance.be/images/og-default.webp',
+      telephone: '',
+      email: 'abrahamyan.rose@mail.ru',
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'BE',
+        addressRegion: copy.region,
+      },
+      sameAs: [
+        'https://instagram.com/rozi.dance',
+        'https://youtube.com/@rozidance',
+      ],
+      numberOfEmployees: 2,
+      foundingDate: '2020',
+      areaServed: ['BE', 'FR', 'RU', 'AM', 'Europe'],
+      knowsLanguage: ['fr', 'ru'],
+      genre: copy.genre,
+    },
+    ...[1, 2].map((artistNumber) => ({
+      '@type': 'Person',
+      '@id': `https://rozidance.be/#artist-${artistNumber}`,
+      name: `Rozi Dance — ${copy.artist} ${artistNumber}`,
+      memberOf: { '@id': 'https://rozidance.be/#organization' },
+      knowsAbout: copy.knowsAbout,
+      jobTitle: copy.artist,
+    })),
+    ...copy.services.map((service) => ({
+      '@type': 'Service',
+      '@id': `https://rozidance.be/#service-${service.id}`,
+      name: service.name,
+      description: service.description,
+      provider: { '@id': 'https://rozidance.be/#organization' },
+      serviceType: service.type,
+      areaServed: service.id === 'cours' ? ['BE', 'Europe', 'Online'] : 'Europe',
+    })),
+  ],
+};
 ---
 
-<script is:inline type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": ["LocalBusiness", "PerformingGroup", "MusicGroup"],
-      "@id": "https://rozidance.be/#organization",
-      "name": "Rozi Dance",
-      "description": "Duo artistique arménien proposant chant de la mariée, danse événementielle et cours de chant & danse. Basé en Belgique, disponible dans toute l'Europe.",
-      "url": "https://rozidance.be",
-      "logo": "https://rozidance.be/images/logo.webp",
-      "image": "https://rozidance.be/images/og-default.webp",
-      "telephone": "",
-      "email": "abrahamyan.rose@mail.ru",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "BE",
-        "addressRegion": "Belgique"
-      },
-      "sameAs": [
-        "https://instagram.com/rozi.dance",
-        "https://youtube.com/@rozidance"
-      ],
-      "numberOfEmployees": 2,
-      "foundingDate": "2020",
-      "areaServed": ["BE", "FR", "RU", "AM", "Europe"],
-      "knowsLanguage": ["fr", "ru"],
-      "genre": "Traditional Armenian music and dance"
-    },
-    {
-      "@type": "Person",
-      "@id": "https://rozidance.be/#artist-1",
-      "name": "Rozi Dance — artiste 1",
-      "memberOf": {"@id": "https://rozidance.be/#organization"},
-      "knowsAbout": ["Chant arménien", "Danse traditionnelle arménienne"],
-      "jobTitle": "Artiste"
-    },
-    {
-      "@type": "Person",
-      "@id": "https://rozidance.be/#artist-2",
-      "name": "Rozi Dance — artiste 2",
-      "memberOf": {"@id": "https://rozidance.be/#organization"},
-      "knowsAbout": ["Chant arménien", "Danse traditionnelle arménienne"],
-      "jobTitle": "Artiste"
-    },
-    {
-      "@type": "Service",
-      "@id": "https://rozidance.be/#service-chant-mariee",
-      "name": "Chant de la mariée",
-      "description": "Chants traditionnels arméniens interprétés lors de la cérémonie d'habillage de la mariée.",
-      "provider": {"@id": "https://rozidance.be/#organization"},
-      "serviceType": "Cérémonie musicale",
-      "areaServed": "Europe"
-    },
-    {
-      "@type": "Service",
-      "@id": "https://rozidance.be/#service-danse",
-      "name": "Danse événementielle",
-      "description": "Performances de groupe pour mariages, célébrations et événements festifs.",
-      "provider": {"@id": "https://rozidance.be/#organization"},
-      "serviceType": "Spectacle vivant",
-      "areaServed": "Europe"
-    },
-    {
-      "@type": "Service",
-      "@id": "https://rozidance.be/#service-cours",
-      "name": "Cours de chant et danse arméniens",
-      "description": "Cours de chant arménien traditionnel et international, et de danse folklorique arménienne. Tous niveaux, individuels et en groupe.",
-      "provider": {"@id": "https://rozidance.be/#organization"},
-      "serviceType": "Enseignement artistique",
-      "areaServed": ["BE", "Europe", "Online"]
-    }
-  ]
-}
-</script>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />

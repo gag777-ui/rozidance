@@ -69,7 +69,7 @@ const videos = [
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                     allowfullscreen
                   ></iframe>
-                  <button class="video-close-btn" aria-label="Fermer la vidéo">
+                  <button class="video-close-btn" aria-label={t.videos.closeVideo}>
                     <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                       <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.5"/>
                       <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="1.5"/>
@@ -97,7 +97,7 @@ const videos = [
         target="_blank"
         rel="noopener noreferrer"
         class="videos-yt-btn"
-        aria-label="Voir toute la chaîne YouTube Rozi Dance"
+        aria-label={t.videos.youtubeAria}
       >
         <span class="yt-logo-mark" aria-hidden="true">
           <svg width="34" height="24" viewBox="0 0 34 24" fill="none">
@@ -106,8 +106,8 @@ const videos = [
           </svg>
         </span>
         <span class="yt-copy">
-          <span class="yt-kicker">Rozi Dance sur YouTube</span>
-          <span class="yt-title">Voir toute la chaîne</span>
+          <span class="yt-kicker">{t.videos.youtubeKicker}</span>
+          <span class="yt-title">{t.videos.youtubeTitle}</span>
         </span>
         <span class="yt-arrow" aria-hidden="true">
           <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
@@ -124,12 +124,17 @@ const videos = [
     position: relative;
     overflow: clip;
     margin-top: -8px;
+    --flow-top: #f3e4d2;
+    --flow-bottom: #f1dfca;
     padding-block: 64px 74px;
     color: var(--color-charcoal);
     background:
       radial-gradient(ellipse at 48% 0%, rgba(168, 135, 83, 0.08), transparent 40%),
       radial-gradient(ellipse at 8% 82%, rgba(135, 144, 115, 0.07), transparent 34%),
       linear-gradient(180deg, #f3e4d2 0%, #fffaf0 34%, #f1dfca 100%);
+    box-shadow:
+      inset 0 18px 24px var(--flow-top),
+      inset 0 -18px 24px var(--flow-bottom);
   }
 
   .section-videos::after {
@@ -501,6 +506,9 @@ const videos = [
         radial-gradient(ellipse at 48% 0%, rgba(168, 135, 83, 0.08), transparent 40%),
         radial-gradient(ellipse at 8% 82%, rgba(135, 144, 115, 0.07), transparent 34%),
         linear-gradient(180deg, #f3e4d2 0%, #fffaf0 30%, #f1dfca 100%);
+      box-shadow:
+        inset 0 18px 24px var(--flow-top),
+        inset 0 -18px 24px var(--flow-bottom);
     }
 
     .section-header {

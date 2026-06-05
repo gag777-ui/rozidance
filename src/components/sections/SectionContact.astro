@@ -22,7 +22,7 @@ const t = getTranslations(lang);
         target="_blank"
         rel="noopener noreferrer"
         class="contact-card reveal-scale"
-        aria-label="Nous contacter sur Instagram @rozi.dance"
+        aria-label={t.contact.instagram.ariaLabel}
         style="transition-delay: 0ms"
       >
         <div class="card-body">
@@ -57,7 +57,7 @@ const t = getTranslations(lang);
       <a
         href="mailto:abrahamyan.rose@mail.ru"
         class="contact-card reveal-scale"
-        aria-label="Nous envoyer un e-mail à abrahamyan.rose@mail.ru"
+        aria-label={t.contact.email.ariaLabel}
         style="transition-delay: 120ms"
       >
         <div class="card-body">
@@ -78,11 +78,11 @@ const t = getTranslations(lang);
         </div>
       </a>
 
-      <!-- Téléphone -->
+      <!-- Phone -->
       <a
         href="tel:+32486219896"
         class="contact-card reveal-scale"
-        aria-label="Appeler le +32 486 21 98 96"
+        aria-label={t.contact.phone.ariaLabel}
         style="transition-delay: 240ms"
       >
         <div class="card-body">
@@ -91,10 +91,10 @@ const t = getTranslations(lang);
               <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 10.8 19.79 19.79 0 01.07 2.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
             </svg>
           </div>
-          <p class="card-label">Téléphone</p>
-          <p class="card-value">+32 486 21 98 96</p>
+          <p class="card-label">{t.contact.phone.label}</p>
+          <p class="card-value">{t.contact.phone.value}</p>
           <span class="card-link">
-            Appeler
+            {t.contact.phone.action}
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="card-arrow-svg">
               <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -112,11 +112,16 @@ const t = getTranslations(lang);
     position: relative;
     overflow: clip;
     margin-top: -8px;
+    --flow-top: #f5e6d5;
+    --flow-bottom: #f1dfca;
     padding-block: 56px 72px;
     background:
       radial-gradient(ellipse at 16% 12%, rgba(168, 135, 83, 0.055), transparent 34%),
       radial-gradient(ellipse at 88% 88%, rgba(135, 144, 115, 0.05), transparent 36%),
-      linear-gradient(180deg, #fff8ee 0%, #f6e8d7 34%, #fffaf1 66%, #f1dfca 100%);
+      linear-gradient(180deg, #f5e6d5 0%, #f6e8d7 34%, #fffaf1 66%, #f1dfca 100%);
+    box-shadow:
+      inset 0 18px 24px var(--flow-top),
+      inset 0 -18px 24px var(--flow-bottom);
   }
 
   .contact-shell {

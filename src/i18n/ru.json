@@ -53,14 +53,21 @@
   "galerie": {
     "eyebrow": "Запечатлённые моменты",
     "title": "Галерея",
+    "pageDescription": "Посмотрите фотографии Rozi Dance: армянские танцевальные выступления, пение невесты, церемонии и мероприятия.",
     "ctaAll": "Смотреть всю галерею",
     "instagramLink": "Наш Instagram",
-    "altPlaceholder": "Фото Rozi Dance"
+    "instagramAria": "Смотреть наш Instagram @rozi.dance",
+    "altPlaceholder": "Фото Rozi Dance",
+    "openPhoto": "Открыть"
   },
   "videos": {
     "eyebrow": "На сцене",
     "title": "Страсть",
-    "youtubeLink": "Смотреть весь YouTube-канал"
+    "youtubeLink": "Смотреть весь YouTube-канал",
+    "closeVideo": "Закрыть видео",
+    "youtubeAria": "Смотреть весь YouTube-канал Rozi Dance",
+    "youtubeKicker": "Rozi Dance на YouTube",
+    "youtubeTitle": "Смотреть весь канал"
   },
   "stats": {
     "eyebrow": "Rozi Dance в цифрах",
@@ -86,6 +93,9 @@
   "temoignages": {
     "eyebrow": "Что говорят наши клиенты",
     "title": "Они нам доверились",
+    "ratingAria": "Средняя оценка: 5 звёзд",
+    "starsAria": "5 звёзд",
+    "reviewSource": "Отзыв клиента",
     "items": [
       {
         "quote": "Вы украсили нашу свадьбу от начала до конца. Огромное вам спасибо!",
@@ -143,11 +153,19 @@
     "subtitle": "Свяжитесь с нами через удобный канал — мы отвечаем в течение 24 часов.",
     "instagram": {
       "label": "Instagram",
-      "handle": "@rozi.dance"
+      "handle": "@rozi.dance",
+      "ariaLabel": "Связаться с нами в Instagram @rozi.dance"
     },
     "email": {
       "label": "Эл. почта",
-      "address": "abrahamyan.rose@mail.ru"
+      "address": "abrahamyan.rose@mail.ru",
+      "ariaLabel": "Отправить нам письмо на abrahamyan.rose@mail.ru"
+    },
+    "phone": {
+      "label": "Телефон",
+      "value": "+32 486 21 98 96",
+      "action": "Позвонить",
+      "ariaLabel": "Позвонить по номеру +32 486 21 98 96"
     },
     "youtube": {
       "label": "YouTube",
@@ -272,10 +290,12 @@
   },
   "footer": {
     "tagline": "Армянская душа в движении.",
+    "homeAria": "Rozi · Dance — главная",
     "nav": "Навигация",
     "links": "Ссылки",
     "legal": "Правовые оговорки",
     "copyright": "© {year} Rozi Dance. Все права защищены.",
+    "poweredBy": "Работает на",
     "madeWith": "Сайт создан с заботой."
   },
   "404": {

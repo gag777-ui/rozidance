@@ -53,14 +53,21 @@
   "galerie": {
     "eyebrow": "Moments capturés",
     "title": "Galerie",
+    "pageDescription": "Découvrez les photos de Rozi Dance : performances de danse arménienne, chant de la mariée, cérémonies et événements.",
     "ctaAll": "Voir la galerie complète",
     "instagramLink": "Voir notre Instagram",
-    "altPlaceholder": "Photo Rozi Dance"
+    "instagramAria": "Voir notre Instagram @rozi.dance",
+    "altPlaceholder": "Photo Rozi Dance",
+    "openPhoto": "Agrandir"
   },
   "videos": {
     "eyebrow": "En performance",
     "title": "Passion",
-    "youtubeLink": "Voir toute la chaîne YouTube"
+    "youtubeLink": "Voir toute la chaîne YouTube",
+    "closeVideo": "Fermer la vidéo",
+    "youtubeAria": "Voir toute la chaîne YouTube Rozi Dance",
+    "youtubeKicker": "Rozi Dance sur YouTube",
+    "youtubeTitle": "Voir toute la chaîne"
   },
   "stats": {
     "eyebrow": "Rozi Dance en chiffres",
@@ -86,6 +93,9 @@
   "temoignages": {
     "eyebrow": "Ce que disent nos clients",
     "title": "Ils nous ont fait confiance",
+    "ratingAria": "Note moyenne 5 étoiles",
+    "starsAria": "5 étoiles",
+    "reviewSource": "Avis client",
     "items": [
       {
         "quote": "Vous avez sublimé notre mariage du début à la fin. Merci mille fois !",
@@ -143,11 +153,19 @@
     "subtitle": "Contactez-nous via le réseau de votre choix — nous répondons dans les 24 heures.",
     "instagram": {
       "label": "Instagram",
-      "handle": "@rozi.dance"
+      "handle": "@rozi.dance",
+      "ariaLabel": "Nous contacter sur Instagram @rozi.dance"
     },
     "email": {
       "label": "E-mail",
-      "address": "abrahamyan.rose@mail.ru"
+      "address": "abrahamyan.rose@mail.ru",
+      "ariaLabel": "Nous envoyer un e-mail à abrahamyan.rose@mail.ru"
+    },
+    "phone": {
+      "label": "Téléphone",
+      "value": "+32 486 21 98 96",
+      "action": "Appeler",
+      "ariaLabel": "Appeler le +32 486 21 98 96"
     },
     "youtube": {
       "label": "YouTube",
@@ -272,10 +290,12 @@
   },
   "footer": {
     "tagline": "L'âme arménienne en mouvement.",
+    "homeAria": "Rozi · Dance — accueil",
     "nav": "Navigation",
     "links": "Liens",
     "legal": "Mentions légales",
     "copyright": "© {year} Rozi Dance. Tous droits réservés.",
+    "poweredBy": "Propulsé par",
     "madeWith": "Site réalisé avec soin."
   },
   "404": {

@@ -178,6 +178,7 @@
 
   section {
     overflow-x: clip;
+    margin-bottom: -1px; /* Prévient les gaps sub-pixel entre sections */
   }
 
   h1, h2, h3, h4 {

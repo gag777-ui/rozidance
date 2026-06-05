@@ -53,14 +53,21 @@
   "galerie": {
     "eyebrow": "Captured moments",
     "title": "Gallery",
+    "pageDescription": "Discover Rozi Dance photos: Armenian dance performances, bridal singing, ceremonies and events.",
     "ctaAll": "View full gallery",
     "instagramLink": "View our Instagram",
-    "altPlaceholder": "Rozi Dance photo"
+    "instagramAria": "View our Instagram @rozi.dance",
+    "altPlaceholder": "Rozi Dance photo",
+    "openPhoto": "Open"
   },
   "videos": {
     "eyebrow": "In performance",
     "title": "Passion",
-    "youtubeLink": "View the full YouTube channel"
+    "youtubeLink": "View the full YouTube channel",
+    "closeVideo": "Close video",
+    "youtubeAria": "View the full Rozi Dance YouTube channel",
+    "youtubeKicker": "Rozi Dance on YouTube",
+    "youtubeTitle": "View the full channel"
   },
   "stats": {
     "eyebrow": "Rozi Dance in numbers",
@@ -86,6 +93,9 @@
   "temoignages": {
     "eyebrow": "What our clients say",
     "title": "They trusted us",
+    "ratingAria": "Average rating: 5 stars",
+    "starsAria": "5 stars",
+    "reviewSource": "Client review",
     "items": [
       {
         "quote": "You made our wedding magical from start to finish. Thank you so much!",
@@ -143,11 +153,19 @@
     "subtitle": "Contact us via your preferred channel — we respond within 24 hours.",
     "instagram": {
       "label": "Instagram",
-      "handle": "@rozi.dance"
+      "handle": "@rozi.dance",
+      "ariaLabel": "Contact us on Instagram @rozi.dance"
     },
     "email": {
       "label": "E-mail",
-      "address": "abrahamyan.rose@mail.ru"
+      "address": "abrahamyan.rose@mail.ru",
+      "ariaLabel": "Send us an email at abrahamyan.rose@mail.ru"
+    },
+    "phone": {
+      "label": "Phone",
+      "value": "+32 486 21 98 96",
+      "action": "Call",
+      "ariaLabel": "Call +32 486 21 98 96"
     },
     "youtube": {
       "label": "YouTube",
@@ -272,10 +290,12 @@
   },
   "footer": {
     "tagline": "The Armenian soul in motion.",
+    "homeAria": "Rozi · Dance — home",
     "nav": "Navigation",
     "links": "Links",
     "legal": "Legal notice",
     "copyright": "© {year} Rozi Dance. All rights reserved.",
+    "poweredBy": "Powered by",
     "madeWith": "Website crafted with care."
   },
   "404": {

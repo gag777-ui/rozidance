@@ -35,7 +35,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   <div class="section-container footer-inner">
     <!-- Logo + tagline -->
     <div class="footer-brand">
-      <a href={base || '/'} class="footer-logo" aria-label="Rozi · Dance — accueil">
+      <a href={base || '/'} class="footer-logo" aria-label={t.footer.homeAria}>
         <img src="/images/logo-footer.webp" alt="Rozi Dance" class="footer-logo-img" width="500" height="500" loading="lazy" decoding="async" />
       </a>
       <p class="footer-tagline">{t.footer.tagline}</p>
@@ -43,7 +43,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
     <!-- Navigation + Liens sociaux -->
     <div class="footer-links-group">
-      <nav class="footer-nav" aria-label="Navigation footer">
+      <nav class="footer-nav" aria-label={t.footer.nav}>
         <p class="footer-nav-title">{t.footer.nav}</p>
         <ul>
           <li><a href={`${base || '/'}#prestations`} class="nav-link">{t.nav.prestations}</a></li>
@@ -85,7 +85,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
         <a href={`${base}/mentions-legales`} class="nav-link footer-legal">{t.footer.legal}</a>
       </div>
       <a href="https://synaplink.be" target="_blank" rel="noopener noreferrer" class="footer-synaplink">
-        Propulsé par <span class="footer-synaplink-name">Synap'Link</span>
+        {t.footer.poweredBy} <span class="footer-synaplink-name">Synap'Link</span>
       </a>
     </div>
   </div>
@@ -96,19 +96,32 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     position: relative;
     overflow: hidden;
     margin-top: -8px;
-    padding-top: 3.4rem;
+    padding-top: clamp(3.4rem, 7vw, 5.2rem);
     color: rgba(255, 248, 238, 0.74);
     background:
-      radial-gradient(ellipse at 12% 0%, rgba(255, 248, 238, 0.12), transparent 34%),
-      radial-gradient(ellipse at 88% 92%, rgba(135, 144, 115, 0.14), transparent 38%),
-      linear-gradient(180deg, #d8c2a8 0%, #8b755f 42%, #5f4b3c 100%);
+      radial-gradient(ellipse at 16% 12%, rgba(168, 135, 83, 0.18), transparent 35%),
+      radial-gradient(ellipse at 88% 88%, rgba(135, 144, 115, 0.12), transparent 42%),
+      linear-gradient(180deg, #2b1f15 0%, #211711 46%, #1c1410 100%),
+      #1c1410;
+  }
+
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: clamp(90px, 13vw, 150px);
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(241, 223, 202, 0.38) 0%, rgba(43, 31, 21, 0.72) 48%, rgba(43, 31, 21, 0) 100%);
+    mix-blend-mode: normal;
+    z-index: 0;
   }
 
   .footer-pattern {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.42;
+    opacity: 0.32;
   }
 
   .footer-pattern-svg {
@@ -120,8 +133,8 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   .footer-inner {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 3rem;
-    padding-bottom: 2.6rem;
+    gap: clamp(2.2rem, 6vw, 4.8rem);
+    padding-bottom: clamp(2.2rem, 5vw, 3.5rem);
     position: relative;
     z-index: 1;
   }
@@ -130,6 +143,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: clamp(2rem, 5vw, 4.5rem);
   }
 
   .footer-logo {
@@ -173,6 +187,8 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     font-size: 0.875rem;
     color: rgba(255, 248, 238, 0.7);
     line-height: 1.6;
+    max-width: 27ch;
+    margin: 0;
   }
 
   .footer-nav-title {
@@ -180,7 +196,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: rgba(255, 232, 190, 0.82);
-    margin-bottom: 1rem;
+    margin: 0 0 1rem;
   }
 
   .footer-nav ul,
@@ -190,13 +206,14 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.625rem;
+    gap: 0.72rem;
   }
 
   .footer-nav .nav-link,
   .footer-social .nav-link {
     color: rgba(255, 248, 238, 0.7);
     font-size: 0.875rem;
+    line-height: 1.45;
   }
 
   .footer-nav .nav-link:hover,
@@ -210,10 +227,11 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   }
 
   .footer-bottom {
-    border-top: 0.5px solid rgba(255, 248, 238, 0.14);
-    padding-block: 1.25rem;
+    border-top: 0.5px solid rgba(255, 248, 238, 0.1);
+    padding-block: 1.15rem;
     position: relative;
     z-index: 1;
+    background: rgba(28, 20, 16, 0.24);
   }
 
   .footer-bottom-inner {
@@ -250,10 +268,93 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   .footer-synaplink-name { color: #7EB8C9; }
 
   @media (max-width: 768px) {
+    .site-footer {
+      padding-top: 3.15rem;
+    }
+
     .footer-inner {
       grid-template-columns: 1fr;
       gap: 2rem;
+      padding-bottom: 2rem;
+      text-align: center;
     }
 
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-logo {
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-tagline {
+      max-width: 24ch;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .footer-links-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(1.2rem, 7vw, 2.1rem);
+      text-align: left;
+      align-items: start;
+    }
+
+    .footer-nav,
+    .footer-social {
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .footer-nav-title {
+      margin-bottom: 0.85rem;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+    }
+
+    .footer-nav ul,
+    .footer-social ul {
+      gap: 0.55rem;
+    }
+
+    .footer-nav .nav-link,
+    .footer-social .nav-link {
+      display: inline-block;
+      max-width: 100%;
+      font-size: 0.86rem;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    .footer-bottom-row {
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      gap: 0.35rem;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .footer-links-group {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 1rem;
+    }
+
+    .footer-nav,
+    .footer-social {
+      text-align: left;
+      padding: 0;
+    }
+
+    .footer-social .nav-link[href^="mailto:"] {
+      font-size: clamp(0.66rem, 3.2vw, 0.78rem);
+      line-height: 1.35;
+    }
   }
 </style>

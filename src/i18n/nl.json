@@ -53,14 +53,21 @@
   "galerie": {
     "eyebrow": "Vastgelegde momenten",
     "title": "Galerij",
+    "pageDescription": "Ontdek foto's van Rozi Dance: Armeense dansoptredens, bruidszang, ceremonies en evenementen.",
     "ctaAll": "Bekijk de volledige galerij",
     "instagramLink": "Bekijk onze Instagram",
-    "altPlaceholder": "Foto Rozi Dance"
+    "instagramAria": "Bekijk onze Instagram @rozi.dance",
+    "altPlaceholder": "Foto Rozi Dance",
+    "openPhoto": "Openen"
   },
   "videos": {
     "eyebrow": "In optreden",
     "title": "Passie",
-    "youtubeLink": "Bekijk het volledige YouTube-kanaal"
+    "youtubeLink": "Bekijk het volledige YouTube-kanaal",
+    "closeVideo": "Video sluiten",
+    "youtubeAria": "Bekijk het volledige YouTube-kanaal van Rozi Dance",
+    "youtubeKicker": "Rozi Dance op YouTube",
+    "youtubeTitle": "Bekijk het volledige kanaal"
   },
   "stats": {
     "eyebrow": "Rozi Dance in cijfers",
@@ -86,6 +93,9 @@
   "temoignages": {
     "eyebrow": "Wat onze klanten zeggen",
     "title": "Zij vertrouwden ons",
+    "ratingAria": "Gemiddelde score: 5 sterren",
+    "starsAria": "5 sterren",
+    "reviewSource": "Klantenbeoordeling",
     "items": [
       {
         "quote": "Jullie hebben onze bruiloft van begin tot eind subliem gemaakt. Duizendmaal dank!",
@@ -143,11 +153,19 @@
     "subtitle": "Contacteer ons via uw voorkeurkanaal — we antwoorden binnen 24 uur.",
     "instagram": {
       "label": "Instagram",
-      "handle": "@rozi.dance"
+      "handle": "@rozi.dance",
+      "ariaLabel": "Contacteer ons op Instagram @rozi.dance"
     },
     "email": {
       "label": "E-mail",
-      "address": "abrahamyan.rose@mail.ru"
+      "address": "abrahamyan.rose@mail.ru",
+      "ariaLabel": "Stuur ons een e-mail naar abrahamyan.rose@mail.ru"
+    },
+    "phone": {
+      "label": "Telefoon",
+      "value": "+32 486 21 98 96",
+      "action": "Bellen",
+      "ariaLabel": "Bel +32 486 21 98 96"
     },
     "youtube": {
       "label": "YouTube",
@@ -272,10 +290,12 @@
   },
   "footer": {
     "tagline": "De Armeense ziel in beweging.",
+    "homeAria": "Rozi · Dance — startpagina",
     "nav": "Navigatie",
     "links": "Links",
     "legal": "Juridische vermeldingen",
     "copyright": "© {year} Rozi Dance. Alle rechten voorbehouden.",
+    "poweredBy": "Aangedreven door",
     "madeWith": "Website gemaakt met zorg."
   },
   "404": {

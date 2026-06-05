@@ -17,27 +17,30 @@ const t = getTranslations(lang);
 const base = `/${lang}`;
 
 const photos = [
-  { src: '/images/galerie/photo-01.webp', thumb: '/images/galerie/photo-01-thumb.webp', alt: 'Rozi Dance — performance de danse arménienne', w: 1108, h: 1420 },
-  { src: '/images/galerie/photo-02.webp', thumb: '/images/galerie/photo-02-thumb.webp', alt: 'Rozi Dance — chant de la mariée', w: 1137, h: 1383 },
-  { src: '/images/galerie/photo-03.webp', thumb: '/images/galerie/photo-03-thumb.webp', alt: 'Rozi Dance — cérémonie de mariage arménien', w: 1132, h: 1389 },
-  { src: '/images/galerie/photo-04.webp', thumb: '/images/galerie/photo-04-thumb.webp', alt: 'Rozi Dance — cours de danse', w: 1560, h: 1008 },
-  { src: '/images/galerie/photo-05.webp', thumb: '/images/galerie/photo-05.webp', alt: 'Rozi Dance — duo en costume arménien traditionnel', w: 1108, h: 1420 },
-  { src: '/images/galerie/photo-06.webp', thumb: '/images/galerie/photo-06-thumb.webp', alt: 'Rozi Dance — événement festif arménien', w: 1129, h: 1393 },
-  { src: '/images/galerie/photo-07.webp', thumb: '/images/galerie/photo-07-thumb.webp', alt: 'Rozi Dance — performance artistique', w: 1290, h: 723 },
-  { src: '/images/galerie/photo-08.webp', thumb: '/images/galerie/photo-08-thumb.webp', alt: 'Rozi Dance — danse arménienne', w: 1600, h: 1067 },
-  { src: '/images/galerie/photo-09.webp', thumb: '/images/galerie/photo-09-thumb.webp', alt: 'Rozi Dance — chant et danse', w: 1600, h: 1067 },
-  { src: '/images/galerie/photo-10.webp', thumb: '/images/galerie/photo-10-thumb.webp', alt: 'Rozi Dance — groupe artistique', w: 1290, h: 722 },
-  { src: '/images/galerie/photo-11.webp', thumb: '/images/galerie/photo-11-thumb.webp', alt: 'Rozi Dance — performance arménienne', w: 934, h: 1400 },
-  { src: '/images/galerie/photo-12.webp', thumb: '/images/galerie/photo-12-thumb.webp', alt: 'Rozi Dance — chant et danse', w: 1400, h: 934 },
-  { src: '/images/galerie/photo-13.webp', thumb: '/images/galerie/photo-13-thumb.webp', alt: 'Rozi Dance — célébration arménienne', w: 787, h: 1400 },
-  { src: '/images/galerie/photo-14.webp', thumb: '/images/galerie/photo-14-thumb.webp', alt: 'Rozi Dance — mariage arménien', w: 1050, h: 1400 },
-  { src: '/images/galerie/photo-15.webp', thumb: '/images/galerie/photo-15-thumb.webp', alt: 'Rozi Dance — événement festif', w: 787, h: 1400 },
-];
+  { src: '/images/galerie/photo-01.webp', thumb: '/images/galerie/photo-01-thumb.webp', w: 1108, h: 1420 },
+  { src: '/images/galerie/photo-02.webp', thumb: '/images/galerie/photo-02-thumb.webp', w: 1137, h: 1383 },
+  { src: '/images/galerie/photo-03.webp', thumb: '/images/galerie/photo-03-thumb.webp', w: 1132, h: 1389 },
+  { src: '/images/galerie/photo-04.webp', thumb: '/images/galerie/photo-04-thumb.webp', w: 1560, h: 1008 },
+  { src: '/images/galerie/photo-05.webp', thumb: '/images/galerie/photo-05.webp', w: 1108, h: 1420 },
+  { src: '/images/galerie/photo-06.webp', thumb: '/images/galerie/photo-06-thumb.webp', w: 1129, h: 1393 },
+  { src: '/images/galerie/photo-07.webp', thumb: '/images/galerie/photo-07-thumb.webp', w: 1290, h: 723 },
+  { src: '/images/galerie/photo-08.webp', thumb: '/images/galerie/photo-08-thumb.webp', w: 1600, h: 1067 },
+  { src: '/images/galerie/photo-09.webp', thumb: '/images/galerie/photo-09-thumb.webp', w: 1600, h: 1067 },
+  { src: '/images/galerie/photo-10.webp', thumb: '/images/galerie/photo-10-thumb.webp', w: 1290, h: 722 },
+  { src: '/images/galerie/photo-11.webp', thumb: '/images/galerie/photo-11-thumb.webp', w: 934, h: 1400 },
+  { src: '/images/galerie/photo-12.webp', thumb: '/images/galerie/photo-12-thumb.webp', w: 1400, h: 934 },
+  { src: '/images/galerie/photo-13.webp', thumb: '/images/galerie/photo-13-thumb.webp', w: 787, h: 1400 },
+  { src: '/images/galerie/photo-14.webp', thumb: '/images/galerie/photo-14-thumb.webp', w: 1050, h: 1400 },
+  { src: '/images/galerie/photo-15.webp', thumb: '/images/galerie/photo-15-thumb.webp', w: 787, h: 1400 },
+].map((photo, i) => ({
+  ...photo,
+  alt: `${t.galerie.altPlaceholder} ${i + 1}`,
+}));
 ---
 
 <Layout
   title={`${t.galerie.title} — Rozi Dance`}
-  description="Découvrez les photos de Rozi Dance : performances de danse arménienne, chant de la mariée, cérémonies et événements."
+  description={t.galerie.pageDescription}
 >
   <main class="galerie-page">
     <div class="galerie-hero section-container">
@@ -56,7 +59,7 @@ const photos = [
             class="galerie-item"
             data-pswp-width={photo.w}
             data-pswp-height={photo.h}
-            aria-label={`Agrandir : ${photo.alt}`}
+            aria-label={`${t.galerie.openPhoto} : ${photo.alt}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -95,7 +98,7 @@ const photos = [
       </a>
     </div>
   </main>
-  <CtaFloat href="tel:+32486219896" />
+  <CtaFloat href="tel:+32486219896" label={t.hero.ctaPrimary} />
 </Layout>
 
 <script>
