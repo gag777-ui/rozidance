@@ -164,6 +164,7 @@
     font-family: var(--font-sans);
     font-size: var(--text-base);
     scroll-behavior: smooth;
+    overscroll-behavior-y: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -171,7 +172,9 @@
   body {
     background-color: var(--color-ivory);
     overflow-x: clip;
+    overscroll-behavior-y: none;
     width: 100%;
+    min-height: 100vh;
     position: relative;
     line-height: var(--leading-normal);
   }

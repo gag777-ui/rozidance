@@ -69,7 +69,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       rel="preload"
       as="style"
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
+      onload="this.setAttribute('rel','stylesheet')"
     />
     <noscript>
       <link
@@ -258,7 +258,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
             const raw = title.innerHTML;
             title.innerHTML = raw.replace(
               /(<[^>]+>)|([^<\s][^<]*[^<\s]|[^<\s])/g,
-              (match, tag, word) => {
+              (_match, tag, word) => {
                 if (tag) return tag;
                 return `<span class="tw-wrap" aria-hidden="true" style="display:inline-block;overflow:hidden;vertical-align:bottom"><span class="tw-inner" style="display:inline-block">${word}</span></span>`;
               }

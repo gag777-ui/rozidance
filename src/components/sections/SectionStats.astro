@@ -155,6 +155,7 @@ function parseStat(value: string) {
         const suffix = el.dataset.countSuffix ?? '';
         const span = el.querySelector<HTMLElement>('.stat-value');
         if (!span) return;
+        const valueSpan = span;
 
         const duration = 1800;
         const startTime = performance.now();
@@ -165,9 +166,9 @@ function parseStat(value: string) {
 
         function tick(now: number) {
           const t = Math.min((now - startTime) / duration, 1);
-          span.textContent = Math.round(easeOutCubic(t) * to) + suffix;
+          valueSpan.textContent = Math.round(easeOutCubic(t) * to) + suffix;
           if (t < 1) requestAnimationFrame(tick);
-          else span.textContent = to + suffix;
+          else valueSpan.textContent = to + suffix;
         }
 
         requestAnimationFrame(tick);

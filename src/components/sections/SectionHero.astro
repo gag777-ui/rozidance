@@ -3,7 +3,6 @@ import { getTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/utils';
 const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
-const base = lang === 'fr' ? '' : `/${lang}`;
 ---
 
 <section class="hero-section" aria-labelledby="hero-title">
@@ -121,6 +120,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     inset: 0;
     overflow: hidden;
     z-index: 0;
+    background: #201510 url('/images/og-default.webp') center / cover no-repeat;
   }
 
   .hero-bg-video {
@@ -128,11 +128,12 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
+    min-width: 112%;
+    min-height: 112%;
     width: auto;
     height: auto;
     object-fit: cover;
+    scale: 1.08;
     z-index: 0;
     pointer-events: none;
   }
