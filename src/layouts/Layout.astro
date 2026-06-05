@@ -4,7 +4,6 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import PageLoader from '../components/ui/PageLoader.astro';
-import Cursor from '../components/ui/Cursor.astro';
 
 interface Props {
   title: string;
@@ -87,7 +86,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   <body>
     <PageLoader transition:persist />
-    <Cursor transition:persist />
     <Header />
     <main>
       <slot />
@@ -189,7 +187,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
         // ── Lenis smooth scroll ──
         lenis = new Lenis({
-          duration: 1.4,
+          duration: 1.05,         /* réduit : scroll plus réactif, moins robotique */
           smoothWheel: true,
           prevent: (node: Element) => node.id === 'mobile-menu',
         });
@@ -199,33 +197,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         gsap.ticker.lagSmoothing(0);
         document.documentElement.style.scrollBehavior = 'auto';
 
-        // ── Hero parallax ──
-        const heroVideo = document.querySelector<HTMLElement>('.hero-bg-video');
-        const heroText  = document.querySelector<HTMLElement>('.hero-text');
+        // ── Hero parallax : animer le wrapper, pas la vidéo elle-même ──
+        // La vidéo a transform:translate(-50%,-50%) en CSS — si GSAP anime
+        // directement yPercent sur elle, il écrase ce transform et la décale.
+        const heroVideoBg = document.querySelector<HTMLElement>('.hero-video-bg');
 
-        if (heroVideo) {
-          gsap.to(heroVideo, {
-            yPercent: 28,
+        if (heroVideoBg) {
+          gsap.to(heroVideoBg, {
+            yPercent: 14,
             ease: 'none',
             scrollTrigger: {
               trigger: '.hero-section',
               start: 'top top',
               end: 'bottom top',
-              scrub: 2,
-            },
-          });
-        }
-
-        if (heroText) {
-          gsap.to(heroText, {
-            y: -80,
-            opacity: 0,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '.hero-section',
-              start: '38% top',
-              end: 'bottom top',
-              scrub: 1.5,
+              scrub: 0.8,
             },
           });
         }

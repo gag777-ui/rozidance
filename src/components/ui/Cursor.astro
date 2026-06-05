@@ -95,7 +95,9 @@
 </style>
 
 <script>
-  let rafStarted = false;
+  import { gsap } from 'gsap';
+
+  let tickerStarted = false;
   let mouseX = 0;
   let mouseY = 0;
 
@@ -104,26 +106,25 @@
     const ring  = document.getElementById('cursor-ring');
     if (!dot || !ring) return;
 
-    // RAF loop — ne tourne qu'une seule fois même après View Transitions
-    if (!rafStarted) {
-      rafStarted = true;
+    /* Lerp du ring via le ticker GSAP — plus de RAF concurrent */
+    if (!tickerStarted) {
+      tickerStarted = true;
       let ringX = 0, ringY = 0;
 
       document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        (document.getElementById('cursor-dot') as HTMLElement).style.left = `${mouseX}px`;
-        (document.getElementById('cursor-dot') as HTMLElement).style.top  = `${mouseY}px`;
+        const d = document.getElementById('cursor-dot') as HTMLElement;
+        if (d) { d.style.left = `${mouseX}px`; d.style.top = `${mouseY}px`; }
       });
 
-      function animateRing() {
+      /* Intégré dans le ticker GSAP — un seul RAF pour tout le site */
+      gsap.ticker.add(() => {
         ringX += (mouseX - ringX) * 0.11;
         ringY += (mouseY - ringY) * 0.11;
-        const r = document.getElementById('cursor-ring');
+        const r = document.getElementById('cursor-ring') as HTMLElement;
         if (r) { r.style.left = `${ringX}px`; r.style.top = `${ringY}px`; }
-        requestAnimationFrame(animateRing);
-      }
-      animateRing();
+      });
 
       document.addEventListener('mouseleave', () => {
         const d = document.getElementById('cursor-dot');

@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rozi Dance - 5 modeles Prestations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ivory: #f7f1e6;
+        --paper: #fbf6ec;
+        --ink: #2b1f15;
+        --muted: #74604e;
+        --line: #e5d7be;
+        --gold: #b99456;
+        --gold-light: #dfbd77;
+        --terracotta: #c16847;
+        --deep: #17100c;
+        --espresso: #24170f;
+        --serif: "Fraunces", Georgia, serif;
+        --sans: "Inter", system-ui, sans-serif;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--ivory);
+        color: var(--ink);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a { color: inherit; }
+
+      .demo-shell {
+        min-height: 100vh;
+      }
+
+      .demo-nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        gap: 8px;
+        padding: 10px;
+        overflow-x: auto;
+        background: rgba(247, 241, 230, 0.86);
+        border-bottom: 0.5px solid rgba(43, 31, 21, 0.16);
+        backdrop-filter: blur(18px);
+      }
+
+      .demo-nav a {
+        flex: 0 0 auto;
+        padding: 10px 13px;
+        border: 0.5px solid rgba(43, 31, 21, 0.15);
+        border-radius: 999px;
+        background: rgba(251, 246, 236, 0.8);
+        color: var(--ink);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .demo-intro {
+        padding: 42px 18px 24px;
+        background:
+          radial-gradient(circle at 15% 12%, rgba(193, 104, 71, 0.16), transparent 34%),
+          var(--ivory);
+      }
+
+      .demo-intro h1 {
+        max-width: 8ch;
+        margin: 0;
+        font-family: var(--serif);
+        font-size: clamp(3.1rem, 15vw, 8rem);
+        font-weight: 300;
+        line-height: 0.9;
+      }
+
+      .demo-intro p {
+        max-width: 36ch;
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .model {
+        padding: 72px 16px;
+        overflow: hidden;
+      }
+
+      .model-head {
+        max-width: 1160px;
+        margin: 0 auto 26px;
+      }
+
+      .model-kicker {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--gold);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .model-title {
+        margin: 0;
+        font-family: var(--serif);
+        font-size: clamp(2.4rem, 11vw, 6.8rem);
+        font-weight: 300;
+        line-height: 0.94;
+        letter-spacing: 0;
+      }
+
+      .model-note {
+        max-width: 36ch;
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .services {
+        max-width: 1160px;
+        margin: 0 auto;
+      }
+
+      .card-title,
+      .panel-title,
+      .poster-title,
+      .strip-title,
+      .atelier-title {
+        font-family: var(--serif);
+        font-weight: 300;
+        letter-spacing: 0;
+      }
+
+      .tag {
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        min-height: 44px;
+        padding: 7px 7px 7px 16px;
+        border-radius: 999px;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+
+      .cta i {
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        font-style: normal;
+        transition: transform 500ms var(--ease);
+      }
+
+      .service:hover .cta i,
+      .poster:hover .cta i,
+      .strip:hover .cta i,
+      .atelier:hover .cta i {
+        transform: translateX(3px);
+      }
+
+      /* Model 1 */
+      .model-1 {
+        position: relative;
+        background:
+          radial-gradient(circle at 18% 8%, rgba(193, 104, 71, 0.2), transparent 28%),
+          radial-gradient(circle at 86% 16%, rgba(185, 148, 86, 0.18), transparent 26%),
+          linear-gradient(180deg, #fffaf1 0%, var(--ivory) 48%, #eadbc2 100%);
+      }
+
+      .model-1::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.42;
+        background-image:
+          linear-gradient(90deg, rgba(168, 135, 83, 0.12) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(168, 135, 83, 0.08) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+      }
+
+      .model-1 .model-head,
+      .model-1 .services {
+        position: relative;
+        z-index: 1;
+      }
+
+      .bento {
+        display: grid;
+        gap: 20px;
+      }
+
+      .bento-card {
+        position: relative;
+        overflow: hidden;
+        min-height: 0;
+        display: grid;
+        grid-template-rows: minmax(300px, 1fr) auto;
+        padding: 6px;
+        border: 0.5px solid rgba(168, 135, 83, 0.26);
+        border-radius: 34px;
+        background:
+          linear-gradient(145deg, rgba(255, 252, 246, 0.94), rgba(229, 215, 190, 0.62));
+        color: var(--ink);
+        text-decoration: none;
+        box-shadow: 0 22px 58px rgba(43, 31, 21, 0.12);
+        transition:
+          transform 650ms var(--ease),
+          box-shadow 650ms var(--ease),
+          border-color 650ms var(--ease);
+      }
+
+      .bento-card img,
+      .poster img,
+      .theatre-panel img,
+      .strip img,
+      .atelier-photo img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 900ms var(--ease);
+      }
+
+      .bento-card:hover img,
+      .poster:hover img,
+      .theatre-panel:hover img,
+      .strip:hover img,
+      .atelier:hover img {
+        transform: scale(1.07);
+      }
+
+      .bento-card::after {
+        display: none;
+      }
+
+      .bento-media {
+        position: relative;
+        min-height: 300px;
+        overflow: hidden;
+        border-radius: 28px 28px 14px 14px;
+        background: var(--deep);
+      }
+
+      .bento-media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(20, 10, 5, 0), rgba(20, 10, 5, 0.34)),
+          linear-gradient(115deg, rgba(193, 104, 71, 0.14), transparent 62%);
+      }
+
+      .bento-num {
+        position: absolute;
+        left: 18px;
+        bottom: 12px;
+        z-index: 1;
+        color: rgba(251, 246, 236, 0.86);
+        font-family: var(--serif);
+        font-size: clamp(3.2rem, 16vw, 8rem);
+        font-style: italic;
+        font-weight: 300;
+        line-height: 0.8;
+        text-shadow: 0 12px 34px rgba(0, 0, 0, 0.3);
+      }
+
+      .bento-copy {
+        display: grid;
+        gap: 13px;
+        padding: 22px 20px 18px;
+        border: 0.5px solid rgba(255, 255, 255, 0.72);
+        border-radius: 14px 14px 28px 28px;
+        background:
+          linear-gradient(180deg, rgba(251, 246, 236, 0.98), rgba(247, 241, 230, 0.94));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+      }
+
+      .bento-card .tag { color: #8c662b; }
+
+      .card-title {
+        max-width: 9.4ch;
+        margin: 0;
+        color: var(--ink);
+        font-size: clamp(2.25rem, 10vw, 5.2rem);
+        line-height: 0.92;
+      }
+
+      .bento-card p {
+        max-width: 32ch;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14.5px;
+        line-height: 1.58;
+      }
+
+      .bento-card .cta {
+        width: 100%;
+        margin-top: 4px;
+        color: var(--ink);
+        border: 0.5px solid rgba(193, 104, 71, 0.24);
+        background: rgba(193, 104, 71, 0.1);
+      }
+
+      .bento-card .cta i {
+        color: var(--paper);
+        background: var(--terracotta);
+      }
+
+      .bento-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(193, 104, 71, 0.38);
+        box-shadow: 0 30px 70px rgba(43, 31, 21, 0.16);
+      }
+
+      /* Model 2 */
+      .model-2 {
+        background: #160f0b;
+        color: var(--paper);
+      }
+
+      .model-2 .model-note { color: rgba(251, 246, 236, 0.66); }
+
+      .theatre {
+        display: grid;
+        gap: 18px;
+      }
+
+      .theatre-panel {
+        position: relative;
+        min-height: 560px;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+        padding: 22px;
+        border: 0.5px solid rgba(251, 246, 236, 0.18);
+        border-radius: 999px 999px 34px 34px;
+        background: #0d0805;
+        color: var(--paper);
+        text-decoration: none;
+      }
+
+      .theatre-panel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 50% 18%, transparent 0 18%, rgba(15, 8, 4, 0.1) 42%, rgba(15, 8, 4, 0.94) 100%),
+          linear-gradient(180deg, transparent 20%, rgba(15, 8, 4, 0.92));
+      }
+
+      .panel-copy {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        text-align: center;
+      }
+
+      .panel-num {
+        color: var(--gold-light);
+        font-family: var(--serif);
+        font-size: 26px;
+        font-style: italic;
+      }
+
+      .panel-title {
+        margin: 8px auto 14px;
+        max-width: 9ch;
+        font-size: clamp(2.3rem, 10vw, 4.8rem);
+        line-height: 0.94;
+      }
+
+      .panel-copy p {
+        max-width: 28ch;
+        margin: 0 auto 18px;
+        color: rgba(251, 246, 236, 0.76);
+        font-size: 14px;
+        line-height: 1.58;
+      }
+
+      .theatre-panel .cta {
+        width: 100%;
+        color: var(--paper);
+        border: 0.5px solid rgba(251, 246, 236, 0.22);
+        background: rgba(251, 246, 236, 0.08);
+      }
+
+      .theatre-panel .cta i {
+        color: #160f0b;
+        background: var(--gold-light);
+      }
+
+      /* Model 3 */
+      .model-3 {
+        background:
+          linear-gradient(90deg, rgba(193, 104, 71, 0.1) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(193, 104, 71, 0.08) 1px, transparent 1px),
+          var(--ivory);
+        background-size: 44px 44px;
+      }
+
+      .posters {
+        display: grid;
+        gap: 22px;
+      }
+
+      .poster {
+        position: relative;
+        min-height: 520px;
+        overflow: hidden;
+        display: flex;
+        align-items: stretch;
+        padding: 8px;
+        color: var(--paper);
+        text-decoration: none;
+        background: var(--ink);
+        border-radius: 8px;
+        box-shadow: 0 22px 58px rgba(43, 31, 21, 0.18);
+      }
+
+      .poster::after {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        border: 0.5px solid rgba(251, 246, 236, 0.34);
+        pointer-events: none;
+      }
+
+      .poster-shade {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(15, 8, 4, 0.08), rgba(15, 8, 4, 0.9)),
+          linear-gradient(120deg, rgba(126, 44, 31, 0.76), transparent 72%);
+      }
+
+      .poster-copy {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        padding: 22px;
+      }
+
+      .poster-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        color: var(--gold-light);
+      }
+
+      .poster-title {
+        max-width: 9ch;
+        margin: auto 0 18px;
+        font-size: clamp(2.7rem, 14vw, 6rem);
+        line-height: 0.88;
+        text-transform: uppercase;
+      }
+
+      .poster-copy p {
+        max-width: 30ch;
+        margin: 0 0 16px;
+        color: rgba(251, 246, 236, 0.78);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .poster .cta {
+        width: 100%;
+        color: var(--paper);
+        border: 0.5px solid rgba(251, 246, 236, 0.26);
+      }
+
+      .poster .cta i {
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      /* Model 4 */
+      .model-4 {
+        background: var(--paper);
+      }
+
+      .strips {
+        display: grid;
+        gap: 14px;
+      }
+
+      .strip {
+        position: relative;
+        min-height: 260px;
+        overflow: hidden;
+        display: grid;
+        align-items: end;
+        padding: 18px;
+        color: var(--paper);
+        text-decoration: none;
+        border-radius: 18px;
+        background: var(--deep);
+      }
+
+      .strip::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(20, 10, 5, 0.92), rgba(20, 10, 5, 0.34), rgba(20, 10, 5, 0.82)),
+          linear-gradient(180deg, transparent, rgba(20, 10, 5, 0.78));
+      }
+
+      .strip-copy {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 10px;
+      }
+
+      .strip-title {
+        margin: 0;
+        max-width: 10ch;
+        font-size: clamp(2rem, 9vw, 4.5rem);
+        line-height: 0.96;
+      }
+
+      .strip-copy p {
+        max-width: 32ch;
+        margin: 0;
+        color: rgba(251, 246, 236, 0.74);
+        font-size: 14px;
+        line-height: 1.54;
+      }
+
+      .strip .tag { color: var(--gold-light); }
+
+      .strip .cta {
+        width: 100%;
+        margin-top: 8px;
+        color: var(--paper);
+        border: 0.5px solid rgba(251, 246, 236, 0.22);
+        background: rgba(251, 246, 236, 0.08);
+      }
+
+      .strip .cta i {
+        color: var(--deep);
+        background: var(--gold-light);
+      }
+
+      /* Model 5 */
+      .model-5 {
+        background:
+          radial-gradient(circle at 72% 4%, rgba(168, 135, 83, 0.2), transparent 26%),
+          #efe3cf;
+      }
+
+      .atelier-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .atelier {
+        display: grid;
+        gap: 0;
+        overflow: hidden;
+        color: var(--ink);
+        text-decoration: none;
+        background: rgba(251, 246, 236, 0.8);
+        border: 0.5px solid rgba(43, 31, 21, 0.12);
+        border-radius: 26px;
+        box-shadow: 0 18px 48px rgba(43, 31, 21, 0.11);
+      }
+
+      .atelier-photo {
+        position: relative;
+        min-height: 300px;
+        overflow: hidden;
+        background: var(--deep);
+      }
+
+      .atelier-photo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent, rgba(20, 10, 5, 0.28));
+      }
+
+      .atelier-copy {
+        display: grid;
+        gap: 12px;
+        padding: 22px;
+      }
+
+      .atelier-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        color: var(--gold);
+      }
+
+      .atelier-title {
+        max-width: 9.5ch;
+        margin: 0;
+        font-size: clamp(2.25rem, 10vw, 4.8rem);
+        line-height: 0.96;
+      }
+
+      .atelier-copy p {
+        max-width: 34ch;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.58;
+      }
+
+      .atelier .cta {
+        width: 100%;
+        margin-top: 6px;
+        color: var(--ink);
+        border: 0.5px solid rgba(193, 104, 71, 0.24);
+        background: rgba(193, 104, 71, 0.1);
+      }
+
+      .atelier .cta i {
+        color: var(--paper);
+        background: var(--terracotta);
+      }
+
+      @media (min-width: 760px) {
+        .demo-intro {
+          padding: 70px 28px 42px;
+        }
+
+        .model {
+          padding: 110px 28px;
+        }
+
+        .model-head {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(280px, 0.45fr);
+          align-items: end;
+          gap: 44px;
+          margin-bottom: 42px;
+        }
+
+        .model-kicker {
+          grid-column: 1 / -1;
+        }
+
+        .bento {
+          grid-template-columns: repeat(12, 1fr);
+        }
+
+        .bento-card {
+          min-height: 0;
+        }
+
+        .bento-card:nth-child(1) {
+          grid-column: span 7;
+        }
+
+        .bento-card:nth-child(1) .bento-media {
+          min-height: 520px;
+        }
+
+        .bento-card:nth-child(2) {
+          grid-column: span 5;
+        }
+
+        .bento-card:nth-child(2) .bento-media {
+          min-height: 350px;
+        }
+
+        .bento-card:nth-child(3) {
+          grid-column: 6 / span 7;
+          margin-top: -120px;
+        }
+
+        .bento-card:nth-child(3) .bento-media {
+          min-height: 340px;
+        }
+
+        .theatre {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .theatre-panel {
+          min-height: 620px;
+        }
+
+        .posters {
+          grid-template-columns: repeat(3, 1fr);
+          align-items: start;
+        }
+
+        .poster:nth-child(2) {
+          margin-top: 70px;
+        }
+
+        .poster:nth-child(3) {
+          margin-top: 28px;
+        }
+
+        .strips {
+          gap: 18px;
+        }
+
+        .strip {
+          min-height: 330px;
+          padding: 34px;
+        }
+
+        .strip:nth-child(2) {
+          margin-left: 9vw;
+        }
+
+        .strip:nth-child(3) {
+          margin-left: 18vw;
+        }
+
+        .strip .cta,
+        .atelier .cta,
+        .poster .cta,
+        .bento-card .cta {
+          width: max-content;
+          min-width: 205px;
+        }
+
+        .atelier-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .atelier:nth-child(2) {
+          margin-top: 54px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="demo-shell">
+      <nav class="demo-nav" aria-label="Modeles">
+        <a href="#model-1">01 Bento cinema</a>
+        <a href="#model-2">02 Arches scene</a>
+        <a href="#model-3">03 Affiches</a>
+        <a href="#model-4">04 Bandes luxe</a>
+        <a href="#model-5">05 Atelier clair</a>
+      </nav>
+
+      <header class="demo-intro">
+        <h1>5 pistes prestations</h1>
+        <p>Regarde sur mobile en premier. Choisis le numero qui a le plus de potentiel, puis on affine vraiment celui-la.</p>
+      </header>
+
+      <section class="model model-1" id="model-1">
+        <header class="model-head">
+          <span class="model-kicker">Modele 01</span>
+          <h2 class="model-title">Bento cinema</h2>
+          <p class="model-note">Grand panneau hero + deux cartes qui cassent la grille. Fort sur desktop, encore lisible en scroll mobile.</p>
+        </header>
+        <div class="services bento">
+          <a class="service bento-card" href="#">
+            <div class="bento-media">
+              <img src="/images/mariages-hero.webp" alt="" />
+              <span class="bento-num">01</span>
+            </div>
+            <div class="bento-copy">
+              <span class="tag">Mariage · Cérémonie</span>
+              <h3 class="card-title">Mariages & Événements</h3>
+              <p>Chant de la mariée, danse d'entrée, animation du banquet — des performances sur mesure.</p>
+              <span class="cta">Nos services <i>→</i></span>
+            </div>
+          </a>
+          <a class="service bento-card" href="#">
+            <div class="bento-media">
+              <img src="/images/chant-hero.webp" alt="" />
+              <span class="bento-num">02</span>
+            </div>
+            <div class="bento-copy">
+              <span class="tag">Chant · Performance</span>
+              <h3 class="card-title">L'art du chant</h3>
+              <p>Jazz, soul, pop ou chant personnalisé pour accompagner vos moments précieux.</p>
+              <span class="cta">En savoir plus <i>→</i></span>
+            </div>
+          </a>
+          <a class="service bento-card" href="#">
+            <div class="bento-media">
+              <img src="/images/cours-hero.webp" alt="" />
+              <span class="bento-num">03</span>
+            </div>
+            <div class="bento-copy">
+              <span class="tag">Cours · Atelier</span>
+              <h3 class="card-title">Chant & danse</h3>
+              <p>Cours individuels ou en groupe, pour tous niveaux et tous âges.</p>
+              <span class="cta">Voir les cours <i>→</i></span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="model model-2" id="model-2">
+        <header class="model-head">
+          <span class="model-kicker">Modele 02</span>
+          <h2 class="model-title">Arches scene</h2>
+          <p class="model-note">Plus cérémoniel et oriental. Les arches donnent une identité forte, surtout sur mobile.</p>
+        </header>
+        <div class="services theatre">
+          <a class="service theatre-panel" href="#">
+            <img src="/images/mariages-hero.webp" alt="" />
+            <div class="panel-copy">
+              <span class="panel-num">01</span>
+              <h3 class="panel-title">Mariages & Événements</h3>
+              <p>Chant de la mariée, danse d'entrée et présence scénique pour vos moments forts.</p>
+              <span class="cta">Nos services <i>→</i></span>
+            </div>
+          </a>
+          <a class="service theatre-panel" href="#">
+            <img src="/images/chant-hero.webp" alt="" />
+            <div class="panel-copy">
+              <span class="panel-num">02</span>
+              <h3 class="panel-title">L'art du chant</h3>
+              <p>Une voix live, intime ou spectaculaire, selon l'ambiance de l'événement.</p>
+              <span class="cta">En savoir plus <i>→</i></span>
+            </div>
+          </a>
+          <a class="service theatre-panel" href="#">
+            <img src="/images/cours-hero.webp" alt="" />
+            <div class="panel-copy">
+              <span class="panel-num">03</span>
+              <h3 class="panel-title">Chant & danse</h3>
+              <p>Apprendre avec exigence, douceur et culture, du premier pas au niveau avancé.</p>
+              <span class="cta">Voir les cours <i>→</i></span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="model model-3" id="model-3">
+        <header class="model-head">
+          <span class="model-kicker">Modele 03</span>
+          <h2 class="model-title">Affiches vivantes</h2>
+          <p class="model-note">Style poster culturel. Plus graphique, plus audacieux, presque comme des affiches de concert.</p>
+        </header>
+        <div class="services posters">
+          <a class="service poster" href="#">
+            <img src="/images/mariages-hero.webp" alt="" />
+            <span class="poster-shade"></span>
+            <div class="poster-copy">
+              <div class="poster-top"><span class="tag">Mariage</span><span>01</span></div>
+              <h3 class="poster-title">Mariages</h3>
+              <p>Chant, danse et animation du banquet avec une signature Rozi Dance.</p>
+              <span class="cta">Nos services <i>→</i></span>
+            </div>
+          </a>
+          <a class="service poster" href="#">
+            <img src="/images/chant-hero.webp" alt="" />
+            <span class="poster-shade"></span>
+            <div class="poster-copy">
+              <div class="poster-top"><span class="tag">Chant</span><span>02</span></div>
+              <h3 class="poster-title">Chant</h3>
+              <p>Jazz, soul, pop et chant personnalisé pour les moments qui comptent.</p>
+              <span class="cta">En savoir plus <i>→</i></span>
+            </div>
+          </a>
+          <a class="service poster" href="#">
+            <img src="/images/cours-hero.webp" alt="" />
+            <span class="poster-shade"></span>
+            <div class="poster-copy">
+              <div class="poster-top"><span class="tag">Cours</span><span>03</span></div>
+              <h3 class="poster-title">Cours</h3>
+              <p>Chant et danse en solo ou en groupe, tous niveaux et tous âges.</p>
+              <span class="cta">Voir les cours <i>→</i></span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="model model-4" id="model-4">
+        <header class="model-head">
+          <span class="model-kicker">Modele 04</span>
+          <h2 class="model-title">Bandes luxe</h2>
+          <p class="model-note">Plus minimal, plus premium. Des bandes horizontales qui respirent, ideal si tu veux quelque chose de chic sans trop charger.</p>
+        </header>
+        <div class="services strips">
+          <a class="service strip" href="#">
+            <img src="/images/mariages-hero.webp" alt="" />
+            <div class="strip-copy">
+              <span class="tag">01 · Mariage · Cérémonie</span>
+              <h3 class="strip-title">Mariages & Événements</h3>
+              <p>Performance sur mesure, du chant de la mariée au banquet.</p>
+              <span class="cta">Nos services <i>→</i></span>
+            </div>
+          </a>
+          <a class="service strip" href="#">
+            <img src="/images/chant-hero.webp" alt="" />
+            <div class="strip-copy">
+              <span class="tag">02 · Chant · Performance</span>
+              <h3 class="strip-title">L'art du chant</h3>
+              <p>Une voix live pour créer une atmosphere intime, moderne ou festive.</p>
+              <span class="cta">En savoir plus <i>→</i></span>
+            </div>
+          </a>
+          <a class="service strip" href="#">
+            <img src="/images/cours-hero.webp" alt="" />
+            <div class="strip-copy">
+              <span class="tag">03 · Cours · Atelier</span>
+              <h3 class="strip-title">Chant & danse</h3>
+              <p>Cours individuels ou en groupe, du débutant au confirmé.</p>
+              <span class="cta">Voir les cours <i>→</i></span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="model model-5" id="model-5">
+        <header class="model-head">
+          <span class="model-kicker">Modele 05</span>
+          <h2 class="model-title">Atelier clair</h2>
+          <p class="model-note">Plus doux, plus editorial magazine. Moins dramatique, mais plus chaleureux et facile a lire.</p>
+        </header>
+        <div class="services atelier-grid">
+          <a class="service atelier" href="#">
+            <div class="atelier-photo"><img src="/images/mariages-hero.webp" alt="" /></div>
+            <div class="atelier-copy">
+              <div class="atelier-meta"><span class="tag">Mariage</span><span>01</span></div>
+              <h3 class="atelier-title">Mariages & Événements</h3>
+              <p>Chant de la mariée, danse d'entrée, animation du banquet.</p>
+              <span class="cta">Nos services <i>→</i></span>
+            </div>
+          </a>
+          <a class="service atelier" href="#">
+            <div class="atelier-photo"><img src="/images/chant-hero.webp" alt="" /></div>
+            <div class="atelier-copy">
+              <div class="atelier-meta"><span class="tag">Chant</span><span>02</span></div>
+              <h3 class="atelier-title">L'art du chant</h3>
+              <p>Jazz, soul, pop ou chant personnalisé en plusieurs langues.</p>
+              <span class="cta">En savoir plus <i>→</i></span>
+            </div>
+          </a>
+          <a class="service atelier" href="#">
+            <div class="atelier-photo"><img src="/images/cours-hero.webp" alt="" /></div>
+            <div class="atelier-copy">
+              <div class="atelier-meta"><span class="tag">Cours</span><span>03</span></div>
+              <h3 class="atelier-title">Chant & danse</h3>
+              <p>Cours individuels ou en groupe, tous niveaux et tous âges.</p>
+              <span class="cta">Voir les cours <i>→</i></span>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

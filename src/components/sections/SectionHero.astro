@@ -346,7 +346,7 @@ const t = getTranslations(lang);
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    backdrop-filter: saturate(118%);
+    /* backdrop-filter retiré — recomposite chaque frame à cause de la vidéo derrière */
     transition:
       border-color 620ms var(--ease-standard),
       background-color 620ms var(--ease-standard),
