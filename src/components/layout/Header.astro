@@ -30,12 +30,14 @@ const base = lang === 'fr' ? '' : `/${lang}`;
         <li><a href={`${base || '/'}#galerie`} class="nav-link">{t.nav.galerie}</a></li>
         <li><a href={`${base}/cours`} class="nav-link">{t.nav.cours}</a></li>
         <li><a href={`${base || '/'}#apropos`} class="nav-link">{t.nav.apropos}</a></li>
-        <li><a href={`${base || '/'}#contact`} class="nav-link nav-link-contact">{t.nav.contact}</a></li>
       </ul>
     </nav>
 
     <!-- Sélecteur de langue + hamburger groupés -->
     <div class="header-end">
+      <a href={`${base || '/'}#contact`} class="nav-link nav-link-contact header-contact-pill" aria-label={t.nav.contact}>
+        {t.nav.contact}
+      </a>
       <LanguageSwitcher />
       <button
         id="menu-toggle"
@@ -121,6 +123,17 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     font-weight: 400;
     color: var(--color-text-primary);
     letter-spacing: 0.02em;
+    animation: logoTextBreathe 4s ease-in-out infinite;
+    display: inline-block;
+  }
+
+  @keyframes logoTextBreathe {
+    0%, 100% { opacity: 1; letter-spacing: 0.02em; }
+    50%       { opacity: 0.72; letter-spacing: 0.05em; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-text { animation: none; }
   }
 
   .logo-dot {
@@ -165,6 +178,42 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .nav-link-contact::after {
     content: none;
+  }
+
+  /* ── Bouton contact dans header-end ── */
+  .header-contact-pill {
+    animation: contactBreathe 3s ease-in-out infinite;
+    margin-right: var(--space-sm); /* 16px d'espace avant le sélecteur de langue */
+  }
+
+  @keyframes contactBreathe {
+    0%, 100% {
+      box-shadow:
+        0 0 0 0px rgba(193, 104, 71, 0),
+        0 10px 24px rgba(43, 31, 21, 0.055),
+        inset 0 1px 0 rgba(255, 255, 255, 0.56);
+      transform: translateZ(0) scale(1);
+    }
+    50% {
+      box-shadow:
+        0 0 0 5px rgba(168, 135, 83, 0.13),
+        0 10px 24px rgba(43, 31, 21, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.56);
+      transform: translateZ(0) scale(1.035);
+    }
+  }
+
+  /* Masqué sur mobile — le menu hamburger prend le relais */
+  @media (max-width: 768px) {
+    .header-contact-pill {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header-contact-pill {
+      animation: none;
+    }
   }
 
   .nav-link-contact:hover {
