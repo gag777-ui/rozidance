@@ -46,24 +46,40 @@ const { href, label = 'Nous contacter' } = Astro.props;
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background-color: var(--color-accent);
-    color: #fff;
-    border: none;
+    background:
+      radial-gradient(circle at 30% 22%, rgba(255, 247, 232, 0.26), transparent 34%),
+      linear-gradient(145deg, rgba(92, 64, 41, 0.96), rgba(132, 100, 64, 0.94));
+    color: #fff7ec;
+    border: 0.5px solid rgba(255, 234, 199, 0.34);
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(168, 135, 83, 0.4);
+    box-shadow:
+      0 10px 28px rgba(72, 46, 25, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
     overflow: hidden;
     transition:
       width 420ms var(--ease-out-soft),
       border-radius 420ms var(--ease-out-soft),
       gap 320ms var(--ease-out-soft),
-      background-color 300ms var(--ease-out-soft),
+      background 300ms var(--ease-out-soft),
       box-shadow 300ms var(--ease-out-soft);
     flex-shrink: 0;
   }
 
   @keyframes fabBreath {
-    0%, 100% { transform: scale(1);    box-shadow: 0 4px 20px rgba(168, 135, 83, 0.4); }
-    50%       { transform: scale(1.08); box-shadow: 0 6px 28px rgba(168, 135, 83, 0.55); }
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 10px 28px rgba(72, 46, 25, 0.18),
+        0 0 0 0 rgba(168, 135, 83, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+    50% {
+      transform: scale(1.08);
+      box-shadow:
+        0 14px 34px rgba(72, 46, 25, 0.24),
+        0 0 0 8px rgba(168, 135, 83, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
   }
 
   .cta-fab-btn:not(.is-open) {
@@ -71,7 +87,12 @@ const { href, label = 'Nous contacter' } = Astro.props;
   }
 
   .cta-fab-btn:hover {
-    background-color: var(--color-accent-hover);
+    background:
+      radial-gradient(circle at 30% 22%, rgba(255, 247, 232, 0.3), transparent 34%),
+      linear-gradient(145deg, rgba(105, 73, 46, 0.98), rgba(146, 110, 69, 0.96));
+    box-shadow:
+      0 14px 34px rgba(72, 46, 25, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
     animation-play-state: paused;
   }
 

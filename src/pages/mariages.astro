@@ -23,6 +23,17 @@ const base = lang === 'fr' ? '' : `/${lang}`;
         <span class="eyebrow">{m.heroEyebrow}</span>
         <h1>{m.heroTitle}</h1>
         <p class="hero-subtitle">{m.heroSubtitle}</p>
+        <div class="hero-service-strip" aria-label={m.reelsTitle}>
+          {m.categories.map((cat) => (
+            <span>{cat.title}</span>
+          ))}
+        </div>
+        <a href="#reels-title" class="hero-jump">
+          {m.reelsTitle}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </div>
       <div class="mariages-hero-img" aria-hidden="true">
         <img
@@ -37,36 +48,39 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     </div>
   </section>
 
-  <!-- 4 category cards -->
-  <section class="categories-section">
+  <!-- Reels selection -->
+  <section class="categories-section" aria-labelledby="reels-title">
     <div class="section-container">
+      <div class="reels-intro reveal-fade">
+        <span class="eyebrow">{m.cardLink}</span>
+        <h2 id="reels-title">{m.reelsTitle}</h2>
+      </div>
       <div class="categories-grid">
         {m.categories.map((cat, i) => (
           <a
             href={`${base}/mariages/${cat.slug}`}
-            class={`card-shell cs-${i % 3} reveal`}
-            style={`transition-delay: ${i * 100}ms`}
-            aria-label={cat.title}
+            class={`card-shell reel-shell cs-${i % 3} reveal`}
+            style={`transition-delay: ${i * 90}ms`}
+            aria-label={`${cat.title} — ${cat.description}`}
             data-card
           >
-            <div class={`card-core cc-${i % 3}`}>
+            <div class="card-core reel-card">
               <div class="card-light"></div>
-              <div class="card-top">
-                <span class="card-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                <div class="card-thumb">
-                  <img src="/images/reel-mariages.webp" alt={cat.title} loading="lazy" width="1013" height="1372" />
-                </div>
-              </div>
-              <h2 class="card-title">{cat.title}</h2>
-              <div class="card-line"></div>
-              <p class="card-desc">{cat.description}</p>
-              <span class="card-cta">
-                {m.cardLink}
-                <span class="cta-circle" aria-hidden="true">
-                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
+              <span class="page-watermark" aria-hidden="true"></span>
+              <span class="page-thread" aria-hidden="true"></span>
+              <span class="page-mark" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M5.25 3.75h5.1l2.4 2.4v8.1h-7.5V3.75Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>
+                  <path d="M10.25 3.9v2.45h2.35M7 9h4M7 11.25h3" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="reel-tag">{m.cardLink}</span>
+              <span class="reel-title">{cat.title}</span>
+              <span class="reel-cta">
+                {m.cardCta}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </span>
             </div>
           </a>
@@ -142,60 +156,128 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
 <style>
   .mariages-hero {
-    padding-block: var(--spacing-section);
-    background-color: var(--color-bg-section);
-    border-bottom: 0.5px solid var(--color-border);
+    position: relative;
+    padding-block: clamp(4rem, 8vw, 7rem) clamp(5rem, 9vw, 8rem);
+    background:
+      radial-gradient(ellipse at 11% 16%, rgba(255, 255, 255, 0.72), transparent 38%),
+      radial-gradient(ellipse at 90% 30%, rgba(168, 135, 83, 0.13), transparent 34%),
+      linear-gradient(180deg, #fffaf3 0%, #fbf0df 58%, #f4dec4 100%);
     overflow: hidden;
   }
 
+  .mariages-hero::before,
+  .mariages-hero::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .mariages-hero::before {
+    left: 0;
+    top: 12%;
+    width: min(420px, 46vw);
+    height: min(420px, 46vw);
+    border: 0.5px solid rgba(168, 135, 83, 0.13);
+    border-left: 0;
+    border-radius: 0 999px 999px 0;
+    opacity: 0.72;
+  }
+
+  .mariages-hero::after {
+    inset-inline: 0;
+    bottom: -1px;
+    height: clamp(5rem, 12vw, 9rem);
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(244, 222, 196, 0), #f4dec4 62%, #f7f1e6 100%);
+  }
+
   .mariages-hero-inner {
+    position: relative;
+    z-index: 2;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 0.95fr) minmax(300px, 1.05fr);
     align-items: center;
-    gap: 2rem;
+    gap: clamp(2rem, 5vw, 5rem);
   }
 
   .mariages-hero-text {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: clamp(0.9rem, 2vw, 1.15rem);
   }
 
   .mariages-hero-img {
     position: relative;
+    justify-self: end;
+    width: min(100%, 590px);
+  }
+
+  .mariages-hero-img::before {
+    content: '';
+    position: absolute;
+    inset: 8% -4% -7% 13%;
+    border-radius: 32px;
+    background: linear-gradient(145deg, rgba(168, 135, 83, 0.2), rgba(255, 255, 255, 0.08));
+    transform: rotate(-2deg);
+    filter: blur(0.2px);
+  }
+
+  .mariages-hero-img::after {
+    content: '';
+    position: absolute;
+    inset: 7% 8% 7% -6%;
+    border: 0.5px solid rgba(168, 135, 83, 0.28);
+    border-radius: 28px;
+    transform: rotate(2.4deg);
+    pointer-events: none;
   }
 
   .mariages-hero-img img {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 18px;
+    border-radius: 26px;
+    box-shadow: 0 24px 58px rgba(72, 46, 25, 0.13);
     mask-image:
-      linear-gradient(to right, transparent 0%, black 18%, black 88%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+      linear-gradient(to right, transparent 0%, black 12%, black 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);
     mask-composite: intersect;
     -webkit-mask-image:
-      linear-gradient(to right, transparent 0%, black 18%, black 88%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+      linear-gradient(to right, transparent 0%, black 12%, black 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);
     -webkit-mask-composite: source-in;
   }
 
   @media (max-width: 768px) {
+    .mariages-hero {
+      padding-block: 3.2rem 4.9rem;
+    }
+
     .mariages-hero-inner {
       grid-template-columns: 1fr;
+      gap: 1.6rem;
     }
 
     .mariages-hero-img {
+      justify-self: stretch;
+      width: 100%;
       max-height: 260px;
       overflow: hidden;
-      border-radius: 18px;
+      border-radius: 22px;
+    }
+
+    .mariages-hero-img::before,
+    .mariages-hero-img::after {
+      display: none;
     }
 
     .mariages-hero-img img {
       object-fit: cover;
       height: 260px;
       width: 100%;
-      border-radius: 18px;
+      border-radius: 22px;
     }
   }
 
@@ -219,11 +301,12 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .mariages-hero h1 {
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 400;
+    font-size: clamp(2.6rem, 7vw, 5.7rem);
+    font-weight: 300;
     color: var(--color-section-title);
-    line-height: 1.15;
+    line-height: 0.95;
     margin: 0;
+    max-width: 9ch;
   }
 
   .hero-subtitle {
@@ -234,150 +317,538 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     margin: 0;
   }
 
-  .categories-section { padding-block: var(--spacing-section); }
+  .hero-service-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.65rem;
+    max-width: 560px;
+    padding-top: 0.35rem;
+  }
+
+  .hero-service-strip span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0.48rem 0.8rem;
+    color: rgba(75, 53, 36, 0.76);
+    border: 0.5px solid rgba(168, 135, 83, 0.2);
+    border-radius: 999px;
+    background: rgba(255, 251, 244, 0.54);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-jump {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    width: fit-content;
+    min-height: 44px;
+    margin-top: 0.2rem;
+    padding: 0.72rem 1rem;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    border: 0.5px solid rgba(122, 92, 32, 0.22);
+    border-radius: 999px;
+    background: rgba(255, 250, 241, 0.62);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76), 0 10px 24px rgba(72, 46, 25, 0.06);
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: transform 260ms var(--ease-out-soft), border-color 260ms var(--ease-out-soft), background 260ms var(--ease-out-soft);
+  }
+
+  .hero-jump:hover {
+    transform: translateY(-2px);
+    border-color: rgba(168, 135, 83, 0.42);
+    background: rgba(255, 252, 247, 0.82);
+  }
+
+  .hero-jump svg {
+    color: var(--color-gold);
+    transition: transform 260ms var(--ease-out-soft);
+  }
+
+  .hero-jump:hover svg {
+    transform: translateY(2px);
+  }
+
+  @media (max-width: 520px) {
+    .mariages-hero h1 {
+      max-width: 8ch;
+    }
+
+    .hero-service-strip {
+      gap: 0.42rem;
+    }
+
+    .hero-service-strip span {
+      min-height: 30px;
+      padding: 0.42rem 0.62rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .categories-section {
+    position: relative;
+    overflow: hidden;
+    margin-top: -1px;
+    padding-block: clamp(3.8rem, 8vw, 6.8rem) clamp(6rem, 11vw, 9rem);
+    background:
+      radial-gradient(ellipse at 16% 8%, rgba(168, 135, 83, 0.08), transparent 34%),
+      radial-gradient(ellipse at 88% 92%, rgba(135, 144, 115, 0.07), transparent 36%),
+      linear-gradient(180deg, #f7f1e6 0%, #fff8ee 44%, #f2dfc9 100%);
+  }
+
+  .categories-section::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: clamp(5rem, 12vw, 9rem);
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(242, 223, 201, 0), #f5e6d1 56%, #fff8ee 100%);
+  }
+
+  .reels-intro {
+    display: grid;
+    gap: 0.7rem;
+    max-width: 760px;
+    margin-bottom: clamp(1.35rem, 4vw, 2.4rem);
+  }
+
+  .reels-intro h2 {
+    margin: 0;
+    color: var(--color-charcoal);
+    font-size: clamp(2.4rem, 8vw, 5.2rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: 0;
+  }
 
   .categories-grid {
-    display: flex; flex-direction: column;
-    gap: 0.85rem; max-width: 420px; margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.72rem, 2.5vw, 1.1rem);
   }
 
-  @media (min-width: 600px) { .categories-grid { display: grid; grid-template-columns: repeat(2, 1fr); max-width: 640px; gap: 1rem; } }
-  @media (min-width: 1024px) { .categories-grid { grid-template-columns: repeat(4, 1fr); max-width: 100%; gap: 1.25rem; } }
-
-  /* Shell */
   .card-shell {
-    border-radius: 28px; padding: 5px;
-    border: 0.5px solid rgba(229,215,190,0.6);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(43,31,21,0.04);
+    position: relative;
+    display: block;
+    min-width: 0;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    border-radius: 24px;
     transform-style: preserve-3d;
     transform: perspective(900px) rotateX(0deg) rotateY(0deg);
-    transition: transform 500ms var(--ease-out-soft), box-shadow 500ms var(--ease-out-soft);
-    will-change: transform; text-decoration: none;
+    transition: transform 500ms var(--ease-out-soft), filter 500ms var(--ease-out-soft);
+    will-change: transform;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    display: flex; flex-direction: column;
   }
-  .cs-0 { background: rgba(168,135,83,0.07); }
-  .cs-1 { background: rgba(193,104,71,0.07); }
-  .cs-2 { background: rgba(122,92,32,0.06); }
 
-  /* Core */
-  .card-core {
-    border-radius: 22px; padding: 1.1rem 1.25rem;
-    display: flex; flex-direction: column; gap: 0.65rem;
-    position: relative; overflow: hidden;
-    flex: 1;
+  .reel-card {
+    position: relative;
+    display: grid;
+    min-height: clamp(188px, 42vw, 248px);
+    aspect-ratio: 0.9;
+    overflow: hidden;
+    border: 0.5px solid rgba(154, 119, 72, 0.18);
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 16% 10%, rgba(255, 255, 255, 0.82), transparent 28%),
+      radial-gradient(circle at 92% 96%, rgba(168, 135, 83, 0.12), transparent 34%),
+      linear-gradient(145deg, rgba(255, 253, 248, 0.98), rgba(246, 235, 219, 0.94));
+    box-shadow:
+      0 14px 32px rgba(72, 46, 25, 0.07),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86);
+    isolation: isolate;
   }
-  .cc-0 { background: linear-gradient(145deg, #FEFCF8 0%, #EDDEB8 100%); }
-  .cc-1 { background: linear-gradient(145deg, #FEFCF8 0%, #F0CBBA 100%); }
-  .cc-2 { background: linear-gradient(145deg, #FEFCF8 0%, #E6D8A8 100%); }
+
+  .reel-card::before,
+  .reel-card::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .reel-card::before {
+    inset: 10px;
+    z-index: 1;
+    border: 0.5px solid rgba(154, 119, 72, 0.13);
+    border-radius: 17px;
+  }
+
+  .reel-card::after {
+    right: -30px;
+    top: -52px;
+    z-index: 1;
+    width: 132px;
+    height: 172px;
+    border-radius: 999px;
+    background: rgba(168, 135, 83, 0.095);
+    transform: rotate(-24deg);
+    transition: transform 700ms var(--ease-out-soft), opacity 700ms var(--ease-out-soft);
+  }
+
+  .page-watermark,
+  .page-thread {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .page-watermark {
+    left: 18px;
+    top: 54px;
+    width: 46%;
+    height: 1px;
+    opacity: 0.46;
+    background: linear-gradient(90deg, rgba(168, 135, 83, 0.34), transparent);
+    box-shadow:
+      0 18px 0 rgba(168, 135, 83, 0.16),
+      0 36px 0 rgba(168, 135, 83, 0.1);
+  }
+
+  .page-thread {
+    right: 18px;
+    bottom: 18px;
+    width: 72px;
+    height: 72px;
+    border-right: 0.5px solid rgba(135, 114, 79, 0.14);
+    border-bottom: 0.5px solid rgba(135, 114, 79, 0.14);
+    border-radius: 0 0 17px 0;
+  }
+
+  .page-thread::before {
+    content: '';
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 42px;
+    height: 42px;
+    border-right: 0.5px solid rgba(135, 114, 79, 0.11);
+    border-bottom: 0.5px solid rgba(135, 114, 79, 0.11);
+    border-radius: 0 0 12px 0;
+  }
 
   .card-light {
-    position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(circle at var(--lx,28%) var(--ly,22%), rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.1) 35%, transparent 65%);
-    border-radius: inherit; transition: background 80ms linear;
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at var(--lx, 28%) var(--ly, 22%), rgba(255, 255, 255, 0.54), transparent 34%),
+      linear-gradient(115deg, transparent 0 48%, rgba(255, 255, 255, 0.22) 56%, transparent 66%);
+    mix-blend-mode: screen;
+    transition: background 80ms linear;
   }
 
-  .card-top { display: flex; align-items: center; justify-content: space-between; position: relative; }
-
-  .card-num {
-    font-family: var(--font-serif); font-size: 2.5rem; font-weight: 200; font-style: italic;
-    line-height: 1; color: rgba(43,31,21,0.09); user-select: none; pointer-events: none;
+  .page-mark {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 4;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(95, 70, 48, 0.74);
+    border: 0.5px solid rgba(168, 135, 83, 0.2);
+    border-radius: 14px;
+    background: rgba(255, 250, 241, 0.72);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.74);
+    transition: transform 420ms var(--ease-out-soft), color 320ms var(--ease-out-soft);
   }
 
-  .card-thumb {
-    width: 48px; height: 48px; border-radius: 50%;
-    overflow: hidden; border: 0.5px solid rgba(229,215,190,0.7); flex-shrink: 0;
-  }
-  .card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-  .card-title {
-    font-family: var(--font-serif); font-size: 1.25rem; font-weight: 300; font-style: italic;
-    color: var(--color-text-primary); margin: 0; line-height: 1.2; position: relative;
+  .reel-tag,
+  .reel-title,
+  .reel-cta {
+    position: absolute;
+    z-index: 4;
   }
 
-  .card-line { height: 0.5px; background: linear-gradient(90deg, var(--color-border), transparent); position: relative; }
-
-  .card-desc { font-size: 0.95rem; color: var(--color-text-secondary); line-height: 1.72; margin: 0; flex: 1; position: relative; }
-
-  .card-cta {
-    display: inline-flex; align-items: center; gap: 0.55rem;
-    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
-    font-style: normal; font-weight: 500; text-decoration: none; color: var(--color-accent);
-    padding: 0.5rem 0.6rem 0.5rem 0.9rem; min-height: 44px;
-    border-radius: 999px; background: rgba(255,255,255,0.5);
-    border: 0.5px solid rgba(255,255,255,0.85);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 4px rgba(43,31,21,0.06);
-    align-self: flex-start; margin-top: 0.2rem;
-    position: relative; overflow: hidden; cursor: pointer;
-    transition: background 300ms var(--ease-out-soft), gap 300ms var(--ease-out-soft);
+  .reel-tag {
+    left: 18px;
+    top: 18px;
+    color: rgba(122, 92, 32, 0.66);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
-  .card-cta::before {
-    content: ''; position: absolute; top: 0; left: -80%; width: 55%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-    animation: cta-shimmer 4s ease-in-out infinite; pointer-events: none;
-  }
-  @keyframes cta-shimmer { 0% { left: -80%; } 30% { left: 130%; } 100% { left: 130%; } }
-  .card-shell:nth-child(2) .card-cta::before { animation-delay: 1.3s; }
-  .card-shell:nth-child(3) .card-cta::before { animation-delay: 2.6s; }
-  .card-shell:nth-child(4) .card-cta::before { animation-delay: 3.5s; }
-  .cs-0 .card-cta { color: var(--color-gold); }
-  .cs-2 .card-cta { color: #7A5C20; }
-  .card-cta:hover { background: rgba(255,255,255,0.78); gap: 0.8rem; }
 
-  .cta-circle {
-    width: 28px; height: 28px; border-radius: 50%;
-    border: 1px solid currentColor; opacity: 0.75;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    transition: transform 350ms var(--ease-out-soft), opacity 300ms;
-    animation: arrow-nudge 4s ease-in-out infinite;
+  .reel-title {
+    left: 18px;
+    right: 56px;
+    bottom: 58px;
+    color: var(--color-charcoal);
+    font-family: var(--font-serif);
+    font-size: clamp(1.12rem, 5vw, 1.62rem);
+    font-style: italic;
+    font-weight: 350;
+    line-height: 1.12;
+    text-shadow: none;
   }
-  @keyframes arrow-nudge { 0%, 50%, 100% { transform: translateX(0); } 62% { transform: translateX(4px); } 70% { transform: translateX(1px); } 78% { transform: translateX(3px); } 86% { transform: translateX(0); } }
-  .card-shell:nth-child(2) .cta-circle { animation-delay: 1.3s; }
-  .card-shell:nth-child(3) .cta-circle { animation-delay: 2.6s; }
-  .card-shell:nth-child(4) .cta-circle { animation-delay: 3.5s; }
-  .card-cta:hover .cta-circle, .card-cta:focus .cta-circle { opacity: 1; transform: translateX(4px); animation-play-state: paused; }
-  @media (prefers-reduced-motion: reduce) { .card-cta::before { animation: none; } .cta-circle { animation: none; } }
+
+  .reel-cta {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: rgba(107, 86, 69, 0.78);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 320ms var(--ease-out-soft);
+  }
+
+  .reel-cta svg {
+    color: var(--color-gold);
+    transition: transform 380ms var(--ease-out-soft);
+  }
+
+  .card-shell:hover {
+    filter: saturate(1.04);
+  }
+
+  .card-shell:hover .reel-card::after {
+    transform: rotate(-18deg) translate(-8px, 8px);
+  }
+
+  .card-shell:hover .page-mark {
+    color: var(--color-gold);
+    transform: translateY(-2px);
+  }
+
+  .card-shell:hover .reel-cta svg {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 430px) {
+    .categories-grid {
+      gap: 0.7rem;
+    }
+
+    .reel-card {
+      min-height: 210px;
+      border-radius: 22px;
+    }
+
+    .page-mark {
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .reel-tag {
+      left: 14px;
+      top: 13px;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+    }
+
+    .reel-title {
+      left: 14px;
+      right: 38px;
+      bottom: 50px;
+      font-size: clamp(0.98rem, 5vw, 1.22rem);
+    }
+
+    .reel-cta {
+      left: 14px;
+      right: 14px;
+      bottom: 17px;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  @media (min-width: 980px) {
+    .categories-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.05rem;
+    }
+
+    .reel-card {
+      min-height: 164px;
+      aspect-ratio: auto;
+      border-radius: 20px;
+    }
+
+    .reel-title {
+      right: 92px;
+      bottom: 52px;
+      font-size: clamp(1.22rem, 1.7vw, 1.72rem);
+    }
+
+    .reel-tag,
+    .reel-cta {
+      font-size: 9px;
+    }
+
+    .page-mark {
+      top: 18px;
+      right: 18px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .reel-card {
+      min-height: 174px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-shell,
+    .page-mark,
+    .reel-cta svg {
+      transition: none;
+    }
+  }
 
   .mariages-cta {
-    padding-block: var(--spacing-section);
-    background-color: var(--color-bg-section);
-    border-top: 0.5px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+    margin-top: -1px;
+    padding-block: clamp(4rem, 8vw, 6.6rem);
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.72), transparent 34%),
+      radial-gradient(ellipse at 12% 90%, rgba(168, 135, 83, 0.08), transparent 32%),
+      linear-gradient(180deg, #fff8ee 0%, #fbf1e1 56%, #f6e3cc 100%);
+  }
+
+  .mariages-cta::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 1.1rem;
+    width: min(720px, 76vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, rgba(168, 135, 83, 0.24), transparent);
+  }
+
+  .mariages-cta::after {
+    content: '';
+    position: absolute;
+    right: min(8vw, 7rem);
+    bottom: 14%;
+    width: min(240px, 42vw);
+    height: min(240px, 42vw);
+    border: 0.5px solid rgba(168, 135, 83, 0.12);
+    border-radius: 999px;
+    pointer-events: none;
   }
 
   .mariages-cta-inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 1.25rem;
+    gap: 1rem;
+    max-width: 760px;
+    padding: clamp(0.35rem, 2vw, 1rem) 0;
   }
 
   .mariages-cta h2 {
     font-family: var(--font-serif);
-    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-    font-weight: 400;
+    font-size: clamp(2.1rem, 5vw, 4rem);
+    font-weight: 300;
     color: var(--color-text-primary);
+    line-height: 0.98;
     margin: 0;
   }
 
-  .mariages-cta p { font-size: 1rem; color: var(--color-text-secondary); line-height: 1.7; max-width: 50ch; margin: 0; }
+  .mariages-cta p {
+    font-size: clamp(0.95rem, 1.45vw, 1.08rem);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    max-width: 54ch;
+    margin: 0;
+  }
 
   .cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.75rem;
-    background-color: var(--color-accent);
-    color: white;
+    justify-content: center;
+    gap: 0.7rem;
+    min-height: 48px;
+    margin-top: 0.55rem;
+    padding: 0.72rem 0.82rem 0.72rem 1.25rem;
+    background:
+      linear-gradient(145deg, rgba(92, 64, 41, 0.96), rgba(122, 92, 58, 0.94));
+    color: #fff7ec;
     font-size: 12px;
-    letter-spacing: 0.1em;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
-    border-radius: var(--radius-btn);
-    transition: background-color 300ms var(--ease-out-soft), gap 250ms var(--ease-out-soft);
-    margin-top: 0.5rem;
+    border: 0.5px solid rgba(255, 234, 199, 0.32);
+    border-radius: 999px;
+    box-shadow:
+      0 16px 32px rgba(72, 46, 25, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    transition: transform 280ms var(--ease-out-soft), box-shadow 280ms var(--ease-out-soft), background 280ms var(--ease-out-soft);
   }
 
-  .cta-btn:hover { background-color: color-mix(in srgb, var(--color-accent) 85%, black); gap: 0.75rem; }
+  .cta-btn svg {
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    color: #5c4029;
+    border-radius: 999px;
+    background: rgba(255, 247, 236, 0.92);
+    transition: transform 280ms var(--ease-out-soft);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    background:
+      linear-gradient(145deg, rgba(105, 73, 46, 0.98), rgba(137, 103, 65, 0.95));
+    box-shadow:
+      0 20px 40px rgba(72, 46, 25, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+
+  .cta-btn:hover svg {
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 520px) {
+    .mariages-cta {
+      padding-block: 3.5rem 5rem;
+    }
+
+    .mariages-cta::before {
+      width: 82vw;
+    }
+
+    .cta-btn {
+      width: min(100%, 280px);
+      justify-content: space-between;
+      padding-left: 1.15rem;
+    }
+  }
 </style>
