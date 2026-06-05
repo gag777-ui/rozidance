@@ -33,21 +33,37 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
   <!-- Hero -->
   <section class="cat-hero">
     <div class="section-container cat-hero-inner">
-      <a href={`/${lang}/mariages`} class="back-link">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        {s.backLink}
-      </a>
-      <span class="eyebrow">{s.eyebrow}</span>
-      <h1>{cat.title}</h1>
-      <p class="hero-subtitle">{cat.description}</p>
+      <div class="cat-hero-copy">
+        <a href={`/${lang}/mariages`} class="back-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {s.backLink}
+        </a>
+        <span class="eyebrow">{s.eyebrow}</span>
+        <h1>{cat.title}</h1>
+        <p class="hero-subtitle">{cat.description}</p>
+      </div>
+      <div class="cat-hero-panel" aria-hidden="true">
+        <span class="panel-line"></span>
+        <span class="panel-arc"></span>
+        <span class="panel-word">{cat.title}</span>
+        <div class="panel-meta">
+          <span>{cat.count} {s.videoLabel}s</span>
+          <span>Instagram</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Reels grid -->
-  <section class="reels-section">
+  <section class="reels-section" aria-labelledby="moments-title">
     <div class="section-container">
+      <div class="reels-heading reveal-fade">
+        <span class="eyebrow">{t.nav.reelLabel}</span>
+        <h2 id="moments-title">{s.momentsTitle}</h2>
+        <p>{s.momentsText}</p>
+      </div>
       <div class="reels-grid">
         {reels.map((href, i) => (
           <a
@@ -58,21 +74,22 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
             target={href !== '#' ? '_blank' : undefined}
             rel={href !== '#' ? 'noopener noreferrer' : undefined}
           >
-            <div class="reel-thumb">
-              <img src="/images/reel-mariages.webp" alt={`${cat.title} ${i + 1}`} loading="lazy" width="1013" height="1372" />
-              <div class="reel-overlay">
-                <svg class="reel-ig-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.4"/>
-                  <circle cx="12" cy="12" r="3.5" stroke="white" stroke-width="1.4"/>
-                  <circle cx="17" cy="7" r="1.2" fill="white"/>
-                </svg>
-              </div>
-            </div>
-            <p class="reel-label">{t.nav.reelLabel}
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <span class="reel-card-glow" aria-hidden="true"></span>
+            <span class="reel-ig-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.35"/>
+                <circle cx="12" cy="12" r="3.35" stroke="currentColor" stroke-width="1.35"/>
+                <circle cx="17" cy="7" r="1.1" fill="currentColor"/>
               </svg>
-            </p>
+            </span>
+            <span class="reel-line" aria-hidden="true"></span>
+            <span class="reel-title">{t.nav.reelLabel}</span>
+            <span class="reel-note">Instagram</span>
+            <span class="reel-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 12 12 4M12 4H5M12 4v7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
           </a>
         ))}
       </div>
@@ -102,17 +119,59 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
 
 <style>
   .cat-hero {
-    padding-block: var(--spacing-section);
-    background-color: var(--color-bg-section);
-    border-bottom: 0.5px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3.8rem, 8vw, 7rem) clamp(5rem, 10vw, 8rem);
+    background:
+      radial-gradient(ellipse at 12% 18%, rgba(255, 255, 255, 0.72), transparent 38%),
+      radial-gradient(ellipse at 88% 20%, rgba(168, 135, 83, 0.12), transparent 36%),
+      linear-gradient(180deg, #fffaf3 0%, #fbefdf 58%, #f6e1c8 100%);
   }
 
-  .cat-hero-inner { display: flex; flex-direction: column; gap: 1rem; }
+  .cat-hero::before,
+  .cat-hero::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .cat-hero::before {
+    left: -120px;
+    top: 18%;
+    width: min(480px, 58vw);
+    height: min(480px, 58vw);
+    border: 0.5px solid rgba(168, 135, 83, 0.12);
+    border-radius: 999px;
+  }
+
+  .cat-hero::after {
+    inset-inline: 0;
+    bottom: -1px;
+    height: clamp(5rem, 12vw, 9rem);
+    background: linear-gradient(180deg, rgba(246, 225, 200, 0), #f6e1c8 52%, #fff7ec 100%);
+  }
+
+  .cat-hero-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.98fr) minmax(280px, 0.72fr);
+    align-items: center;
+    gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .cat-hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
   .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.48rem;
+    width: fit-content;
+    min-height: 40px;
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -126,10 +185,11 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
 
   .cat-hero h1 {
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 400;
+    font-size: clamp(2.7rem, 7vw, 6rem);
+    font-weight: 300;
     color: var(--color-text-primary);
-    line-height: 1.15;
+    line-height: 0.96;
+    max-width: 10ch;
     margin: 0;
   }
 
@@ -141,79 +201,277 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
     margin: 0;
   }
 
-  .reels-section { padding-block: var(--spacing-section); }
+  .cat-hero-panel {
+    position: relative;
+    min-height: clamp(250px, 36vw, 430px);
+    border: 0.5px solid rgba(168, 135, 83, 0.18);
+    border-radius: 34px;
+    background:
+      radial-gradient(circle at 26% 24%, rgba(255, 255, 255, 0.75), transparent 32%),
+      radial-gradient(circle at 74% 78%, rgba(168, 135, 83, 0.12), transparent 36%),
+      linear-gradient(145deg, rgba(255, 253, 248, 0.84), rgba(242, 224, 201, 0.58));
+    box-shadow:
+      0 22px 56px rgba(72, 46, 25, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    overflow: hidden;
+  }
+
+  .panel-line,
+  .panel-arc,
+  .panel-word {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .panel-line {
+    left: 10%;
+    top: 22%;
+    width: 54%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(168, 135, 83, 0.42), transparent);
+    box-shadow:
+      0 42px 0 rgba(168, 135, 83, 0.16),
+      0 84px 0 rgba(168, 135, 83, 0.1);
+  }
+
+  .panel-arc {
+    right: -24%;
+    top: 12%;
+    width: 78%;
+    aspect-ratio: 1;
+    border: 0.5px solid rgba(168, 135, 83, 0.22);
+    border-radius: 999px;
+  }
+
+  .panel-word {
+    left: 10%;
+    right: 10%;
+    bottom: 27%;
+    color: rgba(43, 31, 21, 0.12);
+    font-family: var(--font-serif);
+    font-size: clamp(2.2rem, 4.6vw, 4.6rem);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 0.95;
+  }
+
+  .panel-meta {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .panel-meta span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0.45rem 0.72rem;
+    color: rgba(75, 53, 36, 0.72);
+    border: 0.5px solid rgba(168, 135, 83, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 251, 244, 0.58);
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+  }
+
+  .reels-section {
+    position: relative;
+    overflow: hidden;
+    margin-top: -1px;
+    padding-block: clamp(3.6rem, 8vw, 6.6rem) clamp(5.5rem, 10vw, 8rem);
+    background:
+      radial-gradient(ellipse at 18% 18%, rgba(168, 135, 83, 0.08), transparent 34%),
+      radial-gradient(ellipse at 88% 82%, rgba(135, 144, 115, 0.07), transparent 36%),
+      linear-gradient(180deg, #fff7ec 0%, #fffaf4 48%, #f5e3cc 100%);
+  }
+
+  .reels-section::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: clamp(5rem, 11vw, 8rem);
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(245, 227, 204, 0), #f5e3cc 48%, #fff8ee 100%);
+  }
+
+  .reels-heading {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.75rem;
+    max-width: 760px;
+    margin-bottom: clamp(1.4rem, 4vw, 2.6rem);
+  }
+
+  .reels-heading h2 {
+    margin: 0;
+    color: var(--color-charcoal);
+    font-family: var(--font-serif);
+    font-size: clamp(2.1rem, 6vw, 4.8rem);
+    font-weight: 300;
+    line-height: 0.98;
+  }
+
+  .reels-heading p {
+    max-width: 58ch;
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: clamp(0.95rem, 1.45vw, 1.08rem);
+    line-height: 1.75;
+  }
 
   .reels-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1rem;
-  }
-
-  @media (min-width: 640px) { .reels-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1.25rem; } }
-  @media (min-width: 1024px) { .reels-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } }
-
-  .reel-card { display: block; text-decoration: none; }
-
-  .reel-thumb {
     position: relative;
-    aspect-ratio: 3 / 4;
-    border-radius: 1.5rem;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.72rem, 2.4vw, 1rem);
+  }
+
+  .reel-card {
+    position: relative;
+    display: grid;
+    min-height: 188px;
+    padding: 1rem;
     overflow: hidden;
-    background-color: var(--color-bg-card);
-    border: 0.5px solid var(--color-border);
+    color: var(--color-charcoal);
+    text-decoration: none;
+    border: 0.5px solid rgba(154, 119, 72, 0.16);
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.74), transparent 28%),
+      linear-gradient(145deg, rgba(255, 253, 248, 0.96), rgba(246, 235, 219, 0.82));
+    box-shadow:
+      0 14px 32px rgba(72, 46, 25, 0.065),
+      inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    transition: transform 420ms var(--ease-out-soft), box-shadow 420ms var(--ease-out-soft);
   }
 
-  .reel-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; position: absolute; inset: 0; transition: transform 500ms var(--ease-out-soft); }
-
-  .reel-overlay {
+  .reel-card-glow {
     position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.22);
-    opacity: 0;
-    transition: opacity 300ms var(--ease-out-soft);
+    right: -38px;
+    top: -48px;
+    width: 138px;
+    height: 168px;
+    border-radius: 999px;
+    background: rgba(168, 135, 83, 0.1);
+    transform: rotate(-24deg);
+    transition: transform 650ms var(--ease-out-soft);
   }
 
-  .reel-ig-icon { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
-
-  .reel-card:hover .reel-thumb img { transform: scale(1.03); }
-  .reel-card:hover .reel-overlay { opacity: 1; }
-
-  .reel-label {
-    display: flex;
+  .reel-ig-icon {
+    position: relative;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.3rem;
-    margin: 0.5rem 0 0;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
+    color: rgba(92, 64, 41, 0.78);
+    border: 0.5px solid rgba(168, 135, 83, 0.2);
+    border-radius: 15px;
+    background: rgba(255, 250, 241, 0.72);
+    backdrop-filter: blur(10px);
+  }
+
+  .reel-line {
+    position: absolute;
+    left: 1rem;
+    top: 72px;
+    width: 42%;
+    height: 1px;
+    opacity: 0.5;
+    background: linear-gradient(90deg, rgba(168, 135, 83, 0.34), transparent);
+    box-shadow: 0 19px 0 rgba(168, 135, 83, 0.12);
+  }
+
+  .reel-title,
+  .reel-note,
+  .reel-arrow {
+    position: absolute;
+    z-index: 1;
+  }
+
+  .reel-title {
+    left: 1rem;
+    right: 3.5rem;
+    bottom: 2.65rem;
+    color: var(--color-charcoal);
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 4vw, 1.45rem);
+    font-style: italic;
+    font-weight: 350;
+    line-height: 1.1;
+  }
+
+  .reel-note {
+    left: 1rem;
+    bottom: 1rem;
+    color: rgba(107, 86, 69, 0.76);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
-    color: var(--color-text-secondary);
-    transition: color 250ms var(--ease-out-soft);
   }
-  .reel-card:hover .reel-label { color: var(--color-accent); }
+
+  .reel-arrow {
+    right: 1rem;
+    bottom: 1rem;
+    color: var(--color-gold);
+    transition: transform 320ms var(--ease-out-soft);
+  }
+
+  .reel-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 18px 42px rgba(72, 46, 25, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  }
+
+  .reel-card:hover .reel-card-glow {
+    transform: rotate(-16deg) translate(-8px, 8px);
+  }
+
+  .reel-card:hover .reel-arrow {
+    transform: translate(3px, -3px);
+  }
 
   .cat-cta {
-    padding-block: var(--spacing-section);
-    background-color: var(--color-bg-section);
-    border-top: 0.5px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+    margin-top: -1px;
+    padding-block: clamp(4rem, 8vw, 6.6rem);
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.7), transparent 34%),
+      linear-gradient(180deg, #fff8ee 0%, #fbf1e1 56%, #f6e3cc 100%);
   }
 
   .cat-cta-inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
   .cat-cta h2 {
     font-family: var(--font-serif);
-    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-    font-weight: 400;
+    font-size: clamp(2.1rem, 5vw, 3.8rem);
+    font-weight: 300;
     color: var(--color-text-primary);
+    line-height: 0.98;
     margin: 0;
   }
 
@@ -224,19 +482,130 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
   .cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.75rem;
+    justify-content: center;
+    gap: 0.65rem;
+    min-height: 48px;
+    padding: 0.72rem 1.2rem;
     font-size: 12px;
-    letter-spacing: 0.1em;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
-    border-radius: var(--radius-btn);
-    transition: background-color 300ms var(--ease-out-soft), gap 250ms var(--ease-out-soft), color 300ms var(--ease-out-soft);
+    border-radius: 999px;
+    transition: transform 280ms var(--ease-out-soft), border-color 280ms var(--ease-out-soft), background 280ms var(--ease-out-soft), color 280ms var(--ease-out-soft);
   }
 
-  .cta-primary { background-color: var(--color-accent); color: white; }
-  .cta-primary:hover { background-color: color-mix(in srgb, var(--color-accent) 85%, black); gap: 0.75rem; }
+  .cta-primary {
+    color: #fff7ec;
+    border: 0.5px solid rgba(255, 234, 199, 0.32);
+    background: linear-gradient(145deg, rgba(92, 64, 41, 0.96), rgba(122, 92, 58, 0.94));
+    box-shadow: 0 16px 32px rgba(72, 46, 25, 0.14);
+  }
 
-  .cta-secondary { background-color: transparent; color: var(--color-text-primary); border: 0.5px solid var(--color-border); }
-  .cta-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); }
+  .cta-primary:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(145deg, rgba(105, 73, 46, 0.98), rgba(137, 103, 65, 0.95));
+  }
+
+  .cta-secondary {
+    background-color: rgba(255, 250, 241, 0.58);
+    color: var(--color-text-primary);
+    border: 0.5px solid rgba(168, 135, 83, 0.24);
+  }
+
+  .cta-secondary:hover {
+    transform: translateY(-2px);
+    border-color: rgba(168, 135, 83, 0.48);
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 820px) {
+    .reels-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1120px) {
+    .reels-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .reel-card {
+      min-height: 200px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .cat-hero {
+      padding-block: 3rem 4.8rem;
+    }
+
+    .cat-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 1.4rem;
+    }
+
+    .cat-hero-panel {
+      min-height: 210px;
+      border-radius: 26px;
+    }
+
+    .panel-word {
+      font-size: clamp(2rem, 12vw, 3.6rem);
+    }
+
+    .panel-meta {
+      flex-wrap: wrap;
+    }
+
+    .reels-grid {
+      gap: 0.72rem;
+    }
+
+    .reel-card {
+      min-height: 170px;
+      border-radius: 20px;
+      padding: 0.85rem;
+    }
+
+    .reel-ig-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+    }
+
+    .reel-line {
+      left: 0.85rem;
+      top: 65px;
+    }
+
+    .reel-title {
+      left: 0.85rem;
+      right: 2.8rem;
+      bottom: 2.45rem;
+      font-size: clamp(1rem, 4.8vw, 1.2rem);
+    }
+
+    .reel-note {
+      left: 0.85rem;
+      bottom: 0.85rem;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+    }
+
+    .reel-arrow {
+      right: 0.85rem;
+      bottom: 0.85rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reel-card,
+    .reel-card-glow,
+    .reel-arrow,
+    .cta-btn {
+      transition: none;
+    }
+  }
 </style>
