@@ -269,15 +269,15 @@ const base = lang === 'fr' ? '' : `/${lang}`;
      ════════════════════════════════════════════════════ */
 
   @keyframes heroKickerIn {
-    from {
-      opacity: 0;
-      transform: translate3d(0, 12px, 0);
-      filter: blur(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-      filter: blur(0);
+    from { opacity: 0; transform: translate3d(0, 12px, 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+
+  /* Version desktop avec blur (uniquement si filter supporté + hover device) */
+  @media (hover: hover) and (min-width: 1024px) {
+    @keyframes heroKickerIn {
+      from { opacity: 0; transform: translate3d(0, 12px, 0); filter: blur(8px); }
+      to   { opacity: 1; transform: translate3d(0, 0, 0);   filter: blur(0); }
     }
   }
 
@@ -542,10 +542,33 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     }
   }
 
+  /* Mobile : boutons plus compacts */
+  @media (max-width: 767px) {
+    .hero-action {
+      min-height: 40px;
+      padding: 4px 4px 4px 14px;
+      font-size: 9.5px;
+      gap: 10px;
+    }
+
+    .hero-actions .btn-primary.hero-action-primary {
+      min-width: 148px;
+    }
+
+    .hero-action-secondary {
+      min-width: 126px;
+    }
+
+    .hero-action-icon {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
   @media (max-width: 430px) {
     .hero-actions {
-      width: min(100%, 330px);
-      gap: 8px;
+      width: min(100%, 300px);
+      gap: 7px;
     }
 
     .hero-action,
@@ -620,23 +643,52 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     const actions  = document.getElementById('hero-actions');
     const decoLine = document.querySelector<HTMLElement>('.hero-deco-line');
     const vw       = window.innerWidth;
+    const isMobile = vw <= 768;
 
     /* ── État initial ── */
-    gsap.set(el,            { opacity: 1 });
-    gsap.set([rozi, dance], { yPercent: 112, opacity: 0, filter: 'blur(10px)' });
+    gsap.set(el, { opacity: 1 });
+    /* Blur désactivé sur mobile — peut bloquer l'animation sur certains navigateurs */
+    if (isMobile) {
+      gsap.set([rozi, dance], { yPercent: 112, opacity: 0 });
+      if (actions) gsap.set(actions, { opacity: 0, y: 12 });
+    } else {
+      gsap.set([rozi, dance], { yPercent: 112, opacity: 0, filter: 'blur(10px)' });
+      if (actions) gsap.set(actions, { opacity: 0, y: 16, filter: 'blur(8px)' });
+    }
     if (decoLine) gsap.set(decoLine, { scaleX: 0, opacity: 0, transformOrigin: 'center' });
-    if (actions)  gsap.set(actions,  { opacity: 0, y: 16, filter: 'blur(8px)' });
 
     /* ── Timeline ── */
-    const isMobile = vw <= 768;
     const tl = gsap.timeline({ delay: isMobile ? 0.48 : 0.86 });
 
-    tl
-      .to(rozi,     { yPercent: 0, opacity: 1, filter: 'blur(0px)', duration: 0.92, ease: 'power4.out' }, 0)
-      .to(dance,    { yPercent: 0, opacity: 1, filter: 'blur(0px)', duration: 0.92, ease: 'power4.out' }, 0.1)
-      .to(decoLine, { scaleX: 1, opacity: 1, duration: 0.68, ease: 'power3.out' }, 0.54)
-      .to(actions,  { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power3.out' }, 0.72);
+    if (isMobile) {
+      tl
+        .to(rozi,     { yPercent: 0, opacity: 1, duration: 0.75, ease: 'power3.out' }, 0)
+        .to(dance,    { yPercent: 0, opacity: 1, duration: 0.75, ease: 'power3.out' }, 0.08)
+        .to(decoLine, { scaleX: 1, opacity: 1, duration: 0.5,  ease: 'power3.out' }, 0.46)
+        .to(actions,  { opacity: 1, y: 0,       duration: 0.55, ease: 'power3.out' }, 0.60);
+    } else {
+      tl
+        .to(rozi,     { yPercent: 0, opacity: 1, filter: 'blur(0px)', duration: 0.92, ease: 'power4.out' }, 0)
+        .to(dance,    { yPercent: 0, opacity: 1, filter: 'blur(0px)', duration: 0.92, ease: 'power4.out' }, 0.1)
+        .to(decoLine, { scaleX: 1, opacity: 1, duration: 0.68, ease: 'power3.out' }, 0.54)
+        .to(actions,  { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power3.out' }, 0.72);
+    }
   }
 
   document.addEventListener('astro:page-load', initHeroTitleAnimation);
+
+  /* ── Filet de sécurité : force tout visible si GSAP coince ── */
+  function heroFallback() {
+    const els = ['hero-italic', 'hero-actions'];
+    els.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.cssText = 'opacity:1;transform:none;filter:none';
+    });
+    const decoLine = document.querySelector<HTMLElement>('.hero-deco-line');
+    if (decoLine) decoLine.style.cssText = 'opacity:1;transform:scaleX(1)';
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    setTimeout(heroFallback, 2500);
+  });
 </script>
