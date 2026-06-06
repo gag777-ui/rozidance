@@ -89,11 +89,6 @@ const danseMarieeVideos = [
               </a>
             </div>
           ))}
-          <div class="reel-dots" aria-hidden="true">
-            {musiciensVideos.map((_, i) => (
-              <button class={`reel-dot${i === 0 ? ' is-active' : ''}`} data-dot={i} aria-label={`Vidéo ${i + 1}`}></button>
-            ))}
-          </div>
         </div>
       ) : isDanseMariee ? (
         /* ── Vidéo danse de la mariée ── */
@@ -114,11 +109,6 @@ const danseMarieeVideos = [
               </a>
             </div>
           ))}
-          <div class="reel-dots" aria-hidden="true">
-            {danseMarieeVideos.map((_, i) => (
-              <button class={`reel-dot${i === 0 ? ' is-active' : ''}`} data-dot={i} aria-label={`Vidéo ${i + 1}`}></button>
-            ))}
-          </div>
         </div>
       ) : isMariee ? (
         /* ── Carousel vidéo chant de la mariée (3 vidéos, 7s) ── */
@@ -139,11 +129,6 @@ const danseMarieeVideos = [
               </a>
             </div>
           ))}
-          <div class="reel-dots" aria-hidden="true">
-            {marieeVideos.map((_, i) => (
-              <button class={`reel-dot${i === 0 ? ' is-active' : ''}`} data-dot={i} aria-label={`Vidéo ${i + 1}`}></button>
-            ))}
-          </div>
         </div>
       ) : isDanse ? (
         /* ── Carousel vidéo danse de mariage (4 vidéos, 5s) ── */
@@ -179,11 +164,6 @@ const danseMarieeVideos = [
           ))}
 
           <!-- Dots navigation -->
-          <div class="reel-dots" aria-hidden="true">
-            {danseVideos.map((_, i) => (
-              <button class={`reel-dot${i === 0 ? ' is-active' : ''}`} data-dot={i} aria-label={`Vidéo ${i + 1}`}></button>
-            ))}
-          </div>
         </div>
       ) : (
         <div class="cat-hero-panel" aria-hidden="true">
@@ -264,29 +244,23 @@ const danseMarieeVideos = [
     if (!carousel) return;
 
     const slides  = Array.from(carousel.querySelectorAll<HTMLElement>('.reel-slide'));
-    const dots    = Array.from(carousel.querySelectorAll<HTMLElement>('.reel-dot'));
     const videos  = slides.map(s => s.querySelector<HTMLVideoElement>('video')!);
     const links   = slides.map(s => s.querySelector<HTMLAnchorElement>('.reel-video-link')!);
 
     let current = 0;
     let timer:   ReturnType<typeof setInterval> | null = null;
-    /* 7s pour les carousels à 3 vidéos, 5s pour danse-de-mariage */
     const DURATION = slides.length === 3 ? 7000 : 5000;
 
     function activate(idx: number) {
-      /* Sortie */
       slides[current].classList.remove('is-active');
-      dots[current].classList.remove('is-active');
       links[current].tabIndex = -1;
       videos[current]?.pause();
 
-      /* Entrée */
       current = idx;
       const slide = slides[current];
       const startTime = parseInt(slide.dataset.start || '0');
 
       slide.classList.add('is-active');
-      dots[current].classList.add('is-active');
       links[current].tabIndex = 0;
 
       const v = videos[current];
@@ -307,11 +281,6 @@ const danseMarieeVideos = [
       const slideDuration = parseInt(slides[current].dataset.duration || String(DURATION));
       timer = setTimeout(() => { next(); startTimer(); }, slideDuration);
     }
-
-    /* Dots cliquables */
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => { activate(i); if (slides.length > 1) startTimer(); });
-    });
 
     /* Lancer la première vidéo avec son start time */
     const firstVideo = videos[0];
@@ -954,34 +923,6 @@ const danseMarieeVideos = [
     opacity: 1;
   }
 
-  /* Dots navigation */
-  .reel-dots {
-    position: absolute;
-    bottom: clamp(1.15rem, 2.2vw, 1.45rem);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 6px;
-    z-index: 10;
-  }
-
-  .reel-dot {
-    width: 6px;
-    height: 6px;
-    padding: 0;
-    border: none;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.35);
-    cursor: pointer;
-    transition:
-      width var(--duration-normal) var(--ease-standard),
-      background var(--duration-normal) var(--ease-standard);
-  }
-
-  .reel-dot.is-active {
-    width: 22px;
-    background: rgba(255, 255, 255, 0.92);
-  }
 
   /* Mobile : format portrait pour bien voir les danseurs */
   @media (max-width: 720px) {

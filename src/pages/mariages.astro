@@ -59,11 +59,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
             </a>
           </div>
         ))}
-        <div class="sc-dots" aria-hidden="true">
-          {[0,1,2,3,4].map(i => (
-            <button class={`sc-dot${i === 0 ? ' is-active' : ''}`} data-dot={i} aria-label={`Vidéo ${i + 1}`}></button>
-          ))}
-        </div>
       </div>
     </div>
   </section>
@@ -281,24 +276,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   }
   .sc-slide.is-active .sc-link:hover .sc-overlay { opacity: 1; }
 
-  .sc-dots {
-    position: absolute;
-    bottom: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 6px;
-    z-index: 10;
-  }
-  .sc-dot {
-    width: 6px; height: 6px;
-    padding: 0; border: none;
-    border-radius: 3px;
-    background: rgba(255,255,255,0.35);
-    cursor: pointer;
-    transition: width 300ms, background 300ms;
-  }
-  .sc-dot.is-active { width: 22px; background: rgba(255,255,255,0.92); }
 
   @media (max-width: 720px) {
     .services-carousel {
@@ -947,7 +924,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     if (!carousel) return;
 
     const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.sc-slide'));
-    const dots   = Array.from(carousel.querySelectorAll<HTMLElement>('.sc-dot'));
     const videos = slides.map(s => s.querySelector<HTMLVideoElement>('video')!);
     const links  = slides.map(s => s.querySelector<HTMLAnchorElement>('.sc-link')!);
 
@@ -957,14 +933,12 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
     function activate(idx: number) {
       slides[current].classList.remove('is-active');
-      dots[current].classList.remove('is-active');
       links[current].tabIndex = -1;
       videos[current]?.pause();
 
       current = idx;
       const startTime = parseInt(slides[current].dataset.start || '0');
       slides[current].classList.add('is-active');
-      dots[current].classList.add('is-active');
       links[current].tabIndex = 0;
 
       const v = videos[current];
@@ -975,10 +949,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       if (timer) clearInterval(timer);
       timer = setInterval(() => activate((current + 1) % slides.length), DURATION);
     }
-
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => { activate(i); startTimer(); });
-    });
 
     const first = videos[0];
     if (first) {
