@@ -315,6 +315,10 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       0 0 44px rgba(255, 240, 215, 0.08);
   }
 
+  .services-carousel {
+    touch-action: pan-y;
+  }
+
   .sc-video {
     width: 100%;
     height: 100%;
@@ -1040,6 +1044,23 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       first.play().catch(() => {});
     }
     videos.slice(1).forEach(v => { if (v) v.preload = 'metadata'; });
+
+    /* Swipe gauche/droite pour changer de slide */
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    carousel.addEventListener('touchend', (e: TouchEvent) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        activate(diff > 0
+          ? (current + 1) % slides.length
+          : (current - 1 + slides.length) % slides.length
+        );
+        startTimer();
+      }
+    }, { passive: true });
+
     startTimer();
 
     document.addEventListener('astro:before-swap', () => {
