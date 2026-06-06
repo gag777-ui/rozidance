@@ -123,13 +123,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     font-weight: 400;
     color: var(--color-text-primary);
     letter-spacing: 0.02em;
-    animation: logoTextBreathe 4s ease-in-out infinite;
     display: inline-block;
-  }
-
-  @keyframes logoTextBreathe {
-    0%, 100% { opacity: 1; letter-spacing: 0.02em; }
-    50%       { opacity: 0.72; letter-spacing: 0.05em; }
   }
 
   @media (prefers-reduced-motion: reduce) {
