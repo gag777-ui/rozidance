@@ -16,7 +16,9 @@
   --color-ivory-subtle:    #EDE3D0;
 
   /* Texte */
-  --color-charcoal:        #2B1F15;
+  --color-charcoal:        #3A2A20;
+  --color-heading-deep:    #4A3326;
+  --color-heading-soft:    #8C684D;
   --color-taupe:           #6B5645;
   --color-sand:            #B8A689;
   --color-sand-light:      #D4C5A9;
@@ -45,7 +47,7 @@
   --color-dark-overlay:    rgba(20, 10, 5, 0.6);
 
   /* Section titles warm tone */
-  --color-title-warm:      #A8714A;
+  --color-title-warm:      var(--color-heading-soft);
 
   /* États système */
   --color-focus-ring:      rgba(193, 104, 71, 0.45);
@@ -57,7 +59,7 @@
   --color-bg-primary:      var(--color-ivory);
   --color-bg-card:         var(--color-ivory-card);
   --color-bg-dark:         var(--color-dark);
-  --color-text-primary:    var(--color-charcoal);
+  --color-text-primary:    var(--color-heading-deep);
   --color-text-secondary:  var(--color-taupe);
   --color-text-muted:      var(--color-sand);
   --color-accent:          var(--color-terracotta);
@@ -188,6 +190,8 @@
     font-family: var(--font-serif);
     font-weight: 400;
     line-height: var(--leading-tight);
+    color: var(--color-heading-deep);
+    text-shadow: 0 1px 0 rgba(255, 248, 236, 0.32);
   }
 
   h1 { font-size: var(--text-4xl); }
@@ -266,6 +270,7 @@
     margin: 0;
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
+    text-shadow: 0 1px 0 rgba(255, 248, 236, 0.34);
   }
 
   @media (min-width: 768px) {
@@ -528,8 +533,8 @@
 
 .section-header .section-title {
   opacity: 0;
-  transform: translateY(28px);
-  letter-spacing: 0.04em;
+  transform: translateY(18px);
+  letter-spacing: 0.015em;
   transition:
     opacity var(--duration-long) var(--ease-standard) 150ms,
     transform var(--duration-long) var(--ease-standard) 150ms,
