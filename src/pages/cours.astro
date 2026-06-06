@@ -44,7 +44,12 @@ const reels = (t.cours as any).reels as (string | null)[];
               <video class="coc-video" muted loop playsinline disablepictureinpicture preload="none">
                 <source src={v.src} type="video/mp4" />
               </video>
-              <div class="coc-overlay" aria-hidden="true">Voir sur Instagram</div>
+              <div class="coc-overlay" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+                Instagram
+              </div>
             </a>
           </div>
         ))}
@@ -787,25 +792,95 @@ const reels = (t.cours as any).reels as (string | null)[];
   /* ── Carousel cours ── */
   .cours-carousel {
     position: relative;
+    isolation: isolate;
     width: min(100%, 420px);
     aspect-ratio: 3 / 4;
     margin-inline: auto;
-    border-radius: 28px;
-    overflow: hidden;
-    background: var(--color-dark);
+    padding: clamp(8px, 1.3vw, 12px);
+    border-radius: 36px;
+    overflow: visible;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.62), transparent 30%),
+      linear-gradient(145deg, rgba(255, 253, 248, 0.72), rgba(236, 216, 190, 0.32));
     touch-action: pan-y;
-    box-shadow: 0 28px 60px rgba(43,31,21,0.18), inset 0 1px 0 rgba(255,255,255,0.08);
+    box-shadow:
+      0 26px 58px rgba(72, 46, 25, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  }
+
+  .cours-carousel::before,
+  .cours-carousel::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .cours-carousel::before {
+    inset: -9% -12% -11% 10%;
+    z-index: -1;
+    border-radius: 44px;
+    background:
+      radial-gradient(ellipse at 70% 18%, rgba(168, 135, 83, 0.2), transparent 35%),
+      radial-gradient(ellipse at 18% 86%, rgba(135, 144, 115, 0.12), transparent 38%),
+      linear-gradient(145deg, rgba(168, 135, 83, 0.14), rgba(255, 255, 255, 0));
+    filter: blur(0.2px);
+    transform: rotate(-2.2deg);
+  }
+
+  .cours-carousel::after {
+    inset: 0;
+    z-index: 8;
+    border: 0.5px solid rgba(168, 135, 83, 0.24);
+    border-radius: inherit;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.26),
+      inset 0 -80px 90px rgba(55, 35, 22, 0.18),
+      inset 0 80px 90px rgba(255, 248, 238, 0.16);
   }
 
   .coc-slide {
-    position: absolute; inset: 0;
-    opacity: 0; transition: opacity 900ms ease-in-out;
+    position: absolute;
+    inset: clamp(8px, 1.3vw, 12px);
+    overflow: hidden;
+    border-radius: 28px;
+    opacity: 0;
+    transition: opacity 900ms ease-in-out;
+    will-change: opacity;
   }
   .coc-slide.is-active { opacity: 1; }
 
   .coc-link {
     display: block; width: 100%; height: 100%;
-    position: relative; text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: inherit;
+    background: #2b1f15;
+    text-decoration: none;
+  }
+
+  .coc-link::before,
+  .coc-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .coc-link::before {
+    background:
+      linear-gradient(90deg, rgba(35, 21, 13, 0.32), transparent 18%, transparent 82%, rgba(35, 21, 13, 0.28)),
+      linear-gradient(180deg, rgba(255, 245, 231, 0.12), transparent 22%, transparent 64%, rgba(35, 21, 13, 0.34));
+    mix-blend-mode: multiply;
+  }
+
+  .coc-link::after {
+    inset: 10px;
+    border: 0.5px solid rgba(255, 242, 219, 0.24);
+    border-radius: 22px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 0 44px rgba(255, 240, 215, 0.08);
   }
 
   .coc-video {
@@ -816,7 +891,8 @@ const reels = (t.cours as any).reels as (string | null)[];
 
   .coc-overlay {
     position: absolute; inset: 0;
-    display: flex; align-items: flex-end; padding: 1rem;
+    z-index: 4;
+    display: flex; align-items: flex-end; gap: 0.5rem; padding: 1rem;
     background: linear-gradient(to top, rgba(20,10,5,0.72) 0%, transparent 55%);
     color: #fff; font-family: var(--font-sans);
     font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
@@ -827,9 +903,25 @@ const reels = (t.cours as any).reels as (string | null)[];
   @media (max-width: 720px) {
     .cours-carousel {
       height: unset; min-height: unset;
-      width: 88vw; aspect-ratio: 3/4;
+      width: 75vw; aspect-ratio: 3/4;
       margin-inline: auto; margin-top: 1.2rem;
-      border-radius: 20px;
+      padding: 7px;
+      border-radius: 26px;
+    }
+
+    .cours-carousel::before {
+      inset: -7% -9% -10% 9%;
+      border-radius: 32px;
+    }
+
+    .coc-slide {
+      inset: 7px;
+      border-radius: 21px;
+    }
+
+    .coc-link::after {
+      inset: 7px;
+      border-radius: 17px;
     }
   }
   @media (prefers-reduced-motion: reduce) {
