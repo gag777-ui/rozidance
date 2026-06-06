@@ -23,13 +23,21 @@ const reels: string[] = Array.from({ length: cat.count }, (_, i) =>
   reelsSrc?.[i] ?? '#'
 );
 
-/* ── Carousel vidéo — uniquement pour "danse-de-mariage" ── */
+/* ── Carousel vidéo — danse-de-mariage (4 vidéos, 5s) ── */
 const isDanse = slug === 'danse-de-mariage';
 const danseVideos = [
   { src: '/videos/mariages/danse-1.mp4', href: 'https://www.instagram.com/reel/DO8kuahirNR/', start: 4  },
   { src: '/videos/mariages/danse-2.mp4', href: 'https://www.instagram.com/reel/DXPkBfZjDfG/', start: 13 },
   { src: '/videos/mariages/danse-3.mp4', href: 'https://www.instagram.com/reel/DR1unSWDMTp/', start: 20 },
   { src: '/videos/mariages/danse-4.mp4', href: 'https://www.instagram.com/reel/DKxHqISI1Wp/', start: 9  },
+];
+
+/* ── Carousel vidéo — danse-de-la-mariee (3 vidéos, 7s) ── */
+const isMariee = slug === 'danse-de-la-mariee';
+const marieeVideos = [
+  { src: '/videos/mariee/mariee-1.mp4', href: 'https://www.instagram.com/reel/DYSGbsVtK7S/', start: 4 },
+  { src: '/videos/mariee/mariee-2.mp4', href: 'https://www.instagram.com/reel/DYCpnNTiIAA/', start: 8 },
+  { src: '/videos/mariee/mariee-3.mp4', href: 'https://www.instagram.com/reel/DCzj6L4IQAA/', start: 5 },
 ];
 ---
 
@@ -48,8 +56,33 @@ const danseVideos = [
         <h1>{cat.title}</h1>
         <p class="hero-subtitle">{cat.description}</p>
       </div>
-      {isDanse ? (
-        /* ── Carousel vidéo danse de mariage ── */
+      {isMariee ? (
+        /* ── Carousel vidéo danse de la mariée (3 vidéos, 7s) ── */
+        <div class="reel-carousel" id="reel-carousel" aria-label="Aperçu vidéos danse de la mariée">
+          {marieeVideos.map((v, i) => (
+            <div class={`reel-slide${i === 0 ? ' is-active' : ''}`} data-index={i} data-start={v.start}>
+              <a href={v.href} target="_blank" rel="noopener noreferrer" class="reel-video-link"
+                aria-label={`Voir le reel ${i + 1} sur Instagram`} tabindex={i === 0 ? 0 : -1}>
+                <video class="reel-video" muted loop playsinline disablepictureinpicture preload={i === 0 ? 'auto' : 'none'}>
+                  <source src={v.src} type="video/mp4" />
+                </video>
+                <div class="reel-hover-cta" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                  </svg>
+                  Voir sur Instagram
+                </div>
+              </a>
+            </div>
+          ))}
+          <div class="reel-dots" aria-hidden="true">
+            {marieeVideos.map((_, i) => (
+              <button class={`reel-dot${i === 0 ? ' is-active' : ''}`} data-dot={i} aria-label={`Vidéo ${i + 1}`}></button>
+            ))}
+          </div>
+        </div>
+      ) : isDanse ? (
+        /* ── Carousel vidéo danse de mariage (4 vidéos, 5s) ── */
         <div class="reel-carousel" id="reel-carousel" aria-label="Aperçu vidéos danse de mariage">
           {danseVideos.map((v, i) => (
             <div class={`reel-slide${i === 0 ? ' is-active' : ''}`} data-index={i} data-start={v.start}>
@@ -173,7 +206,8 @@ const danseVideos = [
 
     let current = 0;
     let timer:   ReturnType<typeof setInterval> | null = null;
-    const DURATION = 5000; // ms entre chaque transition
+    /* 7s pour danse-de-la-mariee (3 vidéos), 5s pour danse-de-mariage (4 vidéos) */
+    const DURATION = slides.length === 3 ? 7000 : 5000;
 
     function activate(idx: number) {
       /* Sortie */
