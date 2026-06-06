@@ -35,15 +35,35 @@ const base = lang === 'fr' ? '' : `/${lang}`;
           </svg>
         </a>
       </div>
-      <div class="mariages-hero-img" aria-hidden="true">
-        <img
-          src="/images/mariages-hero.webp"
-          alt=""
-          width="2048"
-          height="1365"
-          loading="eager"
-          decoding="async"
-        />
+      <!-- Carousel vidéo services -->
+      <div class="services-carousel" id="services-carousel" aria-label="Aperçu de nos services">
+        {[
+          { src: '/videos/musiciens/musiciens-2.mp4',    href: 'https://www.instagram.com/reel/DAtffBloITF/', start: 2  },
+          { src: '/videos/mariages/danse-3.mp4',         href: 'https://www.instagram.com/reel/DY6ymdMsrb6/', start: 8  },
+          { src: '/videos/musiciens/musiciens-1.mp4',    href: 'https://www.instagram.com/reel/DO8wo3NjEY0/', start: 22 },
+          { src: '/videos/mariee/mariee-2.mp4',          href: 'https://www.instagram.com/reel/DYCpnNTiIAA/', start: 8  },
+          { src: '/videos/danse-mariee/danse-mariee-3.mp4', href: 'https://www.instagram.com/reel/DR1unSWDMTp/', start: 12 },
+        ].map((v, i) => (
+          <div class={`sc-slide${i === 0 ? ' is-active' : ''}`} data-start={v.start}>
+            <a href={v.href} target="_blank" rel="noopener noreferrer" class="sc-link"
+              aria-label={`Voir le reel ${i + 1} sur Instagram`} tabindex={i === 0 ? 0 : -1}>
+              <video class="sc-video" muted loop playsinline disablepictureinpicture preload={i === 0 ? 'auto' : 'none'}>
+                <source src={v.src} type="video/mp4" />
+              </video>
+              <div class="sc-overlay" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+                Voir sur Instagram
+              </div>
+            </a>
+          </div>
+        ))}
+        <div class="sc-dots" aria-hidden="true">
+          {[0,1,2,3,4].map(i => (
+            <button class={`sc-dot${i === 0 ? ' is-active' : ''}`} data-dot={i} aria-label={`Vidéo ${i + 1}`}></button>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -206,20 +226,88 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     gap: clamp(0.9rem, 2vw, 1.15rem);
   }
 
-  .mariages-hero-img {
+  /* ── Carousel services ── */
+  .services-carousel {
     position: relative;
     justify-self: end;
-    width: min(100%, 590px);
+    width: min(100%, 480px);
+    aspect-ratio: 4 / 5;
+    border-radius: 28px;
+    overflow: hidden;
+    background: var(--color-dark);
+    box-shadow: 0 28px 60px rgba(43, 31, 21, 0.18), inset 0 1px 0 rgba(255,255,255,0.08);
   }
 
-  .mariages-hero-img::before {
-    content: '';
+  .sc-slide {
     position: absolute;
-    inset: 8% -4% -7% 13%;
-    border-radius: 32px;
-    background: linear-gradient(145deg, rgba(168, 135, 83, 0.2), rgba(255, 255, 255, 0.08));
-    transform: rotate(-2deg);
-    filter: blur(0.2px);
+    inset: 0;
+    opacity: 0;
+    transition: opacity 900ms ease-in-out;
+  }
+  .sc-slide.is-active { opacity: 1; }
+
+  .sc-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .sc-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  .sc-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(20,10,5,0.72) 0%, transparent 55%);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 300ms;
+    pointer-events: none;
+  }
+  .sc-slide.is-active .sc-link:hover .sc-overlay { opacity: 1; }
+
+  .sc-dots {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 10;
+  }
+  .sc-dot {
+    width: 6px; height: 6px;
+    padding: 0; border: none;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.35);
+    cursor: pointer;
+    transition: width 300ms, background 300ms;
+  }
+  .sc-dot.is-active { width: 22px; background: rgba(255,255,255,0.92); }
+
+  @media (max-width: 720px) {
+    .services-carousel {
+      width: 88vw;
+      aspect-ratio: 3 / 4;
+      margin-inline: auto;
+      margin-top: 1.2rem;
+      border-radius: 20px;
+    }
   }
 
   .mariages-hero-img::after {
@@ -852,3 +940,59 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     }
   }
 </style>
+
+<script>
+  function initServicesCarousel() {
+    const carousel = document.getElementById('services-carousel');
+    if (!carousel) return;
+
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.sc-slide'));
+    const dots   = Array.from(carousel.querySelectorAll<HTMLElement>('.sc-dot'));
+    const videos = slides.map(s => s.querySelector<HTMLVideoElement>('video')!);
+    const links  = slides.map(s => s.querySelector<HTMLAnchorElement>('.sc-link')!);
+
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const DURATION = 5000;
+
+    function activate(idx: number) {
+      slides[current].classList.remove('is-active');
+      dots[current].classList.remove('is-active');
+      links[current].tabIndex = -1;
+      videos[current]?.pause();
+
+      current = idx;
+      const startTime = parseInt(slides[current].dataset.start || '0');
+      slides[current].classList.add('is-active');
+      dots[current].classList.add('is-active');
+      links[current].tabIndex = 0;
+
+      const v = videos[current];
+      if (v) { v.currentTime = startTime; v.muted = true; v.play().catch(() => {}); }
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(() => activate((current + 1) % slides.length), DURATION);
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => { activate(i); startTimer(); });
+    });
+
+    const first = videos[0];
+    if (first) {
+      first.currentTime = parseInt(slides[0].dataset.start || '0');
+      first.muted = true;
+      first.play().catch(() => {});
+    }
+    videos.slice(1).forEach(v => { if (v) v.preload = 'metadata'; });
+    startTimer();
+
+    document.addEventListener('astro:before-swap', () => {
+      if (timer) clearInterval(timer);
+    }, { once: true });
+  }
+
+  document.addEventListener('astro:page-load', initServicesCarousel);
+</script>
