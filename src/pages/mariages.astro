@@ -47,7 +47,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
           <div class={`sc-slide${i === 0 ? ' is-active' : ''}`} data-start={v.start}>
             <a href={v.href} target="_blank" rel="noopener noreferrer" class="sc-link"
               aria-label={`Voir le reel ${i + 1} sur Instagram`} tabindex={i === 0 ? 0 : -1}>
-              <video class="sc-video" muted loop playsinline disablepictureinpicture preload={i === 0 ? 'auto' : 'none'}>
+              <video class="sc-video" muted loop playsinline disablepictureinpicture preload="none">
                 <source src={v.src} type="video/mp4" />
               </video>
               <div class="sc-overlay" aria-hidden="true">
@@ -1037,14 +1037,6 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       timer = setInterval(() => activate((current + 1) % slides.length), DURATION);
     }
 
-    const first = videos[0];
-    if (first) {
-      first.currentTime = parseInt(slides[0].dataset.start || '0');
-      first.muted = true;
-      first.play().catch(() => {});
-    }
-    videos.slice(1).forEach(v => { if (v) v.preload = 'metadata'; });
-
     /* Swipe gauche/droite pour changer de slide */
     let touchStartX = 0;
     carousel.addEventListener('touchstart', (e: TouchEvent) => {
@@ -1061,7 +1053,13 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       }
     }, { passive: true });
 
-    startTimer();
+    new IntersectionObserver((entries, obs) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      const first = videos[0];
+      if (first) { first.currentTime = parseInt(slides[0].dataset.start||'0'); first.muted=true; first.play().catch(()=>{}); }
+      startTimer();
+    }, { threshold: 0.1 }).observe(carousel);
 
     document.addEventListener('astro:before-swap', () => {
       if (timer) clearInterval(timer);

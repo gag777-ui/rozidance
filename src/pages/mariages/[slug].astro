@@ -77,7 +77,7 @@ const danseMarieeVideos = [
             <div class={`reel-slide${i === 0 ? ' is-active' : ''}`} data-index={i} data-start={v.start}>
               <a href={v.href} target="_blank" rel="noopener noreferrer" class="reel-video-link"
                 aria-label={`Voir le reel ${i + 1} sur Instagram`} tabindex={i === 0 ? 0 : -1}>
-                <video class="reel-video" muted loop playsinline disablepictureinpicture preload={i === 0 ? 'auto' : 'none'}>
+                <video class="reel-video" muted loop playsinline disablepictureinpicture preload="none">
                   <source src={v.src} type="video/mp4" />
                 </video>
                 <div class="reel-hover-cta" aria-hidden="true">
@@ -97,7 +97,7 @@ const danseMarieeVideos = [
             <div class={`reel-slide${i === 0 ? ' is-active' : ''}`} data-index={i} data-start={v.start} data-duration={v.duration}>
               <a href={v.href} target="_blank" rel="noopener noreferrer" class="reel-video-link"
                 aria-label={`Voir le reel ${i + 1} sur Instagram`} tabindex={i === 0 ? 0 : -1}>
-                <video class="reel-video" muted loop playsinline disablepictureinpicture preload={i === 0 ? 'auto' : 'none'}>
+                <video class="reel-video" muted loop playsinline disablepictureinpicture preload="none">
                   <source src={v.src} type="video/mp4" />
                 </video>
                 <div class="reel-hover-cta" aria-hidden="true">
@@ -117,7 +117,7 @@ const danseMarieeVideos = [
             <div class={`reel-slide${i === 0 ? ' is-active' : ''}`} data-index={i} data-start={v.start}>
               <a href={v.href} target="_blank" rel="noopener noreferrer" class="reel-video-link"
                 aria-label={`Voir le reel ${i + 1} sur Instagram`} tabindex={i === 0 ? 0 : -1}>
-                <video class="reel-video" muted loop playsinline disablepictureinpicture preload={i === 0 ? 'auto' : 'none'}>
+                <video class="reel-video" muted loop playsinline disablepictureinpicture preload="none">
                   <source src={v.src} type="video/mp4" />
                 </video>
                 <div class="reel-hover-cta" aria-hidden="true">
@@ -149,7 +149,7 @@ const danseMarieeVideos = [
                   loop
                   playsinline
                   disablepictureinpicture
-                  preload={i === 0 ? 'auto' : 'none'}
+                  preload="none"
                 >
                   <source src={v.src} type="video/mp4" />
                 </video>
@@ -282,18 +282,6 @@ const danseMarieeVideos = [
       timer = setTimeout(() => { next(); startTimer(); }, slideDuration);
     }
 
-    /* Lancer la première vidéo avec son start time */
-    const firstVideo = videos[0];
-    if (firstVideo) {
-      const firstStartTime = parseInt(slides[0].dataset.start || '0');
-      firstVideo.currentTime = firstStartTime;
-      firstVideo.muted = true;
-      firstVideo.play().catch(() => {});
-    }
-
-    /* Précharger les autres au chargement de la page */
-    videos.slice(1).forEach(v => { if (v) v.preload = 'metadata'; });
-
     /* Swipe gauche/droite pour changer de slide */
     let touchStartX = 0;
     carousel.addEventListener('touchstart', (e: TouchEvent) => {
@@ -310,8 +298,18 @@ const danseMarieeVideos = [
       }
     }, { passive: true });
 
-    /* Si 1 seule vidéo : boucle naturelle, pas de timer */
-    if (slides.length > 1) startTimer();
+    /* Lazy — démarre uniquement quand visible */
+    new IntersectionObserver((entries, obs) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      const firstVideo = videos[0];
+      if (firstVideo) {
+        firstVideo.currentTime = parseInt(slides[0].dataset.start||'0');
+        firstVideo.muted = true;
+        firstVideo.play().catch(() => {});
+      }
+      if (slides.length > 1) startTimer();
+    }, { threshold: 0.1 }).observe(carousel);
 
     document.addEventListener('astro:before-swap', () => {
       if (timer) clearTimeout(timer);

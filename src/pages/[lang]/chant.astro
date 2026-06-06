@@ -735,16 +735,19 @@ const c = t.chant;
       if (v) { v.currentTime = parseInt(slides[current].dataset.start||'0'); v.muted=true; v.play().catch(()=>{}); }
     }
     function startTimer() { if (timer) clearInterval(timer); timer = setInterval(() => activate((current+1)%slides.length), 7000); }
-    const first = videos[0];
-    if (first) { first.currentTime = parseInt(slides[0].dataset.start||'0'); first.muted=true; first.play().catch(()=>{}); }
-    videos.slice(1).forEach(v => { if(v) v.preload='metadata'; });
     let touchStartX = 0;
     carousel.addEventListener('touchstart', (e: TouchEvent) => { touchStartX = e.touches[0].clientX; }, { passive: true });
     carousel.addEventListener('touchend', (e: TouchEvent) => {
       const diff = touchStartX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 40) { activate(diff>0?(current+1)%slides.length:(current-1+slides.length)%slides.length); startTimer(); }
     }, { passive: true });
-    startTimer();
+    new IntersectionObserver((entries, obs) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      const first = videos[0];
+      if (first) { first.currentTime = parseInt(slides[0].dataset.start||'0'); first.muted=true; first.play().catch(()=>{}); }
+      startTimer();
+    }, { threshold: 0.1 }).observe(carousel);
     document.addEventListener('astro:before-swap', () => { if(timer) clearInterval(timer); }, { once: true });
   }
   document.addEventListener('astro:page-load', initChantCarousel);

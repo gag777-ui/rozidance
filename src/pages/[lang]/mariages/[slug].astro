@@ -88,7 +88,7 @@ const musiciensVideos = [
           {danseMarieeVideos.map((v, i) => (
             <div class={`reel-slide${i === 0 ? ' is-active' : ''}`} data-start={v.start} data-duration={(v as any).duration}>
               <a href={v.href} target="_blank" rel="noopener noreferrer" class="reel-video-link" tabindex={i === 0 ? 0 : -1}>
-                <video class="reel-video" muted loop playsinline disablepictureinpicture preload="auto">
+                <video class="reel-video" muted loop playsinline disablepictureinpicture preload="none">
                   <source src={v.src} type="video/mp4" />
                 </video>
                 <div class="reel-hover-cta" aria-hidden="true">Voir sur Instagram</div>
@@ -870,16 +870,19 @@ const musiciensVideos = [
       const dur = parseInt(slides[current].dataset.duration || String(DURATION));
       timer = setTimeout(() => { activate((current + 1) % slides.length); startTimer(); }, dur);
     }
-    const first = videos[0];
-    if (first) { first.currentTime = parseInt(slides[0].dataset.start || '0'); first.muted = true; first.play().catch(() => {}); }
-    videos.slice(1).forEach(v => { if (v) v.preload = 'metadata'; });
     let touchStartX = 0;
     carousel.addEventListener('touchstart', (e: TouchEvent) => { touchStartX = e.touches[0].clientX; }, { passive: true });
     carousel.addEventListener('touchend', (e: TouchEvent) => {
       const diff = touchStartX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 40) { activate(diff > 0 ? (current+1)%slides.length : (current-1+slides.length)%slides.length); if (slides.length > 1) startTimer(); }
     }, { passive: true });
-    if (slides.length > 1) startTimer();
+    new IntersectionObserver((entries, obs) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      const first = videos[0];
+      if (first) { first.currentTime = parseInt(slides[0].dataset.start||'0'); first.muted=true; first.play().catch(()=>{}); }
+      if (slides.length > 1) startTimer();
+    }, { threshold: 0.1 }).observe(carousel);
     document.addEventListener('astro:before-swap', () => { if (timer) clearTimeout(timer); }, { once: true });
   }
   document.addEventListener('astro:page-load', initReelCarousel);
