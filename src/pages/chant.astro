@@ -715,8 +715,9 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .cc-video {
     width: 100%; height: 100%;
-    object-fit: cover; object-position: center 20%;
+    object-fit: contain; object-position: center;
     display: block;
+    background: #0d0d0d;
   }
 
   .cc-overlay {
