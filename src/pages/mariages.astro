@@ -224,18 +224,56 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   /* ── Carousel services ── */
   .services-carousel {
     position: relative;
+    isolation: isolate;
     justify-self: end;
     width: min(100%, 480px);
     aspect-ratio: 4 / 5;
-    border-radius: 28px;
-    overflow: hidden;
-    background: var(--color-dark);
-    box-shadow: 0 28px 60px rgba(43, 31, 21, 0.18), inset 0 1px 0 rgba(255,255,255,0.08);
+    padding: clamp(8px, 1.2vw, 12px);
+    border-radius: 36px;
+    overflow: visible;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.62), transparent 30%),
+      linear-gradient(145deg, rgba(255, 253, 248, 0.72), rgba(236, 216, 190, 0.32));
+    box-shadow:
+      0 26px 58px rgba(72, 46, 25, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  }
+
+  .services-carousel::before,
+  .services-carousel::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .services-carousel::before {
+    inset: -9% -12% -11% 10%;
+    z-index: -1;
+    border-radius: 44px;
+    background:
+      radial-gradient(ellipse at 70% 18%, rgba(168, 135, 83, 0.2), transparent 35%),
+      radial-gradient(ellipse at 18% 86%, rgba(135, 144, 115, 0.12), transparent 38%),
+      linear-gradient(145deg, rgba(168, 135, 83, 0.14), rgba(255, 255, 255, 0));
+    filter: blur(0.2px);
+    transform: rotate(-2.2deg);
+  }
+
+  .services-carousel::after {
+    inset: 0;
+    z-index: 8;
+    border: 0.5px solid rgba(168, 135, 83, 0.24);
+    border-radius: inherit;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.26),
+      inset 0 -80px 90px rgba(55, 35, 22, 0.18),
+      inset 0 80px 90px rgba(255, 248, 238, 0.16);
   }
 
   .sc-slide {
     position: absolute;
-    inset: 0;
+    inset: clamp(8px, 1.2vw, 12px);
+    overflow: hidden;
+    border-radius: 28px;
     opacity: 0;
     transition: opacity 900ms ease-in-out;
   }
@@ -247,6 +285,34 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     height: 100%;
     position: relative;
     text-decoration: none;
+    overflow: hidden;
+    border-radius: inherit;
+    background: #2b1f15;
+  }
+
+  .sc-link::before,
+  .sc-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .sc-link::before {
+    background:
+      linear-gradient(90deg, rgba(35, 21, 13, 0.32), transparent 18%, transparent 82%, rgba(35, 21, 13, 0.28)),
+      linear-gradient(180deg, rgba(255, 245, 231, 0.12), transparent 22%, transparent 64%, rgba(35, 21, 13, 0.34));
+    mix-blend-mode: multiply;
+  }
+
+  .sc-link::after {
+    inset: 10px;
+    border: 0.5px solid rgba(255, 242, 219, 0.24);
+    border-radius: 22px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 0 44px rgba(255, 240, 215, 0.08);
   }
 
   .sc-video {
@@ -271,6 +337,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     opacity: 0;
+    z-index: 4;
     transition: opacity 300ms;
     pointer-events: none;
   }
@@ -283,7 +350,23 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       aspect-ratio: 3 / 4;
       margin-inline: auto;
       margin-top: 1.2rem;
-      border-radius: 20px;
+      padding: 7px;
+      border-radius: 26px;
+    }
+
+    .services-carousel::before {
+      inset: -7% -9% -10% 9%;
+      border-radius: 32px;
+    }
+
+    .sc-slide {
+      inset: 7px;
+      border-radius: 21px;
+    }
+
+    .sc-link::after {
+      inset: 7px;
+      border-radius: 17px;
     }
   }
 
