@@ -27,10 +27,6 @@ const t = getTranslations(lang);
 
   <SectionHero />
 
-  <div class="logo-bridge reveal-fade" aria-hidden="true">
-    <img src="/images/logo.webp" alt="" width="160" height="160" loading="eager" decoding="async" />
-  </div>
-
   <!-- Bande réseaux sociaux -->
   <div class="hero-tagband">
     <div class="tagband-inner">
@@ -108,19 +104,6 @@ const t = getTranslations(lang);
 </Layout>
 
 <style>
-  .logo-bridge {
-    display: flex;
-    justify-content: center;
-    padding-block: 1.25rem 0.75rem;
-    background-color: var(--color-bg-primary);
-  }
-
-  .logo-bridge img {
-    width: 140px;
-    height: auto;
-    opacity: 0.9;
-  }
-
   .hero-tagband {
     background-color: var(--color-bg-primary);
     position: relative;
@@ -247,7 +230,4 @@ const t = getTranslations(lang);
     padding-top: 2rem;
   }
 
-  @media (max-width: 768px) {
-    .logo-bridge img { width: 110px; }
-  }
 </style>
