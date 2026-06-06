@@ -40,8 +40,16 @@ const marieeVideos = [
   { src: '/videos/mariee/mariee-3.mp4', href: 'https://www.instagram.com/reel/DCzj6L4IQAA/', start: 5 },
 ];
 
-/* ── Carousel vidéo — danse-de-la-mariee (3 vidéos, 7s) ── */
+/* ── Vidéo — danse-de-la-mariee (1 vidéo en boucle) ── */
 const isDanseMariee = slug === 'danse-de-la-mariee';
+
+/* ── Carousel vidéo — musiciens (3 vidéos, 7s) ── */
+const isMusicians = slug === 'musiciens';
+const musiciensVideos = [
+  { src: '/videos/musiciens/musiciens-1.mp4', href: 'https://www.instagram.com/reel/DO8wo3NjEY0/', start: 12 },
+  { src: '/videos/musiciens/musiciens-2.mp4', href: 'https://www.instagram.com/reel/DAtffBloITF/', start: 2  },
+  { src: '/videos/musiciens/musiciens-3.mp4', href: 'https://www.instagram.com/reel/DPl-zEijMzZ/', start: 15 },
+];
 const danseMarieeVideos = [
   { src: '/videos/danse-mariee/danse-mariee-3.mp4', href: 'https://www.instagram.com/reel/DR1unSWDMTp/', start: 12, duration: 12000 },
 ];
@@ -62,8 +70,33 @@ const danseMarieeVideos = [
         <h1>{cat.title}</h1>
         <p class="hero-subtitle">{cat.description}</p>
       </div>
-      {isDanseMariee ? (
-        /* ── Carousel vidéo danse de la mariée (3 vidéos, 7s) ── */
+      {isMusicians ? (
+        /* ── Carousel vidéo musiciens (3 vidéos, 7s) ── */
+        <div class="reel-carousel" id="reel-carousel" aria-label="Aperçu vidéos nos musiciens">
+          {musiciensVideos.map((v, i) => (
+            <div class={`reel-slide${i === 0 ? ' is-active' : ''}`} data-index={i} data-start={v.start}>
+              <a href={v.href} target="_blank" rel="noopener noreferrer" class="reel-video-link"
+                aria-label={`Voir le reel ${i + 1} sur Instagram`} tabindex={i === 0 ? 0 : -1}>
+                <video class="reel-video" muted loop playsinline disablepictureinpicture preload={i === 0 ? 'auto' : 'none'}>
+                  <source src={v.src} type="video/mp4" />
+                </video>
+                <div class="reel-hover-cta" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                  </svg>
+                  Voir sur Instagram
+                </div>
+              </a>
+            </div>
+          ))}
+          <div class="reel-dots" aria-hidden="true">
+            {musiciensVideos.map((_, i) => (
+              <button class={`reel-dot${i === 0 ? ' is-active' : ''}`} data-dot={i} aria-label={`Vidéo ${i + 1}`}></button>
+            ))}
+          </div>
+        </div>
+      ) : isDanseMariee ? (
+        /* ── Vidéo danse de la mariée ── */
         <div class="reel-carousel" id="reel-carousel" aria-label="Aperçu vidéos danse de la mariée">
           {danseMarieeVideos.map((v, i) => (
             <div class={`reel-slide${i === 0 ? ' is-active' : ''}`} data-index={i} data-start={v.start} data-duration={v.duration}>
@@ -237,7 +270,7 @@ const danseMarieeVideos = [
 
     let current = 0;
     let timer:   ReturnType<typeof setInterval> | null = null;
-    /* 7s pour danse-de-la-mariee (3 vidéos), 5s pour danse-de-mariage (4 vidéos) */
+    /* 7s pour les carousels à 3 vidéos, 5s pour danse-de-mariage */
     const DURATION = slides.length === 3 ? 7000 : 5000;
 
     function activate(idx: number) {
@@ -789,25 +822,60 @@ const danseMarieeVideos = [
   }
 
   /* ════════════════════════════════════════════════════
-     CAROUSEL VIDÉO (danse-de-mariage uniquement)
+     CAROUSEL VIDÉO
      ════════════════════════════════════════════════════ */
   .reel-carousel {
     position: relative;
-    /* Desktop : remplit toute la hauteur de la colonne gauche */
+    isolation: isolate;
     height: 100%;
     min-height: clamp(380px, 50vw, 580px);
-    border-radius: 28px;
-    overflow: hidden;
-    background: var(--color-dark);
+    padding: clamp(8px, 1.3vw, 12px);
+    border-radius: 36px;
+    overflow: visible;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.62), transparent 30%),
+      linear-gradient(145deg, rgba(255, 253, 248, 0.72), rgba(236, 216, 190, 0.32));
     box-shadow:
-      0 28px 60px rgba(43, 31, 21, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      0 26px 58px rgba(72, 46, 25, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  }
+
+  .reel-carousel::before,
+  .reel-carousel::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .reel-carousel::before {
+    inset: -9% -12% -11% 10%;
+    z-index: -1;
+    border-radius: 44px;
+    background:
+      radial-gradient(ellipse at 70% 18%, rgba(168, 135, 83, 0.2), transparent 35%),
+      radial-gradient(ellipse at 18% 86%, rgba(135, 144, 115, 0.12), transparent 38%),
+      linear-gradient(145deg, rgba(168, 135, 83, 0.14), rgba(255, 255, 255, 0));
+    filter: blur(0.2px);
+    transform: rotate(-2.2deg);
+  }
+
+  .reel-carousel::after {
+    inset: 0;
+    z-index: 8;
+    border: 0.5px solid rgba(168, 135, 83, 0.24);
+    border-radius: inherit;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.26),
+      inset 0 -80px 90px rgba(55, 35, 22, 0.18),
+      inset 0 80px 90px rgba(255, 248, 238, 0.16);
   }
 
   /* Slide — empilées en absolute */
   .reel-slide {
     position: absolute;
-    inset: 0;
+    inset: clamp(8px, 1.3vw, 12px);
+    overflow: hidden;
+    border-radius: 28px;
     opacity: 0;
     transition: opacity 900ms ease-in-out;
     will-change: opacity;
@@ -823,6 +891,34 @@ const danseMarieeVideos = [
     height: 100%;
     position: relative;
     text-decoration: none;
+    overflow: hidden;
+    border-radius: inherit;
+    background: #2b1f15;
+  }
+
+  .reel-video-link::before,
+  .reel-video-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .reel-video-link::before {
+    background:
+      linear-gradient(90deg, rgba(35, 21, 13, 0.32), transparent 18%, transparent 82%, rgba(35, 21, 13, 0.28)),
+      linear-gradient(180deg, rgba(255, 245, 231, 0.12), transparent 22%, transparent 64%, rgba(35, 21, 13, 0.34));
+    mix-blend-mode: multiply;
+  }
+
+  .reel-video-link::after {
+    inset: 10px;
+    border: 0.5px solid rgba(255, 242, 219, 0.24);
+    border-radius: 22px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 0 44px rgba(255, 240, 215, 0.08);
   }
 
   .reel-video {
@@ -849,6 +945,7 @@ const danseMarieeVideos = [
     text-transform: uppercase;
     gap: 0.5rem;
     opacity: 0;
+    z-index: 4;
     transition: opacity var(--duration-normal) var(--ease-standard);
     pointer-events: none;
   }
@@ -860,7 +957,7 @@ const danseMarieeVideos = [
   /* Dots navigation */
   .reel-dots {
     position: absolute;
-    bottom: var(--space-sm);
+    bottom: clamp(1.15rem, 2.2vw, 1.45rem);
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -891,10 +988,27 @@ const danseMarieeVideos = [
     .reel-carousel {
       height: unset;
       min-height: unset;
-      width: 72vw;
+      width: 88vw;
       aspect-ratio: 3 / 4;
       margin-inline: auto;
-      border-radius: 20px;
+      margin-top: 1.2rem;
+      padding: 7px;
+      border-radius: 26px;
+    }
+
+    .reel-carousel::before {
+      inset: -7% -9% -10% 9%;
+      border-radius: 32px;
+    }
+
+    .reel-slide {
+      inset: 7px;
+      border-radius: 21px;
+    }
+
+    .reel-video-link::after {
+      inset: 7px;
+      border-radius: 17px;
     }
   }
 
