@@ -44,15 +44,22 @@ const base = `/${lang}`;
           </svg>
         </a>
       </div>
-      <div class="mariages-hero-img" aria-hidden="true">
-        <img
-          src="/images/mariages-hero.webp"
-          alt=""
-          width="2048"
-          height="1365"
-          loading="eager"
-          decoding="async"
-        />
+      <div class="services-carousel" id="services-carousel" aria-label="Aperçu de nos services">
+        {[
+          { src: '/videos/musiciens/musiciens-2.mp4',       href: 'https://www.instagram.com/reel/DAtffBloITF/', start: 2  },
+          { src: '/videos/mariages/danse-3.mp4',            href: 'https://www.instagram.com/reel/DY6ymdMsrb6/', start: 8  },
+          { src: '/videos/musiciens/musiciens-1.mp4',       href: 'https://www.instagram.com/reel/DO8wo3NjEY0/', start: 22 },
+          { src: '/videos/mariee/mariee-2.mp4',             href: 'https://www.instagram.com/reel/DYCpnNTiIAA/', start: 8  },
+          { src: '/videos/danse-mariee/danse-mariee-3.mp4', href: 'https://www.instagram.com/reel/DR1unSWDMTp/', start: 12 },
+        ].map((v, i) => (
+          <div class={`sc-slide${i === 0 ? ' is-active' : ''}`} data-start={v.start}>
+            <a href={v.href} target="_blank" rel="noopener noreferrer" class="sc-link" tabindex={i === 0 ? 0 : -1}>
+              <video class="sc-video" muted loop playsinline disablepictureinpicture preload={i === 0 ? 'auto' : 'none'}>
+                <source src={v.src} type="video/mp4" />
+              </video>
+            </a>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -860,4 +867,53 @@ const base = `/${lang}`;
       padding-left: 1.15rem;
     }
   }
+
+  .services-carousel {
+    position: relative; justify-self: end;
+    width: min(100%, 480px); aspect-ratio: 4/5;
+    border-radius: 28px; overflow: hidden;
+    background: var(--color-dark); touch-action: pan-y;
+    box-shadow: 0 28px 60px rgba(43,31,21,0.18);
+  }
+  .sc-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 900ms ease-in-out; }
+  .sc-slide.is-active { opacity: 1; }
+  .sc-link { display: block; width: 100%; height: 100%; text-decoration: none; }
+  .sc-video { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+  @media (max-width: 720px) {
+    .services-carousel { width: 88vw; aspect-ratio: 3/4; margin-inline: auto; margin-top: 1.2rem; border-radius: 20px; }
+  }
 </style>
+
+<script>
+  function initServicesCarousel() {
+    const carousel = document.getElementById('services-carousel');
+    if (!carousel) return;
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.sc-slide'));
+    const videos = slides.map(s => s.querySelector<HTMLVideoElement>('video')!);
+    const links  = slides.map(s => s.querySelector<HTMLAnchorElement>('.sc-link')!);
+    let current = 0, timer: ReturnType<typeof setInterval> | null = null;
+    function activate(idx: number) {
+      slides[current].classList.remove('is-active'); links[current].tabIndex = -1; videos[current]?.pause();
+      current = idx;
+      slides[current].classList.add('is-active'); links[current].tabIndex = 0;
+      const v = videos[current];
+      if (v) { v.currentTime = parseInt(slides[current].dataset.start||'0'); v.muted=true; v.play().catch(()=>{}); }
+    }
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(() => activate((current+1)%slides.length), 5000);
+    }
+    const first = videos[0];
+    if (first) { first.currentTime = parseInt(slides[0].dataset.start||'0'); first.muted=true; first.play().catch(()=>{}); }
+    videos.slice(1).forEach(v => { if(v) v.preload='metadata'; });
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', (e: TouchEvent) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', (e: TouchEvent) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) { activate(diff>0?(current+1)%slides.length:(current-1+slides.length)%slides.length); startTimer(); }
+    }, { passive: true });
+    startTimer();
+    document.addEventListener('astro:before-swap', () => { if(timer) clearInterval(timer); }, { once: true });
+  }
+  document.addEventListener('astro:page-load', initServicesCarousel);
+</script>
