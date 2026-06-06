@@ -35,7 +35,7 @@ const t = getTranslations(lang);
   <div class="hero-tagband">
     <div class="tagband-inner">
 
-      <!-- YouTube — rouge 🇦🇲 -->
+      <!-- YouTube -->
       <a
         href="https://www.youtube.com/@luarozihayband"
         target="_blank"
@@ -50,7 +50,7 @@ const t = getTranslations(lang);
 
       <span class="social-sep" aria-hidden="true"></span>
 
-      <!-- Facebook — bleu 🇦🇲 -->
+      <!-- Facebook -->
       <a
         href="https://www.facebook.com/RoziDanseenBelgique/"
         target="_blank"
@@ -65,7 +65,7 @@ const t = getTranslations(lang);
 
       <span class="social-sep" aria-hidden="true"></span>
 
-      <!-- Instagram — orange 🇦🇲 -->
+      <!-- Instagram -->
       <a
         href="https://www.instagram.com/rozi.dance/"
         target="_blank"
@@ -149,20 +149,53 @@ const t = getTranslations(lang);
     gap: 0.5rem;
   }
 
-  /* Icône réseau social — couleurs naturelles toujours visibles */
+  /* Icônes réseaux sociaux — tons bijou adoucis */
   .social-link {
+    --social-tone: #805f2a;
+    --social-glow: rgba(128, 95, 42, 0.14);
+    --social-wash: rgba(128, 95, 42, 0.08);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     border-radius: var(--radius-full);
+    color: var(--social-tone);
+    border: 1px solid rgba(141, 105, 57, 0.18);
+    background:
+      radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.9), transparent 36%),
+      radial-gradient(circle at 72% 78%, var(--social-wash), transparent 48%),
+      linear-gradient(145deg, rgba(255, 250, 241, 0.82), rgba(235, 217, 190, 0.58));
+    box-shadow:
+      0 12px 26px rgba(79, 50, 27, 0.08),
+      0 0 0 6px var(--social-glow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
     text-decoration: none;
-    transition: transform var(--duration-short) var(--ease-standard);
+    transition:
+      color var(--duration-normal) var(--ease-standard),
+      border-color var(--duration-normal) var(--ease-standard),
+      box-shadow var(--duration-normal) var(--ease-standard),
+      transform var(--duration-short) var(--ease-standard);
+  }
+
+  .social-link svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .social-yt svg {
+    width: 30px;
+    height: 25px;
   }
 
 
   .social-link:hover {
+    color: var(--social-tone);
+    border-color: color-mix(in srgb, var(--social-tone) 40%, rgba(255, 255, 255, 0.5));
+    box-shadow:
+      0 16px 34px rgba(79, 50, 27, 0.12),
+      0 0 0 8px var(--social-glow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86);
     transform: translateY(-3px) scale(1.12);
     animation-play-state: paused;
   }
@@ -173,10 +206,26 @@ const t = getTranslations(lang);
     50%       { transform: scale(1.12); opacity: 0.78; }
   }
 
-  /* Bleu · Rouge · Orange — drapeau arménien */
-  .social-fb { color: #0a5fd4; animation: socialBreathe 3.6s ease-in-out 0s   infinite; }
-  .social-yt { color: #FF0000; animation: socialBreathe 3.6s ease-in-out 1.2s infinite; }
-  .social-ig { color: #F57C00; animation: socialBreathe 3.6s ease-in-out 2.4s infinite; }
+  .social-fb {
+    --social-tone: #4f6f8f;
+    --social-glow: rgba(79, 111, 143, 0.13);
+    --social-wash: rgba(79, 111, 143, 0.12);
+    animation: socialBreathe 3.6s ease-in-out 0s infinite;
+  }
+
+  .social-yt {
+    --social-tone: #9b5445;
+    --social-glow: rgba(155, 84, 69, 0.13);
+    --social-wash: rgba(155, 84, 69, 0.12);
+    animation: socialBreathe 3.6s ease-in-out 1.2s infinite;
+  }
+
+  .social-ig {
+    --social-tone: #9a6b74;
+    --social-glow: rgba(154, 107, 116, 0.14);
+    --social-wash: rgba(154, 107, 116, 0.13);
+    animation: socialBreathe 3.6s ease-in-out 2.4s infinite;
+  }
 
   /* Séparateur losange */
   .social-sep {
