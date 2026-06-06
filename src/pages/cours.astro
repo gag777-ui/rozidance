@@ -165,9 +165,9 @@ const reels = (t.cours as any).reels as (string | null)[];
 
   .cours-hero-inner {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 1fr);
+    align-items: stretch;
+    gap: clamp(2rem, 6vw, 6rem);
   }
 
   .cours-hero-text {
@@ -785,13 +785,10 @@ const reels = (t.cours as any).reels as (string | null)[];
   }
 
   /* ── Carousel cours ── */
-  .cours-hero-inner { align-items: center; }
-
   .cours-carousel {
     position: relative;
-    width: min(100%, 360px);
-    aspect-ratio: 3 / 4;
-    margin-inline: auto;
+    height: 100%;
+    min-height: clamp(380px, 50vw, 580px);
     border-radius: 28px;
     overflow: hidden;
     background: var(--color-dark);
@@ -828,6 +825,7 @@ const reels = (t.cours as any).reels as (string | null)[];
 
   @media (max-width: 720px) {
     .cours-carousel {
+      height: unset; min-height: unset;
       width: 88vw; aspect-ratio: 3/4;
       margin-inline: auto; margin-top: 1.2rem;
       border-radius: 20px;
