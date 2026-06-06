@@ -35,15 +35,24 @@ const reels = (fr.cours as any).reels as (string | null)[] ?? [];
         <h1 id="cours-title">{t.cours.heroTitle}</h1>
         <p class="cours-hero-subtitle">{t.cours.heroSubtitle}</p>
       </div>
-      <div class="cours-hero-img" aria-hidden="true">
-        <img
-          src="/images/cours-hero.webp"
-          alt=""
-          width="1536"
-          height="1024"
-          loading="eager"
-          decoding="async"
-        />
+      <div class="cours-carousel" id="cours-carousel" aria-label="Aperçu cours de chant et danse">
+        {[
+          { src: '/videos/cours/cours-1.mp4', href: 'https://www.instagram.com/reel/DPgmkq3iug0/', start: 5  },
+          { src: '/videos/cours/cours-2.mp4', href: 'https://www.instagram.com/reel/C1M02FgIz6j/', start: 25 },
+          { src: '/videos/cours/cours-3.mp4', href: 'https://www.instagram.com/reel/DLrwoH9ojVe/', start: 10 },
+          { src: '/videos/cours/cours-4.mp4', href: 'https://www.instagram.com/reel/C_6LDgrIsAA/', start: 8  },
+          { src: '/videos/cours/cours-5.mp4', href: 'https://www.instagram.com/reel/DH1h3BnI9XE/', start: 8  },
+        ].map((v, i) => (
+          <div class={`coc-slide${i === 0 ? ' is-active' : ''}`} data-start={v.start}>
+            <a href={v.href} target="_blank" rel="noopener noreferrer" class="coc-link"
+              aria-label={`Voir le reel ${i + 1} sur Instagram`} tabindex={i === 0 ? 0 : -1}>
+              <video class="coc-video" muted loop playsinline disablepictureinpicture preload="none">
+                <source src={v.src} type="video/mp4" />
+              </video>
+              <div class="coc-overlay" aria-hidden="true">Voir sur Instagram</div>
+            </a>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -675,4 +684,61 @@ const reels = (fr.cours as any).reels as (string | null)[] ?? [];
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+
+  .cours-carousel {
+    position: relative; width: min(100%, 360px); aspect-ratio: 3/4;
+    margin-inline: auto; border-radius: 28px; overflow: hidden;
+    background: var(--color-dark); touch-action: pan-y;
+    box-shadow: 0 28px 60px rgba(43,31,21,0.18);
+  }
+  .coc-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 900ms ease-in-out; }
+  .coc-slide.is-active { opacity: 1; }
+  .coc-link { display: block; width: 100%; height: 100%; position: relative; text-decoration: none; }
+  .coc-video { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+  .coc-overlay {
+    position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 1rem;
+    background: linear-gradient(to top, rgba(20,10,5,0.72) 0%, transparent 55%);
+    color: #fff; font-family: var(--font-sans); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    opacity: 0; transition: opacity 300ms; pointer-events: none;
+  }
+  .coc-slide.is-active .coc-link:hover .coc-overlay { opacity: 1; }
+  @media (max-width: 720px) {
+    .cours-carousel { width: 88vw; margin-top: 1.2rem; border-radius: 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .coc-slide { transition: none; } }
 </style>
+
+<script>
+  function initCoursCarousel() {
+    const carousel = document.getElementById('cours-carousel');
+    if (!carousel) return;
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.coc-slide'));
+    const videos = slides.map(s => s.querySelector<HTMLVideoElement>('video')!);
+    const links  = slides.map(s => s.querySelector<HTMLAnchorElement>('.coc-link')!);
+    let current = 0, timer: ReturnType<typeof setInterval> | null = null;
+    function activate(idx: number) {
+      slides[current].classList.remove('is-active'); links[current].tabIndex = -1; videos[current]?.pause();
+      current = idx;
+      slides[current].classList.add('is-active'); links[current].tabIndex = 0;
+      const v = videos[current];
+      if (v) { v.currentTime = parseInt(slides[current].dataset.start||'0'); v.muted=true; v.play().catch(()=>{}); }
+    }
+    function startTimer() { if (timer) clearInterval(timer); timer = setInterval(() => activate((current+1)%slides.length), 6000); }
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', (e: TouchEvent) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', (e: TouchEvent) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) { activate(diff>0?(current+1)%slides.length:(current-1+slides.length)%slides.length); startTimer(); }
+    }, { passive: true });
+    new IntersectionObserver((entries, obs) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      const first = videos[0];
+      if (first) { first.currentTime = parseInt(slides[0].dataset.start||'0'); first.muted=true; first.play().catch(()=>{}); }
+      startTimer();
+    }, { threshold: 0.1 }).observe(carousel);
+    document.addEventListener('astro:before-swap', () => { if(timer) clearInterval(timer); }, { once: true });
+  }
+  document.addEventListener('astro:page-load', initCoursCarousel);
+</script>
