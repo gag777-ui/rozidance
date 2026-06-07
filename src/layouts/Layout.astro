@@ -8,6 +8,7 @@ import PageLoader from '../components/ui/PageLoader.astro';
 interface Props {
   title: string;
   description?: string;
+  keywords?: string;
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
@@ -17,6 +18,7 @@ interface Props {
 const {
   title,
   description = 'Duo artistique arménien — chant, danse, cérémonies et cours.',
+  keywords,
   ogTitle,
   ogDescription,
   ogImage = '/images/og-default.webp',
@@ -35,6 +37,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <meta name="author" content="Rozi Dance" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Canonical -->
