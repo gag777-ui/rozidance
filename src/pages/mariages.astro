@@ -65,15 +65,15 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       <div class="video-carousel-wrapper" id="video-carousel-mobile" aria-label="Aperçu de nos services">
         <div class="video-carousel" aria-label="Vidéos services">
           {[
-            { src: '/videos/musiciens/musiciens-2.mp4',    href: 'https://www.instagram.com/reel/DAtffBloITF/', start: 2  },
-            { src: '/videos/mariages/danse-3.mp4',         href: 'https://www.instagram.com/reel/DY6ymdMsrb6/', start: 8  },
-            { src: '/videos/musiciens/musiciens-1.mp4',    href: 'https://www.instagram.com/reel/DO8wo3NjEY0/', start: 22 },
-            { src: '/videos/mariee/mariee-2.mp4',          href: 'https://www.instagram.com/reel/DYCpnNTiIAA/', start: 8  },
-            { src: '/videos/danse-mariee/danse-mariee-3.mp4', href: 'https://www.instagram.com/reel/DR1unSWDMTp/', start: 12 },
+            { src: '/videos/musiciens/musiciens-2.mp4',    poster: '/images/video-posters/musiciens-musiciens-2.png', href: 'https://www.instagram.com/reel/DAtffBloITF/', start: 2  },
+            { src: '/videos/mariages/danse-3.mp4',         poster: '/images/video-posters/mariages-danse-3.png', href: 'https://www.instagram.com/reel/DY6ymdMsrb6/', start: 8  },
+            { src: '/videos/musiciens/musiciens-1.mp4',    poster: '/images/video-posters/musiciens-musiciens-1.png', href: 'https://www.instagram.com/reel/DO8wo3NjEY0/', start: 22 },
+            { src: '/videos/mariee/mariee-2.mp4',          poster: '/images/video-posters/mariee-mariee-2.png', href: 'https://www.instagram.com/reel/DYCpnNTiIAA/', start: 8  },
+            { src: '/videos/danse-mariee/danse-mariee-3.mp4', poster: '/images/video-posters/danse-mariee-danse-mariee-3.png', href: 'https://www.instagram.com/reel/DR1unSWDMTp/', start: 12 },
           ].map((v, i) => (
             <div class="video-card" data-index={i} data-start={v.start} data-src={v.src}>
               <div class="card-inner">
-                <video class="video-player" muted loop playsinline disablepictureinpicture preload="none">
+                <video class="video-player" muted loop playsinline disablepictureinpicture preload="none" poster={v.poster}>
                   <source src={v.src} type="video/mp4" />
                 </video>
                 <button class="play-btn" aria-label={`Jouer vidéo ${i + 1}`}>
