@@ -73,7 +73,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
           ].map((v, i) => (
             <div class="video-card" data-index={i} data-start={v.start} data-src={v.src}>
               <div class="card-inner">
-                <video class="video-player" muted loop playsinline disablepictureinpicture preload="none" poster={v.poster}>
+                <video class="video-player" muted loop playsinline disablepictureinpicture preload="metadata" poster={v.poster}>
                   <source src={v.src} type="video/mp4" />
                 </video>
                 <button class="play-btn" aria-label={`Jouer vidéo ${i + 1}`}>
