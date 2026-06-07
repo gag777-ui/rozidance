@@ -26,6 +26,32 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Hreflang pour Europe entière — SEO multilingue
+const hreflangs = [
+  { hreflang: 'fr', path: '' },
+  { hreflang: 'fr-BE', path: '' },
+  { hreflang: 'fr-FR', path: '' },
+  { hreflang: 'fr-CH', path: '' },
+  { hreflang: 'fr-LU', path: '' },
+  { hreflang: 'en', path: '/en' },
+  { hreflang: 'en-GB', path: '/en' },
+  { hreflang: 'en-IE', path: '/en' },
+  { hreflang: 'en-EU', path: '/en' },
+  { hreflang: 'nl', path: '/nl' },
+  { hreflang: 'nl-BE', path: '/nl' },
+  { hreflang: 'nl-NL', path: '/nl' },
+  { hreflang: 'de', path: '/de' },
+  { hreflang: 'de-DE', path: '/de' },
+  { hreflang: 'de-AT', path: '/de' },
+  { hreflang: 'de-CH', path: '/de' },
+  { hreflang: 'es', path: '/es' },
+  { hreflang: 'es-ES', path: '/es' },
+  { hreflang: 'it', path: '/it' },
+  { hreflang: 'it-IT', path: '/it' },
+  { hreflang: 'ru', path: '/ru' },
+];
+const pagePath = Astro.url.pathname.replace(/^\/(fr|en|nl|de|es|it|ru)/, '') || '/';
 ---
 
 <!doctype html>
@@ -45,6 +71,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Canonical -->
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- Hreflang — Référencement multilingue Europe entière -->
+    {hreflangs.map(({ hreflang, path }) => (
+      <link
+        rel="alternate"
+        hreflang={hreflang}
+        href={new URL(path + pagePath, Astro.site)}
+      />
+    ))}
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(pagePath, Astro.site)}
+    />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -52,7 +92,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={ogDescription ?? description} />
     <meta property="og:image" content={new URL(ogImage, Astro.site)} />
     <meta property="og:locale" content="fr_BE" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:locale:alternate" content="nl_BE" />
+    <meta property="og:locale:alternate" content="nl_NL" />
+    <meta property="og:locale:alternate" content="de_DE" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:locale:alternate" content="it_IT" />
+    <meta property="og:locale:alternate" content="ru_RU" />
     <meta property="og:site_name" content="Rozi Dance" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/webp" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />

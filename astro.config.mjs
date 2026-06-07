@@ -11,7 +11,7 @@ export default defineConfig({
 
   i18n: {
     defaultLocale: 'fr',
-    locales: ['fr', 'en', 'nl', 'ru'],
+    locales: ['fr', 'en', 'nl', 'ru', 'de', 'es', 'it'],
     routing: {
       prefixDefaultLocale: false,
     },
@@ -26,7 +26,7 @@ export default defineConfig({
     sitemap({
       i18n: {
         defaultLocale: 'fr',
-        locales: { fr: 'fr-BE', en: 'en-GB', nl: 'nl-BE', ru: 'ru-RU' },
+        locales: { fr: 'fr-BE', en: 'en-GB', nl: 'nl-BE', ru: 'ru-RU', de: 'de-DE', es: 'es-ES', it: 'it-IT' },
       },
     }),
     icon({
