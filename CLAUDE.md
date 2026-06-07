@@ -234,6 +234,31 @@ Générés via ffmpeg frame extraction (frame 0 de chaque source vidéo).
 
 Commit: `58aaee1` — feat: dual carousel (desktop + mobile) — all pages
 
+## Footer Location Map (Session 5 — 2026-06-07)
+
+**Implementation:**
+- `src/components/layout/Footer.astro` — Added Google Maps embed iframe
+- Address: Rue du Gaz 83, Brussels, Belgium 1020
+- Maps URL: `https://www.google.com/maps/search/?api=1&query={encoded_address}`
+- Maps embed: `https://www.google.com/maps?q={encoded_address}&output=embed`
+
+**Features:**
+- Responsive 2-column layout: Logo + tagline (left) | Navigation + Links + Maps (right)
+- Google Maps iframe with `loading="lazy"` and `referrerpolicy="no-referrer-when-downgrade"`
+- "Open in Maps" button (external link with icon) positioned over map
+- Full-width footer with dark gradient background (`#2b1f15` → `#1c1410`)
+- Geometric watermark pattern (double lines + diamonds) at 0.12 opacity
+- Mobile responsive: stacks vertically on small screens
+- Added i18n keys: `footer.addressLabel`, `footer.mapTitle`, `footer.openMapAria` (7 langues)
+- Schema.org updated with PostalAddress (line 89-103)
+
+**i18n translations:**
+- `footer.addressLabel` — "Localisation" (FR), "Location" (EN), "Locatie" (NL), "Адрес" (RU), "Standort" (DE), "Ubicación" (ES), "Posizione" (IT)
+- `footer.mapTitle` — "Carte Google — Localisation Rozi Dance"
+- `footer.openMapAria` — "Ouvrir la localisation dans Google Maps"
+
+Commit: `7dd2277` — Add footer location map
+
 ## V1 constraints (do not add in V1)
 
 - No contact form (V2: Web3Forms)
