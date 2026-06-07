@@ -196,6 +196,44 @@ Audit complet FR + EN + NL + RU — 62 pages buildées, zéro erreur.
 - `mentions-legales` hardcodée en français uniquement (acceptable V1)
 - `"Voir le reel"` hardcodé dans cours.astro (à i18niser en V2)
 
+## Dual Carousel (Session 4 — Mobile Performance) — 2026-06-07
+
+**Pattern appliqué à toutes les pages carousel :**
+- **Desktop (>720px)** : carousel rotatif classique original → `preload="none"`
+- **Mobile (≤720px)** : horizontal scroll 88vw cards (3/4 aspect) → `preload="metadata"` + poster images
+
+**Implémentation complète :**
+- `/src/pages/cours.astro` + `/src/pages/[lang]/cours.astro` (5 vidéos, 6s timer)
+- `/src/pages/chant.astro` (3 vidéos, 7s timer) — FR-only, pas de [lang]/chant
+- `/src/pages/mariages/[slug].astro` + `/src/pages/[lang]/mariages/[slug].astro` — 4 cases (danse-de-mariage 4v, chant-de-la-mariée 3v, danse-de-la-mariée 1v, musiciens 3v)
+
+**Poster images** (14 fichiers PNG, 320px, ~10MB total):
+- `public/images/video-posters/cours-cours-{1..5}.png`
+- `public/images/video-posters/chant-chant-{1..3}.png`
+- `public/images/video-posters/danse-{1,2,4}.png`
+- `public/images/video-posters/mariee-{1,3}.png`
+- `public/images/video-posters/musiciens-3.png`
+- `public/images/video-posters/danse-mariee-danse-mariee-3.png`
+Générés via ffmpeg frame extraction (frame 0 de chaque source vidéo).
+
+**Mobile carousel CSS**:
+- `.video-carousel-wrapper` — horizontal scroll conteneur (hidden scrollbar)
+- `.video-carousel` — flex row, gap 0.75rem, min-width 100% (allows scroll)
+- `.video-card` — flex: 0 0 min(88vw, 280px), 3/4 aspect-ratio
+- `.video-card-link` + pseudo-elements — overlay gradients + border effects (matches rotatif style)
+- `.video-card-hover` — Instagram badge on hover (gradient background)
+- `preload="metadata"` + `poster={path}` — eliminates black background
+
+**Mobile carousel JavaScript**:
+- `initVideoCarousel()` / `initMobileVideos()` — lazy loads videos via IntersectionObserver
+- 500px rootMargin anticipation — videos download 500px before viewport entry
+- Play/pause → play-btn opacity toggle (hidden when playing)
+- Cleanup via `astro:before-swap` → `astro:page-load` pattern
+
+**Result** : No black screen before play, smooth 88vw scroll, same Instagram linking as desktop carousel.
+
+Commit: `58aaee1` — feat: dual carousel (desktop + mobile) — all pages
+
 ## V1 constraints (do not add in V1)
 
 - No contact form (V2: Web3Forms)
