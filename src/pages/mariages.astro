@@ -383,43 +383,44 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     width: min(100vw, 760px);
     max-width: none;
     overflow: visible;
+    isolation: isolate;
     perspective: 1400px;
     perspective-origin: 50% 42%;
   }
 
   .video-carousel-wrapper::before {
     content: '';
-    display: none;
     position: absolute;
     left: 50%;
-    top: 48%;
-    width: min(78vw, 430px);
-    height: min(88vw, 470px);
+    top: 50%;
+    z-index: 0;
+    width: min(88vw, 510px);
+    height: min(74vw, 330px);
     pointer-events: none;
-    border-radius: 46% 54% 49% 51% / 42% 48% 52% 58%;
+    border-radius: 56% 44% 62% 38% / 46% 58% 42% 54%;
     background:
-      radial-gradient(ellipse at 50% 42%, rgba(255, 239, 212, 0.34), transparent 44%),
-      radial-gradient(ellipse at 28% 58%, rgba(157, 117, 72, 0.16), transparent 46%),
-      radial-gradient(ellipse at 74% 52%, rgba(95, 63, 38, 0.13), transparent 50%);
-    filter: blur(18px);
-    opacity: 0.76;
-    transform: translate3d(-50%, -50%, -1px) rotate(-7deg);
+      radial-gradient(ellipse at 48% 42%, rgba(255, 239, 212, 0.42), transparent 46%),
+      radial-gradient(ellipse at 26% 66%, rgba(168, 135, 83, 0.17), transparent 48%),
+      radial-gradient(ellipse at 78% 34%, rgba(96, 65, 41, 0.12), transparent 50%);
+    filter: blur(22px);
+    opacity: 0.72;
+    transform: translate3d(-50%, -50%, 0) rotate(-5deg);
   }
 
   .video-carousel-wrapper::after {
     content: '';
-    display: none;
     position: absolute;
     left: 50%;
-    bottom: 0.05rem;
-    width: min(82vw, 470px);
-    height: 34px;
-    transform: translateX(-50%);
+    bottom: 1.15rem;
+    z-index: 0;
+    width: min(74vw, 440px);
+    height: 42px;
+    transform: translateX(-50%) rotate(-1deg);
     pointer-events: none;
     border-radius: 999px;
-    background: radial-gradient(ellipse at center, rgba(55, 35, 22, 0.2), transparent 70%);
-    filter: blur(10px);
-    opacity: 0.64;
+    background: radial-gradient(ellipse at center, rgba(72, 46, 25, 0.18), transparent 72%);
+    filter: blur(12px);
+    opacity: 0.58;
   }
 
   .video-carousel {
@@ -436,6 +437,8 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     scroll-padding-inline: calc((100vw - var(--cover-card-width)) / 2);
     -webkit-overflow-scrolling: touch;
     transform-style: preserve-3d;
+    position: relative;
+    z-index: 2;
   }
 
   .video-carousel::-webkit-scrollbar {
@@ -458,7 +461,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .video-card {
     flex: 0 0 var(--cover-card-width);
-    height: min(96vw, 365px);
+    height: min(102vw, 392px);
     scroll-snap-align: center;
     scroll-snap-stop: always;
     padding-inline: 0.32rem;
@@ -614,7 +617,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
     .video-card {
       flex-basis: var(--cover-card-width);
-      height: min(96vw, 370px);
+      height: min(104vw, 398px);
     }
 
     .play-btn {
@@ -1332,7 +1335,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     let userInteracting = false;
     const observers: IntersectionObserver[] = [];
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const AUTO_SCROLL_DELAY = 4600;
+    const AUTO_SCROLL_DELAY = 3900;
     const RESUME_DELAY = 5200;
 
     const getCardMedia = (card: HTMLElement) => ({
