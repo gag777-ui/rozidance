@@ -1238,7 +1238,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
             video.load();
           }
         }
-      }, { threshold: 0.2 });
+      }, { threshold: 0, rootMargin: '500px 0px' });
       observer.observe(card);
 
       playBtn.addEventListener('click', (e) => {
