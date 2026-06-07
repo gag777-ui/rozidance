@@ -8,7 +8,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 const address = 'Rue du Gaz 83, Brussels, Belgium 1020';
 const mapsQuery = encodeURIComponent(address);
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
-const mapsEmbedUrl = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
+const mapsEmbedUrl = `https://maps.google.com/maps?q=${mapsQuery}&z=15&output=embed`;
 ---
 
 <footer class="site-footer">
