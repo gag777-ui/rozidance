@@ -10,10 +10,10 @@
   /* ─── PALETTE ───────────────────────────────────────────────────────────── */
 
   /* Backgrounds ivory */
-  --color-ivory:           #F7F1E6;
-  --color-ivory-card:      #FBF6EC;
-  --color-ivory-hover:     #F2E8D5;
-  --color-ivory-subtle:    #EDE3D0;
+  --color-ivory:           #FBF4EA;
+  --color-ivory-card:      #FFFBF4;
+  --color-ivory-hover:     #F7EBDD;
+  --color-ivory-subtle:    #F3E7D8;
 
   /* Texte */
   --color-charcoal:        #3A2A20;
@@ -37,8 +37,8 @@
   --color-gold-muted:      rgba(168, 135, 83, 0.20);
 
   /* Lignes / dividers */
-  --color-line:            #E5D7BE;
-  --color-divider:         #D9C9B0;
+  --color-line:            #EADDC8;
+  --color-divider:         #E1D1B9;
   --color-eyebrow:         #7A5C20;   /* WCAG AA sur ivoire */
 
   /* Dark (footer, hero overlay, temoignages) */
@@ -161,7 +161,9 @@
    ══════════════════════════════════════════════════════════════════════════════ */
 @layer base {
   html {
-    background-color: var(--color-ivory);
+    background:
+      radial-gradient(ellipse at 16% 8%, rgba(255, 255, 255, 0.46), transparent 32%),
+      linear-gradient(180deg, var(--color-ivory) 0%, #fff8f0 100%);
     color: var(--color-charcoal);
     font-family: var(--font-sans);
     font-size: var(--text-base);
@@ -172,7 +174,9 @@
   }
 
   body {
-    background-color: var(--color-ivory);
+    background:
+      radial-gradient(ellipse at 16% 8%, rgba(255, 255, 255, 0.46), transparent 32%),
+      linear-gradient(180deg, var(--color-ivory) 0%, #fff8f0 100%);
     overflow-x: clip;
     overscroll-behavior-y: none;
     width: 100%;
