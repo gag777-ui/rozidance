@@ -5,6 +5,10 @@ const lang = (Astro.currentLocale ?? 'fr') as Lang;
 const t = getTranslations(lang);
 const year = new Date().getFullYear();
 const base = lang === 'fr' ? '' : `/${lang}`;
+const address = 'Rue du Gaz 83, Brussels, Belgium 1020';
+const mapsQuery = encodeURIComponent(address);
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+const mapsEmbedUrl = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
 ---
 
 <footer class="site-footer">
@@ -63,6 +67,11 @@ const base = lang === 'fr' ? '' : `/${lang}`;
             </a>
           </li>
           <li>
+            <a href="https://www.facebook.com/RoziDanseenBelgique/" target="_blank" rel="noopener noreferrer" class="nav-link">
+              Facebook
+            </a>
+          </li>
+          <li>
             <a href="https://www.youtube.com/@luarozihayband" target="_blank" rel="noopener noreferrer" class="nav-link">
               YouTube
             </a>
@@ -73,6 +82,31 @@ const base = lang === 'fr' ? '' : `/${lang}`;
             </a>
           </li>
         </ul>
+      </div>
+    </div>
+
+    <div class="footer-location" aria-label={t.footer.addressLabel}>
+      <div class="footer-location-copy">
+        <p class="footer-nav-title">{t.footer.addressLabel}</p>
+        <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="footer-address">
+          {address}
+        </a>
+      </div>
+      <div class="footer-map-shell">
+        <iframe
+          class="footer-map"
+          title={t.footer.mapTitle}
+          src={mapsEmbedUrl}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+        <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="footer-map-open" aria-label={t.footer.openMapAria}>
+          Maps
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M3 9l6-6M4.2 3H9v4.8" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
       </div>
     </div>
   </div>
@@ -133,11 +167,17 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   .footer-inner {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: minmax(150px, 0.8fr) minmax(280px, 1.35fr) minmax(240px, 0.92fr);
     gap: clamp(2.2rem, 6vw, 4.8rem);
     padding-bottom: clamp(2.2rem, 5vw, 3.5rem);
     position: relative;
     z-index: 1;
+    align-items: end;
+  }
+
+  .footer-brand {
+    align-self: start;
+    padding-top: 0.15rem;
   }
 
   .footer-links-group {
@@ -227,6 +267,79 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     background-color: rgba(255, 232, 190, 0.72);
   }
 
+  .footer-location {
+    justify-self: end;
+    width: min(100%, 310px);
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .footer-location-copy {
+    display: grid;
+    gap: 0.32rem;
+  }
+
+  .footer-location .footer-nav-title {
+    margin-bottom: 0;
+  }
+
+  .footer-address {
+    max-width: 28ch;
+    color: rgba(255, 248, 238, 0.74);
+    font-size: 0.82rem;
+    line-height: 1.45;
+    text-decoration: none;
+    transition: color 260ms var(--ease-standard);
+  }
+
+  .footer-address:hover {
+    color: #fff8ee;
+  }
+
+  .footer-map-shell {
+    position: relative;
+    display: block;
+    height: 132px;
+    overflow: hidden;
+    border-radius: 30px;
+    background: transparent;
+    box-shadow: none;
+    transform: translateZ(0);
+  }
+
+  .footer-map-shell::after {
+    content: none;
+  }
+
+  .footer-map-open {
+    position: absolute;
+    right: 0.6rem;
+    bottom: 0.6rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.36rem;
+    padding: 0.42rem 0.55rem 0.42rem 0.72rem;
+    color: rgba(54, 36, 24, 0.94);
+    border-radius: var(--radius-full);
+    background: rgba(255, 248, 238, 0.9);
+    box-shadow: 0 8px 18px rgba(12, 8, 5, 0.18);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .footer-map {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+    filter: saturate(0.84) sepia(0.08) contrast(0.94);
+  }
+
   .footer-bottom {
     border-top: 0.5px solid rgba(255, 248, 238, 0.1);
     padding-block: 1.15rem;
@@ -275,7 +388,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
     .footer-inner {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.85rem;
       padding-bottom: 2rem;
       text-align: left;
     }
@@ -284,6 +397,8 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      align-self: auto;
+      padding-top: 0;
     }
 
     .footer-logo {
@@ -302,6 +417,39 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       gap: clamp(1.2rem, 7vw, 2.1rem);
       text-align: left;
       align-items: start;
+    }
+
+    .footer-location {
+      justify-self: stretch;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+      align-items: end;
+      padding-top: 0.2rem;
+    }
+
+    .footer-location-copy {
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .footer-address {
+      max-width: none;
+      display: block;
+      font-size: 0.82rem;
+      line-height: 1.42;
+    }
+
+    .footer-map-shell {
+      grid-column: 1 / -1;
+      height: 86px;
+      border-radius: 26px;
+      box-shadow: none;
+    }
+
+    .footer-map-shell .footer-map-open {
+      display: none;
     }
 
     .footer-nav,
