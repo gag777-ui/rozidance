@@ -377,22 +377,65 @@ const base = lang === 'fr' ? '' : `/${lang}`;
 
   /* ── Mobile: Horizontal Scroll Carousel (3D) ── */
   .video-carousel-wrapper {
+    position: relative;
     display: none;
     justify-self: center;
-    width: 100%;
-    max-width: 1200px;
-    overflow: hidden;
-    perspective: 1200px;
+    width: min(100vw, 760px);
+    max-width: none;
+    overflow: visible;
+    perspective: 1400px;
+    perspective-origin: 50% 42%;
+  }
+
+  .video-carousel-wrapper::before {
+    content: '';
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    width: min(78vw, 430px);
+    height: min(88vw, 470px);
+    pointer-events: none;
+    border-radius: 46% 54% 49% 51% / 42% 48% 52% 58%;
+    background:
+      radial-gradient(ellipse at 50% 42%, rgba(255, 239, 212, 0.34), transparent 44%),
+      radial-gradient(ellipse at 28% 58%, rgba(157, 117, 72, 0.16), transparent 46%),
+      radial-gradient(ellipse at 74% 52%, rgba(95, 63, 38, 0.13), transparent 50%);
+    filter: blur(18px);
+    opacity: 0.76;
+    transform: translate3d(-50%, -50%, -1px) rotate(-7deg);
+  }
+
+  .video-carousel-wrapper::after {
+    content: '';
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: 0.05rem;
+    width: min(82vw, 470px);
+    height: 34px;
+    transform: translateX(-50%);
+    pointer-events: none;
+    border-radius: 999px;
+    background: radial-gradient(ellipse at center, rgba(55, 35, 22, 0.2), transparent 70%);
+    filter: blur(10px);
+    opacity: 0.64;
   }
 
   .video-carousel {
+    --cover-card-width: min(70vw, 270px);
     display: flex;
-    gap: clamp(1rem, 2vw, 2rem);
+    align-items: center;
+    gap: 0;
     overflow-x: auto;
-    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 1.5rem);
+    overflow-y: visible;
+    padding-block: clamp(1.4rem, 4vw, 2.2rem) 2.9rem;
+    padding-inline: calc((100vw - var(--cover-card-width)) / 2);
     scroll-behavior: smooth;
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: calc((100vw - var(--cover-card-width)) / 2);
     -webkit-overflow-scrolling: touch;
+    transform-style: preserve-3d;
   }
 
   .video-carousel::-webkit-scrollbar {
@@ -414,27 +457,80 @@ const base = lang === 'fr' ? '' : `/${lang}`;
   }
 
   .video-card {
-    flex: 0 0 clamp(240px, 50vw, 380px);
-    height: clamp(320px, 66vw, 500px);
+    flex: 0 0 var(--cover-card-width);
+    height: min(96vw, 365px);
     scroll-snap-align: center;
     scroll-snap-stop: always;
+    padding-inline: 0.32rem;
+    transform-style: preserve-3d;
+    opacity: var(--flow-opacity, 0.28);
+    filter: saturate(var(--flow-saturation, 0.76)) brightness(var(--flow-brightness, 0.86));
+    transition:
+      opacity 360ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 360ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .card-inner {
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: clamp(16px, 3vw, 24px);
+    border-radius: clamp(34px, 9vw, 52px);
     overflow: hidden;
+    isolation: isolate;
+    clip-path: inset(0 round clamp(34px, 9vw, 52px));
     background: #1a1a1a;
-    box-shadow: 0 16px 40px rgba(72, 46, 25, 0.2);
-    transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+    box-shadow: 0 18px 42px rgba(72, 46, 25, 0.16);
+    transition:
+      transform 460ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 460ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform:
+      perspective(1400px)
+      translateX(var(--flow-x, 0px))
+      translateZ(var(--flow-z, -190px))
+      rotateY(var(--flow-rotate, 0deg))
+      scale(var(--flow-scale, 0.82));
+    transform-origin: center center;
     cursor: pointer;
   }
 
-  .video-card:hover .card-inner {
-    transform: scale(1.04) translateY(-4px);
-    box-shadow: 0 24px 60px rgba(72, 46, 25, 0.3);
+  .card-inner::before,
+  .card-inner::after {
+    content: '';
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .card-inner::before {
+    background:
+      linear-gradient(90deg, rgba(35, 21, 13, 0.18), transparent 32%, transparent 68%, rgba(35, 21, 13, 0.2)),
+      linear-gradient(180deg, rgba(255, 245, 231, 0.08), transparent 30%, transparent 68%, rgba(35, 21, 13, 0.22));
+    mix-blend-mode: multiply;
+  }
+
+  .card-inner::after {
+    inset: 9px;
+    border: 0.5px solid rgba(255, 242, 219, 0.14);
+    border-radius: clamp(21px, 6.4vw, 35px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .video-card.is-active {
+    z-index: 5;
+  }
+
+  .video-card.is-active .card-inner {
+    box-shadow: 0 30px 72px rgba(72, 46, 25, 0.2);
+  }
+
+  .video-card.is-prev {
+    z-index: 3;
+  }
+
+  .video-card.is-next {
+    z-index: 3;
   }
 
   .video-player {
@@ -443,6 +539,9 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     object-fit: cover;
     object-position: center;
     display: block;
+    border-radius: clamp(34px, 9vw, 52px);
+    clip-path: inset(0 round clamp(34px, 9vw, 52px));
+    transform: translateZ(0);
   }
 
   .play-btn {
@@ -460,7 +559,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     cursor: pointer;
     transition: all 300ms ease-out;
     backdrop-filter: blur(4px);
-    z-index: 2;
+    z-index: 4;
   }
 
   .video-card:hover .play-btn {
@@ -486,7 +585,7 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     justify-content: center;
     cursor: pointer;
     transition: all 300ms ease-out;
-    z-index: 3;
+    z-index: 4;
     backdrop-filter: blur(4px);
     text-decoration: none;
   }
@@ -508,13 +607,14 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     }
 
     .video-carousel {
-      padding: 1.2rem 0.8rem;
-      gap: 1rem;
+      --cover-card-width: min(72vw, 276px);
+      padding-block: 1.45rem 2.8rem;
+      padding-inline: calc((100vw - var(--cover-card-width)) / 2);
     }
 
     .video-card {
-      flex: 0 0 min(80vw, 280px);
-      height: min(106vw, 373px);
+      flex-basis: var(--cover-card-width);
+      height: min(96vw, 370px);
     }
 
     .play-btn {
@@ -1224,6 +1324,193 @@ const base = lang === 'fr' ? '' : `/${lang}`;
     if (!carousel) return;
 
     const cards = Array.from(carousel.querySelectorAll<HTMLElement>('.video-card'));
+    let scrollRaf = 0;
+    let activeVideoIndex = -1;
+    let carouselVisible = false;
+    let autoTimer: ReturnType<typeof setInterval> | null = null;
+    let resumeTimer: ReturnType<typeof setTimeout> | null = null;
+    let userInteracting = false;
+    const observers: IntersectionObserver[] = [];
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const AUTO_SCROLL_DELAY = 4600;
+    const RESUME_DELAY = 5200;
+
+    const getCardMedia = (card: HTMLElement) => ({
+      video: card.querySelector<HTMLVideoElement>('.video-player'),
+      playBtn: card.querySelector<HTMLButtonElement>('.play-btn'),
+    });
+
+    const setPlayButton = (playBtn: HTMLButtonElement | null, visible: boolean) => {
+      if (!playBtn) return;
+      playBtn.style.opacity = visible ? '1' : '0';
+      playBtn.style.pointerEvents = visible ? 'auto' : 'none';
+    };
+
+    const prepareVideo = (card: HTMLElement, video: HTMLVideoElement) => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.preload = 'auto';
+
+      const src = card.dataset.src;
+      if (src && !video.currentSrc) {
+        video.src = src;
+      }
+      if (video.readyState === 0) {
+        video.load();
+      }
+    };
+
+    const seekToStart = (card: HTMLElement, video: HTMLVideoElement) => {
+      const startTime = parseInt(card.dataset.start || '0');
+      const applySeek = () => {
+        try {
+          if (Math.abs(video.currentTime - startTime) > 0.5) {
+            video.currentTime = startTime;
+          }
+        } catch {}
+      };
+
+      if (video.readyState >= 1) {
+        applySeek();
+      } else {
+        video.addEventListener('loadedmetadata', applySeek, { once: true });
+      }
+    };
+
+    const pauseInactiveVideos = (activeIndex: number) => {
+      cards.forEach((card, index) => {
+        if (index === activeIndex) return;
+        const { video, playBtn } = getCardMedia(card);
+        if (!video) return;
+        video.pause();
+        setPlayButton(playBtn, true);
+      });
+    };
+
+    const pauseAllVideos = () => {
+      cards.forEach(card => {
+        const { video, playBtn } = getCardMedia(card);
+        if (!video) return;
+        video.pause();
+        setPlayButton(playBtn, true);
+      });
+    };
+
+    const playActiveVideo = (index: number, reset = false) => {
+      if (!carouselVisible) return;
+
+      const card = cards[index];
+      if (!card) return;
+
+      const { video, playBtn } = getCardMedia(card);
+      if (!video) return;
+
+      pauseInactiveVideos(index);
+      prepareVideo(card, video);
+      if (reset) seekToStart(card, video);
+
+      video.play()
+        .then(() => setPlayButton(playBtn, false))
+        .catch(() => setPlayButton(playBtn, true));
+    };
+
+    const centerCard = (index: number, behavior: ScrollBehavior = 'smooth') => {
+      const card = cards[index];
+      if (!card) return;
+      const targetLeft = card.offsetLeft - (carousel.clientWidth - card.offsetWidth) / 2;
+      carousel.scrollTo({ left: targetLeft, behavior });
+    };
+
+    const stopAutoScroll = () => {
+      if (!autoTimer) return;
+      clearInterval(autoTimer);
+      autoTimer = null;
+    };
+
+    const startAutoScroll = () => {
+      if (prefersReducedMotion || autoTimer || cards.length < 2) return;
+      autoTimer = setInterval(() => {
+        if (!carouselVisible || userInteracting || document.hidden) return;
+        const nextIndex = activeVideoIndex < 0 ? 0 : (activeVideoIndex + 1) % cards.length;
+        centerCard(nextIndex);
+      }, AUTO_SCROLL_DELAY);
+    };
+
+    const pauseAutoScrollBriefly = () => {
+      userInteracting = true;
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        userInteracting = false;
+        if (carouselVisible) startAutoScroll();
+      }, RESUME_DELAY);
+    };
+
+    const updateCoverflow = () => {
+      scrollRaf = 0;
+      const carouselRect = carousel.getBoundingClientRect();
+      const center = carouselRect.left + carouselRect.width / 2;
+      let activeIndex = 0;
+      let closest = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(cardCenter - center);
+        if (distance < closest) {
+          closest = distance;
+          activeIndex = index;
+        }
+      });
+
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const rawOffset = (cardCenter - center) / Math.max(rect.width, 1);
+        const offset = Math.max(-2.2, Math.min(2.2, rawOffset));
+        const absOffset = Math.abs(offset);
+        const depth = Math.min(absOffset, 2);
+        const scale = 1 - depth * 0.105;
+        const z = 110 - depth * 150;
+        const rotate = -offset * 25;
+        const translateX = -offset * 16;
+        const opacity = Math.max(0.24, 1 - absOffset * 0.34);
+        const saturation = Math.max(0.76, 1 - absOffset * 0.09);
+        const brightness = Math.max(0.86, 1 - absOffset * 0.045);
+
+        card.style.setProperty('--flow-x', `${translateX.toFixed(1)}px`);
+        card.style.setProperty('--flow-z', `${z.toFixed(1)}px`);
+        card.style.setProperty('--flow-rotate', `${rotate.toFixed(2)}deg`);
+        card.style.setProperty('--flow-scale', scale.toFixed(3));
+        card.style.setProperty('--flow-opacity', opacity.toFixed(3));
+        card.style.setProperty('--flow-saturation', saturation.toFixed(3));
+        card.style.setProperty('--flow-brightness', brightness.toFixed(3));
+
+        card.classList.remove('is-active', 'is-prev', 'is-next', 'is-far-left', 'is-far-right');
+        if (index === activeIndex) {
+          card.classList.add('is-active');
+        } else if (index === activeIndex - 1) {
+          card.classList.add('is-prev');
+        } else if (index === activeIndex + 1) {
+          card.classList.add('is-next');
+        } else if (index < activeIndex) {
+          card.classList.add('is-far-left');
+        } else {
+          card.classList.add('is-far-right');
+        }
+      });
+
+      const changedActiveVideo = activeIndex !== activeVideoIndex;
+      activeVideoIndex = activeIndex;
+      playActiveVideo(activeIndex, changedActiveVideo);
+    };
+
+    const scheduleCoverflow = () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(updateCoverflow);
+    };
 
     cards.forEach(card => {
       const video = card.querySelector<HTMLVideoElement>('.video-player');
@@ -1231,28 +1518,83 @@ const base = lang === 'fr' ? '' : `/${lang}`;
       if (!video || !playBtn) return;
 
       const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && !video.src) {
-          const src = card.dataset.src;
-          if (src) {
-            video.src = src;
-            video.load();
-          }
+        if (entries[0].isIntersecting) {
+          prepareVideo(card, video);
         }
       }, { threshold: 0, rootMargin: '500px 0px' });
       observer.observe(card);
+      observers.push(observer);
 
       playBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        const startTime = parseInt(card.dataset.start || '0');
-        video.currentTime = startTime;
-        video.muted = true;
-        video.play().catch(() => {});
+        const index = cards.indexOf(card);
+        activeVideoIndex = index;
+        prepareVideo(card, video);
+        seekToStart(card, video);
+        pauseInactiveVideos(index);
+        video.play()
+          .then(() => setPlayButton(playBtn, false))
+          .catch(() => setPlayButton(playBtn, true));
+      });
+
+      card.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a, button')) return;
+        pauseAutoScrollBriefly();
+        card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       });
 
       video.addEventListener('play', () => playBtn.style.opacity = '0');
       video.addEventListener('pause', () => playBtn.style.opacity = '1');
       video.addEventListener('ended', () => playBtn.style.opacity = '1');
     });
+
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      carouselVisible = entries[0]?.isIntersecting ?? false;
+      if (carouselVisible) {
+        playActiveVideo(activeVideoIndex >= 0 ? activeVideoIndex : 0, true);
+        startAutoScroll();
+      } else {
+        stopAutoScroll();
+        pauseAllVideos();
+      }
+    }, { threshold: 0.38 });
+    visibilityObserver.observe(wrapper);
+    observers.push(visibilityObserver);
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAutoScroll();
+        pauseAllVideos();
+      } else {
+        playActiveVideo(activeVideoIndex >= 0 ? activeVideoIndex : 0);
+        if (carouselVisible) startAutoScroll();
+      }
+    };
+
+    const handleUserInteraction = () => pauseAutoScrollBriefly();
+
+    carousel.addEventListener('scroll', scheduleCoverflow, { passive: true });
+    carousel.addEventListener('pointerdown', handleUserInteraction, { passive: true });
+    carousel.addEventListener('touchstart', handleUserInteraction, { passive: true });
+    carousel.addEventListener('wheel', handleUserInteraction, { passive: true });
+    carousel.addEventListener('keydown', handleUserInteraction);
+    window.addEventListener('resize', scheduleCoverflow, { passive: true });
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    updateCoverflow();
+
+    document.addEventListener('astro:before-swap', () => {
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      stopAutoScroll();
+      if (resumeTimer) clearTimeout(resumeTimer);
+      pauseAllVideos();
+      observers.forEach(observer => observer.disconnect());
+      carousel.removeEventListener('pointerdown', handleUserInteraction);
+      carousel.removeEventListener('touchstart', handleUserInteraction);
+      carousel.removeEventListener('wheel', handleUserInteraction);
+      carousel.removeEventListener('keydown', handleUserInteraction);
+      window.removeEventListener('resize', scheduleCoverflow);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    }, { once: true });
   }
 
   document.addEventListener('astro:page-load', () => {
