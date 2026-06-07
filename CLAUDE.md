@@ -234,6 +234,28 @@ Générés via ffmpeg frame extraction (frame 0 de chaque source vidéo).
 
 Commit: `58aaee1` — feat: dual carousel (desktop + mobile) — all pages
 
+## SEO Hreflang Fix (Session 5 — 2026-06-07)
+
+**Problem identified & fixed:**
+- LanguageSwitcher.astro was adding `hreflang` attributes to `<a>` dropdown links
+- This created duplicate hreflang tags (all 6 non-FR languages appeared twice)
+- Hreflang tags are SEO metadata that belong ONLY in `<link>` tags in `<head>`
+
+**Fix applied:**
+- Removed `hreflang={lang.code}` from LanguageSwitcher navigation links (line 54)
+- Canonical hreflang declarations remain in Layout.astro `<head>`
+- Result: 22 unique hreflang tags (each appearing exactly once)
+  - French variants: 5 (fr, fr-BE, fr-FR, fr-CH, fr-LU)
+  - English variants: 4 (en, en-GB, en-IE, en-EU)
+  - Dutch variants: 3 (nl, nl-BE, nl-NL)
+  - German variants: 4 (de, de-DE, de-AT, de-CH)
+  - Spanish variants: 2 (es, es-ES)
+  - Italian variants: 2 (it, it-IT)
+  - Russian: 1 (ru)
+  - Default: 1 (x-default)
+
+Commit: `6c4b4b5` — fix: remove duplicate hreflang attributes from language switcher
+
 ## Footer Location Map (Session 5 — 2026-06-07)
 
 **Implementation:**
