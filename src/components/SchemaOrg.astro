@@ -111,6 +111,84 @@ const schemaCopy = {
       },
     ],
   },
+  de: {
+    region: 'Deutschland',
+    genre: 'Traditionelle armenische Musik und Tanz',
+    artist: 'Künstler',
+    knowsAbout: ['Armenischer Gesang', 'Traditioneller armenischer Tanz'],
+    services: [
+      {
+        id: 'chant-mariee',
+        name: 'Brautgesang',
+        description: 'Traditionelle armenische Lieder während der Anzugzeremonie der Braut.',
+        type: 'Musikalische Zeremonie',
+      },
+      {
+        id: 'danse',
+        name: 'Veranstaltungstanz',
+        description: 'Gruppenauftritte für Hochzeiten, Feiern und festliche Veranstaltungen.',
+        type: 'Live-Aufführung',
+      },
+      {
+        id: 'cours',
+        name: 'Armenische Gesangs- und Tanzstunden',
+        description: 'Unterricht in traditionellem und internationalem armenischem Gesang sowie armenischem Volkstanz. Alle Niveaus, einzeln und in Gruppen.',
+        type: 'Künstlerische Ausbildung',
+      },
+    ],
+  },
+  es: {
+    region: 'España',
+    genre: 'Música y danza armenias tradicionales',
+    artist: 'Artista',
+    knowsAbout: ['Canto armenio', 'Danza tradicional armenia'],
+    services: [
+      {
+        id: 'chant-mariee',
+        name: 'Canto de la novia',
+        description: 'Canciones armenias tradicionales interpretadas durante la ceremonia de vestimenta de la novia.',
+        type: 'Ceremonia musical',
+      },
+      {
+        id: 'danse',
+        name: 'Danza de eventos',
+        description: 'Actuaciones grupales para bodas, celebraciones y eventos festivos.',
+        type: 'Actuación en vivo',
+      },
+      {
+        id: 'cours',
+        name: 'Clases de canto y danza armenios',
+        description: 'Clases de canto armenio tradicional e internacional, y danza folclórica armenia. Todos los niveles, clases individuales y en grupo.',
+        type: 'Educación artística',
+      },
+    ],
+  },
+  it: {
+    region: 'Italia',
+    genre: 'Musica e danza tradizionali armene',
+    artist: 'Artista',
+    knowsAbout: ['Canto armeno', 'Danza tradizionale armena'],
+    services: [
+      {
+        id: 'chant-mariee',
+        name: 'Canto della sposa',
+        description: 'Canzoni armene tradizionali eseguite durante la cerimonia di vestizione della sposa.',
+        type: 'Cerimonia musicale',
+      },
+      {
+        id: 'danse',
+        name: 'Danza per eventi',
+        description: 'Esibizioni di gruppo per matrimoni, celebrazioni ed eventi festivi.',
+        type: 'Esibizione dal vivo',
+      },
+      {
+        id: 'cours',
+        name: 'Lezioni di canto e danza armeni',
+        description: 'Lezioni di canto armeno tradizionale e internazionale, e danza folcloristica armena. Tutti i livelli, lezioni individuali e di gruppo.',
+        type: 'Educazione artistica',
+      },
+    ],
+  },
 } satisfies Record<Lang, {
   region: string;
   genre: string;
@@ -146,6 +224,23 @@ const schema = {
       foundingDate: '2020',
       areaServed: ['BE', 'FR', 'RU', 'AM', 'Europe'],
       knowsLanguage: ['fr', 'ru'],
+      serviceArea: {
+        '@type': 'GeoCircle',
+        geoMidpoint: {
+          '@type': 'GeoCoordinates',
+          latitude: 50.8503,
+          longitude: 4.3517,
+        },
+        geoRadius: '2000000',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 50.8503,
+        longitude: 4.3517,
+      },
+      priceRange: '€€',
+      currenciesAccepted: 'EUR',
+      paymentAccepted: 'Cash, Credit Card, Bank Transfer',
       genre: copy.genre,
     },
     ...[1, 2].map((artistNumber) => ({

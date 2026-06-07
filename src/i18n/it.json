@@ -1,4 +1,9 @@
 {
+  "404": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "cta": "Back to home"
+  },
   "meta": {
     "siteTitle": "Rozi Dance — Danza e Canto Armeno | Matrimoni & Eventi in Italia",
     "siteDescription": "Spettacoli professionali di danza e canto armeno per matrimoni, eventi e celebrazioni in Europa. Organizzazione a Bruxelles. Lezioni di danza e canto. Artisti armeni esperti.",
@@ -7,12 +12,13 @@
     "ogDescription": "Spettacoli professionali di danza e canto armeno per matrimoni e eventi. Basati a Bruxelles, disponibili in tutta Italia e Europa."
   },
   "nav": {
-    "prestazioni": "Prestazioni",
+    "prestations": "Performances",
     "galerie": "Galleria",
     "cours": "Lezioni",
     "apropos": "Chi siamo",
     "contact": "Contatti",
-    "reelLabel": "Vedi il reel"
+    "reelLabel": "Vedi il reel",
+    "prestazioni": "Prestazioni"
   },
   "hero": {
     "eyebrowChant": "Canto",
@@ -298,11 +304,6 @@
     "copyright": "© {year} Rozi Dance. All rights reserved.",
     "poweredBy": "Powered by",
     "madeWith": "Website crafted with care."
-  },
-  "404": {
-    "title": "Page not found",
-    "description": "The page you're looking for doesn't exist or has been moved.",
-    "cta": "Back to home"
   },
   "mariages": {
     "pageTitle": "Weddings & Events — Rozi Dance",

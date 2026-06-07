@@ -1,4 +1,9 @@
 {
+  "404": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "cta": "Back to home"
+  },
   "meta": {
     "siteTitle": "Rozi Dance — Armenischer Tanz & Gesang | Hochzeiten & Events in Deutschland",
     "siteDescription": "Professionelle armenische Tanz- und Gesangsaufführungen für Hochzeiten, Events und Feiern in Europa. Tanzunterricht und Gesangslektionen. Erfahrene armenische Künstler.",
@@ -298,11 +303,6 @@
     "copyright": "© {year} Rozi Dance. All rights reserved.",
     "poweredBy": "Powered by",
     "madeWith": "Website crafted with care."
-  },
-  "404": {
-    "title": "Page not found",
-    "description": "The page you're looking for doesn't exist or has been moved.",
-    "cta": "Back to home"
   },
   "mariages": {
     "pageTitle": "Weddings & Events — Rozi Dance",

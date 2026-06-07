@@ -1,4 +1,9 @@
 {
+  "404": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "cta": "Back to home"
+  },
   "meta": {
     "siteTitle": "Rozi Dance — Danza & Canto Armenio | Bodas & Eventos en España",
     "siteDescription": "Actuaciones profesionales de danza y canto armenio para bodas, eventos y celebraciones en Europa. Organización en Bruselas. Lecciones de danza y canto. Artistas armenios experimentados.",
@@ -298,11 +303,6 @@
     "copyright": "© {year} Rozi Dance. All rights reserved.",
     "poweredBy": "Powered by",
     "madeWith": "Website crafted with care."
-  },
-  "404": {
-    "title": "Page not found",
-    "description": "The page you're looking for doesn't exist or has been moved.",
-    "cta": "Back to home"
   },
   "mariages": {
     "pageTitle": "Weddings & Events — Rozi Dance",
