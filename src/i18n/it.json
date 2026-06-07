@@ -1,8 +1,8 @@
 {
   "404": {
-    "title": "Page not found",
-    "description": "The page you're looking for doesn't exist or has been moved.",
-    "cta": "Back to home"
+    "title": "Pagina non trovata",
+    "description": "La pagina che stai cercando non esiste o è stata spostata.",
+    "cta": "Torna alla home"
   },
   "meta": {
     "siteTitle": "Rozi Dance — Danza e Canto Armeno | Matrimoni & Eventi in Italia",
@@ -12,13 +12,12 @@
     "ogDescription": "Spettacoli professionali di danza e canto armeno per matrimoni e eventi. Basati a Bruxelles, disponibili in tutta Italia e Europa."
   },
   "nav": {
-    "prestations": "Performances",
+    "prestations": "Prestazioni",
     "galerie": "Galleria",
     "cours": "Lezioni",
     "apropos": "Chi siamo",
     "contact": "Contatti",
-    "reelLabel": "Vedi il reel",
-    "prestazioni": "Prestazioni"
+    "reelLabel": "Vedi il reel"
   },
   "hero": {
     "eyebrowChant": "Canto",
@@ -34,256 +33,256 @@
     "ctaSecondary": "Scopri"
   },
   "prestations": {
-    "eyebrow": "Was wir anbieten",
-    "title": "Präsentation",
+    "eyebrow": "Quello che offriamo",
+    "title": "Presentazione",
     "items": [
       {
         "id": "mariages",
-        "title": "Hochzeiten & Events",
-        "description": "Brautgesang, Einzugstanz, Unterhaltung im Bankett — wir heben jeden Moment Ihres Tages mit maßgeschneiderten Aufführungen hervor.",
-        "link": "Unsere Arbeiten ansehen"
+        "title": "Matrimoni & Eventi",
+        "description": "Canto della sposa, danza d'ingresso, intrattenimento in banchetto — eleviamo ogni momento del tuo giorno con prestazioni personalizzate.",
+        "link": "Vedi il nostro lavoro"
       },
       {
         "id": "danse-evenementielle",
-        "title": "Die Kunst des Gesangs",
-        "description": "Eine Stimme für jeden Anlass. Jazz · Soul · Pop, zeitgenössischer oder personalisierter Gesang in mehreren Sprachen, um Ihre kostbarsten Momente zu begleiten.",
-        "link": "Mehr erfahren"
+        "title": "L'arte del canto",
+        "description": "Una voce per ogni occasione. Jazz · Soul · Pop, canto contemporaneo o personalizzato, in più lingue, per accompagnare i tuoi momenti più preziosi.",
+        "link": "Scopri di più"
       },
       {
         "id": "cours",
-        "title": "Gesangs- und Tanzunterricht",
-        "description": "Gesangs- und Tanzstunden, individuell oder in Gruppen, für alle Niveaus und Altersgruppen. Mehrere Unterrichtssprachen, vom Anfänger bis zum Fortgeschrittenen.",
-        "link": "Lektionen anzeigen"
+        "title": "Lezioni di canto e danza",
+        "description": "Lezioni di canto e danza, individuali o di gruppo, per tutti i livelli e le età. Più lingue d'insegnamento, dal principiante all'avanzato.",
+        "link": "Vedi lezioni"
       }
     ]
   },
   "galerie": {
-    "eyebrow": "Festgehaltene Momente",
-    "title": "Galerie",
-    "pageDescription": "Entdecken Sie Rozi Dance Fotos: Armenische Tanzaufführungen, Brautgesang, Zeremonien und Events.",
-    "ctaAll": "Vollständige Galerie anzeigen",
-    "instagramLink": "Unseren Instagram anzeigen",
-    "instagramAria": "Unseren Instagram @rozi.dance anzeigen",
-    "altPlaceholder": "Rozi Dance Foto",
-    "openPhoto": "Öffnen"
+    "eyebrow": "Momenti catturati",
+    "title": "Galleria",
+    "pageDescription": "Scopri le foto di Rozi Dance: esibizioni di danza armena, canto della sposa, cerimonie ed eventi.",
+    "ctaAll": "Vedi galleria completa",
+    "instagramLink": "Vedi il nostro Instagram",
+    "instagramAria": "Vedi il nostro Instagram @rozi.dance",
+    "altPlaceholder": "Foto di Rozi Dance",
+    "openPhoto": "Apri"
   },
   "videos": {
-    "eyebrow": "In Aktion",
-    "title": "Leidenschaft",
-    "youtubeLink": "Vollständigen YouTube-Kanal anzeigen",
-    "closeVideo": "Video schließen",
-    "youtubeAria": "Vollständigen Rozi Dance YouTube-Kanal anzeigen",
-    "youtubeKicker": "Rozi Dance auf YouTube",
-    "youtubeTitle": "Kanal anzeigen"
+    "eyebrow": "In esibizione",
+    "title": "Passione",
+    "youtubeLink": "Vedi il canale YouTube completo",
+    "closeVideo": "Chiudi video",
+    "youtubeAria": "Vedi il canale YouTube completo di Rozi Dance",
+    "youtubeKicker": "Rozi Dance su YouTube",
+    "youtubeTitle": "Vedi canale"
   },
   "stats": {
-    "eyebrow": "Rozi Dance in Zahlen",
+    "eyebrow": "Rozi Dance in numeri",
     "items": [
       {
         "value": "200+",
-        "label": "Hochzeiten begleitet"
+        "label": "Matrimoni accompagnati"
       },
       {
-        "value": "4 Jahre",
-        "label": "Künstlerische Erfahrung"
+        "value": "4 anni",
+        "label": "Di esperienza artistica"
       },
       {
         "value": "8",
-        "label": "Länder bedient"
+        "label": "Paesi serviti"
       },
       {
         "value": "100%",
-        "label": "Mit Herz"
+        "label": "Con il cuore"
       }
     ]
   },
   "temoignages": {
-    "eyebrow": "Was unsere Kunden sagen",
-    "title": "Sie vertrauen uns",
-    "ratingAria": "Durchschnittliche Bewertung: 5 Sterne",
-    "starsAria": "5 Sterne",
-    "reviewSource": "Kundenbewertung",
+    "eyebrow": "Quello che dicono i nostri clienti",
+    "title": "Ci hanno affidato il loro giorno",
+    "ratingAria": "Valutazione media: 5 stelle",
+    "starsAria": "5 stelle",
+    "reviewSource": "Recensione cliente",
     "items": [
       {
-        "quote": "Ihr habt unsere Hochzeit von Anfang bis Ende magisch gemacht. Vielen Dank!",
+        "quote": "Avete reso il nostro matrimonio magico dall'inizio alla fine. Grazie mille!",
         "author": "Ani & Saro",
-        "event": "Armenische Hochzeit, Brüssel"
+        "event": "Matrimonio armeno, Bruxelles"
       },
       {
-        "quote": "Professionell, talentiert und warm. Der Tanz erhob unseren Abend — wir feiern jetzt nicht mehr ohne euch.",
+        "quote": "Professionali, talentuosi e calorosi. La danza ha elevato la nostra serata — ora non celebriamo senza di voi.",
         "author": "Nadia M.",
-        "event": "Hochzeitsempfang, Lüttich"
+        "event": "Ricevimento matrimoniale, Liegi"
       },
       {
-        "quote": "Meine Kinder lieben die Lektionen, und meine Tochter wird bald Gesangsstunden nehmen. Danke euch beiden!",
+        "quote": "Ai miei figli sono piaciute molto le lezioni, e mia figlia presto inizierà lezioni di canto. Grazie a entrambi!",
         "author": "Christine K.",
-        "event": "Tanzlektionen, Antwerpen"
+        "event": "Lezioni di danza, Anversa"
       }
     ]
   },
   "faq": {
-    "eyebrow": "Häufig gestellte Fragen",
-    "title": "Alles, was Sie wissen möchten",
+    "eyebrow": "Domande frequenti",
+    "title": "Tutto quello che vuoi sapere",
     "items": [
       {
-        "q": "Tretet ihr auch außerhalb Belgiens auf?",
-        "a": "Ja, wir treten in ganz Europa auf. Fahrtkosten können je nach Entfernung anfallen. Kontaktiert uns für ein personalisiertes Angebot."
+        "q": "Esibite fuori dal Belgio?",
+        "a": "Sì, ci esibiamo in tutta Europa. Possono essere applicati costi di viaggio a seconda della distanza. Contattaci per un preventivo personalizzato."
       },
       {
-        "q": "Wie weit im Voraus sollten wir buchen?",
-        "a": "Wir empfehlen, uns mindestens 2 bis 3 Monate vor der Veranstaltung zu kontaktieren, um die Verfügbarkeit zu sichern, besonders in der Hochsaison (Mai–September)."
+        "q": "Quanto tempo prima devo prenotare?",
+        "a": "Consigliamo di contattarci almeno 2-3 mesi prima dell'evento per garantire la disponibilità, soprattutto durante l'alta stagione (maggio-settembre)."
       },
       {
-        "q": "Bietet ihr maßgeschneiderte Aufführungen an?",
-        "a": "Absolut. Jede Aufführung wird nach euren Wünschen gestaltet: Songauswahl, Dauer, Kostüme. Wir besprechen alles im Voraus, um etwas Einzigartiges zu schaffen."
+        "q": "Offrite esibizioni personalizzate?",
+        "a": "Assolutamente. Ogni esibizione è personalizzata secondo i tuoi desideri: scelta delle canzoni, durata, costumi. Discutiamo tutto in anticipo per creare qualcosa di unico."
       },
       {
-        "q": "Sind Lektionen für absolute Anfänger geeignet?",
-        "a": "Absolut. Wir heißen alle Niveaus willkommen, von absoluten Anfängern bis zu erfahrenen Praktizierenden. Jede Lektion wird dem Tempo und den Zielen jedes Schülers angepasst."
+        "q": "Le lezioni sono accessibili ai principianti assoluti?",
+        "a": "Assolutamente. Accogliamo tutti i livelli, da principianti assoluti a praticanti esperti. Ogni lezione si adatta al ritmo e agli obiettivi di ogni studente."
       },
       {
-        "q": "Können wir mehrere Aufführungen für eine Veranstaltung kombinieren?",
-        "a": "Ja, und das empfehlen wir oft. Zum Beispiel Brautgesang am Morgen und eine Tanzaufführung am Abend — wir erstellen das Programm mit euch."
+        "q": "Possiamo combinare più esibizioni per lo stesso evento?",
+        "a": "Sì, e spesso è quello che consigliamo. Ad esempio, canto della sposa al mattino e un'esibizione di danza alla sera — costruiamo il programma con te."
       }
     ]
   },
   "apropos": {
-    "eyebrow": "Unsere Geschichte",
-    "title": "Zwei Stimmen, zwei Körper, eine Tradition",
-    "p1": "Rozi Dance ist vor allem eine Geschichte der gemeinsamen Leidenschaft für armenische Kultur. Von Kindheit an in traditionellen Künsten ausgebildet, bewahren wir ein tausendjähriges musikalisches und choreographisches Erbe mit zeitgenösslicher Sensibilität.",
-    "p2": "Ob bei der Anzugzeremonie einer Braut, einem großen Hochzeitsbankett oder im Tanzstudio — wir legen unser Herz und unsere Seele in die Schönheit unserer Traditionen.",
-    "altPortrait": "Rozi Dance Duo Porträt"
+    "eyebrow": "La nostra storia",
+    "title": "Due voci, due corpi, una tradizione",
+    "p1": "Rozi Dance è soprattutto una storia di passione condivisa per la cultura armena. Addestrati fin dall'infanzia nelle arti tradizionali, perpetuiamo un'eredità musicale e coreografica millenaria con sensibilità contemporanea.",
+    "p2": "Che sia alla cerimonia di vestizione della sposa, a un grande banchetto matrimoniale o in studio di danza, mettiamo il nostro cuore e l'anima nella bellezza delle nostre tradizioni.",
+    "altPortrait": "Ritratto del duo Rozi Dance"
   },
   "contact": {
-    "eyebrow": "Booking & information",
-    "title": "Let's talk about your event",
-    "subtitle": "Contact us via your preferred channel — we respond within 24 hours.",
+    "eyebrow": "Prenotazioni e informazioni",
+    "title": "Parliamo del tuo evento",
+    "subtitle": "Contattaci tramite il tuo canale preferito — rispondiamo entro 24 ore.",
     "instagram": {
       "label": "Instagram",
       "handle": "@rozi.dance",
-      "ariaLabel": "Contact us on Instagram @rozi.dance"
+      "ariaLabel": "Contattaci su Instagram @rozi.dance"
     },
     "email": {
-      "label": "E-mail",
+      "label": "Email",
       "address": "abrahamyan.rose@mail.ru",
-      "ariaLabel": "Send us an email at abrahamyan.rose@mail.ru"
+      "ariaLabel": "Inviaci un'email a abrahamyan.rose@mail.ru"
     },
     "phone": {
-      "label": "Phone",
+      "label": "Telefono",
       "value": "+32 486 21 98 96",
-      "action": "Call",
-      "ariaLabel": "Call +32 486 21 98 96"
+      "action": "Chiama",
+      "ariaLabel": "Chiamaci al +32 486 21 98 96"
     },
     "youtube": {
       "label": "YouTube",
-      "handle": "Our channel"
+      "handle": "Il nostro canale"
     }
   },
   "cours": {
-    "pageTitle": "Armenian singing & dance lessons — Rozi Dance",
-    "pageDescription": "Armenian and international singing lessons, Armenian folk dance lessons. Individual and group, all levels, remote possible.",
-    "heroEyebrow": "Learn at your own pace",
-    "heroTitle": "Singing & dance lessons",
-    "heroSubtitle": "Lessons accessible to all, from beginner to advanced, in person or remotely.",
-    "chantTitle": "Singing lessons",
-    "chantDescription": "Discover the traditional Armenian repertoire as well as international songs. Our lessons adapt to your voice and level, whether beginner or advanced.",
-    "danseTitle": "Dance lessons",
-    "danseDescription": "Discover Armenian folk dances or perfect your technique. Solo or group lessons, in a warm and welcoming atmosphere.",
-    "tarifsEyebrow": "Investment",
-    "tarifsTitle": "Rates",
-    "faqEyebrow": "Frequently asked questions",
-    "faqTitle": "Everything you want to know",
+    "pageTitle": "Lezioni di canto e danza armena — Rozi Dance",
+    "pageDescription": "Lezioni di canto armeno e internazionale, lezioni di danza folcloristica armena. Individuali e di gruppo, tutti i livelli, possibile online.",
+    "heroEyebrow": "Impara al tuo ritmo",
+    "heroTitle": "Lezioni di canto e danza",
+    "heroSubtitle": "Lezioni accessibili a tutti, dal principiante all'avanzato, in persona o online.",
+    "chantTitle": "Lezioni di canto",
+    "chantDescription": "Scopri il repertorio tradizionale armeno così come canzoni internazionali. Le nostre lezioni si adattano alla tua voce e al tuo livello, principiante o avanzato.",
+    "danseTitle": "Lezioni di danza",
+    "danseDescription": "Scopri le danze folcloriche armene o perfeziona la tua tecnica. Lezioni individuali o di gruppo, in un'atmosfera calda e accogliente.",
+    "tarifsEyebrow": "Investimento",
+    "tarifsTitle": "Tariffe",
+    "faqEyebrow": "Domande frequenti",
+    "faqTitle": "Tutto quello che vuoi sapere",
     "faqItems": [
       {
-        "q": "Do I need to know how to sing to enrol?",
-        "a": "Not at all! Our lessons are for all levels, from complete beginners to experienced singers wishing to specialise in Armenian repertoire."
+        "q": "Devo saper cantare per iscrivermi?",
+        "a": "Assolutamente no! Le nostre lezioni sono per tutti i livelli, da principianti assoluti a cantanti esperti che desiderano specializzarsi nel repertorio armeno."
       },
       {
-        "q": "Are lessons taught in Armenian?",
-        "a": "Lessons can be conducted in French, Russian or Armenian according to your preference. Songs are of course taught in their original language (Armenian), with explanations of the texts."
+        "q": "Le lezioni sono insegnate in armeno?",
+        "a": "Le lezioni possono essere condotte in francese, russo o armeno secondo la tua preferenza. Le canzoni sono ovviamente insegnate nella loro lingua originale (armeno), con spiegazioni dei testi."
       },
       {
-        "q": "Are remote lessons available?",
-        "a": "Yes, we offer lessons via video conference (Zoom, Google Meet). This option is available for individual singing and dance lessons."
+        "q": "Sono disponibili lezioni online?",
+        "a": "Sì, offriamo lezioni tramite videoconferenza (Zoom, Google Meet). Questa opzione è disponibile per lezioni individuali di canto e danza."
       },
       {
-        "q": "How long does it take to learn a song?",
-        "a": "Generally, a simple song can be learned in 2 to 4 sessions. More complex pieces take longer. It all depends on your level and practice between lessons."
+        "q": "Quanto tempo ci vuole per imparare una canzone?",
+        "a": "Generalmente, una canzone semplice può essere imparata in 2-4 sessioni. I pezzi più complessi richiedono più tempo. Dipende dal tuo livello e dalla pratica tra le lezioni."
       },
       {
-        "q": "Do you offer lessons to prepare a wedding song?",
-        "a": "Absolutely! This is one of our specialities. We can prepare you to sing at your own wedding ceremony, with a bespoke programme adapted to your schedule."
+        "q": "Offrite lezioni per preparare una canzone di matrimonio?",
+        "a": "Assolutamente! Questa è una delle nostre specialità. Possiamo prepararti a cantare alla tua stessa cerimonia matrimoniale, con un programma personalizzato adattato al tuo programma."
       },
       {
-        "q": "Are dance lessons suitable for beginners?",
-        "a": "Yes, all our dance lessons start from the basics. No prior dance experience is required. We progress at your pace."
+        "q": "Le lezioni di danza sono adatte ai principianti?",
+        "a": "Sì, tutte le nostre lezioni di danza iniziano dalle basi. Non è richiesta alcuna esperienza di danza precedente. Progrediamo al tuo ritmo."
       },
       {
-        "q": "Can singing and dance lessons be combined?",
-        "a": "Absolutely, and it's what we recommend! Contact us for a personalised programme."
+        "q": "Le lezioni di canto e danza possono essere combinate?",
+        "a": "Assolutamente, ed è quello che consigliamo! Contattaci per un programma personalizzato."
       },
       {
-        "q": "Do group lessons have a minimum number of participants?",
-        "a": "Group lessons start from 4 people. They are ideal for cultural associations, groups of friends or event preparation."
+        "q": "Le lezioni di gruppo hanno un numero minimo di partecipanti?",
+        "a": "Le lezioni di gruppo iniziano da 4 persone. Sono ideali per associazioni culturali, gruppi di amici o preparazione di eventi."
       },
       {
-        "q": "Can lessons be given as a gift?",
-        "a": "Yes, we offer gift vouchers for individual sessions or packages. Contact us by e-mail to order one."
+        "q": "Le lezioni possono essere regalate?",
+        "a": "Sì, offriamo buoni regalo per sessioni individuali o pacchetti. Contattaci per email per ordinarne uno."
       },
       {
-        "q": "How do we pay?",
-        "a": "We accept bank transfer (BE) and cash for in-person lessons. Details are provided at enrolment."
+        "q": "Come paghiamo?",
+        "a": "Accettiamo bonifico bancario (BE) e contanti per lezioni in persona. I dettagli vengono forniti all'iscrizione."
       }
     ],
-    "ctaTitle": "Ready to start?",
-    "ctaSubtitle": "Contact us to choose the option that suits you.",
-    "ctaBtn": "Contact us",
-    "cardLink": "Watch videos",
+    "ctaTitle": "Pronto per iniziare?",
+    "ctaSubtitle": "Contattaci per scegliere l'opzione che ti conviene.",
+    "ctaBtn": "Contattaci",
+    "cardLink": "Guarda video",
     "chantList": [
-      "Traditional Armenian repertoire",
-      "Popular international songs",
-      "Vocal technique adapted to your voice",
-      "All levels — beginner to advanced",
-      "Individual or group lessons",
-      "In person or remotely"
+      "Repertorio tradizionale armeno",
+      "Canzoni popolari internazionali",
+      "Tecnica vocale adattata alla tua voce",
+      "Tutti i livelli — principiante all'avanzato",
+      "Lezioni individuali o di gruppo",
+      "In persona o online"
     ],
     "danseList": [
-      "Armenian folk dances",
-      "Choreographies for events",
-      "Group and individual dance",
-      "All levels, all ages",
-      "Warm and welcoming atmosphere"
+      "Danze folcloriche armene",
+      "Coreografie per eventi",
+      "Danza di gruppo e individuale",
+      "Tutti i livelli, tutte le età",
+      "Atmosfera calda e accogliente"
     ],
     "cards": [
       {
         "slug": "chant-armenien",
-        "title": "Armenian singing",
-        "description": "We are proud to share our art and passion with each student, whatever their level."
+        "title": "Canto armeno",
+        "description": "Siamo orgogliosi di condividere la nostra arte e passione con ogni studente, indipendentemente dal livello."
       },
       {
         "slug": "chant-jazz-soul-pop",
-        "title": "Jazz · Soul · Pop singing",
-        "description": "We are proud to share our art and passion with each student, whatever their level."
+        "title": "Canto Jazz · Soul · Pop",
+        "description": "Siamo orgogliosi di condividere la nostra arte e passione con ogni studente, indipendentemente dal livello."
       },
       {
         "slug": "chant-de-mariage",
-        "title": "Wedding singing",
-        "description": "We are proud to share our art and passion with each student, whatever their level."
+        "title": "Canto di matrimonio",
+        "description": "Siamo orgogliosi di condividere la nostra arte e passione con ogni studente, indipendentemente dal livello."
       },
       {
         "slug": "danse-armenienne",
-        "title": "Armenian dance",
-        "description": "We are proud to share our art and passion with each student, whatever their level."
+        "title": "Danza armena",
+        "description": "Siamo orgogliosi di condividere la nostra arte e passione con ogni studente, indipendentemente dal livello."
       },
       {
         "slug": "danse-en-groupe",
-        "title": "Group dance",
-        "description": "We are proud to share our art and passion with each student, whatever their level."
+        "title": "Danza di gruppo",
+        "description": "Siamo orgogliosi di condividere la nostra arte e passione con ogni studente, indipendentemente dal livello."
       },
       {
         "slug": "cours-en-ligne",
-        "title": "Online lessons",
-        "description": "We are proud to share our art and passion with each student, whatever their level."
+        "title": "Lezioni online",
+        "description": "Siamo orgogliosi di condividere la nostra arte e passione con ogni studente, indipendentemente dal livello."
       }
     ],
     "reels": [
@@ -296,103 +295,103 @@
     ]
   },
   "footer": {
-    "tagline": "Die armenische Seele in Bewegung.",
-    "homeAria": "Rozi · Dance — Startseite",
-    "nav": "Navigation",
-    "links": "Links",
-    "legal": "Impressum",
-    "copyright": "© {year} Rozi Dance. Alle Rechte vorbehalten.",
+    "tagline": "L'anima armena in movimento.",
+    "homeAria": "Rozi · Dance — home",
+    "nav": "Navigazione",
+    "links": "Link",
+    "legal": "Avviso legale",
+    "copyright": "© {year} Rozi Dance. Tutti i diritti riservati.",
     "poweredBy": "Powered by",
-    "madeWith": "Website mit Sorgfalt erstellt."
+    "madeWith": "Sito web realizzato con cura."
   },
   "mariages": {
-    "pageTitle": "Hochzeiten & Events — Rozi Dance",
-    "pageDescription": "Entdecken Sie unsere Hochzeitsaufführungen: Brautenztanz, Brautgesang, Hochzeitstanz und Musiker. Rozi Dance, ansässig in Belgien, in ganz Europa verfügbar.",
-    "heroEyebrow": "Hochzeiten & Events",
-    "heroTitle": "Unsere Dienstleistungen",
-    "heroSubtitle": "Von der Anzugzeremonie der Braut bis zum Bankett begleiten wir jeden Schritt Ihres Tages mit Anmut und Gefühl.",
-    "backLink": "Aufführungen",
-    "cardLink": "Dienstleistungen",
-    "reelsTitle": "Wählen Sie eine Dienstleistung",
-    "cardCta": "Seite öffnen",
-    "ctaEyebrow": "Ihr Tag",
-    "ctaTitle": "Lassen Sie uns über Ihre Hochzeit sprechen",
-    "ctaText": "Jede Aufführung wird nach Maß gestaltet. Kontaktieren Sie uns, um das Programm zu erstellen, das Ihrer Vision entspricht.",
-    "ctaBtn": "Kontaktieren Sie uns",
+    "pageTitle": "Matrimoni & Eventi — Rozi Dance",
+    "pageDescription": "Scopri le nostre esibizioni matrimoniali: danza della sposa, canto della sposa, danza matrimoniale e musicisti. Rozi Dance, con sede in Belgio, disponibile in tutta Europa.",
+    "heroEyebrow": "Matrimoni & Eventi",
+    "heroTitle": "I nostri servizi",
+    "heroSubtitle": "Dalla cerimonia di vestizione della sposa al banchetto, accompagniamo ogni passo della tua giornata con grazia ed emozione.",
+    "backLink": "Esibizioni",
+    "cardLink": "Servizi",
+    "reelsTitle": "Scegli un servizio",
+    "cardCta": "Apri pagina",
+    "ctaEyebrow": "Il tuo giorno",
+    "ctaTitle": "Parliamo del tuo matrimonio",
+    "ctaText": "Ogni esibizione è creata su misura. Contattaci per costruire il programma che corrisponde alla tua visione.",
+    "ctaBtn": "Contattaci",
     "categories": [
       {
         "slug": "danse-de-la-mariee",
-        "title": "Brautenztanz",
-        "description": "Der traditionelle armenische Brautenztanz, Anmut und Gefühl vereint.",
+        "title": "Danza della sposa",
+        "description": "La tradizionale danza armena della sposa, grazia ed emozione unite.",
         "count": 6
       },
       {
         "slug": "chant-de-la-mariee",
-        "title": "Brautgesang",
-        "description": "Traditionelle und zeitgenössische Lieder, um die schönsten Momente zu begleiten.",
+        "title": "Canto della sposa",
+        "description": "Canzoni tradizionali e contemporanee per accompagnare i momenti più belli.",
         "count": 4
       },
       {
         "slug": "danse-de-mariage",
-        "title": "Hochzeitstanz",
-        "description": "Gruppenaufführungen, um Ihr Bankett zu beleben und Ihre Gäste zu bewegen.",
+        "title": "Danza matrimoniale",
+        "description": "Esibizioni di gruppo per animare il tuo banchetto e commuovere i tuoi ospiti.",
         "count": 10
       },
       {
         "slug": "musiciens",
-        "title": "Unsere Musiker",
-        "description": "Musiker, die jede Aufführung mit ihrem Talent und ihrer Sensibilität erheben.",
+        "title": "I nostri musicisti",
+        "description": "Musicisti che elevano ogni esibizione con il loro talento e sensibilità.",
         "count": 2
       }
     ]
   },
   "chant": {
-    "pageTitle": "Die Kunst des Gesangs — Rozi Dance",
-    "pageDescription": "Jazz-, Soul- und Popgesang für Ihre Hochzeiten und Events. Rozi Dance, ansässig in Belgien, in ganz Europa verfügbar.",
-    "heroEyebrow": "Die Kunst des Gesangs",
-    "heroTitle": "Unsere Songs",
-    "heroSubtitle": "Eine Stimme für jeden Anlass — Soul, Pop oder Jazz, in mehreren Sprachen, um Ihre kostbarsten Momente zu begleiten.",
-    "backLink": "Aufführungen",
-    "cardLink": "Entdecken",
-    "ctaEyebrow": "Ihr Event",
-    "ctaTitle": "Lassen Sie uns über Ihren Anlass sprechen",
-    "ctaText": "Jede Aufführung wird an Ihre Wünsche angepasst. Kontaktieren Sie uns für ein personalisiertes Programm.",
-    "ctaBtn": "Kontaktieren Sie uns",
+    "pageTitle": "L'arte del canto — Rozi Dance",
+    "pageDescription": "Canto Jazz, Soul e Pop per i tuoi matrimoni e eventi. Rozi Dance, con sede in Belgio, disponibile in tutta Europa.",
+    "heroEyebrow": "L'arte del canto",
+    "heroTitle": "Le nostre canzoni",
+    "heroSubtitle": "Una voce per ogni occasione — Soul, Pop o Jazz, in più lingue, per accompagnare i tuoi momenti più preziosi.",
+    "backLink": "Esibizioni",
+    "cardLink": "Scopri",
+    "ctaEyebrow": "Il tuo evento",
+    "ctaTitle": "Parliamo della tua occasione",
+    "ctaText": "Ogni esibizione si adatta ai tuoi desideri. Contattaci per un programma personalizzato.",
+    "ctaBtn": "Contattaci",
     "categories": [
       {
-        "title": "Soul-Gesang",
-        "description": "Eine Stimme, die die Seele berührt. Soul-Stücke voller Gefühl für Ihre intensivsten Momente."
+        "title": "Canto Soul",
+        "description": "Una voce che tocca l'anima. Brani Soul pieni di emozione per i tuoi momenti più intensi."
       },
       {
-        "title": "Pop-Gesang",
-        "description": "Cover und Original-Pop-Songs, um Ihre Feiern mit modernem Stil zu beleben."
+        "title": "Canto Pop",
+        "description": "Cover e canzoni Pop originali per energizzare le tue celebrazioni con uno stile moderno."
       },
       {
-        "title": "Jazz-Gesang",
-        "description": "Die Eleganz des Jazz, um Ihre Cocktails, Abendessen und Empfänge mit Klasse zu begleiten."
+        "title": "Canto Jazz",
+        "description": "L'eleganza del Jazz per accompagnare i tuoi cocktail, cene e ricevimenti con classe."
       }
     ]
   },
   "mariagesSlug": {
-    "backLink": "Hochzeiten & Events",
-    "eyebrow": "Aufführungen",
+    "backLink": "Matrimoni & Eventi",
+    "eyebrow": "Esibizioni",
     "videoLabel": "video",
-    "momentsTitle": "Momente zum Entdecken",
-    "momentsText": "Eine Auswahl von Instagram-Reels, um die Energie, Anmut und das Gefühl dieser Aufführung zu spüren.",
-    "ctaEyebrow": "Ihr Tag",
-    "ctaTitle": "Eine maßgeschneiderte Aufführung?",
-    "ctaText": "Kontaktieren Sie uns, um Ihr Programm zu besprechen und etwas Einzigartiges zu schaffen.",
-    "ctaBtn": "Kontaktieren Sie uns",
-    "ctaBtnSecondary": "Alle Aufführungen anzeigen"
+    "momentsTitle": "Momenti da scoprire",
+    "momentsText": "Una selezione di reel Instagram per sentire l'energia, la grazia e l'emozione di questa esibizione.",
+    "ctaEyebrow": "Il tuo giorno",
+    "ctaTitle": "Un'esibizione personalizzata?",
+    "ctaText": "Contattaci per discutere il tuo programma e creare qualcosa di unico.",
+    "ctaBtn": "Contattaci",
+    "ctaBtnSecondary": "Vedi tutte le esibizioni"
   },
   "coursSlug": {
-    "backLink": "Lektionen",
-    "eyebrow": "Gesangs- und Tanzlektionen",
+    "backLink": "Lezioni",
+    "eyebrow": "Lezioni di canto e danza",
     "videoLabel": "video",
-    "ctaEyebrow": "Einschreiben",
-    "ctaTitle": "Bereit zu starten?",
-    "ctaText": "Kontaktieren Sie uns, um die Option zu wählen, die zu Ihnen passt, und definieren Sie Ihr Programm.",
-    "ctaBtn": "Kontaktieren Sie uns",
-    "ctaBtnSecondary": "Alle Lektionen anzeigen"
+    "ctaEyebrow": "Iscriviti",
+    "ctaTitle": "Pronto per iniziare?",
+    "ctaText": "Contattaci per scegliere l'opzione che ti conviene e definisci il tuo programma.",
+    "ctaBtn": "Contattaci",
+    "ctaBtnSecondary": "Vedi tutte le lezioni"
   }
 }
