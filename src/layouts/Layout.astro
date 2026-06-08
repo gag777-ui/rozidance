@@ -65,8 +65,8 @@ const pagePath = Astro.url.pathname.replace(/^\/(fr|en|nl|de|es|it|ru)/, '') || 
     <meta name="description" content={description} />
     {keywords && <meta name="keywords" content={keywords} />}
     <meta name="author" content="Rozi Dance" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    {/* TODO: Restaurer "index, follow" après livraison en fin de semaine */}
+    <meta name="robots" content="noindex, nofollow" />
 
     <!-- Canonical -->
     <link rel="canonical" href={canonicalURL} />

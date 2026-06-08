@@ -1,18 +1,20 @@
 User-agent: *
-Allow: /
+Disallow: /
 
-# Sitemaps pour tous les marchés
-Sitemap: https://rozidance.be/sitemap-index.xml
-Sitemap: https://rozidance.be/sitemap-0.xml
+# Noindex — site en préparation, livraison en fin de semaine
+# À restaurer: Allow: / après la livraison
+
+# Sitemaps pour tous les marchés (temporairement désactivées)
+# Sitemap: https://rozidance.be/sitemap-index.xml
+# Sitemap: https://rozidance.be/sitemap-0.xml
 
 # Bloquer les ressources inutiles
 Disallow: /api/
 Disallow: *.json$
 Disallow: /admin/
 
-# Autorisations spéciales
-User-agent: Googlebot
-Crawl-delay: 0
-
-User-agent: Bingbot
-Crawl-delay: 1
+# Autorisations spéciales (temporairement désactivées)
+# User-agent: Googlebot
+# Crawl-delay: 0
+# User-agent: Bingbot
+# Crawl-delay: 1
