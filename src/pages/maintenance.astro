@@ -1,0 +1,204 @@
+---
+// Page de maintenance — affichée quand MAINTENANCE_MODE=true sur Vercel
+const title = 'Rozi Dance — Bientôt disponible';
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>{title}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Fraunces', 'Inter', system-ui, sans-serif;
+      background: linear-gradient(135deg, #2b1f15 0%, #1c1410 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: rgba(255, 248, 238, 0.9);
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+      animation: fadeIn 600ms ease-out both;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-wrapper {
+      margin-bottom: 3rem;
+      animation: slideDown 800ms ease-out both;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(255, 248, 238, 0.05));
+      border: 1px solid rgba(184, 134, 11, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      color: rgba(255, 248, 238, 0.7);
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .message {
+      font-size: 1rem;
+      color: rgba(255, 248, 238, 0.6);
+      margin-bottom: 3rem;
+      line-height: 1.8;
+      margin-top: 1rem;
+    }
+
+    .coming-soon {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: rgba(184, 134, 11, 0.1);
+      border: 1px solid rgba(184, 134, 11, 0.3);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(184, 134, 11, 0.9);
+      margin-bottom: 2rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .footer {
+      font-size: 0.9rem;
+      color: rgba(255, 248, 238, 0.5);
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 248, 238, 0.1);
+    }
+
+    .dots {
+      display: inline-block;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 20%, 50%, 80%, 100% {
+        opacity: 0.4;
+      }
+      40% {
+        opacity: 1;
+      }
+      60% {
+        opacity: 0.7;
+      }
+    }
+
+    .social {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .social a {
+      color: rgba(184, 134, 11, 0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 300ms;
+    }
+
+    .social a:hover {
+      color: rgba(184, 134, 11, 1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-wrapper">
+      <div class="logo">RD</div>
+    </div>
+
+    <h1>Rozi Dance</h1>
+    <p class="subtitle">Danse & Chant Arméniens</p>
+
+    <div class="coming-soon">
+      Bientôt disponible<span class="dots">…</span>
+    </div>
+
+    <p class="message">
+      Quelque chose de spécial arrive en fin de semaine.<br/>
+      Une présentation que tu ne vas pas oublier<span class="dots">.</span>
+    </p>
+
+    <div class="footer">
+      <p>Restez connectés</p>
+      <div class="social">
+        <a href="https://instagram.com/rozi.dance" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://facebook.com/RoziDanseenBelgique" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://youtube.com/@rozidance" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

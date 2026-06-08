@@ -5,6 +5,12 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import PageLoader from '../components/ui/PageLoader.astro';
 
+// Check maintenance mode (Vercel env var)
+const maintenanceMode = import.meta.env.MAINTENANCE_MODE === 'true';
+if (maintenanceMode && Astro.url.pathname !== '/maintenance') {
+  return Astro.redirect('/maintenance');
+}
+
 interface Props {
   title: string;
   description?: string;
