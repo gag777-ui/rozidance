@@ -16,12 +16,14 @@
   --color-ivory-subtle:    #F3E7D8;
 
   /* Texte */
-  --color-charcoal:        #3A2A20;
-  --color-heading-deep:    #4A3326;
-  --color-heading-soft:    #8C684D;
-  --color-taupe:           #6B5645;
+  --color-charcoal:        #503A2C;
+  --color-heading-deep:    #5A4030;
+  --color-heading-soft:    #927059;
+  --color-taupe:           #725D4B;
   --color-sand:            #B8A689;
   --color-sand-light:      #D4C5A9;
+  --color-heading-bronze:  #9C7758;
+  --color-heading-sage:    #7C8468;
 
   /* Terracotta — accent principal */
   --color-terracotta:      #C16847;
@@ -48,6 +50,7 @@
 
   /* Section titles warm tone */
   --color-title-warm:      var(--color-heading-soft);
+  --color-title-gradient:  linear-gradient(108deg, #5F4331 0%, #9B7657 48%, #7C8468 100%);
 
   /* États système */
   --color-focus-ring:      rgba(193, 104, 71, 0.45);
@@ -195,7 +198,7 @@
     font-weight: 400;
     line-height: var(--leading-tight);
     color: var(--color-heading-deep);
-    text-shadow: 0 1px 0 rgba(255, 248, 236, 0.32);
+    text-shadow: 0 1px 0 rgba(255, 248, 236, 0.24);
   }
 
   h1 { font-size: var(--text-4xl); }
@@ -274,7 +277,17 @@
     margin: 0;
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
-    text-shadow: 0 1px 0 rgba(255, 248, 236, 0.34);
+    text-shadow: none;
+  }
+
+  body .section-header .section-title,
+  body .section-title {
+    color: transparent !important;
+    background: var(--color-title-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none !important;
   }
 
   @media (min-width: 768px) {
