@@ -81,14 +81,14 @@ function splitTitle(title: string) {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    --flow-top: #fff8ee;
-    --flow-bottom: #f6eadc;
+    --flow-top: #fffaf4;
+    --flow-bottom: #fbefe3;
     padding-block: 64px 72px;
     background:
-      radial-gradient(circle at 88% 8%, rgba(135, 144, 115, 0.11), transparent 26%),
-      radial-gradient(circle at 10% 86%, rgba(168, 135, 83, 0.1), transparent 30%),
-      linear-gradient(90deg, rgba(168, 135, 83, 0.05) 0 1px, transparent 1px 100%),
-      linear-gradient(180deg, #fff8ee 0%, #fff2e4 42%, #f6eadc 100%);
+      radial-gradient(circle at 88% 8%, rgba(135, 144, 115, 0.075), transparent 26%),
+      radial-gradient(circle at 10% 86%, rgba(168, 135, 83, 0.065), transparent 30%),
+      linear-gradient(90deg, rgba(168, 135, 83, 0.03) 0 1px, transparent 1px 100%),
+      linear-gradient(180deg, #fffaf4 0%, #fff6ec 46%, #fbefe3 100%);
     background-size: auto, auto, 100% 88px, auto;
     box-shadow:
       inset 0 18px 24px var(--flow-top),
@@ -101,10 +101,10 @@ function splitTitle(title: string) {
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.36;
+    opacity: 0.22;
     background:
-      linear-gradient(135deg, transparent 0 44%, rgba(135, 144, 115, 0.14) 44% 45%, transparent 45% 100%),
-      linear-gradient(135deg, transparent 0 60%, rgba(168, 135, 83, 0.11) 60% 61%, transparent 61% 100%);
+      linear-gradient(135deg, transparent 0 44%, rgba(135, 144, 115, 0.1) 44% 45%, transparent 45% 100%),
+      linear-gradient(135deg, transparent 0 60%, rgba(168, 135, 83, 0.08) 60% 61%, transparent 61% 100%);
   }
 
   .section-prestations::after {
@@ -116,7 +116,7 @@ function splitTitle(title: string) {
     z-index: 0;
     height: 92px;
     pointer-events: none;
-    background: linear-gradient(180deg, transparent 0%, rgba(240, 220, 200, 0.68) 54%, #f6eadc 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(250, 238, 224, 0.58) 56%, #fbefe3 100%);
   }
 
   .section-prestations > .section-container {
@@ -161,19 +161,25 @@ function splitTitle(title: string) {
   }
 
   .prestation-card {
+    --card-glow: rgba(168, 135, 83, 0.12);
+    --card-line: rgba(168, 135, 83, 0.2);
+    --card-accent: #9b7657;
     position: relative;
     display: grid;
     grid-template-columns: 1fr;
     overflow: hidden;
+    isolation: isolate;
     color: var(--color-charcoal);
     text-decoration: none;
-    border: 0.5px solid rgba(135, 144, 115, 0.24);
-    border-radius: 26px;
+    border: 1px solid transparent;
+    border-radius: 30px;
     background:
-      linear-gradient(145deg, rgba(255, 249, 239, 0.96), rgba(236, 216, 190, 0.78));
+      linear-gradient(145deg, rgba(255, 253, 248, 0.98), rgba(247, 235, 220, 0.56)) padding-box,
+      linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(168, 135, 83, 0.14), rgba(135, 144, 115, 0.12)) border-box;
     box-shadow:
-      0 18px 48px rgba(58, 35, 21, 0.13),
-      inset 0 1px 0 rgba(255, 255, 255, 0.82);
+      0 16px 42px rgba(58, 35, 21, 0.075),
+      0 1px 0 rgba(255, 255, 255, 0.66) inset,
+      0 -1px 0 rgba(168, 135, 83, 0.07) inset;
     transition:
       opacity 880ms var(--ease-standard),
       transform 880ms var(--ease-standard),
@@ -181,14 +187,48 @@ function splitTitle(title: string) {
       box-shadow 640ms var(--ease-standard);
   }
 
+  .prestation-card:nth-child(2) {
+    --card-glow: rgba(160, 111, 97, 0.13);
+    --card-line: rgba(160, 111, 97, 0.22);
+    --card-accent: #a06f61;
+  }
+
+  .prestation-card:nth-child(3) {
+    --card-glow: rgba(135, 144, 115, 0.13);
+    --card-line: rgba(135, 144, 115, 0.22);
+    --card-accent: #7c8468;
+  }
+
   .prestation-card::before {
     content: '';
     position: absolute;
-    inset: 6px;
-    z-index: 2;
+    inset: 7px;
+    z-index: 3;
     pointer-events: none;
-    border: 0.5px solid rgba(255, 255, 255, 0.62);
-    border-radius: 20px;
+    border: 0.5px solid rgba(255, 255, 255, 0.46);
+    border-radius: 23px;
+    box-shadow:
+      inset 0 0 0 1px rgba(168, 135, 83, 0.045),
+      inset 0 1px 0 rgba(255, 255, 255, 0.46);
+  }
+
+  .prestation-card::after {
+    content: '';
+    position: absolute;
+    top: 28px;
+    right: -62px;
+    z-index: 0;
+    width: 190px;
+    height: 190px;
+    pointer-events: none;
+    opacity: 0.52;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 50%, var(--card-glow), transparent 64%),
+      conic-gradient(from 40deg, transparent 0 18%, rgba(255, 255, 255, 0.38) 19% 20%, transparent 21% 42%, var(--card-glow) 43% 45%, transparent 46% 100%);
+    transition:
+      opacity 900ms var(--ease-standard),
+      transform 900ms var(--ease-standard);
   }
 
   .prestation-card:focus-visible {
@@ -202,11 +242,19 @@ function splitTitle(title: string) {
 
   .prestation-photo {
     position: relative;
+    z-index: 1;
     min-height: 205px;
     overflow: hidden;
-    margin: 6px 6px 0;
-    border-radius: 20px 20px 10px 10px;
-    background: var(--color-dark);
+    overflow: clip;
+    isolation: isolate;
+    contain: paint;
+    margin: 8px 8px 0;
+    border-radius: 22px 22px 12px 12px;
+    clip-path: inset(0 round 22px 22px 12px 12px);
+    background: #f2e2cb;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.64),
+      0 14px 30px rgba(58, 35, 21, 0.08);
   }
 
   .prestation-photo img {
@@ -215,33 +263,63 @@ function splitTitle(title: string) {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1.025);
+    transform: scale(1.02);
+    border-radius: inherit;
+    filter: saturate(0.9) contrast(0.95) brightness(1.055);
     backface-visibility: hidden;
-    transition: transform 1100ms var(--ease-standard);
+    transition:
+      filter 900ms var(--ease-standard),
+      transform 1100ms var(--ease-standard);
     will-change: transform;
   }
 
   .prestation-card:nth-child(2) .prestation-photo img {
-    transform: scale(1.025);
+    transform: scale(1.02);
+  }
+
+  .prestation-photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.24), transparent 28%),
+      linear-gradient(118deg, transparent 0 42%, rgba(255, 255, 255, 0.14) 48%, transparent 56% 100%),
+      linear-gradient(90deg, transparent 0 16%, var(--card-line) 16.2% 16.45%, transparent 16.8% 100%);
+    mix-blend-mode: soft-light;
+    opacity: 0.68;
   }
 
   .prestation-photo::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 88%, rgba(236, 216, 190, 0.6) 100%);
+    z-index: 2;
+    background:
+      radial-gradient(circle at 0% 0%, rgba(255, 251, 245, 0.54), transparent 35%),
+      radial-gradient(circle at 100% 0%, rgba(249, 235, 216, 0.46), transparent 37%),
+      radial-gradient(circle at 0% 100%, rgba(247, 229, 207, 0.5), transparent 38%),
+      radial-gradient(circle at 100% 100%, rgba(247, 229, 207, 0.52), transparent 40%),
+      linear-gradient(180deg, rgba(255, 251, 245, 0.3) 0%, transparent 18%, transparent 66%, rgba(247, 229, 207, 0.42) 100%),
+      linear-gradient(90deg, rgba(255, 250, 241, 0.32) 0%, transparent 17%, transparent 83%, rgba(242, 222, 199, 0.32) 100%);
+    border-radius: inherit;
+    box-shadow: inset 0 0 34px 10px rgba(247, 231, 211, 0.38);
   }
 
   .prestation-badge {
     position: absolute;
     top: 12px;
     right: 12px;
-    z-index: 1;
-    padding: 7px 10px;
-    color: var(--color-ivory-card);
-    border: 0.5px solid rgba(255, 249, 239, 0.42);
+    z-index: 3;
+    padding: 7px 11px 7px 12px;
+    color: color-mix(in srgb, var(--card-accent) 78%, #3a2a20);
+    border: 0.5px solid rgba(255, 249, 239, 0.72);
     border-radius: var(--radius-full);
-    background: rgba(37, 23, 15, 0.48);
+    background: rgba(255, 248, 238, 0.72);
+    box-shadow:
+      0 10px 24px rgba(58, 35, 21, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.64);
     font-family: var(--font-sans);
     font-size: 9px;
     font-weight: 500;
@@ -250,14 +328,17 @@ function splitTitle(title: string) {
   }
 
   .prestation-copy {
+    position: relative;
+    z-index: 1;
     display: grid;
     align-content: center;
-    gap: 8px;
-    padding: 15px 16px 17px;
+    gap: 9px;
+    padding: 16px 17px 18px;
   }
 
   .prestation-tag {
     color: #7a653e;
+    max-width: 32ch;
     font-family: var(--font-sans);
     font-size: 10px;
     font-weight: 500;
@@ -310,11 +391,13 @@ function splitTitle(title: string) {
     gap: 12px;
     width: 100%;
     margin-top: 4px;
-    padding: 5px 5px 5px 14px;
+    padding: 5px 5px 5px 15px;
     color: var(--color-charcoal);
-    border: 0.5px solid rgba(135, 144, 115, 0.3);
+    border: 0.5px solid rgba(168, 135, 83, 0.22);
     border-radius: var(--radius-full);
-    background: rgba(135, 144, 115, 0.12);
+    background:
+      linear-gradient(135deg, rgba(255, 249, 239, 0.72), rgba(255, 249, 239, 0.24));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.54);
     font-family: var(--font-sans);
     font-size: 10px;
     font-weight: 500;
@@ -331,7 +414,9 @@ function splitTitle(title: string) {
     flex: 0 0 auto;
     color: var(--color-ivory-card);
     border-radius: var(--radius-full);
-    background: #879073;
+    background:
+      linear-gradient(135deg, var(--card-accent), color-mix(in srgb, var(--card-accent) 76%, #2b1f15));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
     transition: transform 560ms var(--ease-standard);
   }
 
@@ -482,13 +567,15 @@ function splitTitle(title: string) {
 
     .prestation-card:nth-child(even) .prestation-photo {
       order: 2;
-      margin: 6px 6px 6px 0;
-      border-radius: 10px 20px 20px 10px;
+      margin: 8px 8px 8px 0;
+      border-radius: 12px 22px 22px 12px;
+      clip-path: inset(0 round 12px 22px 22px 12px);
     }
 
     .prestation-card:not(:nth-child(even)) .prestation-photo {
-      margin: 6px 0 6px 6px;
-      border-radius: 20px 10px 10px 20px;
+      margin: 8px 0 8px 8px;
+      border-radius: 22px 12px 12px 22px;
+      clip-path: inset(0 round 22px 12px 12px 22px);
     }
 
     .prestation-photo {
@@ -517,12 +604,19 @@ function splitTitle(title: string) {
     .prestation-card:hover {
       transform: translateY(-5px);
       box-shadow:
-        0 24px 58px rgba(58, 35, 21, 0.17),
+        0 26px 64px rgba(58, 35, 21, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.48) inset,
         inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    }
+
+    .prestation-card:hover::after {
+      opacity: 0.92;
+      transform: translate3d(-8px, 8px, 0) rotate(10deg);
     }
 
     .prestation-card:hover .prestation-photo img {
       transform: scale(1.055);
+      filter: saturate(0.94) contrast(0.98) brightness(1.065);
     }
 
     .prestation-card:hover .cta-icon {

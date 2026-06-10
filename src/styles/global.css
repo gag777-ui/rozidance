@@ -282,11 +282,9 @@
 
   body .section-header .section-title,
   body .section-title {
-    color: transparent !important;
-    background: var(--color-title-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-title-warm) !important;
+    background: none;
+    -webkit-text-fill-color: currentColor;
     text-shadow: none !important;
   }
 
@@ -536,7 +534,7 @@
 
 /* ── Apparition des titres dans .section-header ──────────────────────────── */
 
-.section-header .eyebrow {
+.section-header:is(.reveal, .reveal-fade, .reveal-left, .reveal-right, .reveal-scale) .eyebrow {
   opacity: 0;
   transform: translateY(12px);
   transition:
@@ -548,7 +546,7 @@
   transform: translateY(0);
 }
 
-.section-header .section-title {
+.section-header:is(.reveal, .reveal-fade, .reveal-left, .reveal-right, .reveal-scale) .section-title {
   opacity: 0;
   transform: translateY(18px);
   letter-spacing: 0.015em;

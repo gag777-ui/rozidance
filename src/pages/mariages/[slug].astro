@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/utils';
+import CtaFloat from '../../components/ui/CtaFloat.astro';
 
 export async function getStaticPaths() {
   const fr = (await import('../../i18n/fr.json')).default;
@@ -320,6 +321,7 @@ const musiciensPosters = musiciensVideos.map(v => `/images/video-posters/${v.src
       </div>
     </div>
   </section>
+  <CtaFloat href="tel:+32486219896" label={t.hero.ctaPrimary} />
 <script>
   function initReelCarousel() {
     const carousel = document.getElementById('reel-carousel');
