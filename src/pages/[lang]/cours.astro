@@ -1048,6 +1048,26 @@ const reels = (fr.cours as any).reels as (string | null)[] ?? [];
   @media (min-width: 721px) {
     .video-carousel-wrapper { display: none !important; }
   }
+
+  .coc-slide { position: relative; }
+  .video-card { position: relative; }
+  :global(.sound-btn) {
+    position: absolute; bottom: 14px; right: 14px; z-index: 5;
+    display: flex; align-items: center; padding: 8px;
+    border-radius: 999px; border: 0.5px solid rgba(255,255,255,0.28);
+    background: rgba(20,12,8,0.52); backdrop-filter: blur(12px);
+    color: rgba(255,255,255,0.92); cursor: pointer; line-height: 0;
+    transition: background 250ms ease, transform 200ms ease;
+  }
+  :global(.sound-btn[aria-pressed="true"]) { background: rgba(168,135,83,0.65); border-color: rgba(212,183,128,0.55); }
+  :global(.sound-btn:hover) { background: rgba(20,12,8,0.78); transform: scale(1.08); }
+  :global(.sound-btn[aria-pressed="true"]:hover) { background: rgba(168,135,83,0.88); transform: scale(1.08); }
+  :global(.sound-btn .snd-off) { display: flex; align-items: center; }
+  :global(.sound-btn .snd-on)  { display: none; align-items: center; }
+  :global(.sound-btn[aria-pressed="true"] .snd-off) { display: none; }
+  :global(.sound-btn[aria-pressed="true"] .snd-on)  { display: flex; }
+  .coc-slide:not(.is-active) :global(.sound-btn) { display: none; }
+  @media (prefers-reduced-motion: reduce) { :global(.sound-btn) { transition: none; } }
 </style>
 
 <script>
@@ -1365,4 +1385,54 @@ const reels = (fr.cours as any).reels as (string | null)[] ?? [];
 
   document.addEventListener('astro:page-load', initCoursCarousel);
   document.addEventListener('astro:page-load', initVideoCarousel);
+
+  // ── Bouton son ──
+  function initSoundButtons() {
+    if (!document.querySelector('.coc-slide, .video-carousel-wrapper')) return;
+    const SVG_MUTED = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>`;
+    const SVG_SOUND = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+    function makeBtn(): HTMLButtonElement {
+      const btn = document.createElement('button');
+      btn.className = 'sound-btn';
+      btn.setAttribute('data-sound-btn', '');
+      btn.setAttribute('aria-label', 'Activer le son');
+      btn.setAttribute('aria-pressed', 'false');
+      btn.innerHTML = `<span class="snd-off" aria-hidden="true">${SVG_MUTED}</span><span class="snd-on" aria-hidden="true">${SVG_SOUND}</span>`;
+      return btn;
+    }
+    document.querySelectorAll<HTMLElement>('.coc-slide').forEach(slide => {
+      if (!slide.querySelector('.sound-btn')) slide.appendChild(makeBtn());
+    });
+    document.querySelectorAll<HTMLElement>('.video-card').forEach(card => {
+      if (!card.querySelector('.sound-btn')) card.appendChild(makeBtn());
+    });
+    function muteAll() {
+      document.querySelectorAll<HTMLVideoElement>('.coc-video, .video-card-video, .video-player').forEach(v => { v.muted = true; });
+      document.querySelectorAll<HTMLButtonElement>('[data-sound-btn]').forEach(b => {
+        b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', 'Activer le son');
+      });
+    }
+    document.querySelectorAll<HTMLButtonElement>('[data-sound-btn]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation(); e.preventDefault();
+        const container = btn.closest<HTMLElement>('.coc-slide, .video-card');
+        const video = container?.querySelector<HTMLVideoElement>('video');
+        if (!video) return;
+        const isOn = btn.getAttribute('aria-pressed') === 'true';
+        muteAll();
+        if (!isOn) { video.muted = false; btn.setAttribute('aria-pressed', 'true'); btn.setAttribute('aria-label', 'Couper le son'); }
+      });
+    });
+    const carousel = document.getElementById('cours-carousel');
+    if (carousel) {
+      const obs = new MutationObserver(() => {
+        document.querySelectorAll<HTMLButtonElement>('.coc-slide:not(.is-active) [data-sound-btn]').forEach(b => {
+          b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', 'Activer le son');
+        });
+      });
+      obs.observe(carousel, { subtree: true, attributeFilter: ['class'] });
+      document.addEventListener('astro:before-swap', () => obs.disconnect(), { once: true });
+    }
+  }
+  document.addEventListener('astro:page-load', initSoundButtons);
 </script>
