@@ -542,8 +542,49 @@ const t = getTranslations(lang);
     }
   }
 
-  /* Mobile : boutons légèrement compacts */
+  /* ════════════════════════════════════════════════════
+     MOBILE ≤ 767px — vidéo en bandeau, texte en dessous
+     ════════════════════════════════════════════════════ */
   @media (max-width: 767px) {
+    /* Hero n'est plus plein écran : flux vertical normal */
+    .hero-section {
+      min-height: auto;
+      display: block;
+      padding-block: 0 var(--space-xl);
+      background-color: var(--color-dark);
+    }
+
+    /* La vidéo devient un bandeau 3:2 en haut (au lieu du plein écran
+       portrait qui forçait un crop extrême ~26%). En 3:2 on voit ~84%
+       de la largeur de la scène. */
+    .hero-video-bg {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Plus de zoom volontaire sur mobile */
+    .hero-bg-video {
+      scale: 1;
+    }
+
+    /* Filtre allégé + fondu vers le fond sombre en bas du bandeau */
+    .hero-filter {
+      background:
+        linear-gradient(to bottom,
+          rgba(20, 10, 5, 0.22) 0%,
+          transparent 28%,
+          transparent 68%,
+          var(--color-dark) 100%);
+    }
+
+    /* Texte en flux normal, sous le bandeau */
+    .hero-inner {
+      padding-inline: var(--space-md);
+    }
+
     .hero-action {
       min-height: 44px;
       padding: 5px 5px 5px 16px;
