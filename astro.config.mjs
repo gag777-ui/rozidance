@@ -28,6 +28,14 @@ export default defineConfig({
         defaultLocale: 'fr',
         locales: { fr: 'fr-BE', en: 'en-GB', nl: 'nl-BE', ru: 'ru-RU', de: 'de-DE', es: 'es-ES', it: 'it-IT' },
       },
+      // Exclure du sitemap tout ce qui porte un noindex (refonte WIP + pages de maintenance)
+      filter: (page) => {
+        const { pathname } = new URL(page);
+        return (
+          !pathname.startsWith('/refonte') &&
+          !pathname.includes('maintenance')
+        );
+      },
     }),
     icon({
       include: {

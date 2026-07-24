@@ -1,20 +1,26 @@
 User-agent: *
-Disallow: /
-
-# Noindex — site en préparation, livraison en fin de semaine
-# À restaurer: Allow: / après la livraison
-
-# Sitemaps pour tous les marchés (temporairement désactivées)
-# Sitemap: https://rozidance.be/sitemap-index.xml
-# Sitemap: https://rozidance.be/sitemap-0.xml
+Allow: /
 
 # Bloquer les ressources inutiles
 Disallow: /api/
-Disallow: *.json$
+Disallow: /admin/
+Disallow: /*.json$
+
+# Maquettes internes / pages techniques
+Disallow: /*-demo.html$
+Disallow: /demo-vivant.html
+Disallow: /inspo-dark.html
+# /maintenance et /refonte ne sont pas bloqués ici : ils portent une balise
+# noindex, et Google doit pouvoir la lire pour les retirer de l'index.
+
+# Pas de groupe User-agent dédié à Googlebot : un groupe nommé annulerait
+# pour lui toutes les règles du groupe « * » ci-dessus.
+User-agent: Bingbot
+Crawl-delay: 1
+Allow: /
+Disallow: /api/
 Disallow: /admin/
 
-# Autorisations spéciales (temporairement désactivées)
-# User-agent: Googlebot
-# Crawl-delay: 0
-# User-agent: Bingbot
-# Crawl-delay: 1
+# Sitemaps pour tous les marchés
+Sitemap: https://rozidance.be/sitemap-index.xml
+Sitemap: https://rozidance.be/sitemap-0.xml
