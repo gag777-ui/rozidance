@@ -42,7 +42,6 @@ const canonicalUrl = new URL(canonicalPath, Astro.site);
     <a class="rf-skip-link" href="#contenu">{layoutTranslations.nav.prestations}</a>
     <div class="rf-grain" aria-hidden="true"></div>
     <div class="rf-progress" data-scroll-progress aria-hidden="true"></div>
-    <div class="rf-header-sentinel" data-rf-header-sentinel aria-hidden="true"></div>
     <RefonteHeader chapter={chapter} lang={currentLang} />
     <slot />
     <RefonteFooter lang={currentLang} />
@@ -60,7 +59,6 @@ const canonicalUrl = new URL(canonicalPath, Astro.site);
       let motionMedia: gsap.MatchMedia | null = null;
       let videoObserver: IntersectionObserver | null = null;
       let serviceObserver: IntersectionObserver | null = null;
-      let headerObserver: IntersectionObserver | null = null;
 
       function destroyRefonte() {
         controller?.abort();
@@ -69,8 +67,6 @@ const canonicalUrl = new URL(canonicalPath, Astro.site);
         videoObserver = null;
         serviceObserver?.disconnect();
         serviceObserver = null;
-        headerObserver?.disconnect();
-        headerObserver = null;
         motionMedia?.revert();
         motionMedia = null;
         if (lenisRaf) {
@@ -85,15 +81,22 @@ const canonicalUrl = new URL(canonicalPath, Astro.site);
         document.body.style.removeProperty('overflow');
       }
 
-      function setupHeaderGlass() {
+      function setupHeaderGlass(signal: AbortSignal) {
         const header = document.querySelector<HTMLElement>('[data-rf-header]');
-        const sentinel = document.querySelector<HTMLElement>('[data-rf-header-sentinel]');
-        if (!header || !sentinel) return;
+        if (!header) return;
 
-        headerObserver = new IntersectionObserver(([entry]) => {
-          header.toggleAttribute('data-scrolled', !entry.isIntersecting);
-        });
-        headerObserver.observe(sentinel);
+        let framePending = false;
+        const updateHeader = () => {
+          if (framePending) return;
+          framePending = true;
+          requestAnimationFrame(() => {
+            header.toggleAttribute('data-scrolled', window.scrollY > 8);
+            framePending = false;
+          });
+        };
+
+        updateHeader();
+        window.addEventListener('scroll', updateHeader, { passive: true, signal });
       }
 
       function setupMenu(signal: AbortSignal) {
@@ -772,7 +775,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site);
         controller = new AbortController();
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         setupMenu(controller.signal);
-        setupHeaderGlass();
+        setupHeaderGlass(controller.signal);
         setupVideos(reduceMotion, controller.signal);
         setupServiceOrientation();
         setupSmoothScroll(reduceMotion);
