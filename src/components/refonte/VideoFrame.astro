@@ -1,5 +1,6 @@
 ---
 import type { RefonteVideo } from '../../data/refonte';
+import { getTranslations, type Lang } from '../../i18n/utils';
 
 const {
   video,
@@ -8,6 +9,7 @@ const {
   eager = false,
   className = '',
   caption = true,
+  lang = 'fr',
 } = Astro.props as {
   video: RefonteVideo;
   shape?: 'arch' | 'oval' | 'portrait' | 'landscape' | 'ribbon' | 'soft';
@@ -15,7 +17,9 @@ const {
   eager?: boolean;
   className?: string;
   caption?: boolean;
+  lang?: Lang;
 };
+const t = getTranslations(lang);
 ---
 
 <figure
@@ -27,7 +31,7 @@ const {
     href={video.href}
     target="_blank"
     rel="noopener noreferrer"
-    aria-label={`Voir ${video.title} sur Instagram`}
+    aria-label={`${t.nav.reelLabel} — ${video.title}`}
   >
     <span class="rf-video__echo" aria-hidden="true"></span>
     <span class="rf-video__aperture">

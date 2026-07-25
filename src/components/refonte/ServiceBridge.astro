@@ -1,17 +1,28 @@
 ---
 import { prestations } from '../../data/refonte';
+import { getTranslations, type Lang } from '../../i18n/utils';
+import { localePath } from '../../i18n/refonte';
 
 const {
   currentHref,
   eyebrow,
   title,
+  lang = 'fr',
 } = Astro.props as {
   currentHref: string;
   eyebrow: string;
   title: string;
+  lang?: Lang;
 };
-const currentIndex = Math.max(0, prestations.findIndex((item) => item.href === currentHref));
-const nextIndex = (currentIndex + 1) % prestations.length;
+const t = getTranslations(lang);
+const localizedPrestations = prestations.map((item, index) => ({
+  ...item,
+  href: localePath(lang, item.href),
+  title: t.prestations.items[index]?.title ?? item.title,
+  kicker: t.prestations.eyebrow,
+}));
+const currentIndex = Math.max(0, localizedPrestations.findIndex((item) => item.href === currentHref));
+const nextIndex = (currentIndex + 1) % localizedPrestations.length;
 ---
 
 <section class="rf-service-bridge" id="service-bridge" data-service-bridge>
@@ -22,7 +33,7 @@ const nextIndex = (currentIndex + 1) % prestations.length;
     </header>
 
     <nav aria-label={eyebrow}>
-      {prestations.map((item, index) => (
+      {localizedPrestations.map((item, index) => (
         <a
           class:list={[
             'rf-service-bridge__link',
@@ -38,6 +49,7 @@ const nextIndex = (currentIndex + 1) % prestations.length;
           <span class="rf-service-bridge__body">
             <span>{item.kicker}</span>
             <strong>{item.title}</strong>
+            <span class="rf-service-bridge__cta">{t.mariages.cardCta}</span>
           </span>
           <i aria-hidden="true">→</i>
         </a>

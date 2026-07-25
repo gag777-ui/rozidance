@@ -1,25 +1,29 @@
 ---
 import { socials } from '../../data/refonte';
+import { getTranslations, type Lang } from '../../i18n/utils';
+import { localePath } from '../../i18n/refonte';
 
+const { lang = 'fr' } = Astro.props as { lang?: Lang };
+const t = getTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
 <footer class="rf-footer">
   <div class="rf-footer__brand">
-    <a href="/refonte" aria-label="Rozi Dance — accueil">
+    <a href={localePath(lang)} aria-label={t.footer.homeAria}>
       <img src="/images/logo-transparent.png" alt="Rozi Dance" width="500" height="500" />
     </a>
-    <p>L'âme arménienne en mouvement.</p>
+    <p>{t.footer.tagline}</p>
   </div>
 
-  <nav class="rf-footer__nav" aria-label="Navigation secondaire">
-    <a href="/refonte/mariages">Mariages & événements</a>
-    <a href="/refonte/chant">L'art du chant</a>
-    <a href="/refonte/cours">Cours chant & danse</a>
-    <a href="/refonte/galerie">Galerie</a>
+  <nav class="rf-footer__nav" aria-label={t.footer.nav}>
+    <a href={localePath(lang, '/mariages')}>{t.prestations.items[0].title}</a>
+    <a href={localePath(lang, '/chant')}>{t.prestations.items[1].title}</a>
+    <a href={localePath(lang, '/cours')}>{t.nav.cours}</a>
+    <a href={localePath(lang, '/galerie')}>{t.nav.galerie}</a>
   </nav>
 
-  <nav class="rf-footer__contact" aria-label="Contact et réseaux sociaux">
+  <nav class="rf-footer__contact" aria-label={t.nav.contact}>
     <a href={socials.instagram} target="_blank" rel="noopener noreferrer">Instagram ↗</a>
     <a href={socials.youtube} target="_blank" rel="noopener noreferrer">YouTube ↗</a>
     <a href={socials.facebook} target="_blank" rel="noopener noreferrer">Facebook ↗</a>
@@ -28,7 +32,7 @@ const year = new Date().getFullYear();
   </nav>
 
   <div class="rf-footer__base">
-    <span>© {year} Rozi Dance. Tous droits réservés.</span>
-    <a href="/refonte/mentions-legales">Mentions légales</a>
+    <span>{t.footer.copyright.replace('{year}', String(year))}</span>
+    <a href={localePath(lang, '/mentions-legales')}>{t.footer.legal}</a>
   </div>
 </footer>

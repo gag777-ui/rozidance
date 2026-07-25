@@ -4,10 +4,22 @@ import VideoFrame from '../../components/refonte/VideoFrame.astro';
 import ContactScene from '../../components/refonte/ContactScene.astro';
 import ServiceBridge from '../../components/refonte/ServiceBridge.astro';
 import { mariagePages } from '../../data/refonte';
-import { getTranslations } from '../../i18n/utils';
+import { getTranslations, type Lang } from '../../i18n/utils';
+import { localePath } from '../../i18n/refonte';
 
-const t = getTranslations('fr');
+const { lang = 'fr' } = Astro.props as { lang?: Lang };
+const t = getTranslations(lang);
 const serviceShapes = ['oval', 'arch', 'ribbon', 'portrait'] as const;
+const localizedPages = mariagePages.map((page, index) => ({
+  ...page,
+  title: t.mariages.categories[index]?.title ?? page.title,
+  text: t.mariages.categories[index]?.description ?? page.text,
+  videos: page.videos.map((video) => ({
+    ...video,
+    title: t.mariages.categories[index]?.title ?? video.title,
+    label: t.videos.eyebrow,
+  })),
+}));
 ---
 
 <RefonteLayout
@@ -15,25 +27,25 @@ const serviceShapes = ['oval', 'arch', 'ribbon', 'portrait'] as const;
   description={t.mariages.pageDescription}
   bodyClass="rf-weddings"
   chapter={t.mariages.heroTitle}
+  lang={lang}
 >
   <main id="contenu">
     <section class="rf-page-hero rf-page-hero--weddings" data-camera="in">
       <div class="rf-page-hero__plane" data-camera-plane>
         <div class="rf-page-hero__copy">
-          <a class="rf-back-link" href="/refonte">
+          <a class="rf-back-link" href={localePath(lang)}>
             <span aria-hidden="true">←</span>
             {t.mariages.backLink}
           </a>
           <span class="rf-eyebrow">{t.mariages.heroEyebrow}</span>
-          <h1 class="rf-page-title">
-            <span class="rf-line-mask"><span data-hero-line>Nos</span></span>
-            <span class="rf-line-mask"><span data-hero-line><em>services</em></span></span>
+          <h1 class="rf-page-title rf-page-title--localized">
+            <span class="rf-line-mask"><span data-hero-line>{t.mariages.heroTitle}</span></span>
           </h1>
           <p>{t.mariages.heroSubtitle}</p>
         </div>
 
         <div class="rf-page-hero__media rf-page-hero__media--weddings" data-hero-media data-depth="-1">
-          <VideoFrame video={mariagePages[2].videos[2]} shape="oval" tone="wedding-hero" eager={true} />
+          <VideoFrame video={localizedPages[2].videos[2]} shape="oval" tone="wedding-hero" eager={true} lang={lang} />
         </div>
 
         <div class="rf-wedding-rings" aria-hidden="true">
@@ -50,7 +62,7 @@ const serviceShapes = ['oval', 'arch', 'ribbon', 'portrait'] as const;
       </header>
 
       <div class="rf-procession__path">
-        {mariagePages.map((page, index) => (
+        {localizedPages.map((page, index) => (
           <article
             class:list={['rf-procession__step', index % 2 ? 'rf-procession__step--reverse' : '']}
             data-camera={index % 2 ? 'out' : 'in'}
@@ -62,7 +74,7 @@ const serviceShapes = ['oval', 'arch', 'ribbon', 'portrait'] as const;
               <div class="rf-procession__copy" data-reveal>
                 <h3>{page.title}</h3>
                 <p>{page.text}</p>
-                <a class="rf-text-link" href={`/refonte/mariages/${page.slug}`}>
+                <a class="rf-text-link rf-service-cta" href={localePath(lang, `/mariages/${page.slug}`)}>
                   {t.mariages.cardCta}
                   <span aria-hidden="true">→</span>
                 </a>
@@ -72,6 +84,7 @@ const serviceShapes = ['oval', 'arch', 'ribbon', 'portrait'] as const;
                   video={page.videos[0]}
                   shape={serviceShapes[index]}
                   tone={`wedding-${index + 1}`}
+                  lang={lang}
                 />
               </div>
             </div>
@@ -87,9 +100,10 @@ const serviceShapes = ['oval', 'arch', 'ribbon', 'portrait'] as const;
       primaryLabel={t.mariages.ctaBtn}
     />
     <ServiceBridge
-      currentHref="/refonte/mariages"
+      currentHref={localePath(lang, '/mariages')}
       eyebrow={t.prestations.eyebrow}
       title={t.prestations.title}
+      lang={lang}
     />
   </main>
 </RefonteLayout>

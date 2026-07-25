@@ -46,21 +46,21 @@ export const prestations = [
   {
     title: 'Mariages & evenements',
     kicker: 'Rituel, scene, banquet',
-    href: '/refonte/mariages',
+    href: '/mariages',
     text: "De l'habillage de la mariee au banquet, une presence artistique complete.",
     video: heroVideos[0],
   },
   {
     title: "L'art du chant",
     kicker: 'Soul, Pop, Jazz',
-    href: '/refonte/chant',
+    href: '/chant',
     text: 'Des voix chaudes et precises pour ouvrir un moment, tenir une salle, marquer une emotion.',
     video: heroVideos[1],
   },
   {
     title: 'Cours chant & danse',
     kicker: 'Studio vivant',
-    href: '/refonte/cours',
+    href: '/cours',
     text: "Une transmission accessible, physique, joyeuse, pour debutants comme profils avances.",
     video: {
       title: 'Cours Rozi Dance',

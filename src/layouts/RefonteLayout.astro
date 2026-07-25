@@ -1,6 +1,7 @@
 ---
 import RefonteHeader from '../components/refonte/RefonteHeader.astro';
 import RefonteFooter from '../components/refonte/RefonteFooter.astro';
+import { getTranslations, type Lang } from '../i18n/utils';
 import '../styles/refonte.css';
 
 const {
@@ -8,17 +9,26 @@ const {
   description = 'Duo & groupe artistique pour mariages, célébrations et événements.',
   bodyClass = '',
   chapter = 'Rozi Dance',
+  lang = 'fr',
 } = Astro.props;
+const currentLang = lang as Lang;
+const layoutTranslations = getTranslations(currentLang);
+const isPreviewRoute = Astro.url.pathname.startsWith('/refonte');
+const canonicalPath = isPreviewRoute
+  ? Astro.url.pathname.replace(/^\/refonte(?=\/|$)/, '') || '/'
+  : Astro.url.pathname;
+const canonicalUrl = new URL(canonicalPath, Astro.site);
 ---
 
 <!doctype html>
-<html lang="fr" class="rf-root">
+<html lang={currentLang} class="rf-root">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content={isPreviewRoute ? 'noindex, nofollow' : 'index, follow'} />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f3eee4" />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,12 +39,13 @@ const {
     />
   </head>
   <body class:list={['rf-body', bodyClass]}>
-    <a class="rf-skip-link" href="#contenu">Aller au contenu</a>
+    <a class="rf-skip-link" href="#contenu">{layoutTranslations.nav.prestations}</a>
     <div class="rf-grain" aria-hidden="true"></div>
     <div class="rf-progress" data-scroll-progress aria-hidden="true"></div>
-    <RefonteHeader chapter={chapter} />
+    <div class="rf-header-sentinel" data-rf-header-sentinel aria-hidden="true"></div>
+    <RefonteHeader chapter={chapter} lang={currentLang} />
     <slot />
-    <RefonteFooter />
+    <RefonteFooter lang={currentLang} />
 
     <script>
       import Lenis from 'lenis';
@@ -49,6 +60,7 @@ const {
       let motionMedia: gsap.MatchMedia | null = null;
       let videoObserver: IntersectionObserver | null = null;
       let serviceObserver: IntersectionObserver | null = null;
+      let headerObserver: IntersectionObserver | null = null;
 
       function destroyRefonte() {
         controller?.abort();
@@ -57,6 +69,8 @@ const {
         videoObserver = null;
         serviceObserver?.disconnect();
         serviceObserver = null;
+        headerObserver?.disconnect();
+        headerObserver = null;
         motionMedia?.revert();
         motionMedia = null;
         if (lenisRaf) {
@@ -67,20 +81,34 @@ const {
         lenis = null;
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
         document.documentElement.classList.remove('rf-menu-open', 'rf-motion-ready');
+        document.querySelector<HTMLElement>('[data-rf-header]')?.removeAttribute('data-scrolled');
         document.body.style.removeProperty('overflow');
+      }
+
+      function setupHeaderGlass() {
+        const header = document.querySelector<HTMLElement>('[data-rf-header]');
+        const sentinel = document.querySelector<HTMLElement>('[data-rf-header-sentinel]');
+        if (!header || !sentinel) return;
+
+        headerObserver = new IntersectionObserver(([entry]) => {
+          header.toggleAttribute('data-scrolled', !entry.isIntersecting);
+        });
+        headerObserver.observe(sentinel);
       }
 
       function setupMenu(signal: AbortSignal) {
         const button = document.querySelector<HTMLButtonElement>('[data-rf-menu-btn]');
         const menu = document.querySelector<HTMLElement>('[data-rf-menu]');
+        const languageSwitcher = document.querySelector<HTMLDetailsElement>('.rf-language-switcher');
         if (!button || !menu) return;
 
         let returnFocus: HTMLElement | null = null;
         const menuLinks = Array.from(menu.querySelectorAll<HTMLAnchorElement>('a'));
 
         const setOpen = (open: boolean) => {
+          const navigationLabel = button.dataset.navigationLabel || button.getAttribute('aria-label') || 'Menu';
           button.setAttribute('aria-expanded', String(open));
-          button.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+          button.setAttribute('aria-label', navigationLabel);
           menu.setAttribute('aria-hidden', String(!open));
           menu.toggleAttribute('inert', !open);
           document.documentElement.classList.toggle('rf-menu-open', open);
@@ -98,14 +126,23 @@ const {
         button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'), { signal });
         menuLinks.forEach((link) => link.addEventListener('click', () => setOpen(false), { signal }));
         document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') setOpen(false);
+          if (event.key !== 'Escape') return;
+          if (button.getAttribute('aria-expanded') === 'true') setOpen(false);
+          if (languageSwitcher) languageSwitcher.open = false;
+        }, { signal });
+        document.addEventListener('click', (event) => {
+          if (languageSwitcher && !languageSwitcher.contains(event.target as Node)) {
+            languageSwitcher.open = false;
+          }
         }, { signal });
 
         const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
         document.querySelectorAll<HTMLAnchorElement>('[data-rf-nav-link]').forEach((link) => {
           const linkPath = new URL(link.href).pathname.replace(/\/$/, '') || '/';
-          const isHome = linkPath === '/refonte';
-          const active = isHome ? currentPath === linkPath : currentPath.startsWith(linkPath);
+          const isHome = link.hasAttribute('data-rf-home-link');
+          const active = isHome
+            ? currentPath === linkPath
+            : currentPath === linkPath || currentPath.startsWith(`${linkPath}/`);
           if (active) link.setAttribute('aria-current', 'page');
         });
       }
@@ -392,6 +429,46 @@ const {
             });
           });
 
+          const galleryPhotos = gsap.utils.toArray<HTMLElement>('[data-gallery-photo]');
+          if (galleryPhotos.length) {
+            gsap.set(galleryPhotos, {
+              autoAlpha: 0,
+              y: 54,
+              scale: 0.94,
+              clipPath: 'inset(12% 8% 12% 8% round 24px)',
+            });
+
+            ScrollTrigger.batch(galleryPhotos, {
+              start: 'top 92%',
+              end: 'bottom 8%',
+              interval: 0.12,
+              batchMax: 3,
+              onEnter: (batch) => {
+                gsap.to(batch, {
+                  autoAlpha: 1,
+                  y: 0,
+                  scale: 1,
+                  clipPath: 'inset(0% 0% 0% 0% round 0px)',
+                  duration: 1.05,
+                  stagger: 0.13,
+                  ease: 'power3.out',
+                  overwrite: true,
+                });
+              },
+              onLeaveBack: (batch) => {
+                gsap.to(batch, {
+                  autoAlpha: 0,
+                  y: 42,
+                  scale: 0.96,
+                  duration: 0.55,
+                  stagger: 0.06,
+                  ease: 'power2.in',
+                  overwrite: true,
+                });
+              },
+            });
+          }
+
           const serviceJourney = document.querySelector<HTMLElement>('[data-service-journey]');
           const serviceProgress = serviceJourney?.querySelector<HTMLElement>('[data-service-progress]');
           if (serviceJourney && serviceProgress) {
@@ -422,7 +499,7 @@ const {
           }
 
           return () => {
-            gsap.set('[data-hero-line], [data-hero-media], [data-hero-backdrop], [data-hero-copy], [data-hero-threshold], [data-reveal], [data-camera-plane], [data-depth], [data-media-reveal], [data-service-progress]', {
+            gsap.set('[data-hero-line], [data-hero-media], [data-hero-backdrop], [data-hero-copy], [data-hero-threshold], [data-reveal], [data-camera-plane], [data-depth], [data-media-reveal], [data-gallery-photo], [data-service-progress]', {
               clearProps: 'all',
             });
           };
@@ -695,6 +772,7 @@ const {
         controller = new AbortController();
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         setupMenu(controller.signal);
+        setupHeaderGlass();
         setupVideos(reduceMotion, controller.signal);
         setupServiceOrientation();
         setupSmoothScroll(reduceMotion);

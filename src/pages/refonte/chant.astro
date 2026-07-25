@@ -4,10 +4,17 @@ import VideoFrame from '../../components/refonte/VideoFrame.astro';
 import ContactScene from '../../components/refonte/ContactScene.astro';
 import ServiceBridge from '../../components/refonte/ServiceBridge.astro';
 import { chantVideos } from '../../data/refonte';
-import { getTranslations } from '../../i18n/utils';
+import { getTranslations, type Lang } from '../../i18n/utils';
+import { localePath } from '../../i18n/refonte';
 
-const t = getTranslations('fr');
+const { lang = 'fr' } = Astro.props as { lang?: Lang };
+const t = getTranslations(lang);
 const voiceShapes = ['portrait', 'oval', 'arch'] as const;
+const localizedVideos = chantVideos.map((video, index) => ({
+  ...video,
+  title: t.chant.categories[index]?.title ?? video.title,
+  label: t.videos.eyebrow,
+}));
 ---
 
 <RefonteLayout
@@ -15,25 +22,25 @@ const voiceShapes = ['portrait', 'oval', 'arch'] as const;
   description={t.chant.pageDescription}
   bodyClass="rf-chant"
   chapter={t.chant.heroTitle}
+  lang={lang}
 >
   <main id="contenu">
     <section class="rf-page-hero rf-page-hero--chant" data-camera="out">
       <div class="rf-page-hero__plane" data-camera-plane>
         <div class="rf-page-hero__copy">
-          <a class="rf-back-link" href="/refonte">
+          <a class="rf-back-link" href={localePath(lang)}>
             <span aria-hidden="true">←</span>
             {t.chant.backLink}
           </a>
           <span class="rf-eyebrow">{t.chant.heroEyebrow}</span>
-          <h1 class="rf-page-title">
-            <span class="rf-line-mask"><span data-hero-line>Nos</span></span>
-            <span class="rf-line-mask"><span data-hero-line><em>chants</em></span></span>
+          <h1 class="rf-page-title rf-page-title--localized">
+            <span class="rf-line-mask"><span data-hero-line>{t.chant.heroTitle}</span></span>
           </h1>
           <p>{t.chant.heroSubtitle}</p>
         </div>
 
         <div class="rf-page-hero__media rf-page-hero__media--chant" data-hero-media data-depth="1.2">
-          <VideoFrame video={chantVideos[0]} shape="ribbon" tone="chant-hero" eager={true} />
+          <VideoFrame video={localizedVideos[0]} shape="ribbon" tone="chant-hero" eager={true} lang={lang} />
         </div>
 
         <div class="rf-sound-rings" aria-hidden="true">
@@ -45,7 +52,7 @@ const voiceShapes = ['portrait', 'oval', 'arch'] as const;
     </section>
 
     <section class="rf-voice-suite">
-      {chantVideos.map((video, index) => (
+      {localizedVideos.map((video, index) => (
         <article
           class:list={['rf-voice-movement', `rf-voice-movement--${index + 1}`]}
           data-camera={index === 1 ? 'in' : 'out'}
@@ -64,6 +71,7 @@ const voiceShapes = ['portrait', 'oval', 'arch'] as const;
                 video={video}
                 shape={voiceShapes[index]}
                 tone={`voice-${index + 1}`}
+                lang={lang}
               />
             </div>
             <span class="rf-voice-movement__echo" aria-hidden="true">{video.label}</span>
@@ -79,9 +87,10 @@ const voiceShapes = ['portrait', 'oval', 'arch'] as const;
       primaryLabel={t.chant.ctaBtn}
     />
     <ServiceBridge
-      currentHref="/refonte/chant"
+      currentHref={localePath(lang, '/chant')}
       eyebrow={t.prestations.eyebrow}
       title={t.prestations.title}
+      lang={lang}
     />
   </main>
 </RefonteLayout>

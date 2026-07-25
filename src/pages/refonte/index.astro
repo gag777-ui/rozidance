@@ -3,12 +3,31 @@ import RefonteLayout from '../../layouts/RefonteLayout.astro';
 import VideoFrame from '../../components/refonte/VideoFrame.astro';
 import ContactScene from '../../components/refonte/ContactScene.astro';
 import { heroVideos, prestations, socials, galleryPhotos } from '../../data/refonte';
-import { getTranslations } from '../../i18n/utils';
+import { getTranslations, type Lang } from '../../i18n/utils';
+import { localePath } from '../../i18n/refonte';
 
-const t = getTranslations('fr');
+const { lang = 'fr' } = Astro.props as { lang?: Lang };
+const t = getTranslations(lang);
 const serviceShapes = ['arch', 'oval', 'ribbon'] as const;
 const performanceShapes = ['portrait', 'arch', 'oval'] as const;
 const serviceIds = ['mariages-evenements', 'chant', 'cours'];
+const localizedHeroVideos = heroVideos.map((video, index) => ({
+  ...video,
+  title: t.prestations.items[index]?.title ?? video.title,
+  label: t.videos.eyebrow,
+}));
+const localizedPrestations = prestations.map((item, index) => ({
+  ...item,
+  href: localePath(lang, item.href),
+  title: t.prestations.items[index]?.title ?? item.title,
+  text: t.prestations.items[index]?.description ?? item.text,
+  kicker: t.prestations.eyebrow,
+  video: localizedHeroVideos[index] ?? item.video,
+}));
+const localizedGalleryPhotos = galleryPhotos.map((photo, index) => ({
+  ...photo,
+  alt: `${t.galerie.altPlaceholder} ${index + 1}`,
+}));
 ---
 
 <RefonteLayout
@@ -16,6 +35,7 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
   description={t.hero.subtitle}
   bodyClass="rf-home"
   chapter="Rozi Dance"
+  lang={lang}
 >
   <main id="contenu">
     <section class="rf-home-hero" aria-labelledby="rf-home-title" data-fullscreen-hero>
@@ -61,7 +81,7 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
           <p class="rf-home-hero__subtitle">{t.hero.subtitle}</p>
 
           <div class="rf-action-row">
-            <a class="rf-button rf-button--ink" href={socials.instagram} target="_blank" rel="noopener noreferrer">
+            <a class="rf-button rf-button--ink" href={socials.phone}>
               {t.hero.ctaPrimary}
               <span aria-hidden="true">↗</span>
             </a>
@@ -71,10 +91,10 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
             </a>
           </div>
 
-          <div class="rf-hero-socials" aria-label="Réseaux sociaux">
+          <div class="rf-hero-socials" aria-label={t.footer.links}>
             <a href={socials.youtube} target="_blank" rel="noopener noreferrer">YouTube</a>
             <a href={socials.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
-            <a href={socials.phone}>Téléphone</a>
+            <a href={socials.phone}>+32 486 21 98 96</a>
           </div>
         </div>
 
@@ -90,7 +110,7 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
     <section class="rf-opening" id="presentation" data-camera="out">
       <div class="rf-opening__plane" data-camera-plane>
         <div class="rf-opening__portrait" data-depth="1.5" data-media-reveal>
-          <img src={galleryPhotos[0].src} alt={t.apropos.altPortrait} loading="lazy" />
+          <img src={localizedGalleryPhotos[0].src} alt={t.apropos.altPortrait} loading="lazy" />
         </div>
         <div class="rf-opening__copy" data-reveal>
           <span class="rf-eyebrow">{t.apropos.eyebrow}</span>
@@ -115,7 +135,7 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
               <i data-service-progress></i>
             </span>
             <ol>
-              {prestations.map((item, index) => (
+              {localizedPrestations.map((item, index) => (
                 <li>
                   <a
                     href={`#service-${serviceIds[index]}`}
@@ -132,7 +152,7 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
         </nav>
 
         <div class="rf-service-continuum__chapters">
-          {prestations.map((item, index) => (
+          {localizedPrestations.map((item, index) => (
             <article
               id={`service-${serviceIds[index]}`}
               class:list={[
@@ -160,7 +180,7 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
                     <span class="rf-eyebrow">{item.kicker}</span>
                     <h3>{item.title}</h3>
                     <p>{item.text}</p>
-                    <a class="rf-text-link" href={item.href}>
+                    <a class="rf-text-link rf-service-cta" href={item.href}>
                       {t.prestations.items[index]?.link}
                       <span aria-hidden="true">→</span>
                     </a>
@@ -170,6 +190,7 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
                       video={item.video}
                       shape={serviceShapes[index]}
                       tone={`service-${index + 1}`}
+                      lang={lang}
                     />
                   </div>
                 </div>
@@ -192,18 +213,18 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
           <span class="rf-eyebrow">{t.galerie.eyebrow}</span>
           <h2>{t.galerie.title}</h2>
           <p>{t.galerie.pageDescription}</p>
-          <a class="rf-button rf-button--light" href="/refonte/galerie">
+          <a class="rf-button rf-button--light" href={localePath(lang, '/galerie')}>
             {t.galerie.ctaAll}
             <span aria-hidden="true">→</span>
           </a>
         </header>
 
         <div class="rf-gallery-tease__stream">
-          {galleryPhotos.slice(0, 6).map((photo, index) => (
+          {localizedGalleryPhotos.slice(0, 6).map((photo, index) => (
             <a
               class={`rf-gallery-tease__photo rf-gallery-tease__photo--${index + 1}`}
-              href="/refonte/galerie"
-              data-depth={(index % 3) - 1}
+              href={localePath(lang, '/galerie')}
+              data-gallery-photo
               aria-label={t.galerie.ctaAll}
             >
               <img src={photo.src} alt={photo.alt} loading="lazy" />
@@ -220,7 +241,7 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
       </header>
 
       <div class="rf-performance-river">
-        {heroVideos.map((video, index) => (
+        {localizedHeroVideos.map((video, index) => (
           <article
             class:list={['rf-performance-river__scene', index % 2 ? 'rf-performance-river__scene--low' : '']}
             data-camera={index === 1 ? 'out' : 'in'}
@@ -233,6 +254,7 @@ const serviceIds = ['mariages-evenements', 'chant', 'cours'];
                 video={video}
                 shape={performanceShapes[index]}
                 tone={`performance-${index + 1}`}
+                lang={lang}
               />
             </div>
           </article>

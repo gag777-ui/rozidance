@@ -4,10 +4,22 @@ import VideoFrame from '../../components/refonte/VideoFrame.astro';
 import ContactScene from '../../components/refonte/ContactScene.astro';
 import ServiceBridge from '../../components/refonte/ServiceBridge.astro';
 import { coursPages, coursVideos } from '../../data/refonte';
-import { getTranslations } from '../../i18n/utils';
+import { getTranslations, type Lang } from '../../i18n/utils';
+import { localePath } from '../../i18n/refonte';
 
-const t = getTranslations('fr');
+const { lang = 'fr' } = Astro.props as { lang?: Lang };
+const t = getTranslations(lang);
 const courseShapes = ['portrait', 'oval', 'ribbon', 'arch', 'soft'] as const;
+const localizedPages = coursPages.map((page, index) => ({
+  ...page,
+  title: t.cours.cards[index]?.title ?? page.title,
+  text: t.cours.cards[index]?.description ?? page.text,
+}));
+const localizedVideos = coursVideos.map((video, index) => ({
+  ...video,
+  title: `${t.cours.cardLink} ${index + 1}`,
+  label: t.videos.eyebrow,
+}));
 ---
 
 <RefonteLayout
@@ -15,25 +27,25 @@ const courseShapes = ['portrait', 'oval', 'ribbon', 'arch', 'soft'] as const;
   description={t.cours.pageDescription}
   bodyClass="rf-courses"
   chapter={t.cours.heroTitle}
+  lang={lang}
 >
   <main id="contenu">
     <section class="rf-page-hero rf-page-hero--courses" data-camera="in">
       <div class="rf-page-hero__plane" data-camera-plane>
         <div class="rf-page-hero__copy">
-          <a class="rf-back-link" href="/refonte">
+          <a class="rf-back-link" href={localePath(lang)}>
             <span aria-hidden="true">←</span>
             {t.hero.line3a} {t.hero.line3italic}
           </a>
           <span class="rf-eyebrow">{t.cours.heroEyebrow}</span>
-          <h1 class="rf-page-title rf-page-title--course">
-            <span class="rf-line-mask"><span data-hero-line>Apprendre</span></span>
-            <span class="rf-line-mask"><span data-hero-line>avec du <em>rythme.</em></span></span>
+          <h1 class="rf-page-title rf-page-title--course rf-page-title--localized">
+            <span class="rf-line-mask"><span data-hero-line>{t.cours.heroTitle}</span></span>
           </h1>
           <p>{t.cours.heroSubtitle}</p>
         </div>
 
         <div class="rf-page-hero__media rf-page-hero__media--courses" data-hero-media data-depth="-1">
-          <VideoFrame video={coursVideos[0]} shape="soft" tone="course-hero" eager={true} />
+          <VideoFrame video={localizedVideos[0]} shape="soft" tone="course-hero" eager={true} lang={lang} />
         </div>
 
         <div class="rf-course-beat" aria-hidden="true">
@@ -50,10 +62,10 @@ const courseShapes = ['portrait', 'oval', 'ribbon', 'arch', 'soft'] as const;
 
       <div class="rf-course-score__line" aria-hidden="true"></div>
       <div class="rf-course-score__items">
-        {coursPages.map((page, index) => (
+        {localizedPages.map((page, index) => (
           <a
             class:list={['rf-course-score__item', index % 2 ? 'rf-course-score__item--right' : '']}
-            href={`/refonte/cours/${page.slug}`}
+            href={localePath(lang, `/cours/${page.slug}`)}
             data-reveal
           >
             <span class="rf-course-score__number">{String(index + 1).padStart(2, '0')}</span>
@@ -74,7 +86,7 @@ const courseShapes = ['portrait', 'oval', 'ribbon', 'arch', 'soft'] as const;
           <h2>{t.cours.cardLink}</h2>
         </header>
         <div class="rf-horizontal-rail" data-horizontal-rail>
-          {coursVideos.map((video, index) => (
+          {localizedVideos.map((video, index) => (
             <article class="rf-course-film__scene">
               <span class="rf-course-film__index" aria-hidden="true">
                 {String(index + 1).padStart(2, '0')}
@@ -83,6 +95,7 @@ const courseShapes = ['portrait', 'oval', 'ribbon', 'arch', 'soft'] as const;
                 video={video}
                 shape={courseShapes[index]}
                 tone={`course-${index + 1}`}
+                lang={lang}
               />
             </article>
           ))}
@@ -97,9 +110,10 @@ const courseShapes = ['portrait', 'oval', 'ribbon', 'arch', 'soft'] as const;
       primaryLabel={t.cours.ctaBtn}
     />
     <ServiceBridge
-      currentHref="/refonte/cours"
+      currentHref={localePath(lang, '/cours')}
       eyebrow={t.prestations.eyebrow}
       title={t.prestations.title}
+      lang={lang}
     />
   </main>
 </RefonteLayout>

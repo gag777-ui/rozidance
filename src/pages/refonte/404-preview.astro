@@ -1,14 +1,17 @@
 ---
 import RefonteLayout from '../../layouts/RefonteLayout.astro';
-import { getTranslations } from '../../i18n/utils';
+import { getTranslations, type Lang } from '../../i18n/utils';
+import { localePath } from '../../i18n/refonte';
 
-const t = getTranslations('fr');
+const { lang = 'fr' } = Astro.props as { lang?: Lang };
+const t = getTranslations(lang);
 ---
 
 <RefonteLayout
   title={`${t['404'].title} — Rozi Dance`}
   description={t['404'].description}
   bodyClass="rf-system-page rf-not-found"
+  lang={lang}
 >
   <main id="contenu">
     <section class="rf-not-found__scene" data-camera="out">
@@ -20,7 +23,7 @@ const t = getTranslations('fr');
             <span class="rf-line-mask"><span data-hero-line>{t['404'].title}</span></span>
           </h1>
           <p>{t['404'].description}</p>
-          <a class="rf-button rf-button--ink" href="/refonte">
+          <a class="rf-button rf-button--ink" href={localePath(lang)}>
             {t['404'].cta}
             <span aria-hidden="true">→</span>
           </a>

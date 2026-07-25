@@ -1,5 +1,5 @@
 ---
-import RefonteCours from '../refonte/cours.astro';
+import RefonteLegal from '../refonte/mentions-legales.astro';
 import { translatedLangs } from '../../i18n/refonte';
 
 export function getStaticPaths() {
@@ -12,4 +12,4 @@ export function getStaticPaths() {
 const { lang } = Astro.props;
 ---
 
-<RefonteCours lang={lang} />
+<RefonteLegal lang={lang} />

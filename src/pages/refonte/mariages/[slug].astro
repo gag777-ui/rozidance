@@ -4,40 +4,62 @@ import VideoFrame from '../../../components/refonte/VideoFrame.astro';
 import ContactScene from '../../../components/refonte/ContactScene.astro';
 import ServiceBridge from '../../../components/refonte/ServiceBridge.astro';
 import { mariagePages } from '../../../data/refonte';
-import { getTranslations } from '../../../i18n/utils';
+import { getTranslations, type Lang } from '../../../i18n/utils';
+import { localePath } from '../../../i18n/refonte';
+
+interface Props {
+  page: (typeof mariagePages)[number];
+  lang?: Lang;
+}
 
 export function getStaticPaths() {
   return mariagePages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
 }
 
-const { page } = Astro.props;
-const t = getTranslations('fr');
+const { page, lang = 'fr' } = Astro.props;
+const t = getTranslations(lang);
 const pageIndex = mariagePages.findIndex((item) => item.slug === page.slug);
-const firstVideo = page.videos[0];
-const followingVideos = page.videos.slice(1);
+const translatedCategory = t.mariages.categories[pageIndex];
+const localizedPage = {
+  ...page,
+  title: translatedCategory?.title ?? page.title,
+  text: translatedCategory?.description ?? page.text,
+  videos: page.videos.map((video) => ({
+    ...video,
+    title: translatedCategory?.title ?? video.title,
+    label: t.videos.eyebrow,
+  })),
+};
+const localizedPages = mariagePages.map((item, index) => ({
+  ...item,
+  title: t.mariages.categories[index]?.title ?? item.title,
+}));
+const firstVideo = localizedPage.videos[0];
+const followingVideos = localizedPage.videos.slice(1);
 const heroShapes = ['oval', 'ribbon', 'arch', 'portrait'] as const;
 const sceneShapes = ['portrait', 'oval', 'ribbon', 'arch'] as const;
 ---
 
 <RefonteLayout
-  title={`${page.title} — Rozi Dance`}
-  description={page.text}
+  title={`${localizedPage.title} — Rozi Dance`}
+  description={localizedPage.text}
   bodyClass={`rf-wedding-detail rf-story-${page.slug}`}
-  chapter={page.title}
+  chapter={localizedPage.title}
+  lang={lang}
 >
   <main id="contenu">
     <section class="rf-detail-hero" data-camera={pageIndex % 2 ? 'out' : 'in'}>
       <div class="rf-detail-hero__plane" data-camera-plane>
         <div class="rf-detail-hero__copy">
-          <a class="rf-back-link" href="/refonte/mariages">
+          <a class="rf-back-link" href={localePath(lang, '/mariages')}>
             <span aria-hidden="true">←</span>
             {t.mariagesSlug.backLink}
           </a>
           <span class="rf-eyebrow">{t.mariagesSlug.eyebrow}</span>
           <h1 class="rf-detail-title">
-            <span class="rf-line-mask"><span data-hero-line>{page.title}</span></span>
+            <span class="rf-line-mask"><span data-hero-line>{localizedPage.title}</span></span>
           </h1>
-          <p>{page.text}</p>
+          <p>{localizedPage.text}</p>
           <a class="rf-button rf-button--ink" href="#contact">
             {t.mariagesSlug.ctaBtn}
             <span aria-hidden="true">↓</span>
@@ -50,6 +72,7 @@ const sceneShapes = ['portrait', 'oval', 'ribbon', 'arch'] as const;
             shape={heroShapes[pageIndex]}
             tone={`detail-${pageIndex + 1}`}
             eager={true}
+            lang={lang}
           />
         </div>
 
@@ -84,6 +107,7 @@ const sceneShapes = ['portrait', 'oval', 'ribbon', 'arch'] as const;
                     video={video}
                     shape={sceneShapes[(pageIndex + index) % sceneShapes.length]}
                     tone={`moment-${(index % 3) + 1}`}
+                    lang={lang}
                   />
                 </div>
                 <div class="rf-moment-scene__title" data-reveal>
@@ -104,14 +128,14 @@ const sceneShapes = ['portrait', 'oval', 'ribbon', 'arch'] as const;
           <h2>{t.mariages.heroTitle}</h2>
         </header>
         <nav aria-label={t.mariagesSlug.ctaBtnSecondary}>
-          {mariagePages.map((item, index) => (
+          {localizedPages.map((item, index) => (
             item.slug === page.slug ? (
               <span aria-current="page">
                 <i>{String(index + 1).padStart(2, '0')}</i>
                 {item.title}
               </span>
             ) : (
-              <a href={`/refonte/mariages/${item.slug}`}>
+              <a href={localePath(lang, `/mariages/${item.slug}`)}>
                 <i>{String(index + 1).padStart(2, '0')}</i>
                 {item.title}
               </a>
@@ -130,9 +154,10 @@ const sceneShapes = ['portrait', 'oval', 'ribbon', 'arch'] as const;
       />
     </div>
     <ServiceBridge
-      currentHref="/refonte/mariages"
+      currentHref={localePath(lang, '/mariages')}
       eyebrow={t.prestations.eyebrow}
       title={t.prestations.title}
+      lang={lang}
     />
   </main>
 </RefonteLayout>

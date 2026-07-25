@@ -4,38 +4,60 @@ import VideoFrame from '../../../components/refonte/VideoFrame.astro';
 import ContactScene from '../../../components/refonte/ContactScene.astro';
 import ServiceBridge from '../../../components/refonte/ServiceBridge.astro';
 import { coursPages, coursVideos } from '../../../data/refonte';
-import { getTranslations } from '../../../i18n/utils';
+import { getTranslations, type Lang } from '../../../i18n/utils';
+import { localePath } from '../../../i18n/refonte';
+
+interface Props {
+  page: (typeof coursPages)[number];
+  lang?: Lang;
+}
 
 export function getStaticPaths() {
   return coursPages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
 }
 
-const { page } = Astro.props;
-const t = getTranslations('fr');
+const { page, lang = 'fr' } = Astro.props;
+const t = getTranslations(lang);
 const pageIndex = coursPages.findIndex((item) => item.slug === page.slug);
-const video = coursVideos[Math.max(0, pageIndex % coursVideos.length)];
+const translatedCard = t.cours.cards[pageIndex];
+const localizedPage = {
+  ...page,
+  title: translatedCard?.title ?? page.title,
+  text: translatedCard?.description ?? page.text,
+};
+const localizedPages = coursPages.map((item, index) => ({
+  ...item,
+  title: t.cours.cards[index]?.title ?? item.title,
+}));
+const baseVideo = coursVideos[Math.max(0, pageIndex % coursVideos.length)];
+const video = {
+  ...baseVideo,
+  title: localizedPage.title,
+  label: t.videos.eyebrow,
+};
 const shapes = ['arch', 'portrait', 'oval', 'ribbon', 'soft', 'landscape'] as const;
 ---
 
 <RefonteLayout
-  title={`${page.title} — Rozi Dance`}
-  description={page.text}
+  title={`${localizedPage.title} — Rozi Dance`}
+  description={localizedPage.text}
   bodyClass={`rf-course-detail rf-course-${page.slug}`}
-  chapter={page.title}
+  chapter={localizedPage.title}
+  lang={lang}
 >
   <main id="contenu">
     <section class="rf-course-detail-hero" data-camera={pageIndex % 2 ? 'out' : 'in'}>
       <div class="rf-course-detail-hero__plane" data-camera-plane>
         <div class="rf-course-detail-hero__copy">
-          <a class="rf-back-link" href="/refonte/cours">
+          <a class="rf-back-link" href={localePath(lang, '/cours')}>
             <span aria-hidden="true">←</span>
             {t.coursSlug.backLink}
           </a>
           <span class="rf-eyebrow">{t.coursSlug.eyebrow}</span>
           <h1 class="rf-detail-title">
-            <span class="rf-line-mask"><span data-hero-line>{page.title}</span></span>
+            <span class="rf-line-mask"><span data-hero-line>{localizedPage.title}</span></span>
           </h1>
-          <p>{page.text}</p>
+          <p>{localizedPage.text}</p>
           <a class="rf-button rf-button--ink" href="#contact">
             {t.coursSlug.ctaBtn}
             <span aria-hidden="true">↓</span>
@@ -48,6 +70,7 @@ const shapes = ['arch', 'portrait', 'oval', 'ribbon', 'soft', 'landscape'] as co
             shape={shapes[pageIndex]}
             tone={`course-detail-${pageIndex + 1}`}
             eager={true}
+            lang={lang}
           />
         </div>
 
@@ -66,14 +89,14 @@ const shapes = ['arch', 'portrait', 'oval', 'ribbon', 'soft', 'landscape'] as co
         </header>
 
         <nav aria-label={t.coursSlug.ctaBtnSecondary}>
-          {coursPages.map((item, index) => (
+          {localizedPages.map((item, index) => (
             item.slug === page.slug ? (
               <span class="is-current" aria-current="page" style={`--orbit-index:${index}`}>
                 <i>{String(index + 1).padStart(2, '0')}</i>
                 {item.title}
               </span>
             ) : (
-              <a href={`/refonte/cours/${item.slug}`} style={`--orbit-index:${index}`}>
+              <a href={localePath(lang, `/cours/${item.slug}`)} style={`--orbit-index:${index}`}>
                 <i>{String(index + 1).padStart(2, '0')}</i>
                 {item.title}
               </a>
@@ -92,9 +115,10 @@ const shapes = ['arch', 'portrait', 'oval', 'ribbon', 'soft', 'landscape'] as co
       />
     </div>
     <ServiceBridge
-      currentHref="/refonte/cours"
+      currentHref={localePath(lang, '/cours')}
       eyebrow={t.prestations.eyebrow}
       title={t.prestations.title}
+      lang={lang}
     />
   </main>
 </RefonteLayout>
