@@ -1,0 +1,32 @@
+---
+import RefonteLayout from '../../layouts/RefonteLayout.astro';
+import { getTranslations } from '../../i18n/utils';
+
+const t = getTranslations('fr');
+---
+
+<RefonteLayout
+  title={`${t['404'].title} — Rozi Dance`}
+  description={t['404'].description}
+  bodyClass="rf-system-page rf-not-found"
+>
+  <main id="contenu">
+    <section class="rf-not-found__scene" data-camera="out">
+      <div class="rf-not-found__plane" data-camera-plane>
+        <span class="rf-not-found__number" aria-hidden="true">404</span>
+        <div class="rf-not-found__copy">
+          <span class="rf-eyebrow">404</span>
+          <h1 class="rf-detail-title">
+            <span class="rf-line-mask"><span data-hero-line>{t['404'].title}</span></span>
+          </h1>
+          <p>{t['404'].description}</p>
+          <a class="rf-button rf-button--ink" href="/refonte">
+            {t['404'].cta}
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+        <div class="rf-not-found__aperture" aria-hidden="true"></div>
+      </div>
+    </section>
+  </main>
+</RefonteLayout>

@@ -1,0 +1,100 @@
+---
+import RefonteLayout from '../../../layouts/RefonteLayout.astro';
+import VideoFrame from '../../../components/refonte/VideoFrame.astro';
+import ContactScene from '../../../components/refonte/ContactScene.astro';
+import ServiceBridge from '../../../components/refonte/ServiceBridge.astro';
+import { coursPages, coursVideos } from '../../../data/refonte';
+import { getTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return coursPages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const t = getTranslations('fr');
+const pageIndex = coursPages.findIndex((item) => item.slug === page.slug);
+const video = coursVideos[Math.max(0, pageIndex % coursVideos.length)];
+const shapes = ['arch', 'portrait', 'oval', 'ribbon', 'soft', 'landscape'] as const;
+---
+
+<RefonteLayout
+  title={`${page.title} — Rozi Dance`}
+  description={page.text}
+  bodyClass={`rf-course-detail rf-course-${page.slug}`}
+  chapter={page.title}
+>
+  <main id="contenu">
+    <section class="rf-course-detail-hero" data-camera={pageIndex % 2 ? 'out' : 'in'}>
+      <div class="rf-course-detail-hero__plane" data-camera-plane>
+        <div class="rf-course-detail-hero__copy">
+          <a class="rf-back-link" href="/refonte/cours">
+            <span aria-hidden="true">←</span>
+            {t.coursSlug.backLink}
+          </a>
+          <span class="rf-eyebrow">{t.coursSlug.eyebrow}</span>
+          <h1 class="rf-detail-title">
+            <span class="rf-line-mask"><span data-hero-line>{page.title}</span></span>
+          </h1>
+          <p>{page.text}</p>
+          <a class="rf-button rf-button--ink" href="#contact">
+            {t.coursSlug.ctaBtn}
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+
+        <div class="rf-course-detail-hero__media" data-hero-media data-depth={pageIndex % 2 ? '-1' : '1'}>
+          <VideoFrame
+            video={video}
+            shape={shapes[pageIndex]}
+            tone={`course-detail-${pageIndex + 1}`}
+            eager={true}
+          />
+        </div>
+
+        <div class="rf-course-detail-hero__rhythm" aria-hidden="true">
+          <span>{String(pageIndex + 1).padStart(2, '0')}</span>
+          <i></i><i></i><i></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="rf-learning-orbit" data-camera="in">
+      <div class="rf-learning-orbit__plane" data-camera-plane>
+        <header data-reveal>
+          <span class="rf-eyebrow">{t.coursSlug.ctaBtnSecondary}</span>
+          <h2>{t.cours.heroTitle}</h2>
+        </header>
+
+        <nav aria-label={t.coursSlug.ctaBtnSecondary}>
+          {coursPages.map((item, index) => (
+            item.slug === page.slug ? (
+              <span class="is-current" aria-current="page" style={`--orbit-index:${index}`}>
+                <i>{String(index + 1).padStart(2, '0')}</i>
+                {item.title}
+              </span>
+            ) : (
+              <a href={`/refonte/cours/${item.slug}`} style={`--orbit-index:${index}`}>
+                <i>{String(index + 1).padStart(2, '0')}</i>
+                {item.title}
+              </a>
+            )
+          ))}
+        </nav>
+      </div>
+    </section>
+
+    <div id="contact">
+      <ContactScene
+        eyebrow={t.coursSlug.ctaEyebrow}
+        title={t.coursSlug.ctaTitle}
+        text={t.coursSlug.ctaText}
+        primaryLabel={t.coursSlug.ctaBtn}
+      />
+    </div>
+    <ServiceBridge
+      currentHref="/refonte/cours"
+      eyebrow={t.prestations.eyebrow}
+      title={t.prestations.title}
+    />
+  </main>
+</RefonteLayout>

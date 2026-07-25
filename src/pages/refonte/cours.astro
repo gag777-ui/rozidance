@@ -1,0 +1,105 @@
+---
+import RefonteLayout from '../../layouts/RefonteLayout.astro';
+import VideoFrame from '../../components/refonte/VideoFrame.astro';
+import ContactScene from '../../components/refonte/ContactScene.astro';
+import ServiceBridge from '../../components/refonte/ServiceBridge.astro';
+import { coursPages, coursVideos } from '../../data/refonte';
+import { getTranslations } from '../../i18n/utils';
+
+const t = getTranslations('fr');
+const courseShapes = ['portrait', 'oval', 'ribbon', 'arch', 'soft'] as const;
+---
+
+<RefonteLayout
+  title={t.cours.pageTitle}
+  description={t.cours.pageDescription}
+  bodyClass="rf-courses"
+  chapter={t.cours.heroTitle}
+>
+  <main id="contenu">
+    <section class="rf-page-hero rf-page-hero--courses" data-camera="in">
+      <div class="rf-page-hero__plane" data-camera-plane>
+        <div class="rf-page-hero__copy">
+          <a class="rf-back-link" href="/refonte">
+            <span aria-hidden="true">←</span>
+            {t.hero.line3a} {t.hero.line3italic}
+          </a>
+          <span class="rf-eyebrow">{t.cours.heroEyebrow}</span>
+          <h1 class="rf-page-title rf-page-title--course">
+            <span class="rf-line-mask"><span data-hero-line>Apprendre</span></span>
+            <span class="rf-line-mask"><span data-hero-line>avec du <em>rythme.</em></span></span>
+          </h1>
+          <p>{t.cours.heroSubtitle}</p>
+        </div>
+
+        <div class="rf-page-hero__media rf-page-hero__media--courses" data-hero-media data-depth="-1">
+          <VideoFrame video={coursVideos[0]} shape="soft" tone="course-hero" eager={true} />
+        </div>
+
+        <div class="rf-course-beat" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="rf-course-score">
+      <header class="rf-section-heading rf-section-heading--split" data-reveal>
+        <span class="rf-eyebrow">{t.cours.heroEyebrow}</span>
+        <h2>{t.cours.heroTitle}</h2>
+      </header>
+
+      <div class="rf-course-score__line" aria-hidden="true"></div>
+      <div class="rf-course-score__items">
+        {coursPages.map((page, index) => (
+          <a
+            class:list={['rf-course-score__item', index % 2 ? 'rf-course-score__item--right' : '']}
+            href={`/refonte/cours/${page.slug}`}
+            data-reveal
+          >
+            <span class="rf-course-score__number">{String(index + 1).padStart(2, '0')}</span>
+            <span class="rf-course-score__body">
+              <strong>{page.title}</strong>
+              <span>{page.text}</span>
+            </span>
+            <i aria-hidden="true">→</i>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="rf-horizontal-story rf-course-film" data-horizontal-story>
+      <div class="rf-horizontal-stage" data-horizontal-stage>
+        <header class="rf-course-film__heading">
+          <span class="rf-eyebrow">{t.videos.eyebrow}</span>
+          <h2>{t.cours.cardLink}</h2>
+        </header>
+        <div class="rf-horizontal-rail" data-horizontal-rail>
+          {coursVideos.map((video, index) => (
+            <article class="rf-course-film__scene">
+              <span class="rf-course-film__index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <VideoFrame
+                video={video}
+                shape={courseShapes[index]}
+                tone={`course-${index + 1}`}
+              />
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <ContactScene
+      eyebrow={t.contact.eyebrow}
+      title={t.cours.ctaTitle}
+      text={t.cours.ctaSubtitle}
+      primaryLabel={t.cours.ctaBtn}
+    />
+    <ServiceBridge
+      currentHref="/refonte/cours"
+      eyebrow={t.prestations.eyebrow}
+      title={t.prestations.title}
+    />
+  </main>
+</RefonteLayout>

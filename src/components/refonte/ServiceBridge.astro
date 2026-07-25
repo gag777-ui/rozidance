@@ -1,0 +1,47 @@
+---
+import { prestations } from '../../data/refonte';
+
+const {
+  currentHref,
+  eyebrow,
+  title,
+} = Astro.props as {
+  currentHref: string;
+  eyebrow: string;
+  title: string;
+};
+const currentIndex = Math.max(0, prestations.findIndex((item) => item.href === currentHref));
+const nextIndex = (currentIndex + 1) % prestations.length;
+---
+
+<section class="rf-service-bridge" id="service-bridge" data-service-bridge>
+  <div class="rf-service-bridge__inner">
+    <header class="rf-service-bridge__heading" data-reveal>
+      <span class="rf-eyebrow">{eyebrow}</span>
+      <h2>{title}</h2>
+    </header>
+
+    <nav aria-label={eyebrow}>
+      {prestations.map((item, index) => (
+        <a
+          class:list={[
+            'rf-service-bridge__link',
+            item.href === currentHref && 'is-current',
+            index === nextIndex && 'is-next',
+          ]}
+          href={item.href}
+          aria-current={item.href === currentHref ? 'page' : undefined}
+          style={`--bridge-index:${index}`}
+          data-reveal
+        >
+          <span class="rf-service-bridge__number">{String(index + 1).padStart(2, '0')}</span>
+          <span class="rf-service-bridge__body">
+            <span>{item.kicker}</span>
+            <strong>{item.title}</strong>
+          </span>
+          <i aria-hidden="true">→</i>
+        </a>
+      ))}
+    </nav>
+  </div>
+</section>

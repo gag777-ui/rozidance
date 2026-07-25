@@ -1,0 +1,62 @@
+---
+import { socials } from '../../data/refonte';
+
+const { chapter = 'Rozi Dance' } = Astro.props as { chapter?: string };
+
+const links = [
+  { href: '/refonte', label: 'Accueil' },
+  { href: '/refonte/mariages', label: 'Mariages' },
+  { href: '/refonte/chant', label: 'Chant' },
+  { href: '/refonte/cours', label: 'Cours' },
+  { href: '/refonte/galerie', label: 'Galerie' },
+];
+---
+
+<header class="rf-header" data-rf-header>
+  <div class="rf-header__identity">
+    <a class="rf-brand" href="/refonte" aria-label="Rozi Dance — accueil" data-rf-nav-link>
+      <img src="/images/logo-transparent.png" alt="Rozi Dance" width="500" height="500" />
+    </a>
+    <span class="rf-header__chapter">{chapter}</span>
+  </div>
+
+  <nav class="rf-nav" aria-label="Navigation principale">
+    {links.slice(1).map((link) => (
+      <a href={link.href} data-rf-nav-link>{link.label}</a>
+    ))}
+  </nav>
+
+  <div class="rf-header__actions">
+    <a class="rf-header__instagram" href={socials.instagram} target="_blank" rel="noopener noreferrer">
+      Instagram
+      <span aria-hidden="true">↗</span>
+    </a>
+    <button
+      class="rf-menu-btn"
+      type="button"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      aria-controls="rf-menu"
+      data-rf-menu-btn
+    >
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<div class="rf-menu" id="rf-menu" data-rf-menu aria-hidden="true" inert>
+  <div class="rf-menu__wash" aria-hidden="true"></div>
+  <nav aria-label="Menu">
+    {links.map((link, index) => (
+      <a href={link.href} data-rf-nav-link style={`--menu-index:${index}`}>
+        <span>{String(index + 1).padStart(2, '0')}</span>
+        {link.label}
+      </a>
+    ))}
+  </nav>
+  <div class="rf-menu__socials">
+    <a href={socials.instagram} target="_blank" rel="noopener noreferrer">@rozi.dance</a>
+    <a href={socials.phone}>+32 486 21 98 96</a>
+  </div>
+</div>

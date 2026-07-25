@@ -1,0 +1,87 @@
+---
+import RefonteLayout from '../../layouts/RefonteLayout.astro';
+import VideoFrame from '../../components/refonte/VideoFrame.astro';
+import ContactScene from '../../components/refonte/ContactScene.astro';
+import ServiceBridge from '../../components/refonte/ServiceBridge.astro';
+import { chantVideos } from '../../data/refonte';
+import { getTranslations } from '../../i18n/utils';
+
+const t = getTranslations('fr');
+const voiceShapes = ['portrait', 'oval', 'arch'] as const;
+---
+
+<RefonteLayout
+  title={t.chant.pageTitle}
+  description={t.chant.pageDescription}
+  bodyClass="rf-chant"
+  chapter={t.chant.heroTitle}
+>
+  <main id="contenu">
+    <section class="rf-page-hero rf-page-hero--chant" data-camera="out">
+      <div class="rf-page-hero__plane" data-camera-plane>
+        <div class="rf-page-hero__copy">
+          <a class="rf-back-link" href="/refonte">
+            <span aria-hidden="true">←</span>
+            {t.chant.backLink}
+          </a>
+          <span class="rf-eyebrow">{t.chant.heroEyebrow}</span>
+          <h1 class="rf-page-title">
+            <span class="rf-line-mask"><span data-hero-line>Nos</span></span>
+            <span class="rf-line-mask"><span data-hero-line><em>chants</em></span></span>
+          </h1>
+          <p>{t.chant.heroSubtitle}</p>
+        </div>
+
+        <div class="rf-page-hero__media rf-page-hero__media--chant" data-hero-media data-depth="1.2">
+          <VideoFrame video={chantVideos[0]} shape="ribbon" tone="chant-hero" eager={true} />
+        </div>
+
+        <div class="rf-sound-rings" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="rf-voice-suite">
+      {chantVideos.map((video, index) => (
+        <article
+          class:list={['rf-voice-movement', `rf-voice-movement--${index + 1}`]}
+          data-camera={index === 1 ? 'in' : 'out'}
+        >
+          <div class="rf-voice-movement__plane" data-camera-plane>
+            <div class="rf-voice-movement__copy" data-reveal>
+              <span class="rf-voice-movement__number" aria-hidden="true">
+                0{index + 1}
+              </span>
+              <span class="rf-eyebrow">{video.label}</span>
+              <h2>{t.chant.categories[index]?.title}</h2>
+              <p>{t.chant.categories[index]?.description}</p>
+            </div>
+            <div class="rf-voice-movement__media" data-depth={index % 2 ? '-1.3' : '1.3'}>
+              <VideoFrame
+                video={video}
+                shape={voiceShapes[index]}
+                tone={`voice-${index + 1}`}
+              />
+            </div>
+            <span class="rf-voice-movement__echo" aria-hidden="true">{video.label}</span>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <ContactScene
+      eyebrow={t.chant.ctaEyebrow}
+      title={t.chant.ctaTitle}
+      text={t.chant.ctaText}
+      primaryLabel={t.chant.ctaBtn}
+    />
+    <ServiceBridge
+      currentHref="/refonte/chant"
+      eyebrow={t.prestations.eyebrow}
+      title={t.prestations.title}
+    />
+  </main>
+</RefonteLayout>

@@ -1,0 +1,257 @@
+---
+import RefonteLayout from '../../layouts/RefonteLayout.astro';
+import VideoFrame from '../../components/refonte/VideoFrame.astro';
+import ContactScene from '../../components/refonte/ContactScene.astro';
+import { heroVideos, prestations, socials, galleryPhotos } from '../../data/refonte';
+import { getTranslations } from '../../i18n/utils';
+
+const t = getTranslations('fr');
+const serviceShapes = ['arch', 'oval', 'ribbon'] as const;
+const performanceShapes = ['portrait', 'arch', 'oval'] as const;
+const serviceIds = ['mariages-evenements', 'chant', 'cours'];
+---
+
+<RefonteLayout
+  title="Rozi Dance"
+  description={t.hero.subtitle}
+  bodyClass="rf-home"
+  chapter="Rozi Dance"
+>
+  <main id="contenu">
+    <section class="rf-home-hero" aria-labelledby="rf-home-title" data-fullscreen-hero>
+      <div class="rf-home-hero__backdrop" data-hero-backdrop aria-hidden="true">
+        <img
+          class="rf-home-hero__poster"
+          src="/images/og-default.webp"
+          alt=""
+          loading="eager"
+          decoding="async"
+        />
+        <video
+          class="rf-home-hero__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          disablepictureinpicture
+          preload="metadata"
+          poster="/images/og-default.webp"
+          data-start="0"
+          data-hero-background-video
+          tabindex="-1"
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="rf-home-hero__veil" aria-hidden="true"></div>
+
+      <div class="rf-home-hero__plane">
+        <div class="rf-home-hero__halo rf-home-hero__halo--one" aria-hidden="true"></div>
+        <div class="rf-home-hero__halo rf-home-hero__halo--two" aria-hidden="true"></div>
+
+        <div class="rf-home-hero__copy" data-hero-copy>
+          <p class="rf-hero-overline">
+            <span>{t.hero.line1}</span>
+            <span>{t.hero.line2}</span>
+          </p>
+          <h1 class="rf-home-title" id="rf-home-title" aria-label="Rozi Dance">
+            <span class="rf-line-mask"><span data-hero-line>Rozi</span></span>
+            <span class="rf-line-mask"><span data-hero-line><em>Dance</em></span></span>
+          </h1>
+          <p class="rf-home-hero__subtitle">{t.hero.subtitle}</p>
+
+          <div class="rf-action-row">
+            <a class="rf-button rf-button--ink" href={socials.instagram} target="_blank" rel="noopener noreferrer">
+              {t.hero.ctaPrimary}
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a class="rf-text-link" href="#presentation">
+              {t.hero.ctaSecondary}
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+
+          <div class="rf-hero-socials" aria-label="Réseaux sociaux">
+            <a href={socials.youtube} target="_blank" rel="noopener noreferrer">YouTube</a>
+            <a href={socials.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a href={socials.phone}>Téléphone</a>
+          </div>
+        </div>
+
+        <a class="rf-scroll-cue" href="#presentation" aria-label={t.hero.ctaSecondary}>
+          <span>{t.hero.ctaSecondary}</span>
+          <i aria-hidden="true"></i>
+        </a>
+      </div>
+
+      <div class="rf-home-hero__threshold" data-hero-threshold aria-hidden="true"></div>
+    </section>
+
+    <section class="rf-opening" id="presentation" data-camera="out">
+      <div class="rf-opening__plane" data-camera-plane>
+        <div class="rf-opening__portrait" data-depth="1.5" data-media-reveal>
+          <img src={galleryPhotos[0].src} alt={t.apropos.altPortrait} loading="lazy" />
+        </div>
+        <div class="rf-opening__copy" data-reveal>
+          <span class="rf-eyebrow">{t.apropos.eyebrow}</span>
+          <h2>{t.apropos.title}</h2>
+          <p>{t.apropos.p1}</p>
+          <p>{t.apropos.p2}</p>
+        </div>
+        <span class="rf-opening__word" aria-hidden="true">Rozi</span>
+      </div>
+    </section>
+
+    <section class="rf-services rf-service-continuum" data-service-journey>
+      <header class="rf-section-heading" data-reveal>
+        <span class="rf-eyebrow">{t.prestations.eyebrow}</span>
+        <h2>{t.prestations.title}</h2>
+      </header>
+
+      <div class="rf-service-continuum__body">
+        <nav class="rf-chapter-marker" aria-label={t.prestations.title}>
+          <div class="rf-chapter-marker__inner">
+            <span class="rf-chapter-marker__track" aria-hidden="true">
+              <i data-service-progress></i>
+            </span>
+            <ol>
+              {prestations.map((item, index) => (
+                <li>
+                  <a
+                    href={`#service-${serviceIds[index]}`}
+                    data-chapter-marker
+                    aria-current={index === 0 ? 'step' : undefined}
+                  >
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{item.title}</strong>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </nav>
+
+        <div class="rf-service-continuum__chapters">
+          {prestations.map((item, index) => (
+            <article
+              id={`service-${serviceIds[index]}`}
+              class:list={[
+                'rf-service-chapter',
+                `rf-service-chapter--${index + 1}`,
+                index % 2 && 'rf-service-chapter--reverse',
+              ]}
+              data-service-chapter
+            >
+              <a
+                class="rf-service-chapter__mobile-index"
+                href={`#service-${serviceIds[index]}`}
+                aria-label={item.title}
+              >
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{item.title}</strong>
+              </a>
+
+              <div class="rf-service-chapter__hold">
+                <div class="rf-service-chapter__stage" data-service-stage>
+                  <div class="rf-service-chapter__number" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+                  <div class="rf-service-chapter__copy" data-service-copy>
+                    <span class="rf-eyebrow">{item.kicker}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                    <a class="rf-text-link" href={item.href}>
+                      {t.prestations.items[index]?.link}
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                  <div class="rf-service-chapter__media" data-service-media>
+                    <VideoFrame
+                      video={item.video}
+                      shape={serviceShapes[index]}
+                      tone={`service-${index + 1}`}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="rf-service-chapter__transition" data-service-transition aria-hidden="true">
+                <i></i>
+                <i></i>
+                <i></i>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="rf-gallery-tease" data-camera="in">
+      <div class="rf-gallery-tease__plane" data-camera-plane>
+        <header class="rf-gallery-tease__heading" data-reveal>
+          <span class="rf-eyebrow">{t.galerie.eyebrow}</span>
+          <h2>{t.galerie.title}</h2>
+          <p>{t.galerie.pageDescription}</p>
+          <a class="rf-button rf-button--light" href="/refonte/galerie">
+            {t.galerie.ctaAll}
+            <span aria-hidden="true">→</span>
+          </a>
+        </header>
+
+        <div class="rf-gallery-tease__stream">
+          {galleryPhotos.slice(0, 6).map((photo, index) => (
+            <a
+              class={`rf-gallery-tease__photo rf-gallery-tease__photo--${index + 1}`}
+              href="/refonte/galerie"
+              data-depth={(index % 3) - 1}
+              aria-label={t.galerie.ctaAll}
+            >
+              <img src={photo.src} alt={photo.alt} loading="lazy" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="rf-performances">
+      <header class="rf-section-heading rf-section-heading--center" data-reveal>
+        <span class="rf-eyebrow">{t.videos.eyebrow}</span>
+        <h2>{t.videos.title}</h2>
+      </header>
+
+      <div class="rf-performance-river">
+        {heroVideos.map((video, index) => (
+          <article
+            class:list={['rf-performance-river__scene', index % 2 ? 'rf-performance-river__scene--low' : '']}
+            data-camera={index === 1 ? 'out' : 'in'}
+          >
+            <div data-camera-plane>
+              <span class="rf-performance-river__index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <VideoFrame
+                video={video}
+                shape={performanceShapes[index]}
+                tone={`performance-${index + 1}`}
+              />
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="rf-performance-river__link" data-reveal>
+        <a class="rf-text-link" href={socials.youtube} target="_blank" rel="noopener noreferrer">
+          {t.videos.youtubeLink}
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <ContactScene
+      eyebrow={t.contact.eyebrow}
+      title={t.contact.title}
+      text={t.contact.subtitle}
+      primaryLabel={t.hero.ctaPrimary}
+    />
+  </main>
+</RefonteLayout>

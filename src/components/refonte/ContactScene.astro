@@ -1,0 +1,34 @@
+---
+import { socials } from '../../data/refonte';
+
+const {
+  eyebrow,
+  title,
+  text,
+  primaryLabel = 'Nous contacter',
+} = Astro.props as {
+  eyebrow: string;
+  title: string;
+  text: string;
+  primaryLabel?: string;
+};
+---
+
+<section class="rf-finale" data-camera="out">
+  <div class="rf-finale__plane" data-camera-plane>
+    <div class="rf-finale__orbit" aria-hidden="true"></div>
+    <div class="rf-finale__copy" data-reveal>
+      <span class="rf-eyebrow">{eyebrow}</span>
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+    <div class="rf-finale__links" data-reveal>
+      <a class="rf-button rf-button--ink" href={socials.instagram} target="_blank" rel="noopener noreferrer">
+        {primaryLabel}
+        <span aria-hidden="true">↗</span>
+      </a>
+      <a class="rf-text-link" href={socials.phone}>+32 486 21 98 96 <span aria-hidden="true">→</span></a>
+      <a class="rf-text-link" href={socials.email}>abrahamyan.rose@mail.ru <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>

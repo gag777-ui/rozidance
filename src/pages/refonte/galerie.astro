@@ -1,0 +1,72 @@
+---
+import RefonteLayout from '../../layouts/RefonteLayout.astro';
+import VideoFrame from '../../components/refonte/VideoFrame.astro';
+import { galleryPhotos, heroVideos, socials } from '../../data/refonte';
+import { getTranslations } from '../../i18n/utils';
+
+const t = getTranslations('fr');
+---
+
+<RefonteLayout
+  title={`Galerie — Rozi Dance`}
+  description={t.galerie.pageDescription}
+  bodyClass="rf-gallery-page"
+>
+  <main id="contenu">
+    <section class="rf-page-hero rf-page-hero--gallery" data-camera="out">
+      <div class="rf-page-hero__plane" data-camera-plane>
+        <div class="rf-page-hero__copy">
+          <a class="rf-back-link" href="/refonte">
+            <span aria-hidden="true">←</span>
+            {t.hero.line3a} {t.hero.line3italic}
+          </a>
+          <span class="rf-eyebrow">{t.galerie.eyebrow}</span>
+          <h1 class="rf-page-title">
+            <span class="rf-line-mask"><span data-hero-line>Galerie</span></span>
+          </h1>
+          <p>{t.galerie.pageDescription}</p>
+          <div class="rf-action-row">
+            <a class="rf-button rf-button--ink" href={socials.instagram} target="_blank" rel="noopener noreferrer">
+              {t.galerie.instagramLink}
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="rf-page-hero__media rf-page-hero__media--gallery" data-hero-media data-depth="1">
+          <VideoFrame video={heroVideos[1]} shape="oval" tone="gallery-hero" eager={true} />
+        </div>
+
+        <div class="rf-gallery-aperture" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="rf-gallery-stream" aria-label={t.galerie.title}>
+      {galleryPhotos.map((photo, index) => (
+        <a
+          class={`rf-gallery-stream__photo rf-gallery-stream__photo--${(index % 7) + 1}`}
+          href={photo.src}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${t.galerie.openPhoto} — ${photo.alt}`}
+          data-depth={(index % 5) * 0.35 - 0.7}
+          data-reveal
+        >
+          <img src={photo.src} alt={photo.alt} loading={index < 4 ? 'eager' : 'lazy'} />
+          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+        </a>
+      ))}
+    </section>
+
+    <section class="rf-gallery-exit" data-camera="in">
+      <div data-camera-plane>
+        <span class="rf-eyebrow">{t.galerie.eyebrow}</span>
+        <h2>{t.galerie.title}</h2>
+        <a class="rf-button rf-button--light" href={socials.instagram} target="_blank" rel="noopener noreferrer">
+          {t.galerie.instagramLink}
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</RefonteLayout>

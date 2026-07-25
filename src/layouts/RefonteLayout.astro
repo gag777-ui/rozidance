@@ -1,0 +1,710 @@
+---
+import RefonteHeader from '../components/refonte/RefonteHeader.astro';
+import RefonteFooter from '../components/refonte/RefonteFooter.astro';
+import '../styles/refonte.css';
+
+const {
+  title = 'Rozi Dance',
+  description = 'Duo & groupe artistique pour mariages, célébrations et événements.',
+  bodyClass = '',
+  chapter = 'Rozi Dance',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr" class="rf-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f3eee4" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class:list={['rf-body', bodyClass]}>
+    <a class="rf-skip-link" href="#contenu">Aller au contenu</a>
+    <div class="rf-grain" aria-hidden="true"></div>
+    <div class="rf-progress" data-scroll-progress aria-hidden="true"></div>
+    <RefonteHeader chapter={chapter} />
+    <slot />
+    <RefonteFooter />
+
+    <script>
+      import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      let lenis: InstanceType<typeof Lenis> | null = null;
+      let lenisRaf: ((time: number) => void) | null = null;
+      let controller: AbortController | null = null;
+      let motionMedia: gsap.MatchMedia | null = null;
+      let videoObserver: IntersectionObserver | null = null;
+      let serviceObserver: IntersectionObserver | null = null;
+
+      function destroyRefonte() {
+        controller?.abort();
+        controller = null;
+        videoObserver?.disconnect();
+        videoObserver = null;
+        serviceObserver?.disconnect();
+        serviceObserver = null;
+        motionMedia?.revert();
+        motionMedia = null;
+        if (lenisRaf) {
+          gsap.ticker.remove(lenisRaf);
+          lenisRaf = null;
+        }
+        lenis?.destroy();
+        lenis = null;
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+        document.documentElement.classList.remove('rf-menu-open', 'rf-motion-ready');
+        document.body.style.removeProperty('overflow');
+      }
+
+      function setupMenu(signal: AbortSignal) {
+        const button = document.querySelector<HTMLButtonElement>('[data-rf-menu-btn]');
+        const menu = document.querySelector<HTMLElement>('[data-rf-menu]');
+        if (!button || !menu) return;
+
+        let returnFocus: HTMLElement | null = null;
+        const menuLinks = Array.from(menu.querySelectorAll<HTMLAnchorElement>('a'));
+
+        const setOpen = (open: boolean) => {
+          button.setAttribute('aria-expanded', String(open));
+          button.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+          menu.setAttribute('aria-hidden', String(!open));
+          menu.toggleAttribute('inert', !open);
+          document.documentElement.classList.toggle('rf-menu-open', open);
+          document.body.style.overflow = open ? 'hidden' : '';
+
+          if (open) {
+            returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : button;
+            requestAnimationFrame(() => menuLinks[0]?.focus());
+          } else if (returnFocus && document.activeElement !== button) {
+            returnFocus.focus();
+          }
+        };
+
+        menu.toggleAttribute('inert', true);
+        button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'), { signal });
+        menuLinks.forEach((link) => link.addEventListener('click', () => setOpen(false), { signal }));
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') setOpen(false);
+        }, { signal });
+
+        const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+        document.querySelectorAll<HTMLAnchorElement>('[data-rf-nav-link]').forEach((link) => {
+          const linkPath = new URL(link.href).pathname.replace(/\/$/, '') || '/';
+          const isHome = linkPath === '/refonte';
+          const active = isHome ? currentPath === linkPath : currentPath.startsWith(linkPath);
+          if (active) link.setAttribute('aria-current', 'page');
+        });
+      }
+
+      function setupVideos(reduceMotion: boolean, signal: AbortSignal) {
+        const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('video[data-start]'));
+        if (!videos.length) return;
+
+        let activeVideo: HTMLVideoElement | null = null;
+        const setPlayingState = (video: HTMLVideoElement, playing: boolean) => {
+          const frame = video.closest<HTMLElement>('[data-video-frame]');
+          const heroBackdrop = video.closest<HTMLElement>('[data-hero-backdrop]');
+          frame?.toggleAttribute('data-playing', playing);
+          heroBackdrop?.toggleAttribute('data-video-ready', playing);
+        };
+        const seek = (video: HTMLVideoElement) => {
+          const start = Number(video.dataset.start || 0);
+          if (Number.isFinite(start) && video.readyState >= 1 && Math.abs(video.currentTime - start) > 1) {
+            video.currentTime = start;
+          }
+        };
+
+        videos.forEach((video) => {
+          video.muted = true;
+          video.playsInline = true;
+          video.addEventListener('loadedmetadata', () => seek(video), { once: true, signal });
+        });
+
+        if (reduceMotion) {
+          videos.forEach((video) => {
+            video.autoplay = false;
+            video.removeAttribute('autoplay');
+            video.pause();
+            setPlayingState(video, false);
+          });
+          return;
+        }
+
+        videos.forEach((video) => {
+          video.addEventListener('playing', () => setPlayingState(video, true), { signal });
+          video.addEventListener('error', () => setPlayingState(video, false), { once: true, signal });
+          if (!video.paused && video.readyState >= 2) setPlayingState(video, true);
+        });
+
+        const playVideo = (video: HTMLVideoElement) => {
+          seek(video);
+          video.play()
+            .then(() => setPlayingState(video, true))
+            .catch(() => {});
+        };
+
+        videoObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            const video = entry.target;
+            if (!(video instanceof HTMLVideoElement)) return;
+
+            if (entry.isIntersecting) {
+              if (activeVideo && activeVideo !== video) {
+                activeVideo.pause();
+                setPlayingState(activeVideo, false);
+              }
+              activeVideo = video;
+              playVideo(video);
+            } else {
+              video.pause();
+              setPlayingState(video, false);
+            }
+          });
+        }, { threshold: 0.48, rootMargin: '8% 0px' });
+
+        videos.forEach((video) => videoObserver?.observe(video));
+
+        const retryHeroPlayback = () => {
+          const heroVideo = videos.find((video) => video.hasAttribute('data-hero-background-video'));
+          if (!heroVideo || !heroVideo.paused) return;
+          const rect = heroVideo.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < window.innerHeight) playVideo(heroVideo);
+        };
+        document.addEventListener('touchstart', retryHeroPlayback, { once: true, passive: true, signal });
+        document.addEventListener('pointerdown', retryHeroPlayback, { once: true, passive: true, signal });
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            activeVideo?.pause();
+            if (activeVideo) setPlayingState(activeVideo, false);
+          } else {
+            retryHeroPlayback();
+          }
+        }, { signal });
+      }
+
+      function setupServiceOrientation() {
+        const chapters = Array.from(document.querySelectorAll<HTMLElement>('[data-service-chapter]'));
+        const markers = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-chapter-marker]'));
+        if (!chapters.length || !markers.length) return;
+
+        const setActive = (index: number) => {
+          markers.forEach((marker, markerIndex) => {
+            if (markerIndex === index) {
+              marker.setAttribute('aria-current', 'step');
+            } else {
+              marker.removeAttribute('aria-current');
+            }
+          });
+        };
+
+        serviceObserver = new IntersectionObserver((entries) => {
+          const activeEntry = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!activeEntry) return;
+          const index = chapters.indexOf(activeEntry.target as HTMLElement);
+          if (index >= 0) setActive(index);
+        }, {
+          rootMargin: '-36% 0px -52%',
+          threshold: [0, 0.01],
+        });
+
+        chapters.forEach((chapter) => serviceObserver?.observe(chapter));
+        setActive(0);
+      }
+
+      function setupSmoothScroll(reduceMotion: boolean) {
+        if (reduceMotion) return;
+
+        lenis = new Lenis({
+          duration: 1.12,
+          smoothWheel: true,
+          syncTouch: false,
+          prevent: (node: Element) => node.hasAttribute('data-rf-menu'),
+        });
+        lenis.on('scroll', ScrollTrigger.update);
+        lenisRaf = (time: number) => lenis?.raf(time * 1000);
+        gsap.ticker.add(lenisRaf);
+        gsap.ticker.lagSmoothing(0);
+        document.documentElement.style.scrollBehavior = 'auto';
+      }
+
+      function setupMotion(reduceMotion: boolean) {
+        const revealItems = gsap.utils.toArray<HTMLElement>('[data-reveal]');
+        if (reduceMotion) {
+          gsap.set(revealItems, { clearProps: 'all' });
+          return;
+        }
+
+        document.documentElement.classList.add('rf-motion-ready');
+        motionMedia = gsap.matchMedia();
+
+        motionMedia.add('(prefers-reduced-motion: no-preference)', () => {
+          gsap.from('[data-hero-line]', {
+            yPercent: 112,
+            rotation: 2,
+            duration: 1.15,
+            stagger: 0.12,
+            ease: 'power4.out',
+          });
+
+          gsap.from('[data-hero-media]', {
+            autoAlpha: 0,
+            scale: 0.82,
+            y: 80,
+            rotation: 4,
+            duration: 1.45,
+            delay: 0.12,
+            ease: 'expo.out',
+          });
+
+          const fullscreenHero = document.querySelector<HTMLElement>('[data-fullscreen-hero]');
+          const heroBackdrop = fullscreenHero?.querySelector<HTMLElement>('[data-hero-backdrop]');
+          const heroCopy = fullscreenHero?.querySelector<HTMLElement>('[data-hero-copy]');
+          const heroThreshold = fullscreenHero?.querySelector<HTMLElement>('[data-hero-threshold]');
+          if (fullscreenHero && heroBackdrop && heroCopy && heroThreshold) {
+            gsap.from(
+              '.rf-home-hero .rf-hero-overline, .rf-home-hero__subtitle, .rf-home-hero .rf-action-row, .rf-home-hero .rf-hero-socials, .rf-home-hero .rf-scroll-cue',
+              {
+                autoAlpha: 0,
+                y: 24,
+                duration: 1,
+                stagger: 0.07,
+                delay: 0.28,
+                ease: 'power3.out',
+              },
+            );
+
+            gsap.timeline({
+              scrollTrigger: {
+                trigger: fullscreenHero,
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 0.9,
+              },
+            })
+              .fromTo(heroBackdrop, {
+                scale: 1.035,
+                yPercent: 0,
+              }, {
+                scale: 1.105,
+                yPercent: 1.5,
+                ease: 'none',
+              }, 0)
+              .fromTo(heroCopy, {
+                yPercent: 0,
+                autoAlpha: 1,
+              }, {
+                yPercent: -9,
+                autoAlpha: 0.2,
+                ease: 'none',
+              }, 0)
+              .fromTo(heroThreshold, {
+                scaleY: 0.82,
+              }, {
+                scaleY: 1.16,
+                transformOrigin: '50% 100%',
+                ease: 'none',
+              }, 0);
+          }
+
+          revealItems.forEach((item) => {
+            gsap.from(item, {
+              autoAlpha: 0,
+              y: 54,
+              rotation: item.hasAttribute('data-reveal-tilt') ? 1.5 : 0,
+              duration: 1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: item,
+                start: 'top 88%',
+                toggleActions: 'play none none reverse',
+              },
+            });
+          });
+
+          document.querySelectorAll<HTMLElement>('[data-camera]').forEach((scene) => {
+            const plane = scene.querySelector<HTMLElement>('[data-camera-plane]');
+            if (!plane) return;
+            const mode = scene.dataset.camera ?? 'in';
+            const movesIn = mode !== 'out';
+
+            gsap.fromTo(plane, {
+              scale: movesIn ? 0.84 : 1.1,
+              yPercent: movesIn ? 7 : -4,
+              rotationX: movesIn ? 1.4 : -1,
+            }, {
+              scale: movesIn ? 1.045 : 0.92,
+              yPercent: movesIn ? -3 : 5,
+              rotationX: 0,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: scene,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.15,
+              },
+            });
+          });
+
+          document.querySelectorAll<HTMLElement>('[data-depth]:not([data-hero-media])').forEach((item) => {
+            const depth = Number(item.dataset.depth || 1);
+            gsap.fromTo(item, { yPercent: depth * 4 }, {
+              yPercent: depth * -4,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: item,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.2,
+              },
+            });
+          });
+
+          document.querySelectorAll<HTMLElement>('[data-media-reveal]').forEach((media) => {
+            gsap.fromTo(media, {
+              clipPath: 'inset(12% 16% 12% 16% round 45% 45% 20% 20%)',
+              scale: 0.92,
+            }, {
+              clipPath: 'inset(0% 0% 0% 0% round 0% 0% 0% 0%)',
+              scale: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: media,
+                start: 'top 92%',
+                end: 'center 52%',
+                scrub: 0.85,
+              },
+            });
+          });
+
+          const serviceJourney = document.querySelector<HTMLElement>('[data-service-journey]');
+          const serviceProgress = serviceJourney?.querySelector<HTMLElement>('[data-service-progress]');
+          if (serviceJourney && serviceProgress) {
+            gsap.fromTo(serviceProgress, { scaleY: 0 }, {
+              scaleY: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: serviceJourney,
+                start: 'top 62%',
+                end: 'bottom 38%',
+                scrub: 0.25,
+              },
+            });
+          }
+
+          const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
+          if (progress) {
+            gsap.fromTo(progress, { scaleX: 0 }, {
+              scaleX: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: document.documentElement,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.2,
+              },
+            });
+          }
+
+          return () => {
+            gsap.set('[data-hero-line], [data-hero-media], [data-hero-backdrop], [data-hero-copy], [data-hero-threshold], [data-reveal], [data-camera-plane], [data-depth], [data-media-reveal], [data-service-progress]', {
+              clearProps: 'all',
+            });
+          };
+        });
+
+        motionMedia.add('(max-width: 959px) and (prefers-reduced-motion: no-preference)', () => {
+          document.querySelectorAll<HTMLElement>('[data-service-chapter]').forEach((chapter, index) => {
+            const stage = chapter.querySelector<HTMLElement>('[data-service-stage]');
+            const copy = chapter.querySelector<HTMLElement>('[data-service-copy]');
+            const media = chapter.querySelector<HTMLElement>('[data-service-media]');
+            const transition = chapter.querySelector<HTMLElement>('[data-service-transition]');
+            if (!stage || !copy || !media || !transition) return;
+
+            const timeline = gsap.timeline({
+              defaults: { ease: 'none' },
+              scrollTrigger: {
+                trigger: chapter,
+                start: 'top 92%',
+                end: 'bottom 8%',
+                scrub: 0.8,
+                invalidateOnRefresh: true,
+              },
+            });
+
+            timeline
+              .fromTo(stage, {
+                scale: 0.975,
+                y: 24,
+              }, {
+                scale: 1,
+                y: -16,
+                duration: 0.68,
+              }, 0)
+              .to(stage, {
+                scale: 0.965,
+                y: -42,
+                duration: 0.32,
+              }, 0.68)
+              .fromTo(copy, {
+                autoAlpha: 0.82,
+                y: 34,
+              }, {
+                autoAlpha: 1,
+                y: -12,
+                duration: 0.72,
+              }, 0)
+              .to(copy, {
+                autoAlpha: 0.9,
+                y: -36,
+                duration: 0.28,
+              }, 0.72)
+              .fromTo(media, {
+                scale: 0.9,
+                yPercent: 8,
+                rotation: index % 2 ? 1.5 : -1.5,
+              }, {
+                scale: 1.025,
+                yPercent: -2,
+                rotation: 0,
+                duration: 0.72,
+              }, 0)
+              .to(media, {
+                scale: 0.94,
+                yPercent: -9,
+                duration: 0.28,
+              }, 0.72)
+              .fromTo(transition, {
+                autoAlpha: 0.2,
+              }, {
+                autoAlpha: 1,
+                duration: 0.18,
+              }, 0.5)
+              .fromTo(transition, {
+                scale: 0.38,
+                rotation: index % 2 ? 7 : -7,
+              }, {
+                scale: 1.03,
+                rotation: 0,
+                duration: 0.46,
+              }, 0.5);
+          });
+
+          return () => {
+            gsap.set('[data-service-stage], [data-service-copy], [data-service-media], [data-service-transition]', {
+              clearProps: 'all',
+            });
+          };
+        });
+
+        motionMedia.add('(min-width: 960px) and (prefers-reduced-motion: no-preference)', () => {
+          document.querySelectorAll<HTMLElement>('[data-service-chapter]').forEach((chapter, index) => {
+            const stage = chapter.querySelector<HTMLElement>('[data-service-stage]');
+            const copy = chapter.querySelector<HTMLElement>('[data-service-copy]');
+            const media = chapter.querySelector<HTMLElement>('[data-service-media]');
+            const transition = chapter.querySelector<HTMLElement>('[data-service-transition]');
+            if (!stage || !copy || !media || !transition) return;
+
+            const timeline = gsap.timeline({
+              defaults: { ease: 'none' },
+              scrollTrigger: {
+                trigger: chapter,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.15,
+                invalidateOnRefresh: true,
+              },
+            });
+
+            timeline
+              .fromTo(stage, {
+                scale: 0.86,
+                z: -170,
+                yPercent: 5,
+                rotationX: 1.2,
+              }, {
+                scale: 1.035,
+                z: 0,
+                yPercent: -1,
+                rotationX: 0,
+                duration: 0.5,
+              }, 0)
+              .to(stage, {
+                scale: 0.91,
+                z: -120,
+                yPercent: -5,
+                rotationX: -0.8,
+                duration: 0.5,
+              }, 0.5)
+              .fromTo(copy, {
+                autoAlpha: 0.68,
+                y: 96,
+              }, {
+                autoAlpha: 1,
+                y: -18,
+                duration: 0.7,
+              }, 0)
+              .to(copy, {
+                autoAlpha: 0.76,
+                y: -78,
+                duration: 0.3,
+              }, 0.7)
+              .fromTo(media, {
+                scale: 0.72,
+                yPercent: 12,
+                rotation: index % 2 ? 4 : -4,
+              }, {
+                scale: 1.07,
+                yPercent: -3,
+                rotation: 0,
+                duration: 0.58,
+              }, 0)
+              .to(media, {
+                scale: 0.84,
+                yPercent: -13,
+                rotation: index % 2 ? -2 : 2,
+                duration: 0.42,
+              }, 0.58)
+              .fromTo(transition, {
+                autoAlpha: 0,
+              }, {
+                autoAlpha: 1,
+                duration: 0.16,
+              }, 0.34)
+              .fromTo(transition, {
+                scale: 0.14,
+                rotation: index % 2 ? 10 : -10,
+              }, {
+                scale: 1.06,
+                rotation: 0,
+                duration: 0.5,
+              }, 0.34);
+          });
+
+          document.querySelectorAll<HTMLElement>('[data-horizontal-story]').forEach((story) => {
+            const stage = story.querySelector<HTMLElement>('[data-horizontal-stage]');
+            const rail = story.querySelector<HTMLElement>('[data-horizontal-rail]');
+            if (!stage || !rail) return;
+
+            const distance = () => Math.max(0, rail.scrollWidth - window.innerWidth + window.innerWidth * 0.12);
+            gsap.to(rail, {
+              x: () => -distance(),
+              ease: 'none',
+              scrollTrigger: {
+                trigger: story,
+                start: 'top top',
+                end: () => `+=${distance() + window.innerHeight * 0.7}`,
+                pin: stage,
+                scrub: 1.05,
+                invalidateOnRefresh: true,
+              },
+            });
+          });
+
+          return () => {
+            gsap.set('[data-service-stage], [data-service-copy], [data-service-media], [data-service-transition]', {
+              clearProps: 'all',
+            });
+          };
+        });
+      }
+
+      function refreshAfterAssets(signal: AbortSignal) {
+        let refreshTimer = 0;
+        signal.addEventListener('abort', () => window.clearTimeout(refreshTimer), { once: true });
+        const requestRefresh = () => {
+          window.clearTimeout(refreshTimer);
+          refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 120);
+        };
+
+        const pending: Promise<void>[] = [];
+        const images = Array.from(document.images);
+        const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('video'));
+        const posterSources = new Set(videos.map((video) => video.poster).filter(Boolean));
+
+        images.forEach((image) => {
+          if (image.complete) return;
+          const load = new Promise<void>((resolve) => {
+            const done = () => {
+              requestRefresh();
+              resolve();
+            };
+            image.addEventListener('load', done, { once: true, signal });
+            image.addEventListener('error', done, { once: true, signal });
+          });
+          if (image.loading !== 'lazy' || image.getBoundingClientRect().top < window.innerHeight * 2) {
+            pending.push(load);
+          }
+        });
+
+        videos.forEach((video) => {
+          if (video.readyState >= 1) return;
+          pending.push(new Promise<void>((resolve) => {
+            const done = () => {
+              requestRefresh();
+              resolve();
+            };
+            video.addEventListener('loadedmetadata', done, { once: true, signal });
+            video.addEventListener('error', done, { once: true, signal });
+          }));
+        });
+
+        posterSources.forEach((source) => {
+          pending.push(new Promise<void>((resolve) => {
+            const poster = new Image();
+            const done = () => {
+              requestRefresh();
+              resolve();
+            };
+            poster.addEventListener('load', done, { once: true, signal });
+            poster.addEventListener('error', done, { once: true, signal });
+            poster.src = source;
+          }));
+        });
+
+        const timeout = new Promise<void>((resolve) => {
+          const timer = window.setTimeout(resolve, 3500);
+          signal.addEventListener('abort', () => window.clearTimeout(timer), { once: true });
+        });
+
+        Promise.all([
+          document.fonts.ready,
+          Promise.race([Promise.all(pending).then(() => undefined), timeout]),
+        ]).then(() => {
+          if (!signal.aborted) ScrollTrigger.refresh();
+        });
+      }
+
+      function initRefonte() {
+        destroyRefonte();
+        controller = new AbortController();
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        setupMenu(controller.signal);
+        setupVideos(reduceMotion, controller.signal);
+        setupServiceOrientation();
+        setupSmoothScroll(reduceMotion);
+        setupMotion(reduceMotion);
+        refreshAfterAssets(controller.signal);
+      }
+
+      initRefonte();
+      document.addEventListener('astro:before-swap', destroyRefonte);
+      document.addEventListener('astro:page-load', initRefonte);
+    </script>
+  </body>
+</html>

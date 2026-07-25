@@ -1,0 +1,138 @@
+---
+import RefonteLayout from '../../../layouts/RefonteLayout.astro';
+import VideoFrame from '../../../components/refonte/VideoFrame.astro';
+import ContactScene from '../../../components/refonte/ContactScene.astro';
+import ServiceBridge from '../../../components/refonte/ServiceBridge.astro';
+import { mariagePages } from '../../../data/refonte';
+import { getTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return mariagePages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const t = getTranslations('fr');
+const pageIndex = mariagePages.findIndex((item) => item.slug === page.slug);
+const firstVideo = page.videos[0];
+const followingVideos = page.videos.slice(1);
+const heroShapes = ['oval', 'ribbon', 'arch', 'portrait'] as const;
+const sceneShapes = ['portrait', 'oval', 'ribbon', 'arch'] as const;
+---
+
+<RefonteLayout
+  title={`${page.title} — Rozi Dance`}
+  description={page.text}
+  bodyClass={`rf-wedding-detail rf-story-${page.slug}`}
+  chapter={page.title}
+>
+  <main id="contenu">
+    <section class="rf-detail-hero" data-camera={pageIndex % 2 ? 'out' : 'in'}>
+      <div class="rf-detail-hero__plane" data-camera-plane>
+        <div class="rf-detail-hero__copy">
+          <a class="rf-back-link" href="/refonte/mariages">
+            <span aria-hidden="true">←</span>
+            {t.mariagesSlug.backLink}
+          </a>
+          <span class="rf-eyebrow">{t.mariagesSlug.eyebrow}</span>
+          <h1 class="rf-detail-title">
+            <span class="rf-line-mask"><span data-hero-line>{page.title}</span></span>
+          </h1>
+          <p>{page.text}</p>
+          <a class="rf-button rf-button--ink" href="#contact">
+            {t.mariagesSlug.ctaBtn}
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+
+        <div class="rf-detail-hero__media" data-hero-media data-depth={pageIndex % 2 ? '1.2' : '-1.2'}>
+          <VideoFrame
+            video={firstVideo}
+            shape={heroShapes[pageIndex]}
+            tone={`detail-${pageIndex + 1}`}
+            eager={true}
+          />
+        </div>
+
+        <div class="rf-story-symbol" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </div>
+      </div>
+    </section>
+
+    {followingVideos.length > 0 && (
+      <section class="rf-moment-sequence">
+        <header class="rf-section-heading rf-section-heading--split" data-reveal>
+          <span class="rf-eyebrow">{t.mariagesSlug.videoLabel}</span>
+          <div>
+            <h2>{t.mariagesSlug.momentsTitle}</h2>
+            <p>{t.mariagesSlug.momentsText}</p>
+          </div>
+        </header>
+
+        <div class="rf-moment-sequence__scenes">
+          {followingVideos.map((video, index) => (
+            <article
+              class:list={['rf-moment-scene', index % 2 ? 'rf-moment-scene--reverse' : '']}
+              data-camera={index % 2 ? 'out' : 'in'}
+            >
+              <div class="rf-moment-scene__plane" data-camera-plane>
+                <span class="rf-moment-scene__index" aria-hidden="true">
+                  {String(index + 2).padStart(2, '0')}
+                </span>
+                <div class="rf-moment-scene__media" data-depth={index % 2 ? '-1' : '1'}>
+                  <VideoFrame
+                    video={video}
+                    shape={sceneShapes[(pageIndex + index) % sceneShapes.length]}
+                    tone={`moment-${(index % 3) + 1}`}
+                  />
+                </div>
+                <div class="rf-moment-scene__title" data-reveal>
+                  <span>{video.label}</span>
+                  <h3>{video.title}</h3>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="rf-related-path" data-camera="out">
+      <div class="rf-related-path__plane" data-camera-plane>
+        <header data-reveal>
+          <span class="rf-eyebrow">{t.mariagesSlug.ctaBtnSecondary}</span>
+          <h2>{t.mariages.heroTitle}</h2>
+        </header>
+        <nav aria-label={t.mariagesSlug.ctaBtnSecondary}>
+          {mariagePages.map((item, index) => (
+            item.slug === page.slug ? (
+              <span aria-current="page">
+                <i>{String(index + 1).padStart(2, '0')}</i>
+                {item.title}
+              </span>
+            ) : (
+              <a href={`/refonte/mariages/${item.slug}`}>
+                <i>{String(index + 1).padStart(2, '0')}</i>
+                {item.title}
+              </a>
+            )
+          ))}
+        </nav>
+      </div>
+    </section>
+
+    <div id="contact">
+      <ContactScene
+        eyebrow={t.mariagesSlug.ctaEyebrow}
+        title={t.mariagesSlug.ctaTitle}
+        text={t.mariagesSlug.ctaText}
+        primaryLabel={t.mariagesSlug.ctaBtn}
+      />
+    </div>
+    <ServiceBridge
+      currentHref="/refonte/mariages"
+      eyebrow={t.prestations.eyebrow}
+      title={t.prestations.title}
+    />
+  </main>
+</RefonteLayout>

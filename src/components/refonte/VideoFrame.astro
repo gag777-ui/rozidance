@@ -1,0 +1,56 @@
+---
+import type { RefonteVideo } from '../../data/refonte';
+
+const {
+  video,
+  shape = 'arch',
+  tone = 'default',
+  eager = false,
+  className = '',
+  caption = true,
+} = Astro.props as {
+  video: RefonteVideo;
+  shape?: 'arch' | 'oval' | 'portrait' | 'landscape' | 'ribbon' | 'soft';
+  tone?: string;
+  eager?: boolean;
+  className?: string;
+  caption?: boolean;
+};
+---
+
+<figure
+  class:list={['rf-video', `rf-video--${shape}`, `rf-video--${tone}`, className]}
+  data-video-frame
+>
+  <a
+    class="rf-video__link"
+    href={video.href}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Voir ${video.title} sur Instagram`}
+  >
+    <span class="rf-video__echo" aria-hidden="true"></span>
+    <span class="rf-video__aperture">
+      <video
+        muted
+        loop
+        playsinline
+        disablepictureinpicture
+        preload={eager ? 'auto' : 'metadata'}
+        poster={video.poster}
+        data-start={video.start ?? 0}
+      >
+        <source src={video.src} type="video/mp4" />
+      </video>
+      <span class="rf-video__veil" aria-hidden="true"></span>
+    </span>
+  </a>
+
+  {caption && (
+    <figcaption>
+      <span>{video.label}</span>
+      <strong>{video.title}</strong>
+      <span class="rf-video__external" aria-hidden="true">Instagram ↗</span>
+    </figcaption>
+  )}
+</figure>
