@@ -1,5 +1,1607 @@
 ---
-import RefonteMariages from './refonte/mariages.astro';
+import Layout from '../layouts/Layout.astro';
+import { getTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/utils';
+import CtaFloat from '../components/ui/CtaFloat.astro';
+const lang = (Astro.currentLocale ?? 'fr') as Lang;
+const t = getTranslations(lang);
+const m = t.mariages;
+const base = lang === 'fr' ? '' : `/${lang}`;
 ---
 
-<RefonteMariages lang="fr" />
+<Layout title={m.pageTitle} description={m.pageDescription}>
+  <!-- Hero -->
+  <section class="mariages-hero">
+    <div class="section-container mariages-hero-inner">
+      <div class="mariages-hero-text">
+        <a href={`${base || '/'}#prestations`} class="back-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {t.nav.prestations}
+        </a>
+        <span class="eyebrow">{m.heroEyebrow}</span>
+        <h1>{m.heroTitle}</h1>
+        <p class="hero-subtitle">{m.heroSubtitle}</p>
+        <div class="hero-service-strip" aria-label={m.reelsTitle}>
+          {m.categories.map((cat) => (
+            <span>{cat.title}</span>
+          ))}
+        </div>
+        <a href="#reels-title" class="hero-jump">
+          {m.reelsTitle}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+      <!-- Desktop: Carousel classique (original) -->
+      <div class="services-carousel-desktop" id="services-carousel" aria-label="Aperçu de nos services">
+        {[
+          { src: '/videos/musiciens/musiciens-2.mp4',    href: 'https://www.instagram.com/reel/DAtffBloITF/', start: 2  },
+          { src: '/videos/mariages/danse-3.mp4',         href: 'https://www.instagram.com/reel/DY6ymdMsrb6/', start: 8  },
+          { src: '/videos/musiciens/musiciens-1.mp4',    href: 'https://www.instagram.com/reel/DO8wo3NjEY0/', start: 22 },
+          { src: '/videos/mariee/mariee-2.mp4',          href: 'https://www.instagram.com/reel/DYCpnNTiIAA/', start: 8  },
+          { src: '/videos/danse-mariee/danse-mariee-3.mp4', href: 'https://www.instagram.com/reel/DR1unSWDMTp/', start: 12 },
+        ].map((v, i) => (
+          <div class={`sc-slide${i === 0 ? ' is-active' : ''}`} data-start={v.start}>
+            <a href={v.href} target="_blank" rel="noopener noreferrer" class="sc-link"
+              aria-label={`Voir le reel ${i + 1} sur Instagram`} tabindex={i === 0 ? 0 : -1}>
+              <video class="sc-video" muted loop playsinline disablepictureinpicture preload="none">
+                <source src={v.src} type="video/mp4" />
+              </video>
+              <div class="sc-overlay" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+                Voir sur Instagram
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <!-- Mobile: Horizontal Scroll Carousel (3D cards) -->
+      <div class="video-carousel-wrapper" id="video-carousel-mobile" aria-label="Aperçu de nos services">
+        <div class="video-carousel" aria-label="Vidéos services">
+          {[
+            { src: '/videos/musiciens/musiciens-2.mp4',    poster: '/images/video-posters/musiciens-musiciens-2.png', href: 'https://www.instagram.com/reel/DAtffBloITF/', start: 2  },
+            { src: '/videos/mariages/danse-3.mp4',         poster: '/images/video-posters/mariages-danse-3.png', href: 'https://www.instagram.com/reel/DY6ymdMsrb6/', start: 8  },
+            { src: '/videos/musiciens/musiciens-1.mp4',    poster: '/images/video-posters/musiciens-musiciens-1.png', href: 'https://www.instagram.com/reel/DO8wo3NjEY0/', start: 22 },
+            { src: '/videos/mariee/mariee-2.mp4',          poster: '/images/video-posters/mariee-mariee-2.png', href: 'https://www.instagram.com/reel/DYCpnNTiIAA/', start: 8  },
+            { src: '/videos/danse-mariee/danse-mariee-3.mp4', poster: '/images/video-posters/danse-mariee-danse-mariee-3.png', href: 'https://www.instagram.com/reel/DR1unSWDMTp/', start: 12 },
+          ].map((v, i) => (
+            <div class="video-card" data-index={i} data-start={v.start} data-src={v.src}>
+              <div class="card-inner">
+                <video class="video-player" muted loop playsinline disablepictureinpicture preload="metadata" poster={v.poster}>
+                  <source src={v.src} type="video/mp4" />
+                </video>
+                <button class="play-btn" aria-label={`Jouer vidéo ${i + 1}`}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+                <a href={v.href} class="insta-link" target="_blank" rel="noopener noreferrer" aria-label={`Voir le reel ${i + 1}`}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reels selection -->
+  <section class="categories-section" aria-labelledby="reels-title">
+    <div class="section-container">
+      <div class="reels-intro reveal-fade">
+        <span class="eyebrow">{m.cardLink}</span>
+        <h2 id="reels-title">{m.reelsTitle}</h2>
+      </div>
+      <div class="categories-grid">
+        {m.categories.map((cat, i) => (
+          <a
+            href={`${base}/mariages/${cat.slug}`}
+            class={`card-shell reel-shell cs-${i % 3} reveal`}
+            style={`transition-delay: ${i * 90}ms`}
+            aria-label={`${cat.title} — ${cat.description}`}
+            data-card
+          >
+            <div class="card-core reel-card">
+              <div class="card-light"></div>
+              <span class="page-watermark" aria-hidden="true"></span>
+              <span class="page-thread" aria-hidden="true"></span>
+              <span class="page-mark" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M5.25 3.75h5.1l2.4 2.4v8.1h-7.5V3.75Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>
+                  <path d="M10.25 3.9v2.45h2.35M7 9h4M7 11.25h3" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="reel-tag">{m.cardLink}</span>
+              <span class="reel-title">{cat.title}</span>
+              <span class="reel-cta">
+                {m.cardCta}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mariages-cta">
+    <div class="section-container mariages-cta-inner reveal-fade">
+      <span class="eyebrow">{m.ctaEyebrow}</span>
+      <h2>{m.ctaTitle}</h2>
+      <p>{m.ctaText}</p>
+      <a href={`${base || '/'}#contact`} class="cta-btn">
+        {m.ctaBtn}
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+  <CtaFloat href="tel:+32486219896" />
+</Layout>
+
+<script>
+  function initMariagesTilt() {
+    const shells = document.querySelectorAll<HTMLElement>('[data-card]');
+    const ac = new AbortController();
+    const { signal } = ac;
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    shells.forEach(shell => {
+      const light = shell.querySelector<HTMLElement>('.card-light');
+      let startX = 0, startY = 0, hasMoved = false;
+
+      shell.addEventListener('touchstart', (e: TouchEvent) => { if (rm) return; startX = e.touches[0].clientX; startY = e.touches[0].clientY; hasMoved = false; }, { passive: true, signal });
+      shell.addEventListener('touchmove', (e: TouchEvent) => {
+        if (rm) return;
+        const t = e.touches[0];
+        if (Math.abs(t.clientX - startX) < 8 && Math.abs(t.clientY - startY) < 8) return;
+        hasMoved = true;
+        shell.style.transition = 'transform 80ms linear';
+        const r = shell.getBoundingClientRect();
+        const dx = (t.clientX - r.left - r.width / 2) / (r.width / 2);
+        const dy = (t.clientY - r.top - r.height / 2) / (r.height / 2);
+        shell.style.transform = `perspective(900px) rotateX(${-dy * 10}deg) rotateY(${dx * 14}deg) translateZ(6px)`;
+        if (light) { light.style.setProperty('--lx', `${50 + dx * 30}%`); light.style.setProperty('--ly', `${50 - dy * 22}%`); }
+      }, { passive: true, signal });
+      const reset = () => {
+        if (!hasMoved) { shell.style.transition = 'none'; shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)'; }
+        else { shell.style.transition = 'transform 500ms var(--ease-out-soft)'; shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)'; if (light) { light.style.setProperty('--lx','28%'); light.style.setProperty('--ly','22%'); } }
+        hasMoved = false;
+      };
+      shell.addEventListener('touchend', reset, { passive: true, signal });
+      shell.addEventListener('touchcancel', reset, { passive: true, signal });
+      shell.addEventListener('mousemove', (e: MouseEvent) => {
+        if (rm) return;
+        const r = shell.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+        const dy = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+        shell.style.transition = 'transform 100ms linear';
+        shell.style.transform = `perspective(900px) rotateX(${-dy * 7}deg) rotateY(${dx * 10}deg) translateZ(4px)`;
+        if (light) { light.style.setProperty('--lx', `${50 + dx * 10 * 2}%`); light.style.setProperty('--ly', `${50 - (-dy * 7) * 2}%`); }
+      }, { signal });
+      shell.addEventListener('mouseleave', () => { shell.style.transition = 'transform 600ms var(--ease-out-soft)'; shell.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)'; if (light) { light.style.setProperty('--lx','28%'); light.style.setProperty('--ly','22%'); } }, { signal });
+    });
+
+    document.addEventListener('astro:before-swap', () => ac.abort(), { once: true });
+  }
+  document.addEventListener('astro:page-load', initMariagesTilt);
+</script>
+
+<style>
+  .mariages-hero {
+    position: relative;
+    padding-block: clamp(4rem, 8vw, 7rem) clamp(5rem, 9vw, 8rem);
+    background:
+      radial-gradient(ellipse at 11% 16%, rgba(255, 255, 255, 0.72), transparent 38%),
+      radial-gradient(ellipse at 90% 30%, rgba(168, 135, 83, 0.13), transparent 34%),
+      linear-gradient(180deg, #fffaf3 0%, #fff3e6 58%, #f9ead7 100%);
+    overflow: hidden;
+  }
+
+  .mariages-hero::before,
+  .mariages-hero::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .mariages-hero::before {
+    left: 0;
+    top: 12%;
+    width: min(420px, 46vw);
+    height: min(420px, 46vw);
+    border: 0.5px solid rgba(168, 135, 83, 0.13);
+    border-left: 0;
+    border-radius: 0 999px 999px 0;
+    opacity: 0.72;
+  }
+
+  .mariages-hero::after {
+    inset-inline: 0;
+    bottom: -1px;
+    height: clamp(5rem, 12vw, 9rem);
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(244, 222, 196, 0), #f9ead7 62%, #fbf4ea 100%);
+  }
+
+  .mariages-hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(300px, 1.05fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .mariages-hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.9rem, 2vw, 1.15rem);
+  }
+
+  /* ── Desktop: Classic Carousel (classique) ── */
+  .services-carousel-desktop {
+    position: relative;
+    isolation: isolate;
+    justify-self: end;
+    width: min(100%, 480px);
+    aspect-ratio: 4 / 5;
+    padding: clamp(8px, 1.2vw, 12px);
+    border-radius: 36px;
+    overflow: visible;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.62), transparent 30%),
+      linear-gradient(145deg, rgba(255, 253, 248, 0.72), rgba(236, 216, 190, 0.32));
+    box-shadow:
+      0 26px 58px rgba(72, 46, 25, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.62);
+    touch-action: pan-y;
+  }
+
+  .services-carousel-desktop::before,
+  .services-carousel-desktop::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .services-carousel-desktop::before {
+    inset: -9% -12% -11% 10%;
+    z-index: -1;
+    border-radius: 44px;
+    background:
+      radial-gradient(ellipse at 70% 18%, rgba(168, 135, 83, 0.2), transparent 35%),
+      radial-gradient(ellipse at 18% 86%, rgba(135, 144, 115, 0.12), transparent 38%),
+      linear-gradient(145deg, rgba(168, 135, 83, 0.14), rgba(255, 255, 255, 0));
+    filter: blur(0.2px);
+    transform: rotate(-2.2deg);
+  }
+
+  .services-carousel-desktop::after {
+    inset: 0;
+    z-index: 8;
+    border: 0.5px solid rgba(168, 135, 83, 0.24);
+    border-radius: inherit;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.26),
+      inset 0 -80px 90px rgba(55, 35, 22, 0.18),
+      inset 0 80px 90px rgba(255, 248, 238, 0.16);
+  }
+
+  .sc-slide {
+    position: absolute;
+    inset: clamp(8px, 1.2vw, 12px);
+    overflow: hidden;
+    border-radius: 28px;
+    opacity: 0;
+    transition: opacity 900ms ease-in-out;
+  }
+  .sc-slide.is-active { opacity: 1; }
+
+  .sc-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
+    overflow: hidden;
+    border-radius: inherit;
+    background: #2b1f15;
+  }
+
+  .sc-link::before,
+  .sc-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .sc-link::before {
+    background:
+      linear-gradient(90deg, rgba(35, 21, 13, 0.32), transparent 18%, transparent 82%, rgba(35, 21, 13, 0.28)),
+      linear-gradient(180deg, rgba(255, 245, 231, 0.12), transparent 22%, transparent 64%, rgba(35, 21, 13, 0.34));
+    mix-blend-mode: multiply;
+  }
+
+  .sc-link::after {
+    inset: 10px;
+    border: 0.5px solid rgba(255, 242, 219, 0.24);
+    border-radius: 22px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 0 44px rgba(255, 240, 215, 0.08);
+  }
+
+  .sc-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  .sc-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(20,10,5,0.72) 0%, transparent 55%);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0;
+    z-index: 4;
+    transition: opacity 300ms;
+    pointer-events: none;
+  }
+  .sc-slide.is-active .sc-link:hover .sc-overlay { opacity: 1; }
+
+  /* ── Mobile: Horizontal Scroll Carousel (3D) ── */
+  .video-carousel-wrapper {
+    position: relative;
+    display: none;
+    justify-self: center;
+    width: min(100vw, 760px);
+    max-width: none;
+    overflow: visible;
+    isolation: isolate;
+    perspective: 1400px;
+    perspective-origin: 50% 42%;
+  }
+
+  .video-carousel-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
+    width: min(88vw, 510px);
+    height: min(74vw, 330px);
+    pointer-events: none;
+    border-radius: 56% 44% 62% 38% / 46% 58% 42% 54%;
+    background:
+      radial-gradient(ellipse at 48% 42%, rgba(255, 239, 212, 0.42), transparent 46%),
+      radial-gradient(ellipse at 26% 66%, rgba(168, 135, 83, 0.17), transparent 48%),
+      radial-gradient(ellipse at 78% 34%, rgba(96, 65, 41, 0.12), transparent 50%);
+    filter: blur(22px);
+    opacity: 0.72;
+    transform: translate3d(-50%, -50%, 0) rotate(-5deg);
+  }
+
+  .video-carousel-wrapper::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 1.15rem;
+    z-index: 0;
+    width: min(74vw, 440px);
+    height: 42px;
+    transform: translateX(-50%) rotate(-1deg);
+    pointer-events: none;
+    border-radius: 999px;
+    background: radial-gradient(ellipse at center, rgba(72, 46, 25, 0.18), transparent 72%);
+    filter: blur(12px);
+    opacity: 0.58;
+  }
+
+  .video-carousel {
+    --cover-card-width: min(70vw, 270px);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-block: clamp(1.4rem, 4vw, 2.2rem) 2.9rem;
+    padding-inline: calc((100vw - var(--cover-card-width)) / 2);
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: calc((100vw - var(--cover-card-width)) / 2);
+    -webkit-overflow-scrolling: touch;
+    transform-style: preserve-3d;
+    position: relative;
+    z-index: 2;
+  }
+
+  .video-carousel::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .video-carousel::-webkit-scrollbar-track {
+    background: rgba(168, 135, 83, 0.1);
+    border-radius: 10px;
+  }
+
+  .video-carousel::-webkit-scrollbar-thumb {
+    background: rgba(168, 135, 83, 0.3);
+    border-radius: 10px;
+  }
+
+  .video-carousel::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 135, 83, 0.5);
+  }
+
+  .video-card {
+    flex: 0 0 var(--cover-card-width);
+    height: min(102vw, 392px);
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    padding-inline: 0.32rem;
+    transform-style: preserve-3d;
+    opacity: var(--flow-opacity, 0.28);
+    filter: saturate(var(--flow-saturation, 0.76)) brightness(var(--flow-brightness, 0.86));
+    transition:
+      opacity 360ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: clamp(34px, 9vw, 52px);
+    overflow: hidden;
+    isolation: isolate;
+    clip-path: inset(0 round clamp(34px, 9vw, 52px));
+    background: #1a1a1a;
+    box-shadow: 0 18px 42px rgba(72, 46, 25, 0.16);
+    transition:
+      transform 460ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 460ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform:
+      perspective(1400px)
+      translateX(var(--flow-x, 0px))
+      translateZ(var(--flow-z, -190px))
+      rotateY(var(--flow-rotate, 0deg))
+      scale(var(--flow-scale, 0.82));
+    transform-origin: center center;
+    cursor: pointer;
+  }
+
+  .card-inner::before,
+  .card-inner::after {
+    content: '';
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .card-inner::before {
+    background:
+      linear-gradient(90deg, rgba(35, 21, 13, 0.18), transparent 32%, transparent 68%, rgba(35, 21, 13, 0.2)),
+      linear-gradient(180deg, rgba(255, 245, 231, 0.08), transparent 30%, transparent 68%, rgba(35, 21, 13, 0.22));
+    mix-blend-mode: multiply;
+  }
+
+  .card-inner::after {
+    inset: 9px;
+    border: 0.5px solid rgba(255, 242, 219, 0.14);
+    border-radius: clamp(21px, 6.4vw, 35px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .video-card.is-active {
+    z-index: 5;
+  }
+
+  .video-card.is-active .card-inner {
+    box-shadow: 0 30px 72px rgba(72, 46, 25, 0.2);
+  }
+
+  .video-card.is-prev {
+    z-index: 3;
+  }
+
+  .video-card.is-next {
+    z-index: 3;
+  }
+
+  .video-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: clamp(34px, 9vw, 52px);
+    clip-path: inset(0 round clamp(34px, 9vw, 52px));
+    transform: translateZ(0);
+  }
+
+  .play-btn {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.4);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 300ms ease-out;
+    backdrop-filter: blur(4px);
+    z-index: 4;
+  }
+
+  .video-card:hover .play-btn {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+  .play-btn:active {
+    transform: scale(0.95);
+  }
+
+  .insta-link {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 300ms ease-out;
+    z-index: 4;
+    backdrop-filter: blur(4px);
+    text-decoration: none;
+  }
+
+  .insta-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 720px) {
+    /* Hide desktop carousel on mobile */
+    .services-carousel-desktop {
+      display: none;
+    }
+
+    /* Show mobile carousel on mobile */
+    .video-carousel-wrapper {
+      display: block;
+    }
+
+    .video-carousel {
+      --cover-card-width: min(72vw, 276px);
+      padding-block: 1.45rem 2.8rem;
+      padding-inline: calc((100vw - var(--cover-card-width)) / 2);
+    }
+
+    .video-card {
+      flex-basis: var(--cover-card-width);
+      height: min(104vw, 398px);
+    }
+
+    .play-btn {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .mariages-hero-img::after {
+    content: '';
+    position: absolute;
+    inset: 7% 8% 7% -6%;
+    border: 0.5px solid rgba(168, 135, 83, 0.28);
+    border-radius: 28px;
+    transform: rotate(2.4deg);
+    pointer-events: none;
+  }
+
+  .mariages-hero-img img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 26px;
+    box-shadow: 0 24px 58px rgba(72, 46, 25, 0.13);
+    mask-image:
+      linear-gradient(to right, transparent 0%, black 12%, black 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, black 12%, black 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);
+    -webkit-mask-composite: source-in;
+  }
+
+  @media (max-width: 768px) {
+    .mariages-hero {
+      padding-block: 3.2rem 4.9rem;
+    }
+
+    .mariages-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 1.6rem;
+    }
+
+    .mariages-hero-img {
+      justify-self: stretch;
+      width: 100%;
+      max-height: 260px;
+      overflow: hidden;
+      border-radius: 22px;
+    }
+
+    .mariages-hero-img::before,
+    .mariages-hero-img::after {
+      display: none;
+    }
+
+    .mariages-hero-img img {
+      object-fit: cover;
+      height: 260px;
+      width: 100%;
+      border-radius: 22px;
+    }
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    min-height: 44px;
+    padding: 0.5rem 0;
+    transition: color 220ms var(--ease-out-soft), gap 220ms var(--ease-out-soft);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .back-link:hover { color: var(--color-accent); gap: 0.75rem; }
+
+  .mariages-hero h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2.6rem, 7vw, 5.7rem);
+    font-weight: 300;
+    color: var(--color-section-title);
+    line-height: 0.95;
+    margin: 0;
+    max-width: 9ch;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  .hero-service-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.65rem;
+    max-width: 560px;
+    padding-top: 0.35rem;
+  }
+
+  .hero-service-strip span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0.48rem 0.8rem;
+    color: rgba(75, 53, 36, 0.76);
+    border: 0.5px solid rgba(168, 135, 83, 0.2);
+    border-radius: 999px;
+    background: rgba(255, 251, 244, 0.54);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-jump {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    width: fit-content;
+    min-height: 44px;
+    margin-top: 0.2rem;
+    padding: 0.72rem 1rem;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    border: 0.5px solid rgba(122, 92, 32, 0.22);
+    border-radius: 999px;
+    background: rgba(255, 250, 241, 0.62);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76), 0 10px 24px rgba(72, 46, 25, 0.06);
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: transform 260ms var(--ease-out-soft), border-color 260ms var(--ease-out-soft), background 260ms var(--ease-out-soft);
+  }
+
+  .hero-jump:hover {
+    transform: translateY(-2px);
+    border-color: rgba(168, 135, 83, 0.42);
+    background: rgba(255, 252, 247, 0.82);
+  }
+
+  .hero-jump svg {
+    color: var(--color-gold);
+    transition: transform 260ms var(--ease-out-soft);
+  }
+
+  .hero-jump:hover svg {
+    transform: translateY(2px);
+  }
+
+  @media (max-width: 520px) {
+    .mariages-hero h1 {
+      max-width: 8ch;
+    }
+
+    .hero-service-strip {
+      gap: 0.42rem;
+    }
+
+    .hero-service-strip span {
+      min-height: 30px;
+      padding: 0.42rem 0.62rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .categories-section {
+    position: relative;
+    overflow: hidden;
+    margin-top: -1px;
+    padding-block: clamp(3.8rem, 8vw, 6.8rem) clamp(6rem, 11vw, 9rem);
+    background:
+      radial-gradient(ellipse at 16% 8%, rgba(168, 135, 83, 0.08), transparent 34%),
+      radial-gradient(ellipse at 88% 92%, rgba(135, 144, 115, 0.07), transparent 36%),
+      linear-gradient(180deg, #fbf4ea 0%, #fff8ee 44%, #f7ead9 100%);
+  }
+
+  .categories-section::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: clamp(5rem, 12vw, 9rem);
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(242, 223, 201, 0), #faefe2 56%, #fff8ee 100%);
+  }
+
+  .reels-intro {
+    display: grid;
+    gap: 0.7rem;
+    max-width: 760px;
+    margin-bottom: clamp(1.35rem, 4vw, 2.4rem);
+  }
+
+  .reels-intro h2 {
+    margin: 0;
+    color: var(--color-charcoal);
+    font-size: clamp(2.4rem, 8vw, 5.2rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: 0;
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.72rem, 2.5vw, 1.1rem);
+  }
+
+  .card-shell {
+    position: relative;
+    display: block;
+    min-width: 0;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    border-radius: 24px;
+    transform-style: preserve-3d;
+    transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+    transition: transform 500ms var(--ease-out-soft), filter 500ms var(--ease-out-soft);
+    will-change: transform;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .reel-card {
+    position: relative;
+    display: grid;
+    min-height: clamp(188px, 42vw, 248px);
+    aspect-ratio: 0.9;
+    overflow: hidden;
+    border: 0.5px solid rgba(154, 119, 72, 0.18);
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 16% 10%, rgba(255, 255, 255, 0.82), transparent 28%),
+      radial-gradient(circle at 92% 96%, rgba(168, 135, 83, 0.12), transparent 34%),
+      linear-gradient(145deg, rgba(255, 253, 248, 0.98), rgba(246, 235, 219, 0.94));
+    box-shadow:
+      0 14px 32px rgba(72, 46, 25, 0.07),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86);
+    isolation: isolate;
+  }
+
+  .reel-card::before,
+  .reel-card::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .reel-card::before {
+    inset: 10px;
+    z-index: 1;
+    border: 0.5px solid rgba(154, 119, 72, 0.13);
+    border-radius: 17px;
+  }
+
+  .reel-card::after {
+    right: -30px;
+    top: -52px;
+    z-index: 1;
+    width: 132px;
+    height: 172px;
+    border-radius: 999px;
+    background: rgba(168, 135, 83, 0.095);
+    transform: rotate(-24deg);
+    transition: transform 700ms var(--ease-out-soft), opacity 700ms var(--ease-out-soft);
+  }
+
+  .page-watermark,
+  .page-thread {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .page-watermark {
+    left: 18px;
+    top: 54px;
+    width: 46%;
+    height: 1px;
+    opacity: 0.46;
+    background: linear-gradient(90deg, rgba(168, 135, 83, 0.34), transparent);
+    box-shadow:
+      0 18px 0 rgba(168, 135, 83, 0.16),
+      0 36px 0 rgba(168, 135, 83, 0.1);
+  }
+
+  .page-thread {
+    right: 18px;
+    bottom: 18px;
+    width: 72px;
+    height: 72px;
+    border-right: 0.5px solid rgba(135, 114, 79, 0.14);
+    border-bottom: 0.5px solid rgba(135, 114, 79, 0.14);
+    border-radius: 0 0 17px 0;
+  }
+
+  .page-thread::before {
+    content: '';
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 42px;
+    height: 42px;
+    border-right: 0.5px solid rgba(135, 114, 79, 0.11);
+    border-bottom: 0.5px solid rgba(135, 114, 79, 0.11);
+    border-radius: 0 0 12px 0;
+  }
+
+  .card-light {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at var(--lx, 28%) var(--ly, 22%), rgba(255, 255, 255, 0.54), transparent 34%),
+      linear-gradient(115deg, transparent 0 48%, rgba(255, 255, 255, 0.22) 56%, transparent 66%);
+    mix-blend-mode: screen;
+    transition: background 80ms linear;
+  }
+
+  .page-mark {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 4;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(95, 70, 48, 0.74);
+    border: 0.5px solid rgba(168, 135, 83, 0.2);
+    border-radius: 14px;
+    background: rgba(255, 250, 241, 0.72);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.74);
+    transition: transform 420ms var(--ease-out-soft), color 320ms var(--ease-out-soft);
+  }
+
+  .reel-tag,
+  .reel-title,
+  .reel-cta {
+    position: absolute;
+    z-index: 4;
+  }
+
+  .reel-tag {
+    left: 18px;
+    top: 18px;
+    color: rgba(122, 92, 32, 0.66);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .reel-title {
+    left: 18px;
+    right: 56px;
+    bottom: 58px;
+    color: var(--color-charcoal);
+    font-family: var(--font-serif);
+    font-size: clamp(1.12rem, 5vw, 1.62rem);
+    font-style: italic;
+    font-weight: 350;
+    line-height: 1.12;
+    text-shadow: none;
+  }
+
+  .reel-cta {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: rgba(107, 86, 69, 0.78);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 320ms var(--ease-out-soft);
+  }
+
+  .reel-cta svg {
+    color: var(--color-gold);
+    transition: transform 380ms var(--ease-out-soft);
+  }
+
+  .card-shell:hover {
+    filter: saturate(1.04);
+  }
+
+  .card-shell:hover .reel-card::after {
+    transform: rotate(-18deg) translate(-8px, 8px);
+  }
+
+  .card-shell:hover .page-mark {
+    color: var(--color-gold);
+    transform: translateY(-2px);
+  }
+
+  .card-shell:hover .reel-cta svg {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 430px) {
+    .categories-grid {
+      gap: 0.7rem;
+    }
+
+    .reel-card {
+      min-height: 210px;
+      border-radius: 22px;
+    }
+
+    .page-mark {
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .reel-tag {
+      left: 14px;
+      top: 13px;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+    }
+
+    .reel-title {
+      left: 14px;
+      right: 38px;
+      bottom: 50px;
+      font-size: clamp(0.98rem, 5vw, 1.22rem);
+    }
+
+    .reel-cta {
+      left: 14px;
+      right: 14px;
+      bottom: 17px;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  @media (min-width: 980px) {
+    .categories-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.05rem;
+    }
+
+    .reel-card {
+      min-height: 164px;
+      aspect-ratio: auto;
+      border-radius: 20px;
+    }
+
+    .reel-title {
+      right: 92px;
+      bottom: 52px;
+      font-size: clamp(1.22rem, 1.7vw, 1.72rem);
+    }
+
+    .reel-tag,
+    .reel-cta {
+      font-size: 9px;
+    }
+
+    .page-mark {
+      top: 18px;
+      right: 18px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .reel-card {
+      min-height: 174px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-shell,
+    .page-mark,
+    .reel-cta svg {
+      transition: none;
+    }
+  }
+
+  .mariages-cta {
+    position: relative;
+    overflow: hidden;
+    margin-top: -1px;
+    padding-block: clamp(4rem, 8vw, 6.6rem);
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.72), transparent 34%),
+      radial-gradient(ellipse at 12% 90%, rgba(168, 135, 83, 0.08), transparent 32%),
+      linear-gradient(180deg, #fff8ee 0%, #fbf1e1 56%, #faecd9 100%);
+  }
+
+  .mariages-cta::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 1.1rem;
+    width: min(720px, 76vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, rgba(168, 135, 83, 0.24), transparent);
+  }
+
+  .mariages-cta::after {
+    content: '';
+    position: absolute;
+    right: min(8vw, 7rem);
+    bottom: 14%;
+    width: min(240px, 42vw);
+    height: min(240px, 42vw);
+    border: 0.5px solid rgba(168, 135, 83, 0.12);
+    border-radius: 999px;
+    pointer-events: none;
+  }
+
+  .mariages-cta-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    max-width: 760px;
+    padding: clamp(0.35rem, 2vw, 1rem) 0;
+  }
+
+  .mariages-cta h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2.1rem, 5vw, 4rem);
+    font-weight: 300;
+    color: var(--color-text-primary);
+    line-height: 0.98;
+    margin: 0;
+  }
+
+  .mariages-cta p {
+    font-size: clamp(0.95rem, 1.45vw, 1.08rem);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    max-width: 54ch;
+    margin: 0;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    min-height: 48px;
+    margin-top: 0.55rem;
+    padding: 0.72rem 0.82rem 0.72rem 1.25rem;
+    background:
+      linear-gradient(145deg, rgba(92, 64, 41, 0.96), rgba(122, 92, 58, 0.94));
+    color: #fff7ec;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 0.5px solid rgba(255, 234, 199, 0.32);
+    border-radius: 999px;
+    box-shadow:
+      0 16px 32px rgba(72, 46, 25, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    transition: transform 280ms var(--ease-out-soft), box-shadow 280ms var(--ease-out-soft), background 280ms var(--ease-out-soft);
+  }
+
+  .cta-btn svg {
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    color: #5c4029;
+    border-radius: 999px;
+    background: rgba(255, 247, 236, 0.92);
+    transition: transform 280ms var(--ease-out-soft);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    background:
+      linear-gradient(145deg, rgba(105, 73, 46, 0.98), rgba(137, 103, 65, 0.95));
+    box-shadow:
+      0 20px 40px rgba(72, 46, 25, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+
+  .cta-btn:hover svg {
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 520px) {
+    .mariages-cta {
+      padding-block: 3.5rem 5rem;
+    }
+
+    .mariages-cta::before {
+      width: 82vw;
+    }
+
+    .cta-btn {
+      width: min(100%, 280px);
+      justify-content: space-between;
+      padding-left: 1.15rem;
+    }
+  }
+</style>
+
+<script>
+  // Desktop: Classic carousel
+  function initServicesCarousel() {
+    const carousel = document.getElementById('services-carousel');
+    if (!carousel) return;
+
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.sc-slide'));
+    const videos = slides.map(s => s.querySelector<HTMLVideoElement>('video')!);
+    const links  = slides.map(s => s.querySelector<HTMLAnchorElement>('.sc-link')!);
+
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const DURATION = 5000;
+
+    function activate(idx: number) {
+      slides[current].classList.remove('is-active');
+      links[current].tabIndex = -1;
+      videos[current]?.pause();
+
+      current = idx;
+      const startTime = parseInt(slides[current].dataset.start || '0');
+      slides[current].classList.add('is-active');
+      links[current].tabIndex = 0;
+
+      const v = videos[current];
+      if (v) { v.currentTime = startTime; v.muted = true; v.play().catch(() => {}); }
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(() => activate((current + 1) % slides.length), DURATION);
+    }
+
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    carousel.addEventListener('touchend', (e: TouchEvent) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        activate(diff > 0
+          ? (current + 1) % slides.length
+          : (current - 1 + slides.length) % slides.length
+        );
+        startTimer();
+      }
+    }, { passive: true });
+
+    new IntersectionObserver((entries, obs) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      const first = videos[0];
+      if (first) { first.currentTime = parseInt(slides[0].dataset.start||'0'); first.muted=true; first.play().catch(()=>{}); }
+      startTimer();
+    }, { threshold: 0.1 }).observe(carousel);
+
+    document.addEventListener('astro:before-swap', () => {
+      if (timer) clearInterval(timer);
+    }, { once: true });
+  }
+
+  // Mobile: Horizontal scroll carousel
+  function initVideoCarousel() {
+    const wrapper = document.getElementById('video-carousel-mobile');
+    if (!wrapper) return;
+
+    const carousel = wrapper.querySelector<HTMLElement>('.video-carousel');
+    if (!carousel) return;
+
+    const cards = Array.from(carousel.querySelectorAll<HTMLElement>('.video-card'));
+    let scrollRaf = 0;
+    let activeVideoIndex = -1;
+    let carouselVisible = false;
+    let autoTimer: ReturnType<typeof setInterval> | null = null;
+    let resumeTimer: ReturnType<typeof setTimeout> | null = null;
+    let userInteracting = false;
+    const observers: IntersectionObserver[] = [];
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const AUTO_SCROLL_DELAY = 3900;
+    const RESUME_DELAY = 5200;
+
+    const getCardMedia = (card: HTMLElement) => ({
+      video: card.querySelector<HTMLVideoElement>('.video-player'),
+      playBtn: card.querySelector<HTMLButtonElement>('.play-btn'),
+    });
+
+    const setPlayButton = (playBtn: HTMLButtonElement | null, visible: boolean) => {
+      if (!playBtn) return;
+      playBtn.style.opacity = visible ? '1' : '0';
+      playBtn.style.pointerEvents = visible ? 'auto' : 'none';
+    };
+
+    const prepareVideo = (card: HTMLElement, video: HTMLVideoElement) => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.preload = 'auto';
+
+      const src = card.dataset.src;
+      if (src && !video.currentSrc) {
+        video.src = src;
+      }
+      if (video.readyState === 0) {
+        video.load();
+      }
+    };
+
+    const seekToStart = (card: HTMLElement, video: HTMLVideoElement) => {
+      const startTime = parseInt(card.dataset.start || '0');
+      const applySeek = () => {
+        try {
+          if (Math.abs(video.currentTime - startTime) > 0.5) {
+            video.currentTime = startTime;
+          }
+        } catch {}
+      };
+
+      if (video.readyState >= 1) {
+        applySeek();
+      } else {
+        video.addEventListener('loadedmetadata', applySeek, { once: true });
+      }
+    };
+
+    const pauseInactiveVideos = (activeIndex: number) => {
+      cards.forEach((card, index) => {
+        if (index === activeIndex) return;
+        const { video, playBtn } = getCardMedia(card);
+        if (!video) return;
+        video.pause();
+        setPlayButton(playBtn, true);
+      });
+    };
+
+    const pauseAllVideos = () => {
+      cards.forEach(card => {
+        const { video, playBtn } = getCardMedia(card);
+        if (!video) return;
+        video.pause();
+        setPlayButton(playBtn, true);
+      });
+    };
+
+    const playActiveVideo = (index: number, reset = false) => {
+      if (!carouselVisible) return;
+
+      const card = cards[index];
+      if (!card) return;
+
+      const { video, playBtn } = getCardMedia(card);
+      if (!video) return;
+
+      pauseInactiveVideos(index);
+      prepareVideo(card, video);
+      if (reset) seekToStart(card, video);
+
+      video.play()
+        .then(() => setPlayButton(playBtn, false))
+        .catch(() => setPlayButton(playBtn, true));
+    };
+
+    const centerCard = (index: number, behavior: ScrollBehavior = 'smooth') => {
+      const card = cards[index];
+      if (!card) return;
+      const targetLeft = card.offsetLeft - (carousel.clientWidth - card.offsetWidth) / 2;
+      carousel.scrollTo({ left: targetLeft, behavior });
+    };
+
+    const stopAutoScroll = () => {
+      if (!autoTimer) return;
+      clearInterval(autoTimer);
+      autoTimer = null;
+    };
+
+    const startAutoScroll = () => {
+      if (prefersReducedMotion || autoTimer || cards.length < 2) return;
+      autoTimer = setInterval(() => {
+        if (!carouselVisible || userInteracting || document.hidden) return;
+        const nextIndex = activeVideoIndex < 0 ? 0 : (activeVideoIndex + 1) % cards.length;
+        centerCard(nextIndex);
+      }, AUTO_SCROLL_DELAY);
+    };
+
+    const pauseAutoScrollBriefly = () => {
+      userInteracting = true;
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        userInteracting = false;
+        if (carouselVisible) startAutoScroll();
+      }, RESUME_DELAY);
+    };
+
+    const updateCoverflow = () => {
+      scrollRaf = 0;
+      const carouselRect = carousel.getBoundingClientRect();
+      const center = carouselRect.left + carouselRect.width / 2;
+      let activeIndex = 0;
+      let closest = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(cardCenter - center);
+        if (distance < closest) {
+          closest = distance;
+          activeIndex = index;
+        }
+      });
+
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const rawOffset = (cardCenter - center) / Math.max(rect.width, 1);
+        const offset = Math.max(-2.2, Math.min(2.2, rawOffset));
+        const absOffset = Math.abs(offset);
+        const depth = Math.min(absOffset, 2);
+        const scale = 1 - depth * 0.105;
+        const z = 110 - depth * 150;
+        const rotate = -offset * 25;
+        const translateX = -offset * 16;
+        const opacity = Math.max(0.24, 1 - absOffset * 0.34);
+        const saturation = Math.max(0.76, 1 - absOffset * 0.09);
+        const brightness = Math.max(0.86, 1 - absOffset * 0.045);
+
+        card.style.setProperty('--flow-x', `${translateX.toFixed(1)}px`);
+        card.style.setProperty('--flow-z', `${z.toFixed(1)}px`);
+        card.style.setProperty('--flow-rotate', `${rotate.toFixed(2)}deg`);
+        card.style.setProperty('--flow-scale', scale.toFixed(3));
+        card.style.setProperty('--flow-opacity', opacity.toFixed(3));
+        card.style.setProperty('--flow-saturation', saturation.toFixed(3));
+        card.style.setProperty('--flow-brightness', brightness.toFixed(3));
+
+        card.classList.remove('is-active', 'is-prev', 'is-next', 'is-far-left', 'is-far-right');
+        if (index === activeIndex) {
+          card.classList.add('is-active');
+        } else if (index === activeIndex - 1) {
+          card.classList.add('is-prev');
+        } else if (index === activeIndex + 1) {
+          card.classList.add('is-next');
+        } else if (index < activeIndex) {
+          card.classList.add('is-far-left');
+        } else {
+          card.classList.add('is-far-right');
+        }
+      });
+
+      const changedActiveVideo = activeIndex !== activeVideoIndex;
+      activeVideoIndex = activeIndex;
+      playActiveVideo(activeIndex, changedActiveVideo);
+    };
+
+    const scheduleCoverflow = () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(updateCoverflow);
+    };
+
+    cards.forEach(card => {
+      const video = card.querySelector<HTMLVideoElement>('.video-player');
+      const playBtn = card.querySelector<HTMLButtonElement>('.play-btn');
+      if (!video || !playBtn) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          prepareVideo(card, video);
+        }
+      }, { threshold: 0, rootMargin: '500px 0px' });
+      observer.observe(card);
+      observers.push(observer);
+
+      playBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const index = cards.indexOf(card);
+        activeVideoIndex = index;
+        prepareVideo(card, video);
+        seekToStart(card, video);
+        pauseInactiveVideos(index);
+        video.play()
+          .then(() => setPlayButton(playBtn, false))
+          .catch(() => setPlayButton(playBtn, true));
+      });
+
+      card.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a, button')) return;
+        pauseAutoScrollBriefly();
+        card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+
+      video.addEventListener('play', () => playBtn.style.opacity = '0');
+      video.addEventListener('pause', () => playBtn.style.opacity = '1');
+      video.addEventListener('ended', () => playBtn.style.opacity = '1');
+    });
+
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      carouselVisible = entries[0]?.isIntersecting ?? false;
+      if (carouselVisible) {
+        playActiveVideo(activeVideoIndex >= 0 ? activeVideoIndex : 0, true);
+        startAutoScroll();
+      } else {
+        stopAutoScroll();
+        pauseAllVideos();
+      }
+    }, { threshold: 0.38 });
+    visibilityObserver.observe(wrapper);
+    observers.push(visibilityObserver);
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAutoScroll();
+        pauseAllVideos();
+      } else {
+        playActiveVideo(activeVideoIndex >= 0 ? activeVideoIndex : 0);
+        if (carouselVisible) startAutoScroll();
+      }
+    };
+
+    const handleUserInteraction = () => pauseAutoScrollBriefly();
+
+    carousel.addEventListener('scroll', scheduleCoverflow, { passive: true });
+    carousel.addEventListener('pointerdown', handleUserInteraction, { passive: true });
+    carousel.addEventListener('touchstart', handleUserInteraction, { passive: true });
+    carousel.addEventListener('wheel', handleUserInteraction, { passive: true });
+    carousel.addEventListener('keydown', handleUserInteraction);
+    window.addEventListener('resize', scheduleCoverflow, { passive: true });
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    updateCoverflow();
+
+    document.addEventListener('astro:before-swap', () => {
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      stopAutoScroll();
+      if (resumeTimer) clearTimeout(resumeTimer);
+      pauseAllVideos();
+      observers.forEach(observer => observer.disconnect());
+      carousel.removeEventListener('pointerdown', handleUserInteraction);
+      carousel.removeEventListener('touchstart', handleUserInteraction);
+      carousel.removeEventListener('wheel', handleUserInteraction);
+      carousel.removeEventListener('keydown', handleUserInteraction);
+      window.removeEventListener('resize', scheduleCoverflow);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    }, { once: true });
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    initServicesCarousel();
+    initVideoCarousel();
+  });
+</script>

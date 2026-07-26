@@ -1,15 +1,11 @@
 ---
-import RefonteLegal from '../refonte/mentions-legales.astro';
-import { translatedLangs } from '../../i18n/refonte';
+import LegalPage from '../mentions-legales.astro';
 
 export function getStaticPaths() {
-  return translatedLangs.map((lang) => ({
+  return ['en', 'nl', 'ru', 'de', 'es', 'it'].map((lang) => ({
     params: { lang },
-    props: { lang },
   }));
 }
-
-const { lang } = Astro.props;
 ---
 
-<RefonteLegal lang={lang} />
+<LegalPage />
